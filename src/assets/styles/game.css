@@ -1,0 +1,212 @@
+#container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 47.4%;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+#container > svg {
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #000;
+  pointer-events: all;
+}
+
+table.outer {
+  border: 2px solid #000;
+  background-color: #fff;
+  width: 100%;
+  margin-bottom: 20px;
+}
+table.outer tr:nth-of-type(even) {
+  background-color: #eee;
+}
+table.outer th {
+  background-color: #ccc;
+}
+table.scroll thead {
+  display: inline-block;
+}
+table.scroll th {
+  text-align: left;
+}
+table.scroll > tbody {
+  display: inline-block;
+  height: 350px;
+  overflow: scroll;
+}
+table.scroll strong {
+  display: block;
+}
+.scroll .unit {
+  width: 250px;
+}
+.scroll .available {
+  width: 125px;
+}
+.purchase td img {
+  max-height: 20px;
+}
+td.unit img {
+  max-width: 250px;
+}
+figure {
+  display: inline-block;
+  margin: 0.5em;
+}
+figure.transported img {
+  vertical-align: text-top;
+}
+figure.transported span {
+  display: inline;
+  vertical-align: super;
+}
+figcaption, .scroll span {
+  display: block;
+  font-style: italic;
+  font-size: 75%;
+}
+.planAttack {
+  display: flex;
+}
+.committedUnits {
+  flex-basis: 100%;
+}
+.committedUnits h3 {
+  margin: 0;
+  background: #ccc;
+}
+.committedUnits ul {
+  margin: 0;
+  height: 350px;
+  overflow: scroll;
+}
+button.gameButton {
+  padding: 0 2px;
+  margin: 0;
+  overflow: visible;
+}
+
+.notice {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  color: #0000ee;
+}
+.warning {
+  color: #ff0000;
+}
+.modal, #tooltip {
+  z-index: 1000;
+}
+
+#modal {
+  position: absolute;
+  left: 25%;
+  top: 5%;
+  width: 50%;
+}
+#modal.plan-attack {
+  left: 15%;
+  width: 70%;
+}
+#modal.hidden {
+  display: none
+}
+
+#modal > div {
+  position: relative;
+  min-height: 500px;
+  box-shadow: 
+    0px 11px 15px -7px rgba(0, 0, 0, 0.6), 
+    0px 24px 38px 3px rgba(0, 0, 0, 0.42), 
+    0px 9px 46px 8px rgba(0, 0, 0, 0.36);
+}
+
+#modal > div, #tooltip {
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 10px;
+}
+
+
+#modal h1 {
+  margin: 0;
+  padding-left: 25px;
+  font-family: 'Bree Serif';
+  font-size: 200%;
+  text-transform: uppercase;
+  text-align: center;
+}
+#modal p {
+  margin: 0.5em 0;
+}
+#modal nav {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0 1em;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+}
+#modal nav a:first-of-type {
+  border-radius: 0 0 0 8px;
+}
+
+.changePhase {
+  position: absolute;
+  top: 86%;
+  left: 53%;
+  width: 100px;
+  background: #fff;
+  padding: 10px;
+  border: 2px solid black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.__react_component_tooltip {
+  width: 34%;
+}
+
+.__react_component_tooltip.show {
+  opacity: 0.95;
+}
+
+.tech li {
+  padding-bottom: 1em;
+}
+.tech li button {
+  margin-right: 5px;
+}
+li button i {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+li button.rockets i {
+  background-image: url(../images/rocket.png);
+  width: 45px;
+}
+li button.radar i {
+  background-image: url(../images/radar.png);
+}
+li button.jets i {
+  background-image: url(../images/jet.png);
+}
+li button.subs i {
+  background-image: url(../images/super_sub.png);
+  width: 70px;
+}
+li button.heavyBomber i {
+  background-image: url(../images/heavy_bomber.png);
+}

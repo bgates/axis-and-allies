@@ -1,0 +1,58 @@
+li {
+  list-style: none;
+}
+#powers {
+  margin-bottom: 0;
+  display: flex;
+  font-family: 'Diplomata SC';
+  -webkit-margin-before: 0;
+  -webkit-padding-start: 0;
+  background: #000;
+}
+
+#powers li {
+  width: 14%;
+  border: 3px solid black;
+  font-size: 36px;
+  opacity: 0.8;
+}
+#powers li.active {
+  opacity: 1;
+  color: #fefefe;
+}
+
+li div.flag {
+  vertical-align: top;
+}
+
+#powers li img {
+  vertical-align: top;
+  display: inline-block;
+}
+
+li img.round {
+  border-radius: 50%;
+  height: 36px;
+  width: 36px;
+  background: #fff;
+}
+
+li.china img.round {
+  background: #e01500;
+}
+
+li div {
+  display: inline-block;
+  padding: 5px 0 0 5px;
+}
+
+li div h1 {
+  margin: 0;
+  font-size: 0.45em;
+  line-height: 0.9;
+}
+
+li div h2 {
+  margin: 0;
+  font-size: 0.4em;
+}

@@ -1,0 +1,109 @@
+.germany {
+  fill: #4d5d53;
+  background: #4d5d53;
+}
+
+span.germany {
+  color: #fff;
+}
+
+.germany:hover {
+  fill: #678a74;
+}
+
+.ussr {
+  fill: #bc0000;
+  background: #bc0000;
+  color: #fff;
+}
+
+.ussr:hover {
+  fill: #f00;
+}
+
+.japan {
+  fill: #ffd700;
+  background: #ffd700;
+}
+
+.japan:hover {
+  fill: #fff3b3;
+}
+
+.uk {
+  fill: #c3b091;
+  background: #c3b091;
+}
+
+.uk:hover {
+  fill: #f5ddb5;
+}
+
+.italy {
+  fill: #2c3539;
+  background: #2c3539;
+  color: #fff;
+}
+
+.italy:hover {
+  fill: #829ca8;
+}
+
+.us {
+  fill: #6b8e23;
+  background: #6b8e23;
+}
+
+.us:hover {
+  fill: #92c230;
+}
+
+.china {
+  fill: #ffff00;
+  background: #ffff00;
+}
+
+.china:hover {
+  fill: #ffffe6;
+}
+
+.neutrals {
+  fill: #ccc;
+}
+
+.neutrals:hover {
+  fill: #f2f2f2;
+}
+
+.oceans {
+  fill: #ebf4fa;
+}
+
+.oceans:hover {
+  fill: #c2e7ff;
+}
+
+#ural_mountains {
+  fill: #7d0000;
+}
+
+#sahara, #himalayas, #afghanistan {
+  fill: #5e5546;
+}
+
+@keyframes blink {
+	0% {opacity: 1}
+	40%{opacity: 0.8}
+	50% {opacity: 0.75}
+	60%{opacity: 0.8}
+	99% {opacity: 1}
+}
+
+path {
+  transition: 0.5s fill;
+}
+
+path.active {
+  animation: blink 1s infinite;
+  fill: url(#p-fire);
+}

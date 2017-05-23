@@ -1,0 +1,55 @@
+.dieWrapper {
+  width: 26px;
+  height: 26px;
+  position: relative;
+  perspective: 1000px;
+  margin: 5px;
+  display: inline-block;
+}
+
+circle {
+  stroke: black;
+  fill: url(#dieGradient);
+}
+
+.die{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-style: preserve-3d;
+  transition: transform 2s;
+}
+.die figure{
+  margin: 0;
+  width: 98%;
+  height: 98%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border: 2px solid #232323;
+  background: white;
+  border-radius: 5px;
+}
+.die svg {
+  width: 100%;
+  height: 100%;
+}
+.die .front{
+  transform: rotateY(0deg) translateZ(13px);
+}
+.die .back{
+  transform: rotateX(180deg) translateZ(13px);
+}
+.die .right{
+  transform: rotateY(90deg) translateZ(13px);
+}
+.die .left{
+  transform: rotateY(-90deg) translateZ(13px);
+}
+.die .top{
+  transform: rotateX(90deg) translateZ(13px);
+}
+.die .bottom{
+  transform: rotateX(-90deg) translateZ(13px);
+}

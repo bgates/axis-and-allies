@@ -1,0 +1,32 @@
+#tooltip {
+  min-width: 250px;
+  max-width: 350px;
+  min-height: 100px;
+  position: absolute;
+  display: none;
+}
+
+#tooltip h1 {
+  font-size: 1.2em;
+  margin: 0.2em 0;
+}
+
+#tooltip p {
+  margin: 5px 0;
+}
+
+#tooltip p:first-of-type {
+  margin: 0;
+}
+
+#tooltip span span {
+  padding: 2px;
+  border-radius: 5px;
+  vertical-align: top;
+  color: #fff;
+}
+#tooltip span span.china, #tooltip span span.japan {
+  color: #000;
+}
+
+

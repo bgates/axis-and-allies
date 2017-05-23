@@ -1,0 +1,75 @@
+import React, { Component } from 'react';
+import Transition from 'react-inline-transition-group';
+import '../assets/styles/die.css';
+
+class Die extends Component {
+
+  hideOtherSides () {
+    if (!this.visible) {
+      for(var i = 1; i < 7; i++){
+        if (i !== this.props.number) {
+          this[`_${i}`].style.display = 'none'
+        }
+      }
+      this.visible = true
+    }
+  }
+  render () {
+    let duration = Math.random() * 3;
+    return (
+      <Transition
+        className="dieWrapper"
+        onChildAppeared={this.hideOtherSides.bind(this)}
+        childrenAppearStyle={ { transform: `rotateX(${this.props.rotateX}) rotateY(${this.props.rotateY})` } }>
+        <div className="die" style={ { transition: `transform ${duration}s` } }>
+          <figure className="front" ref={(f) => this._1 = f}>
+            <svg viewBox="0 0 170 170">
+              <circle cx="85" cy="85" r="24"/>
+            </svg>
+          </figure>
+          <figure className="bottom" ref={(f) => this._2 = f}>
+            <svg viewBox="0 0 170 170">
+              <circle cx="140" cy="30" r="24" />
+              <circle cx="30" cy="140" r="24" />
+            </svg>
+          </figure>
+          <figure className="left" ref={(f) => this._3 = f}>
+            <svg viewBox="0 0 170 170">
+              <circle cx="140" cy="30" r="24" />
+              <circle cx="85" cy="85" r="24"  />
+              <circle cx="30" cy="140" r="24" />
+            </svg>
+          </figure>
+          <figure className="right" ref={(f) => this._4 = f}>
+            <svg viewBox="0 0 170 170">
+              <circle cx="140" cy="30" r="24" />
+              <circle cx="30" cy="140" r="24" />
+              <circle cx="30" cy="30" r="24"  />
+              <circle cx="140" cy="140" r="24"/>
+            </svg>
+          </figure>
+          <figure className="top" ref={(f) => this._5 = f}>
+            <svg viewBox="0 0 170 170">
+              <circle cx="140" cy="30" r="24" />
+              <circle cx="30" cy="140" r="24" />
+              <circle cx="85" cy="85" r="24"  />
+              <circle cx="30" cy="30" r="24"  />
+              <circle cx="140" cy="140" r="24"/>
+            </svg>
+          </figure>
+          <figure className="back" ref={(f) => this._6 = f}>
+            <svg viewBox="0 0 170 170">
+              <circle cx="140" cy="30" r="24" />
+              <circle cx="30" cy="140" r="24" />
+              <circle cx="30" cy="30" r="24"  />
+              <circle cx="140" cy="140" r="24"/>
+              <circle cx="30" cy="85" r="24"  />
+              <circle cx="140" cy="85" r="24" />
+            </svg>
+          </figure>
+        </div>
+      </Transition>
+    )
+  }
+}
+export default Die;

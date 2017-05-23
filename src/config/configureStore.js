@@ -1,0 +1,30 @@
+import { createStore, compose, applyMiddleware } from 'redux'
+import { reduxReactFirebase } from 'redux-react-firebase'
+import { createBrowserHistory } from 'history'
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import thunk from 'redux-thunk'
+import reducer from '../reducers'
+import firebaseConfig from './firebase'
+
+export const history = createBrowserHistory()
+
+const reducerWithRouteState = connectRouter(history)(reducer)
+
+const configureStore = (initialState) => {
+  const createStoreWithMiddleware = compose(
+    applyMiddleware(routerMiddleware(history), thunk),
+    reduxReactFirebase(firebaseConfig),
+    typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
+  )(createStore)
+  const store = createStoreWithMiddleware(reducerWithRouteState, initialState)
+  if (module.hot) {
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers/index').default
+      const nextRootReducerWithRouteState = connectRouter(history)(nextRootReducer)
+      store.replaceReducer(nextRootReducerWithRouteState)
+    })
+  }
+  return store
+}
+export default configureStore
+

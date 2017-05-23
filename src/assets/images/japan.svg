@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-350 -300 900 600" width="900" height="600">
+<rect fill="#FFF" x="-350" y="-300" width="900" height="600"/>
+<g fill="#be0026">
+<g id="o">
+<g id="r">
+<g id="q">
+<polygon id="p" points="0 0 620.6354488 61.12725632 620.6354488 -61.12725632"/>
+<use xlink:href="#p" transform="rotate(180)"/>
+</g>
+<use xlink:href="#q" transform="rotate(90)"/>
+</g>
+<use xlink:href="#r" transform="rotate(45)"/>
+</g>
+<use xlink:href="#o" transform="rotate(22.5)"/>
+<circle r="150"/>
+</g>
+</svg>

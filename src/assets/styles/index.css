@@ -1,0 +1,32 @@
+body {
+  font-family: 'Open Sans';
+}
+
+button, .btn {
+  background: #455a64;
+  border-radius: 2px;
+  font-family: Arial;
+  color: #fff;
+  font-size: 13px;
+  padding: 2px 5px;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+nav .btn {
+  color: #455a64;
+  background: transparent;
+}
+
+.help {
+  margin-right: 5px;
+  width: 20px;
+  background: url('../images/help.png') no-repeat;
+  background-size: contain;
+  text-indent: -9999px;
+  float: right;
+}
+
+ol {
+  padding-left: 1em;
+}
