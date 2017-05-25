@@ -32,7 +32,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/income" component={IncomeContainer}/>
       <Route path="/lend-lease" component={LendLeaseModal}/>
       <Route path="/plan-combat" component={PlanContainer}/>
-      <Route path="/combat" component={CombatModal}/>
+      <Route path="/resolve-combat" component={CombatModal}/>
       <Route path="/plane-landing" component={PlaneLandingModal}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
       <Route path="/movement" component={MovementModal}/>

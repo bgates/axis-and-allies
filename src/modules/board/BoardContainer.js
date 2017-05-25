@@ -45,6 +45,9 @@ const territoryThunk = (territory) => {
 
     } else if (router.location.pathname === '/plan-combat') {
       dispatch({ type: 'PLAN_ATTACK', territory })
+    } else if (router.location.pathname === '/resolve-combat') {
+      // need logic to prevent dispatch if no combat
+      dispatch({ type: 'RESOLVE_COMBAT', territory })
     } else {
       dispatch({ type: 'TERRITORY_CLICKED' })
     }

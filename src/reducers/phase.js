@@ -16,6 +16,9 @@ const phase = (state = { current: 'start' }, action) => {
     delete newState['territory'];
     return newState;
   } 
+  case 'RESOLVE_COMBAT': {
+    return { ...state, current: 'combat', territory: action.territory }
+  }
   case 'VIEW_TRANSPORT_LOAD_OPTIONS': {
     return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }
   }
@@ -23,9 +26,6 @@ const phase = (state = { current: 'start' }, action) => {
     let newState = Object.assign({}, state, { current: 'plan-attack' });
     delete newState['transport'];
     return newState;
-  }
-  case 'RESOLVE_COMBAT': {
-    return state
   }
   default:
     return state
