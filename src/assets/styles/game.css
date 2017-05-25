@@ -132,6 +132,12 @@ button.gameButton {
   border-radius: 10px;
 }
 
+#tooltip {
+  box-shadow: 
+    0px 5px 5px -3px rgba(0, 0, 0, 0.2), 
+    0px 8px 10px 1px rgba(0, 0, 0, 0.14), 
+    0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
 
 #modal h1 {
   margin: 0;
@@ -153,10 +159,9 @@ button.gameButton {
   position: absolute;
   bottom: 0px;
 }
-#modal nav a:first-of-type {
-  border-radius: 0 0 0 8px;
+#modal nav.forwardOnly {
+  justify-content: flex-end;
 }
-
 .changePhase {
   position: absolute;
   top: 86%;

@@ -48,8 +48,26 @@ const PlanCombatTooltip = () => {
   return (
     <div>
       <p><strong>Make your combat moves.</strong> Click on an enemy territory or sea zone you wish to attack, any sea zone you need to move supporting units to, or friendly territory you wish to blitz to.</p> 
-      <p><strong>When you are done making your combat moves, click the &quot;Done&quot; button in the compass rose.</strong></p>
+      <p><strong>When you are done making your combat moves, click the &quot;Done&quot; button in the Indian Ocean.</strong></p>
       <p><strong className="warning">Warning:</strong> Any land or sea units moved during this phase can not be moved during the non-combat phase of your turn. Units on a transport that gets loaded or moved during this phase will only be allowed to unload from where they are. <strong className="notice">Use F.A.Q.s link above.</strong></p>
+    </div>
+  )
+}
+
+const ResolveCombatTooltip = () => {
+  return (
+    <div>
+      <p><strong>Resolve all combat.</strong> Click on an enemy territory or sea zone you are attacking. Territories with combat needing to be resolved are blinking.</p>
+      <p>You can choose the order in which the battles are fought, but you will not be able to fight more than one battle at a time. Each battle will need to be fully resolved in order to begin the next one. Amphibious assault units will need to have their sea zone battle resolved before the land battle can begin.</p>
+    </div>
+  )
+}
+const LandPlanesTooltip = () => {
+  return (
+    <div>
+      <p><strong>Land all combat aircraft.</strong> Click on any territory or sea zone with combat aircraft to land. Territories with combat aircraft needing to be landed are blinking.</p>
+      <p>When you have landed all your combat aircraft and are ready to move to the next phase, press the <b>Done</b> button in the compass rose.</p>
+      <p>Aircraft cannot land in territories that were captured this turn. Aircraft do not have to endure antiaircraft fire during this phase.</p>
     </div>
   )
 }
@@ -67,6 +85,7 @@ const Tooltip = ({ territory, currentPower }) => {
         render={() => <StartTooltip currentPower={currentPower} />} />
       <Route path="/repair" component={RepairTooltip} />
       <Route path="/plan-combat" component={PlanCombatTooltip} />
+      <Route path="/resolve-combat" component={ResolveCombatTooltip} />
     </div>
   )
 }

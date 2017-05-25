@@ -20,7 +20,6 @@ import EndCheckModal from '../endCheck/EndCheckModal'
 import DefenseOrderModal from '../defenseOrder/DefenseOrderModal'
 
 const Modal = ({ ctrlPressed, phase }) => {
-  console.log('modal?')
   const classes = classNames('modal', phase, { hidden: ctrlPressed })
   return (
     <div id='modal' className={classes}>
