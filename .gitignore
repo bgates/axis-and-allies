@@ -14,3 +14,4 @@ build
 npm-debug.log
 global.js
 scavenge.global.js
+src/lib/movement.js
