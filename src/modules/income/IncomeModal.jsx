@@ -13,7 +13,7 @@ const IncomeModal = ({ currentPower, npl, objectives, nextNpl }) => {
       <p> so you will be able to use {nextNpl} <abbr title="Industrial Production Certificates">I.P.C.s</abbr> next turn</p>
       <nav>
         <Link to="/purchase" className="btn">Back</Link>
-        <Link to="/plan-combat" className="btn">Advance</Link>
+        <Link to="/plan-combat" className="btn">Plan Combat</Link>
       </nav>
     </div>
   )

@@ -41,7 +41,7 @@ class ResearchResultsModal extends Component {
     if (this.props.tech.includes('Rockets')) {
       return <Link to="/rockets">Launch Rocket Attacks</Link>
     } else {
-      return <Link to="/purchase">Purchase Units</Link>
+      return <Link to="/purchase" className="btn forward">Purchase Units</Link>
     }
   }
 
@@ -54,7 +54,7 @@ class ResearchResultsModal extends Component {
         <h1>Research Results</h1>
         {this.visualizeDice(this.props.rolls)}
         {text}
-        {link}
+        <nav className="forwardOnly">{link}</nav>
       </div>
     )
   }
