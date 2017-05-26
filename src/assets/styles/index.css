@@ -13,9 +13,12 @@ button, .btn {
   text-transform: uppercase;
 }
 
-nav .btn {
+nav .btn, .changePhase .btn {
   color: #455a64;
   background: transparent;
+}
+.changePhase .btn {
+  margin: 0 auto;
 }
 
 .help {

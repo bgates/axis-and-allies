@@ -132,7 +132,7 @@ button.gameButton {
   border-radius: 10px;
 }
 
-#tooltip {
+#tooltip, .changePhase {
   box-shadow: 
     0px 5px 5px -3px rgba(0, 0, 0, 0.2), 
     0px 8px 10px 1px rgba(0, 0, 0, 0.14), 
@@ -183,12 +183,6 @@ button.gameButton {
   opacity: 0.95;
 }
 
-.tech li {
-  padding-bottom: 1em;
-}
-.tech li button {
-  margin-right: 5px;
-}
 li button i {
   display: inline-block;
   width: 20px;
@@ -197,21 +191,4 @@ li button i {
   background-repeat: no-repeat;
   margin-right: 3px;
   vertical-align: middle;
-}
-li button.rockets i {
-  background-image: url(../images/rocket.png);
-  width: 45px;
-}
-li button.radar i {
-  background-image: url(../images/radar.png);
-}
-li button.jets i {
-  background-image: url(../images/jet.png);
-}
-li button.subs i {
-  background-image: url(../images/super_sub.png);
-  width: 70px;
-}
-li button.heavyBomber i {
-  background-image: url(../images/heavy_bomber.png);
 }

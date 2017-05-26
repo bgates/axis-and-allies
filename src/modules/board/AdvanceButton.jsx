@@ -29,10 +29,8 @@ const mapDispatchToProps = (dispatch) => {
 const AdvanceButtonComponent = ({ phase, advancePhase, previousPhase }) => {
   return (
     <div className="changePhase">
-      <Link to="resolve-combat">Done</Link>
-      <Link to="income">Back</Link>
-      <button onClick={advancePhase}>Done</button>
-      <button onClick={previousPhase}>Back</button>
+      <Link to="resolve-combat" className="btn">Done</Link>
+      <Link to="income" className="btn">Back</Link>
     </div>
   )
 }

@@ -1,0 +1,24 @@
+.tech li {
+  padding-bottom: 1em;
+}
+.tech li button {
+  margin-right: 5px;
+}
+li button.rockets i {
+  background-image: url(../images/rocket.png);
+  width: 45px;
+}
+li button.radar i {
+  background-image: url(../images/radar.png);
+}
+li button.jets i {
+  background-image: url(../images/jet.png);
+}
+li button.subs i {
+  background-image: url(../images/super_sub.png);
+  width: 70px;
+}
+li button.heavyBomber i {
+  background-image: url(../images/heavy_bomber.png);
+}
+

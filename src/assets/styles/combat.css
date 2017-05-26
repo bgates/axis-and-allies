@@ -1,0 +1,48 @@
+.combat h2 {
+  margin: 0;
+  background-color: #000;
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+}
+.battleBoard > div {
+  min-height: 60px;
+}
+.battleBoard > div {
+  display: flex;
+}
+.battleBoard > div > div {
+  border-left: 1px solid black;
+  flex: 1;
+  text-align: center;
+}
+.battleBoard > div > div:first-of-type {
+  border: 0;
+}
+.combat .defenderSpace {
+  background: #dEB887;
+}
+.combat .midSpace {
+  background: #99915B;
+}
+.combat .midSpace div {
+  margin: 5px auto;
+  flex: initial;
+  background: #bbb;
+  color: #fff;
+  height: 50px;
+  width: 50px;
+  font-size: 150%;
+}
+.midSpace span {
+  display: block;
+  color: #000;
+  font-size: 50%;
+}
+.combat .attackerSpace {
+  background: #556B2F;
+}
+.battleBoard img {
+  max-height: 30%;
+  max-width: 30%;
+}
