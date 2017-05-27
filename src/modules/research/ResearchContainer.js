@@ -19,16 +19,16 @@ const attemptResearch = () => {
     let state = getState()
     let { research } = state 
     let currentPower = getCurrentPower(state)
-    let rolls = dice(research.attempts)
+    let playerRolls = dice(research.attempts)
     dispatch({
-      type: 'PLAYER_ROLL',
-      rolls
+      type: 'ROLLS',
+      playerRolls
     })
     dispatch({
       type: 'ATTEMPT_RESEARCH',
       cost: research.attempts * researchOptions.cost
     })
-    if (rolls.includes(6)) {
+    if (playerRolls.includes(6)) {
       dispatch({
         type: 'DEVELOP_TECH',
         currentPower,

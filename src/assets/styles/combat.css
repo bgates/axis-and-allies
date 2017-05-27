@@ -50,5 +50,22 @@
   flex-grow: 1;
 }
 .battleBoard img {
-  transform: scale(0.4);
+  /*transform: scale(0.4);*/
+}
+.battleBoard img {
+  max-width: 25%;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+.battleBoard img[alt*=infantry] {
+  max-width: 10%;
+}
+.battleBoard img[alt*=mechanized] {
+  max-width: 25%;
+}
+.battleBoard img[alt*=fighter] {
+  max-width: 50%;
+}
+.battleBoard img[alt*=bomber] {
+  max-width: 70%;
 }

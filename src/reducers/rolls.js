@@ -1,7 +1,10 @@
 const rolls = (state = {}, action) => {
   switch (action.type) {
-    case 'PLAYER_ROLL':
-      return { player: action.rolls }
+    case 'ROLLS':
+      return { 
+        player: action.playerRolls, 
+        opponent: action.opponentRolls 
+      }
     default:
       return state
   }
