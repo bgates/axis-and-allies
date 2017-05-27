@@ -8,9 +8,12 @@ const path = (power, name) => {
   return require(`../assets/images/units/${power}/${unitName}.png`)
 }
 
-export const UnitImg = ({ power, name }) => {
+export const UnitImg = ({ power, name, handleClick }) => {
   return (
-    <img src={path(power, name)} alt={`${power} ${name}`} />
+    <img 
+      src={path(power, name)} 
+      alt={`${power} ${name}`} 
+      onClick={handleClick} />
   )
 }
 

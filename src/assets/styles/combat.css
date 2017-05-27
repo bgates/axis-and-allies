@@ -5,6 +5,11 @@
   text-transform: uppercase;
   text-align: center;
 }
+.battleBoard {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 25px;
+}
 .battleBoard > div {
   min-height: 60px;
 }
@@ -21,6 +26,7 @@
 }
 .combat .defenderSpace {
   background: #dEB887;
+  flex-grow: 1;
 }
 .combat .midSpace {
   background: #99915B;
@@ -41,8 +47,8 @@
 }
 .combat .attackerSpace {
   background: #556B2F;
+  flex-grow: 1;
 }
 .battleBoard img {
-  max-height: 30%;
-  max-width: 30%;
+  transform: scale(0.4);
 }

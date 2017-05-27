@@ -70,7 +70,6 @@ const amphibUnitsInRange = (board, currentPower, territory) => {
     })
     return [...transports, ...territoryTransports.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index }))]
   }, []);
-  console.log(transports);
   return transports;
 }
 

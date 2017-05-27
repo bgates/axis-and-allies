@@ -1,5 +1,5 @@
 import React from 'react'
-import { ImgAndQty } from '../../components/UnitFigure'
+import { UnitImg } from '../../components/UnitFigure'
 import '../../assets/styles/combat.css'
 
 const CombatModal = ({ combatants }) => {
@@ -42,7 +42,15 @@ const Defenders = ({ units }) => {
   return (
     <div>
       {units.map(unit => {
-        return <ImgAndQty unit={unit} />
+        return unit.ids.map(id => {
+          return (
+            <UnitImg 
+              key={id} 
+              id={id} 
+              power={unit.power} 
+              name={unit.name} />
+          )
+        })
       })}
     </div>
   )
@@ -52,7 +60,16 @@ const Attackers = ({ units }) => {
   return (
     <div>
       {units.map(unit => {
-        return <ImgAndQty unit={unit} />
+        return unit.ids.map(id => {
+          return (
+            <UnitImg 
+              key={id} 
+              id={id} 
+              handleClick={() => {console.log(id)}}
+              power={unit.power} 
+              name={unit.name} />
+          )
+        })
       })}
     </div>
   )
