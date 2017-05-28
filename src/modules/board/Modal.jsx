@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom'
 import RepairModal from '../repair/RepairModal'
 import ResearchContainer from '../research/ResearchContainer'
 import ResearchResultsContainer from '../researchResults/ResearchResultsContainer'
-import RocketAttackModal from '../rocketAttack/RocketAttackModal'
+import RocketAttackContainer from '../rocketAttack/RocketAttackContainer'
 import RocketResultsModal from '../rocketResults/RocketResultsModal'
 import { PurchaseContainer } from '../purchases'
 import { IncomeContainer } from '../income'
@@ -26,7 +26,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/repair" component={RepairModal}/>
       <Route exact path="/research" component={ResearchContainer}/>
       <Route path="/research/results" component={ResearchResultsContainer}/>
-      <Route exact path="/rockets" component={RocketAttackModal}/>
+      <Route exact path="/rockets" component={RocketAttackContainer}/>
       <Route path="/rockets/results" component={RocketResultsModal}/>
       <Route path="/purchase" component={PurchaseContainer}/>
       <Route path="/income" component={IncomeContainer}/>

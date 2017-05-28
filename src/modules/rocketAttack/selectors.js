@@ -1,11 +1,30 @@
-import { territoriesInRange } from '??'
-import { isEnemy, hasIndustrialComplex } from '??'
+import { createSelector } from 'reselect';
+import { getCurrentPower, mergeBoardAndTerritories } from '../globalSelectors';
+import { territoriesInRange } from '../planCombat/movement';
+import { isEnemy, hasIndustrialComplex } from '../../lib/territory';
   
-export const IndustrialComplexInRocketRange = (board, currentPower, territory) => {
+const industrialComplexInRocketRange = (board, currentPower, territory) => {
   const all = () => true
-  return territoriesInRange(board, currentPower, territory, all, 3)
+  const ranges = territoriesInRange(board, currentPower, territory, all, 2)
+  let territories = Object.values(ranges).reduce((total, one) => total.concat(one), [])
+  return territories
     .filter(hasIndustrialComplex)
     .filter(territory => isEnemy(territory, currentPower.name))
 }
 
+const territoriesWithRockets = (board, currentPower) => {
+  return board.filter(territory => {
+    return territory.currentPower === currentPower.name && 
+      territory.units.some(unit => unit.name === 'anti-aircraft gun')
+  })
+}
 
+const _rocketTargets = (board, currentPower) => {
+  return territoriesWithRockets(board, currentPower).map(territory => industrialComplexInRocketRange(board, currentPower, territory))
+}
+
+export const rocketTargets = createSelector(
+  getCurrentPower,
+  mergeBoardAndTerritories,
+  (currentPower, board) => _rocketTargets(board, currentPower)
+)

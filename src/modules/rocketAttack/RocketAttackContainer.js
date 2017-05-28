@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 import RocketAttackModal from './RocketAttackModal';
-import { IndustrialComplexInRocketRange } from './selectors';
+import { rocketTargets } from './selectors';
 
 const mapStateToProps = (state) => ({
-  targets: IndustrialComplexInRocketRange(state)
+  targets: rocketTargets(state)
 });
 
 const RocketAttackContainer = connect(mapStateToProps)(RocketAttackModal)
