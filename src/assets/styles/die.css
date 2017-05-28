@@ -12,14 +12,14 @@ circle {
   fill: url(#dieGradient);
 }
 
-.die{
+.die {
   width: 100%;
   height: 100%;
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 2s;
 }
-.die figure{
+.die figure {
   margin: 0;
   width: 98%;
   height: 98%;
@@ -28,8 +28,14 @@ circle {
   align-items: center;
   position: absolute;
   border: 2px solid #232323;
-  background: white;
+  background: #fff;
   border-radius: 5px;
+}
+.metGoal circle {
+  fill: #fff;
+}
+.die.metGoal figure {
+  background: #ff0000;
 }
 .die svg {
   width: 100%;

@@ -15,45 +15,46 @@ class ResearchResultsModal extends Component {
   }
 
   visualizeDice (rolls) {
-    return rolls.player.map((die) => roll(die))
+    return rolls.map((die) => roll(die))
       .map((rotation, i) => <Die key={i}
-                                 number={rolls.player[i]}
+                                 metGoal={rolls[i] === 6}
+                                 reveal={this.reveal.bind(this)}
+                                 number={rolls[i]}
                                  rotateX={rotation[0]}
                                  rotateY={rotation[1]} />)
   }
 
-  componentDidMount () {
-    window.addEventListener('transitionend', this.reveal)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('transitionend', this.reveal)
-  }
-
-  reveal (event) {
+  reveal () {
     this.rolledCount += 1
-    if (this.rolledCount === this.props.rolls.player.length) {
+    if (this.rolledCount === this.props.rolls.length) {
       setTimeout(this.setState.bind(this, { reveal: true }), 500)
     }
   }
 
   rocketsOrPurchases () {
     if (this.props.tech.includes('Rockets')) {
-      return <Link to="/rockets">Launch Rocket Attacks</Link>
+      return <Link to="/rockets" className="btn forward">Launch Rocket Attacks</Link>
     } else {
       return <Link to="/purchase" className="btn forward">Purchase Units</Link>
     }
   }
 
+  text () {
+    if (this.state.reveal) {
+      const rolls = this.props.rolls.join(', ');
+      const tech = this.props.developedTech
+      const sentence = tech ? `You developed ${tech}!` : null;
+      return <p>You rolled {rolls}. {sentence}</p> 
+    }
+  }
+
   render () {
-    const developedTech = this.props.developedTech
-    let text = this.state.reveal ? <p>You rolled {this.props.rolls.player.join(',')}. {developedTech ? `You developed ${developedTech}!` : null}</p> : null
     let link = this.state.reveal ? this.rocketsOrPurchases() : null
     return (
       <div>
         <h1>Research Results</h1>
         {this.visualizeDice(this.props.rolls)}
-        {text}
+        {this.text()}
         <nav className="forwardOnly">{link}</nav>
       </div>
     )

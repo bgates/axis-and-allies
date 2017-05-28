@@ -2,23 +2,21 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import CombatModal from './CombatModal'
 import { combatants } from '../planCombat'
-import { rolls } from './selectors'
+import { strengths, rollCount } from './selectors'
 import dice from '../../lib/numericalDieRolls'
 
 const mapStateToProps = (state) => ({
   combatants: combatants(state),
-  strengths: rolls(state)
+  strengths: strengths(state),
+  rollCount: rollCount(state)
 })
 
-const rollForCombat = (playerCount, opponentCount) => {
-  console.log(playerCount, opponentCount)
+const rollForCombat = (combatantCount) => {
   return (dispatch, getState) => {
-    let playerRolls = dice(playerCount)
-    let opponentRolls = dice(opponentCount)
+    let rolls = dice(combatantCount)
     dispatch({
       type: 'ROLLS',
-      playerRolls,
-      opponentRolls
+      rolls
     })
     dispatch({
       type: 'SET_MINIMUM_PHASE',

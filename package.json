@@ -66,6 +66,7 @@
     "react": "^15.3.1",
     "react-addons-transition-group": "^15.3.2",
     "react-dom": "^15.3.1",
+    "react-inline-transition-group": "^2.1.6",
     "react-redux": "^4.4.6",
     "react-router-dom": "^4.0.0-beta.6",
     "react-tooltip": "^3.3.0",

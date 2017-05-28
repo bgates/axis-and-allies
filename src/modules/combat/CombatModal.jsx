@@ -2,7 +2,7 @@ import React from 'react'
 import { UnitImg } from '../../components/UnitFigure'
 import '../../assets/styles/combat.css'
 
-const CombatModal = ({ combatants, strengths, rollForCombat }) => {
+const CombatModal = ({ combatants, strengths, rollCount, rollForCombat }) => {
   const { attackers, defenders } = combatants;
   return (
     <div className="battleBoard">
@@ -29,7 +29,7 @@ const CombatModal = ({ combatants, strengths, rollForCombat }) => {
       <nav>
         <button>Back</button>
         <button 
-          onClick={rollForCombat.bind(null, attackers.length, defenders.length)}>Roll for combat</button>
+          onClick={rollForCombat.bind(null, rollCount)}>Roll for combat</button>
       </nav>
     </div>
   )

@@ -95,3 +95,4 @@ could be accounted for by placing a _mission_ prop on units in unitsFrom; when a
 
 roll for combat: player rolls, opponent rolls
 also establishes that something irreversible has happened
+if a player rolls for research, those roles need to be available until the next irreversible event happens. the next irreversible event could be rockets or combat or &c. 

@@ -5,7 +5,7 @@ import ResearchResultsModal from './ResearchResultsModal'
 const mapStateToProps = (state) => {
   return {
     developedTech: state.research.developedTech,
-    rolls: state.rolls,
+    rolls: state.rolls.research,
     tech: getCurrentPower(state).tech
   }
 }

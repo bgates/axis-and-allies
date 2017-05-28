@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import Transition from 'react-inline-transition-group';
+import classNames from 'classnames';
 import '../assets/styles/die.css';
 
 class Die extends Component {
-
+  constructor () {
+    super()
+    this.state = {}
+  }
+  /*
   hideOtherSides () {
     if (!this.visible) {
       for(var i = 1; i < 7; i++){
@@ -13,15 +18,24 @@ class Die extends Component {
       }
       this.visible = true
     }
+  }*/
+
+  showRed (phase) {
+    if (phase === 'appear') {
+      this.setState({ complete: true })
+      this.props.reveal()
+    }
   }
+
   render () {
-    let duration = Math.random() * 3;
+    let duration = this.state.complete ? 0 : Math.random() * 3;
+    const classes = classNames('die', { metGoal: this.props.metGoal && this.state.complete })
     return (
       <Transition
         className="dieWrapper"
-        onChildAppeared={this.hideOtherSides.bind(this)}
-        childrenAppearStyle={ { transform: `rotateX(${this.props.rotateX}) rotateY(${this.props.rotateY})` } }>
-        <div className="die" style={ { transition: `transform ${duration}s` } }>
+        onPhaseEnd={this.showRed.bind(this)}
+        childrenStyles={{ appear: { transform: `rotateX(${this.props.rotateX}) rotateY(${this.props.rotateY})` } }}>
+        <div className={classes} style={ { transition: `transform ${duration}s` } }>
           <figure className="front" ref={(f) => this._1 = f}>
             <svg viewBox="0 0 170 170">
               <circle cx="85" cy="85" r="24"/>
