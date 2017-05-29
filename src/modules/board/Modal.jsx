@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Route } from 'react-router-dom'
 import RepairModal from '../repair/RepairModal'
-import ResearchContainer from '../research/ResearchContainer'
+import { ResearchContainer } from '../research'
 import ResearchResultsContainer from '../researchResults/ResearchResultsContainer'
 import RocketAttackContainer from '../rocketAttack/RocketAttackContainer'
 import RocketResultsModal from '../rocketResults/RocketResultsModal'
@@ -24,7 +24,7 @@ const Modal = ({ ctrlPressed, phase }) => {
   return (
     <div id='modal' className={classes}>
       <Route path="/repair" component={RepairModal}/>
-      <Route exact path="/research" component={ResearchContainer}/>
+      <Route path="/research" component={ResearchContainer}/>
       <Route path="/research/results" component={ResearchResultsContainer}/>
       <Route exact path="/rockets" component={RocketAttackContainer}/>
       <Route path="/rockets/results" component={RocketResultsModal}/>
@@ -40,14 +40,6 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/carrier-loading" component={CarrierLoadingModal}/>
       <Route path="/confirm" component={EndCheckModal}/>
       <Route path="/order" component={DefenseOrderModal}/>
-      <svg width="100" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="dieGradient" fx="30%" fy="30%">
-            <stop offset="5%" stopColor="#333"></stop>
-            <stop offset="95%" stopColor="#000"></stop>
-          </radialGradient>
-        </defs>
-      </svg>
     </div>
   )
 }

@@ -15,17 +15,8 @@ it's not just that what is _displayed_ is phase-dependent, but what _events_ can
 the event to be dispatched from, say, a click on a territory, is phase-dependent. also, whether it is possible to use the back button ought to be phase-dependent; no going back and re-running certain actions.
 I ought to be able to generate that much: the sequence of events to get through a turn.
 
-powers and ipcs are more complicated than I thought. I need to remind myself of the flow of the game. 1st I select purchases, then I get income, then I plan combat
 
 now I get the first forward/back problem. when going from income to combat, currentPower has to get an amount, and when going back, that amount must be subtracted.
-
-the tooltip can be populated by route, but it is always there. just hidden for some routes.
-
-I don't want a new route for when a popup for planning combat appears. just set a new phase.
-when I click on a territory I want to plan an attack for,
-I want to see a modal which lists the units defending that territory
-as well as all the units available to attack that territory.
-that means I must keep track of all the territories where attacks are being planned, as well as the territory whose attack I am planning.
 
 to attack a territory,
 account for normal moves, amphib, blitz, & possible carrier landing

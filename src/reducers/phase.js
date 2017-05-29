@@ -1,4 +1,4 @@
-const phase = (state = { current: 'start' }, action) => {
+const phase = (state = { current: '/start' }, action) => {
   switch (action.type) {
   case '@@router/LOCATION_CHANGE': {
     const { pathname } = action.payload.location;
