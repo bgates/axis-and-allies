@@ -1,4 +1,5 @@
 import ResearchContainer from './ResearchContainer';
-import research from './reducer';
+import { currentPowerHasRockets } from './selectors';
+import { research } from './reducer';
 
-export { research, ResearchContainer }
+export { research, currentPowerHasRockets, ResearchContainer }

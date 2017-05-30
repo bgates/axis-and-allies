@@ -6,11 +6,16 @@ import Territories from './Territories';
 const paths = ['start', 'repair', 'research', 'research/results', 'rockets', 'rockets/results', 'purchase', 'income', 'lend-lease', 'plan-combat', 'resolve-combat']
 
 const BoardWithRedirect = (props) => {
+  const currentPath = props.router.location.pathname.replace('/', '') || 'start'
+  const minPath = props.phase.minimum
   return (
+    <div>
+    <Route path='/start' render={routeProps => <Redirect to='/' />}/>
     <Route path='/' render={routeProps => (
-      paths.indexOf(props.phase.minimum) < paths.indexOf(props.phase.current) ? <Board {...props} {...routeProps} /> : <Redirect to={props.phase.minimum} />
+      paths.indexOf(minPath) <= paths.indexOf(currentPath) ? console.log('render') || <Board {...props} {...routeProps} /> : console.log(minPath, currentPath) || <Redirect to={minPath} />
 
     )} />
+    </div>
   )
 }
 

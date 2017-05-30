@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import Board from './Board'
+import { damagedShipsInHarbor } from './selectors'
 import { 
   overlayPhase,
   advanceButtonPhase,
@@ -13,23 +14,13 @@ const mapStateToProps = (state) => {
   return {
     board: mergeBoardAndTerritories(state),
     phase: state.phase,
+    router: state.router,
     hasOverlay: overlayPhase(state),
     advanceBtn: advanceButtonPhase(state),
     currentPower: getCurrentPower(state),
   }
 }
 
-const damagedShips = (territories, power) => {
-  return territories.length > 0
-}
-
-const getFriendlyHarbor = (board, power) => {
-  return board.filter(territory => territory.seaPort && territory.currentPower === power.name)
-}
-
-const damagedShipsInHarbor = (board, power) => {
-   return damagedShips(getFriendlyHarbor(board, power))
-}
 
 const territoryThunk = (territory) => {
   return (dispatch, getState) => {
@@ -40,7 +31,7 @@ const territoryThunk = (territory) => {
     let { board, router, phase } = state 
     let currentPower = getCurrentPower(state)
     if (phase.current === 'start') {
-      let nextUrl = damagedShipsInHarbor(board, currentPower) ? 'repair' : 'research'
+      let nextUrl = damagedShipsInHarbor(board, currentPower).length ? 'repair' : 'research'
       dispatch(push(nextUrl))
 
     } else if (router.location.pathname === '/plan-combat') {

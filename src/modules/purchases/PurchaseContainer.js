@@ -9,7 +9,7 @@ const mapStateToProps = (state) => ({
   buildableUnits: buildableUnits(state),
   purchases: state.purchases,
   total: purchaseCost(state),
-  previous: state.phase.minimum || '/research'
+  previous: state.phase.minimum === 'start' ? '/research' : state.phase.minimum
 })
 
 const increment = (unit) => {

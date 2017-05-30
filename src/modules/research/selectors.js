@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { getCurrentPower } from '../globalSelectors';
-import researchOptions from '../../config/research'
+import researchOptions from '../../config/research';
 export { getCurrentPower }
 
 export const currentPowerHasRockets = createSelector(
