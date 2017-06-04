@@ -22,7 +22,7 @@ const attemptResearch = () => {
     let rolls = dice(research.attempts)
     dispatch({
       type: 'ROLLS',
-      purpose: 'research',
+      phase: '/research/results',
       rolls
     })
     dispatch({
@@ -36,10 +36,6 @@ const attemptResearch = () => {
         tech: research.selectedTech
       })
     }
-    dispatch({
-      type: 'SET_MINIMUM_PHASE',
-      phase: '/research/results'
-    })
     dispatch(push('research/results'))
   }
 }

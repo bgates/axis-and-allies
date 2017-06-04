@@ -5,7 +5,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     const current = pathname === '/' ? 'start' : pathname.replace('/', '');
     return { ...state, current }
   }
-  case 'SET_MINIMUM_PHASE': {
+  case 'ROLLS': {
     return { ...state, current: action.phase, minimum: action.phase }
   } 
   case 'PLAN_ATTACK': {

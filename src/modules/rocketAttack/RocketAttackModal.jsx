@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const RocketAttackModal = ({ targets }) => {
+const RocketAttackModal = ({ targets, previous }) => {
   //<b>You cannot attack with rockets.</b> There are no enemy industrial complexes %r adjacent spaces or less from any of your antiaircraft guns., - note that aa guns shouldn't really fire these
   console.log(targets)
   return (
@@ -13,7 +13,7 @@ const RocketAttackModal = ({ targets }) => {
         return <button>{target.name}, {target.currentPower}</button>
       }))}
       <nav>
-        <Link to="/purchase" className="btn">Back</Link>
+        <Link to={previous} className="btn">Back</Link>
         <Link to="/purchase" className="btn">Purchase</Link>
       </nav>
     </div>

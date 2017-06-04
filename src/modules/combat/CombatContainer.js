@@ -1,5 +1,6 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import { combatants } from '../planCombat'
 import { strengths, rollCount } from './selectors'
@@ -16,12 +17,10 @@ const rollForCombat = (combatantCount) => {
     let rolls = dice(combatantCount)
     dispatch({
       type: 'ROLLS',
+      phase: '/combat-rolls',
       rolls
     })
-    dispatch({
-      type: 'SET_MINIMUM_PHASE',
-      phase: '/resolve-combat'
-    })
+    dispatch(push('combat-rolls'))
   }
 }
 

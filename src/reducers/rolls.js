@@ -1,9 +1,7 @@
 const rolls = (state = {}, action) => {
   switch (action.type) {
     case 'ROLLS':
-      return { ...state, [action.purpose]: action.rolls }
-    case 'CLEAR_ROLLS':
-      return []
+      return { ...state, [action.phase]: action.rolls }
     default:
       return state
   }

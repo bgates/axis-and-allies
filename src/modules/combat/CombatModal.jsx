@@ -16,7 +16,7 @@ const CombatModal = ({ combatants, strengths, rollCount, rollForCombat }) => {
       </div>
       <div className="midSpace">
         {strengths.map(n => {
-          return <div>{n}{n > 1 ? <span>or less</span> : ''}</div>
+          return <div key={n}>{n}{n > 1 ? <span>or less</span> : ''}</div>
         })}                       
       </div>
       <div className="attackerSpace"> 

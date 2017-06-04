@@ -15,5 +15,5 @@ export const strengths = createSelector(
 
 export const rollCount = createSelector(
   combatants,
-  combatants => (combatants.attackers + combatants.defenders).reduce((total, unit) => total + unit.ids.length, 0)
+  combatants => (combatants.attackers.concat(combatants.defenders)).reduce((total, unit) => total + unit.ids.length, 0)
 )

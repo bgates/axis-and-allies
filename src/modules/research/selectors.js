@@ -5,7 +5,7 @@ export { getCurrentPower }
 
 export const currentPowerHasRockets = createSelector(
   getCurrentPower,
-  currentPower => currentPower.tech.includes('rockets')
+  currentPower => currentPower.tech.includes('Rockets')
 );
 
 export const research = (state) => Object.assign({}, researchOptions, state.research)

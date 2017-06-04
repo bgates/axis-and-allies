@@ -34,8 +34,8 @@ practice what I preach:
 -[] repair
 -[x] research
   -[]save to fb
-  -[]prevent back button from going too far
-  -[]if r&d spend, go back only to research results
+  -[x]prevent back button from going too far
+  -[x]if r&d spend, go back only to research results
 [] rockets
 [x] purchase
   -[] special units (naval air, marines)
@@ -45,7 +45,7 @@ practice what I preach:
    -[] blitz
  -[x] normal air
    -[] account for aa
- -[] strategic bombing/escort
+ -[x] strategic bombing/escort
  -[x] normal sea
    -[x] transport
    -[] amphib assault
@@ -85,4 +85,7 @@ could be accounted for by placing a _mission_ prop on units in unitsFrom; when a
 
 roll for combat: player rolls, opponent rolls
 also establishes that something irreversible has happened
-if a player rolls for research, those roles need to be available until the next irreversible event happens. the next irreversible event could be rockets or combat or &c. 
+if a player rolls for research, those rolls need to be available until the next irreversible event happens. the next irreversible event could be rockets or combat or &c. 
+
+what's the next thing that happens after roll for combat? display rolls.
+I forget how this works.
