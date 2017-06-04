@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { getCurrentPower } from '../globalSelectors';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
 import unitTypes from '../../config/unitTypes';
 export { getCurrentPower }
 

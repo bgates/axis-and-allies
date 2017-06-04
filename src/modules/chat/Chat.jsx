@@ -31,7 +31,7 @@ class Chat extends Component {
     }
   }
   render () {
-    const { firebase, messages } = this.props
+    const { messages } = this.props /* also firebase is in props */
     return (
       <section id="chat">
         <h2>Messages</h2>

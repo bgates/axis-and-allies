@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { getCurrentPower, mergeBoardAndTerritories } from '../globalSelectors';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
 import { territoriesInRange } from '../planCombat/movement';
 import { isEnemy, hasIndustrialComplex } from '../../lib/territory';
   

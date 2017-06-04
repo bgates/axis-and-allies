@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { getCurrentPower, mergeBoardAndTerritories, getFocusTerritory  } from '../globalSelectors';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { combatUnitsInRange } from './movement';
 import { sameSide } from '../../config/initialPowers';
 import { consolidateUnits, nonIndustry, duplicateUnit } from '../../lib/unit';

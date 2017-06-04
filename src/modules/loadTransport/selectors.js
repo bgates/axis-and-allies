@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect';
-import { getCurrentPower, mergeBoardAndTerritories, getFocusTerritory  } from '../globalSelectors';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { isLand, isSea, isFriendly } from '../../lib/territory';
 import unitTypes from '../../config/unitTypes';
-export { getCurrentPower, getFocusTerritory }
+export { getFocusTerritory }
 
 const _hasLoadable = (territory, currentPower) => {
   return isFriendly(territory, currentPower) && 

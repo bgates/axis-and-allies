@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect';
 import { groupBy } from 'ramda';
-import { getCurrentPower, mergeBoardAndTerritories  } from '../globalSelectors';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
 import { powerData } from '../../config/initialPowers'
 import unitTypes from '../../config/unitTypes'
 // capturing capital: 3; losing capital: -5
-export { getCurrentPower };
 
 const capitalCapture = (territoryNames, power) => {
   let opponent = powerData[power].side === 'axis' ? 'allies' : 'axis'

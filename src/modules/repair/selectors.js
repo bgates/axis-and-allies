@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
-import { getCurrentPower, mergeBoardAndTerritories } from '../globalSelectors';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
 
 const hasDamagedShips = (territory) => {
   return territory.units.some(u => u.name.includes('damaged'))

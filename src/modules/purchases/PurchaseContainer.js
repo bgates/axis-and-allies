@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PurchaseModal from './PurchaseModal'
 import { purchaseCost, buildableUnits, getCurrentPower } from './selectors'
+import { previousPhase } from '../../selectors/previousPhase';
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state).name,
@@ -9,7 +10,7 @@ const mapStateToProps = (state) => ({
   buildableUnits: buildableUnits(state),
   purchases: state.purchases,
   total: purchaseCost(state),
-  previous: state.phase.minimum === 'start' ? '/research' : state.phase.minimum
+  previous: previousPhase(state)
 })
 
 const increment = (unit) => {

@@ -1,11 +1,6 @@
 import { createSelector } from 'reselect';
 import territoryData from '../config/territories.json';
 
-export const getCurrentPower = createSelector(
-  state => state.powers,
-  powers => powers.find(power => power.current)
-);
-
 export const mergeBoardAndTerritories = createSelector(
   state => state.board,
   board => board.map((territoryState, index) => {
@@ -19,4 +14,5 @@ export const getFocusTerritory = createSelector(
   mergeBoardAndTerritories,
   (phase, territories) => territories[phase.territory.index]
 );
+
 

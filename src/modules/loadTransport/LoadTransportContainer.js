@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LoadTransport from './LoadTransport'
-import { getCurrentPower, getFocusTerritory, getLoadableUnits } from './selectors'
+import { getFocusTerritory, getLoadableUnits } from './selectors'
+import { getCurrentPower } from '../../selectors/getCurrentPower';
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),

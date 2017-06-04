@@ -62,6 +62,7 @@ const ResolveCombatTooltip = () => {
     </div>
   )
 }
+ 
 const LandPlanesTooltip = () => {
   return (
     <div>
@@ -86,6 +87,7 @@ const Tooltip = ({ territory, currentPower }) => {
       <Route path="/repair" component={RepairTooltip} />
       <Route path="/plan-combat" component={PlanCombatTooltip} />
       <Route path="/resolve-combat" component={ResolveCombatTooltip} />
+      <Route path="/land-planes" component={LandPlanesTooltip} />
     </div>
   )
 }

@@ -79,7 +79,6 @@ software issues
 []what do non-logged-in users see?
 []log
 
-back link: from purchase, if minimum is research results, go there; otherwise, go to research
 
 different types of combat (normal, amphib(?), strat bomb, shore bombard)
 could be accounted for by placing a _mission_ prop on units in unitsFrom; when a unit gets committed to a type of combat, it gets a mission assigned

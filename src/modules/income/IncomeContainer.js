@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import IncomeModal from './IncomeModal'
-import { getCurrentPower, nationalObjectives, currentPowerNPL, nextNPL } from './selectors'
+import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { nationalObjectives, currentPowerNPL, nextNPL } from './selectors'
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),

@@ -7,14 +7,19 @@ const paths = ['start', 'repair', 'research', 'research/results', 'rockets', 'ro
 
 const BoardWithRedirect = (props) => {
   const currentPath = props.router.location.pathname.replace('/', '') || 'start'
-  const minPath = props.phase.minimum
+  const minPath = props.phase.minimum.replace('/', '')
+  const FirstViewableComponent = (routeProps) => {
+    if (paths.indexOf(minPath) <= paths.indexOf(currentPath)) {
+      return <Board {...props} {...routeProps} /> 
+    } else {
+      return <Redirect to={minPath} />
+    } 
+  }
+
   return (
     <div>
-    <Route path='/start' render={routeProps => <Redirect to='/' />}/>
-    <Route path='/' render={routeProps => (
-      paths.indexOf(minPath) <= paths.indexOf(currentPath) ? console.log('render') || <Board {...props} {...routeProps} /> : console.log(minPath, currentPath) || <Redirect to={minPath} />
-
-    )} />
+      <Route path='/start' render={routeProps => <Redirect to='/' />}/>
+      <Route path='/' render={FirstViewableComponent} />
     </div>
   )
 }

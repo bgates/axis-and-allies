@@ -24,7 +24,7 @@ const Modal = ({ ctrlPressed, phase }) => {
   return (
     <div id='modal' className={classes}>
       <Route path="/repair" component={RepairModal}/>
-      <Route path="/research" component={ResearchContainer}/>
+      <Route exact path="/research" component={ResearchContainer}/>
       <Route path="/research/results" component={ResearchResultsContainer}/>
       <Route exact path="/rockets" component={RocketAttackContainer}/>
       <Route path="/rockets/results" component={RocketResultsModal}/>

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { getCurrentPower } from '../board/selectors'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
 import ResearchResultsModal from './ResearchResultsModal'
 
 const mapStateToProps = (state) => {
