@@ -11,6 +11,7 @@ import { IncomeContainer } from '../income'
 import LendLeaseModal from '../lendLease/LendLeaseModal'
 import { PlanContainer } from '../planCombat'
 import { CombatContainer } from '../combat'
+import CombatRollsContainer from '../combatRolls/combatRollsContainer.js'
 import PlaneLandingModal from '../planeLanding/PlaneLandingModal'
 import RussianWinterModal from '../russianWinter/RussianWinterModal'
 import MovementModal from '../movement/MovementModal'
@@ -33,6 +34,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/lend-lease" component={LendLeaseModal}/>
       <Route path="/plan-combat" component={PlanContainer}/>
       <Route path="/resolve-combat" component={CombatContainer}/>
+      <Route path="/combat-rolls" component={CombatRollsContainer}/>
       <Route path="/plane-landing" component={PlaneLandingModal}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
       <Route path="/movement" component={MovementModal}/>

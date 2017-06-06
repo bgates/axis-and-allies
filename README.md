@@ -88,4 +88,4 @@ also establishes that something irreversible has happened
 if a player rolls for research, those rolls need to be available until the next irreversible event happens. the next irreversible event could be rockets or combat or &c. 
 
 what's the next thing that happens after roll for combat? display rolls.
-I forget how this works.
+the display should have as many spots as the combat itself, on the same board, with hits by strength.

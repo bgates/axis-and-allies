@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 const pathRequiresOverlay = (pathname) => {
-  return ['/research', '/research/results', '/rockets', '/purchase', '/income'].includes(pathname)
+  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls'].includes(pathname)
 };
 
 const phaseRequiresOverlay = (phase) => {

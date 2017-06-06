@@ -1,4 +1,4 @@
-.combat h2 {
+.battleBoard h2 {
   margin: 0;
   background-color: #000;
   color: #fff;
@@ -24,14 +24,14 @@
 .battleBoard > div > div:first-of-type {
   border: 0;
 }
-.combat .defenderSpace {
+.defenderSpace {
   background: #dEB887;
   flex-grow: 1;
 }
-.combat .midSpace {
+.midSpace {
   background: #99915B;
 }
-.combat .midSpace div {
+.midSpace div {
   margin: 5px auto;
   flex: initial;
   background: #bbb;
@@ -45,7 +45,7 @@
   color: #000;
   font-size: 50%;
 }
-.combat .attackerSpace {
+.attackerSpace {
   background: #556B2F;
   flex-grow: 1;
 }
