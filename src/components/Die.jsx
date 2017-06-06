@@ -8,22 +8,13 @@ class Die extends Component {
     super()
     this.state = {}
   }
-  /*
-  hideOtherSides () {
-    if (!this.visible) {
-      for(var i = 1; i < 7; i++){
-        if (i !== this.props.number) {
-          this[`_${i}`].style.display = 'none'
-        }
-      }
-      this.visible = true
-    }
-  }*/
 
   showRed (phase) {
     if (phase === 'appear') {
       this.setState({ complete: true })
-      this.props.reveal()
+      if (this.props.reveal) {
+        this.props.reveal()
+      }
     }
   }
 

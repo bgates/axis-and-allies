@@ -85,7 +85,7 @@ could be accounted for by placing a _mission_ prop on units in unitsFrom; when a
 
 roll for combat: player rolls, opponent rolls
 also establishes that something irreversible has happened
-if a player rolls for research, those rolls need to be available until the next irreversible event happens. the next irreversible event could be rockets or combat or &c. 
 
 what's the next thing that happens after roll for combat? display rolls.
 the display should have as many spots as the combat itself, on the same board, with hits by strength.
+after seeing the rolls, calculate/choose casualties

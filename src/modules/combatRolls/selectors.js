@@ -6,7 +6,7 @@ const unitCount = (total, unit) => total + unit.ids.length;
 
 const arrangeRolls = (combatants, strengths, rolls) => {
   const { attackers, defenders } = combatants;
-  const rollsByStrength = { attackers: {}, defenders: {} }
+  const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
     let attackRolls = attackers.filter(unit => unit.attack === n).reduce(unitCount, 0)
     rollsByStrength.attackers[n] = rolls.splice(0, attackRolls)
@@ -14,7 +14,6 @@ const arrangeRolls = (combatants, strengths, rolls) => {
     rollsByStrength.defenders[n] = rolls.splice(0, defendRolls)
   })
   return rollsByStrength
-  // use strengths, unit.ids.length for defender.defend && attacker.attack to figure out how many rolls get allocated to each position
 }
 
 export const combatRolls = createSelector(

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Die from '../../components/Die'
-import roll from '../../lib/dieRollRotation'
+import Dice from '../../components/Dice'
 
 class ResearchResultsModal extends Component {
   constructor () {
@@ -10,18 +9,7 @@ class ResearchResultsModal extends Component {
       reveal: false
     }
     this.rolledCount = 0
-    this.visualizeDice = this.visualizeDice.bind(this)
     this.reveal = this.reveal.bind(this)
-  }
-
-  visualizeDice (rolls) {
-    return rolls.map((die) => roll(die))
-      .map((rotation, i) => <Die key={i}
-                                 metGoal={rolls[i] === 6}
-                                 reveal={this.reveal.bind(this)}
-                                 number={rolls[i]}
-                                 rotateX={rotation[0]}
-                                 rotateY={rotation[1]} />)
   }
 
   reveal () {
@@ -53,7 +41,10 @@ class ResearchResultsModal extends Component {
     return (
       <div>
         <h1>Research Results</h1>
-        {this.visualizeDice(this.props.rolls)}
+        <Dice
+          rolls={this.props.rolls}
+          handleReveal={this.reveal}
+          goalFunction={value => value === 6} />
         {this.text()}
         <nav className="forwardOnly">{link}</nav>
       </div>
