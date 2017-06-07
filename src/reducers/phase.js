@@ -17,7 +17,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return newState;
   } 
   case 'RESOLVE_COMBAT': {
-    return { ...state, current: 'combat', territory: action.territory }
+    return { ...state, current: 'combat', territory: action.territory || state.territory }
   }
   case 'VIEW_TRANSPORT_LOAD_OPTIONS': {
     return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }

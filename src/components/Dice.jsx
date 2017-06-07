@@ -1,6 +1,6 @@
 import React from 'react';
 import Die from './Die';
-import roll from '../lib/dieRollRotation'
+import roll from '../lib/dieRollRotation';
 
 const Dice = ({ rolls, goalFunction, handleReveal }) => {
   return (

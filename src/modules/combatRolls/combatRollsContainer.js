@@ -1,6 +1,8 @@
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 import { combatRolls } from './selectors';
-import { strengths } from '../combat/selectors'
+import { strengths } from '../combat/selectors';
 import CombatRollsModal from './CombatRollsModal';
 
 const mapStateToProps = (state) => {
@@ -10,6 +12,19 @@ const mapStateToProps = (state) => {
   }
 }
 
-const CombatRollsContainer = connect(mapStateToProps)(CombatRollsModal)
+const returnToCombat = () => {
+  return (dispatch) => {
+    dispatch(push('resolve-combat'))
+    dispatch({ type: 'RESOLVE_COMBAT' })
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ 
+    returnToCombat
+  }, dispatch)
+}
+
+const CombatRollsContainer = connect(mapStateToProps, mapDispatchToProps)(CombatRollsModal)
 
 export default CombatRollsContainer

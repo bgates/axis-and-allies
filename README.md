@@ -56,8 +56,8 @@ practice what I preach:
   -[] strategic bomb
   -[] sub strike
   -[] combat modifiers (banzai, etc)
-  -[] display die rolls, then combat board
-  -[] display combat board
+  -[x] display die rolls, then combat board
+  -[x] display combat board
   -[] automate defensive casualties
   -[] allow attacker to choose casualties
   -[] advance from one round of combat to the next
@@ -89,3 +89,9 @@ also establishes that something irreversible has happened
 what's the next thing that happens after roll for combat? display rolls.
 the display should have as many spots as the combat itself, on the same board, with hits by strength.
 after seeing the rolls, calculate/choose casualties
+the casualty board will look just like the battle board, except that 
+- the defender will have casualties depicted
+- the attacker will be able to choose casualties
+- that's about it
+ok, use combat. that means that going to that phase could display the board, _if_ there is a territory
+there's plan-combat, clicking territory moves to plan-attack, then resolve-combat, clicking territory moves to combat, clicking button advances to combat-rolls, 

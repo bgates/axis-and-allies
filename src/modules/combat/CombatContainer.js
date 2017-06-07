@@ -13,7 +13,7 @@ const mapStateToProps = (state) => ({
 })
 
 const rollForCombat = (combatantCount) => {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     let rolls = dice(combatantCount)
     dispatch({
       type: 'ROLLS',

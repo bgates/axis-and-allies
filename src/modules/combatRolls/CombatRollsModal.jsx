@@ -1,7 +1,7 @@
-import React from 'react'
-import Dice from '../../components/Dice'
+import React from 'react';
+import Dice from '../../components/Dice';
 
-const CombatRollsModal = ({ rolls, strengths }) => {
+const CombatRollsModal = ({ rolls, strengths, returnToCombat }) => {
 
   const { attackers, defenders } = rolls
   return (
@@ -35,8 +35,7 @@ const CombatRollsModal = ({ rolls, strengths }) => {
     </div>
     <h2>Attacker</h2>
     <nav className="forwardOnly">
-      <button 
-        onClick={()=>console.log('click')}>Roll for combat</button>
+      <button onClick={returnToCombat}>Remove Casualties</button>
     </nav>
   </div>
   )
