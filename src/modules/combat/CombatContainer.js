@@ -3,13 +3,16 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import { combatants } from '../planCombat'
-import { strengths, rollCount } from './selectors'
+import { rollCount } from './selectors'
+import { combatRolls, strengths, defenderCasualties } from '../combatRolls'
 import dice from '../../lib/numericalDieRolls'
 
 const mapStateToProps = (state) => ({
   combatants: combatants(state),
   strengths: strengths(state),
-  rollCount: rollCount(state)
+  rollCount: rollCount(state),
+  rolls: combatRolls(state),
+  casualties: defenderCasualties(state)
 })
 
 const rollForCombat = (combatantCount) => {

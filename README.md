@@ -93,5 +93,4 @@ the casualty board will look just like the battle board, except that
 - the defender will have casualties depicted
 - the attacker will be able to choose casualties
 - that's about it
-ok, use combat. that means that going to that phase could display the board, _if_ there is a territory
-there's plan-combat, clicking territory moves to plan-attack, then resolve-combat, clicking territory moves to combat, clicking button advances to combat-rolls, 
+combat modal should display casualties: line up units in order of defense, put ids into casualty list

@@ -2,7 +2,8 @@ import React from 'react'
 import { UnitImg } from '../../components/UnitFigure'
 import '../../assets/styles/combat.css'
 
-const CombatModal = ({ combatants, strengths, rollCount, rollForCombat }) => {
+const CombatModal = ({ combatants, strengths, rollCount, rolls, rollForCombat, casualties }) => {
+  console.log(casualties);
   const { attackers, defenders } = combatants;
   return (
     <div className="battleBoard">
@@ -11,6 +12,7 @@ const CombatModal = ({ combatants, strengths, rollCount, rollForCombat }) => {
       <div className="defenderSpace"> 
         {strengths.map(n => {
           return <Defenders key={n}
+                    casualties={casualties}
                     units={defenders.filter(u => u.defend === n)}/>
         })}
       </div>
@@ -36,7 +38,7 @@ const CombatModal = ({ combatants, strengths, rollCount, rollForCombat }) => {
 }
 export default CombatModal
 
-const Defenders = ({ units }) => {
+const Defenders = ({ units, casualties }) => {
   return (
     <div>
       {units.map(unit => {
@@ -46,6 +48,7 @@ const Defenders = ({ units }) => {
               key={id} 
               id={id} 
               power={unit.power} 
+              className={casualties.includes(id) ? 'casualty' : null}
               name={unit.name} />
           )
         })

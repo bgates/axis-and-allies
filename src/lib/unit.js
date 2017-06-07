@@ -7,6 +7,8 @@ export const unitMatch = (unit, unit2, ...props) => {
     props.every(prop => unit[prop] === unit2[prop])
 }
 
+export const unitCount = (total, unit) => total + unit.ids.length;
+
 export const nonIndustry = (unit) => unit.name !== 'industrial complex';
 
 export const duplicateUnit = (original) => {

@@ -1,10 +1,20 @@
 import { createSelector } from 'reselect';
 import { combatants } from '../planCombat';
-import { strengths } from '../combat';
+import { unitCount } from '../../lib/unit';
 
-const unitCount = (total, unit) => total + unit.ids.length;
+const _strengths = (combatants) => {
+  const { attackers, defenders } = combatants;
+  const dieMax = Math.max(...attackers.map(u => u.attack), 
+    ...defenders.map(u => u.defend));
+  return Array(dieMax).fill().map((n, i) => i + 1);
+}
 
-const arrangeRolls = (combatants, strengths, rolls) => {
+export const strengths = createSelector(
+  combatants,
+  combatants => _strengths(combatants)
+);
+
+const arrangeRolls = (combatants, strengths, rolls = []) => {
   const { attackers, defenders } = combatants;
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
@@ -21,4 +31,20 @@ export const combatRolls = createSelector(
   strengths,
   state => state.rolls['/combat-rolls'],
   (combatants, strengths, rolls) => arrangeRolls(combatants, strengths, rolls)
+)
+
+const _casualties = (combatants, rolls) => {
+  const hits = rolls.attackers.reduce((total, _rolls, i) => {
+    return total + _rolls.filter(n => n <= i).length
+  }, 0)
+  return combatants.defenders
+    .sort((a, b) => a.defend - b.defend).reduce((total, defender) => {
+    return total.concat(defender.ids)
+  }, []).slice(0, hits)
+}
+
+export const defenderCasualties = createSelector(
+  combatants,
+  combatRolls,
+  (combatants, rolls) => _casualties(combatants, rolls)
 )

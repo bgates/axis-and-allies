@@ -69,3 +69,6 @@
 .battleBoard img[alt*=bomber] {
   max-width: 70%;
 }
+img.casualty {
+  border: 2px solid red;
+}

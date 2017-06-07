@@ -1,8 +1,7 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { combatRolls } from './selectors';
-import { strengths } from '../combat/selectors';
+import { combatRolls, strengths } from './selectors';
 import CombatRollsModal from './CombatRollsModal';
 
 const mapStateToProps = (state) => {
