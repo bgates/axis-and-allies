@@ -5,6 +5,8 @@ import { ImgAndQty } from '../../components/UnitFigure';
 import { matchingUnit } from '../../lib/Parser';
 import { powerData } from '../../config/initialPowers';
 import '../../assets/styles/tooltip.css';
+import industryImg from '../../assets/images/industrial_complex.png';
+
 
 const Units = ({ units, unitsFrom }) => {
   const combatUnits = units.filter(u => u.name !== 'industrial complex' && u.ids.length);
@@ -72,8 +74,6 @@ const LandPlanesTooltip = () => {
     </div>
   )
 }
-
-import industryImg from '../../assets/images/industrial_complex.png'
 
 const Tooltip = ({ territory, currentPower }) => {
   const { units = [], unitsFrom = [] } = territory

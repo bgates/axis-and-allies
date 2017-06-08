@@ -33,18 +33,26 @@ export const combatRolls = createSelector(
   (combatants, strengths, rolls) => arrangeRolls(combatants, strengths, rolls)
 )
 
-const _casualties = (combatants, rolls) => {
-  const hits = rolls.attackers.reduce((total, _rolls, i) => {
+const hits = (rolls, side) => {
+  return rolls[side].reduce((total, _rolls, i) => {
     return total + _rolls.filter(n => n <= i).length
   }, 0)
+}
+
+const _casualties = (combatants, rolls) => {
   return combatants.defenders
     .sort((a, b) => a.defend - b.defend).reduce((total, defender) => {
     return total.concat(defender.ids)
-  }, []).slice(0, hits)
+  }, []).slice(0, hits(rolls, 'attackers'))
 }
 
 export const defenderCasualties = createSelector(
   combatants,
   combatRolls,
-  (combatants, rolls) => _casualties(combatants, rolls)
+  (combatants, rolls) => _casualties(combatants, rolls, 'defenders')
+)
+
+export const attackerCasualtyCount = createSelector(
+  combatRolls,
+  (rolls) => hits(rolls, 'defenders')
 )

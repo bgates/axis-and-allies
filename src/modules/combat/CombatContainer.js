@@ -4,7 +4,7 @@ import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import { combatants } from '../planCombat'
 import { rollCount } from './selectors'
-import { combatRolls, strengths, defenderCasualties } from '../combatRolls'
+import { combatRolls, strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import dice from '../../lib/numericalDieRolls'
 
 const mapStateToProps = (state) => ({
@@ -12,7 +12,8 @@ const mapStateToProps = (state) => ({
   strengths: strengths(state),
   rollCount: rollCount(state),
   rolls: combatRolls(state),
-  casualties: defenderCasualties(state)
+  defenderCasualties: defenderCasualties(state),
+  attackerCasualtyCount: attackerCasualtyCount(state)
 })
 
 const rollForCombat = (combatantCount) => {
@@ -27,9 +28,19 @@ const rollForCombat = (combatantCount) => {
   }
 }
 
+const toggleCasualtyStatus = (id) => {
+  return (dispatch) => {
+    return dispatch({
+      type: 'TOGGLE_CASUALTY',
+      id
+    })
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     rollForCombat, 
+    toggleCasualtyStatus
   }, dispatch)
 }
 

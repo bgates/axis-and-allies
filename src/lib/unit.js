@@ -1,4 +1,4 @@
-export const isNotSubmergedSub = (unit) => {
+export const isNotSubmerged = (unit) => {
   return !unit.submerged
 }
 

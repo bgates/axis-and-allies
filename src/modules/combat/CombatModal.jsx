@@ -2,8 +2,15 @@ import React from 'react'
 import { UnitImg } from '../../components/UnitFigure'
 import '../../assets/styles/combat.css'
 
-const CombatModal = ({ combatants, strengths, rollCount, rolls, rollForCombat, casualties }) => {
-  console.log(casualties);
+const CombatModal = ({ 
+  combatants, 
+  strengths, 
+  rollCount, 
+  rolls, 
+  rollForCombat, 
+  defenderCasualties, 
+  toggleCasualtyStatus 
+}) => {
   const { attackers, defenders } = combatants;
   return (
     <div className="battleBoard">
@@ -12,7 +19,7 @@ const CombatModal = ({ combatants, strengths, rollCount, rolls, rollForCombat, c
       <div className="defenderSpace"> 
         {strengths.map(n => {
           return <Defenders key={n}
-                    casualties={casualties}
+                    casualties={defenderCasualties}
                     units={defenders.filter(u => u.defend === n)}/>
         })}
       </div>
@@ -23,8 +30,13 @@ const CombatModal = ({ combatants, strengths, rollCount, rolls, rollForCombat, c
       </div>
       <div className="attackerSpace"> 
         {strengths.map(n => {
-          return <Attackers key={n}
-                    units={attackers.filter(u => u.attack === n)}/>
+          return (
+            <Attackers 
+              key={n}
+              units={attackers.filter(u => u.attack === n)}
+              handleClick={toggleCasualtyStatus}
+            />
+          )
         })}
       </div>
       <h2>Attacker</h2>
@@ -57,7 +69,7 @@ const Defenders = ({ units, casualties }) => {
   )
 }
 
-const Attackers = ({ units }) => {
+const Attackers = ({ units, handleClick }) => {
   return (
     <div>
       {units.map(unit => {
@@ -66,7 +78,7 @@ const Attackers = ({ units }) => {
             <UnitImg 
               key={id} 
               id={id} 
-              handleClick={() => {console.log(id)}}
+              handleClick={(id) => {handleClick(id)}}
               power={unit.power} 
               name={unit.name} />
           )

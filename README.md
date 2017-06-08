@@ -58,7 +58,7 @@ practice what I preach:
   -[] combat modifiers (banzai, etc)
   -[x] display die rolls, then combat board
   -[x] display combat board
-  -[] automate defensive casualties
+  -[x] automate defensive casualties
   -[] allow attacker to choose casualties
   -[] advance from one round of combat to the next
   -[] allow retreat
@@ -86,11 +86,8 @@ could be accounted for by placing a _mission_ prop on units in unitsFrom; when a
 roll for combat: player rolls, opponent rolls
 also establishes that something irreversible has happened
 
-what's the next thing that happens after roll for combat? display rolls.
-the display should have as many spots as the combat itself, on the same board, with hits by strength.
 after seeing the rolls, calculate/choose casualties
 the casualty board will look just like the battle board, except that 
 - the defender will have casualties depicted
 - the attacker will be able to choose casualties
 - that's about it
-combat modal should display casualties: line up units in order of defense, put ids into casualty list

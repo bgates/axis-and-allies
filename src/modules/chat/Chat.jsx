@@ -4,15 +4,6 @@ import { firebase, helpers } from 'redux-react-firebase'
 
 const { isLoaded, isEmpty, dataToJS } = helpers
 
-@firebase([
-  '/messages'
-])
-@connect(
-  ({ firebase }) => ({
-    messages: dataToJS(firebase, 'messages')
-  })
-)
-
 class Chat extends Component {
 
   handleAdd () {
@@ -42,4 +33,10 @@ class Chat extends Component {
     )
   }
 }
-export default Chat
+const fbWrappedChat = firebase(['/messages'])(Chat)
+export default connect(
+  ({ firebase }) => ({
+    messages: dataToJS(firebase, 'messages')
+  })
+)(fbWrappedChat)
+
