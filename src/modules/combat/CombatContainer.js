@@ -3,11 +3,12 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import { combatants } from '../planCombat'
-import { rollCount } from './selectors'
+import { rollCount, getFocusTerritory } from './selectors'
 import { combatRolls, strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import dice from '../../lib/numericalDieRolls'
 
 const mapStateToProps = (state) => ({
+  territory: getFocusTerritory(state),
   combatants: combatants(state),
   strengths: strengths(state),
   rollCount: rollCount(state),
@@ -30,7 +31,8 @@ const rollForCombat = (combatantCount) => {
 
 const toggleCasualtyStatus = (id) => {
   return (dispatch) => {
-    return dispatch({
+    console.log('id', id);
+    dispatch({
       type: 'TOGGLE_CASUALTY',
       id
     })

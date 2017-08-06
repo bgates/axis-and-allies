@@ -103,6 +103,9 @@ const board = (state = initialBoard, action) => {
         }
       });
     }
+    case 'TOGGLE_CASUALTY_STATUS': {
+
+    }
     default:
       return state
   }

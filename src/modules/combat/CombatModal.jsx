@@ -5,6 +5,7 @@ import '../../assets/styles/combat.css'
 const CombatModal = ({ 
   combatants, 
   strengths, 
+  territory,
   rollCount, 
   rolls, 
   rollForCombat, 
@@ -14,7 +15,7 @@ const CombatModal = ({
   const { attackers, defenders } = combatants;
   return (
     <div className="battleBoard">
-      <h1>Combat in Eastern Europe</h1>
+      <h1>Combat in {territory.name}</h1>
       <h2>Defender</h2>
       <div className="defenderSpace"> 
         {strengths.map(n => {
@@ -78,7 +79,7 @@ const Attackers = ({ units, handleClick }) => {
             <UnitImg 
               key={id} 
               id={id} 
-              handleClick={(id) => {handleClick(id)}}
+              handleClick={(event) => handleClick(id)}
               power={unit.power} 
               name={unit.name} />
           )
