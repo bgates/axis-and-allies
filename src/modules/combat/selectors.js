@@ -9,3 +9,7 @@ export const rollCount = createSelector(
   combatants => (combatants.attackers.concat(combatants.defenders)).reduce(unitCount, 0)
 )
 
+export const attackerCasualties = createSelector(
+  getFocusTerritory,
+  territory => territory.attackerCasualties || []
+)

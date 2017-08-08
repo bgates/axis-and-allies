@@ -10,6 +10,7 @@ const CombatModal = ({
   rolls, 
   rollForCombat, 
   defenderCasualties, 
+  attackerCasualties,
   toggleCasualtyStatus 
 }) => {
   const { attackers, defenders } = combatants;
@@ -35,6 +36,8 @@ const CombatModal = ({
             <Attackers 
               key={n}
               units={attackers.filter(u => u.attack === n)}
+              territoryIndex={territory.index}
+              casualties={attackerCasualties}
               handleClick={toggleCasualtyStatus}
             />
           )
@@ -70,7 +73,7 @@ const Defenders = ({ units, casualties }) => {
   )
 }
 
-const Attackers = ({ units, handleClick }) => {
+const Attackers = ({ units, handleClick, territoryIndex, casualties }) => {
   return (
     <div>
       {units.map(unit => {
@@ -79,7 +82,8 @@ const Attackers = ({ units, handleClick }) => {
             <UnitImg 
               key={id} 
               id={id} 
-              handleClick={(event) => handleClick(id)}
+              className={casualties.includes(id) ? 'casualty' : null}
+              handleClick={(event) => handleClick(id, territoryIndex)}
               power={unit.power} 
               name={unit.name} />
           )
