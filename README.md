@@ -91,3 +91,15 @@ the casualty board will look just like the battle board, except that
 - the defender will have casualties depicted
 - the attacker will be able to choose casualties
 - that's about it
+
+combat progression
+1st battleboard: choices are 'roll for combat' or 'back'/'choose other territory'
+* 'back'/'choose other' work the same, return user to picking territory
+* 'roll for combat' is irreversible 
+  * after 'roll for combat', next screen is choose casualties
+  "the attacking units got x hits and the defenders got x hits; select x units to remove and press ok"
+  the number you need to select is dynamic
+
+2nd battleboard: choices are 'roll for combat', 'back' (to casualty selection), or 'retreat options'.
+
+if eventually all defenders are destroyed, moving on from casualty selection flips territory ownership

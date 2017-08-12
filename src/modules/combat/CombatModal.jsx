@@ -7,11 +7,7 @@ const CombatModal = ({
   strengths, 
   territory,
   rollCount, 
-  rolls, 
-  rollForCombat, 
-  defenderCasualties, 
-  attackerCasualties,
-  toggleCasualtyStatus 
+  rollForCombat 
 }) => {
   const { attackers, defenders } = combatants;
   return (
@@ -20,8 +16,7 @@ const CombatModal = ({
       <h2>Defender</h2>
       <div className="defenderSpace"> 
         {strengths.map(n => {
-          return <Defenders key={n}
-                    casualties={defenderCasualties}
+          return <Forces key={n}
                     units={defenders.filter(u => u.defend === n)}/>
         })}
       </div>
@@ -33,12 +28,9 @@ const CombatModal = ({
       <div className="attackerSpace"> 
         {strengths.map(n => {
           return (
-            <Attackers 
+            <Forces
               key={n}
               units={attackers.filter(u => u.attack === n)}
-              territoryIndex={territory.index}
-              casualties={attackerCasualties}
-              handleClick={toggleCasualtyStatus}
             />
           )
         })}
@@ -47,48 +39,27 @@ const CombatModal = ({
       <nav>
         <button>Back</button>
         <button 
-          onClick={rollForCombat.bind(null, rollCount)}>Roll for combat</button>
+          onClick={rollForCombat.bind(null, rollCount, territory.index)}
+        >Roll for combat</button>
       </nav>
     </div>
   )
 }
 export default CombatModal
 
-const Defenders = ({ units, casualties }) => {
+const Forces = ({ units }) => {
   return (
     <div>
-      {units.map(unit => {
-        return unit.ids.map(id => {
-          return (
-            <UnitImg 
-              key={id} 
-              id={id} 
-              power={unit.power} 
-              className={casualties.includes(id) ? 'casualty' : null}
-              name={unit.name} />
-          )
-        })
-      })}
+      {units.map(unit => ( 
+        unit.ids.map(id => (
+          <UnitImg 
+            key={id} 
+            id={id} 
+            power={unit.power} 
+            name={unit.name} />
+        ))
+      ))}
     </div>
   )
 }
 
-const Attackers = ({ units, handleClick, territoryIndex, casualties }) => {
-  return (
-    <div>
-      {units.map(unit => {
-        return unit.ids.map(id => {
-          return (
-            <UnitImg 
-              key={id} 
-              id={id} 
-              className={casualties.includes(id) ? 'casualty' : null}
-              handleClick={(event) => handleClick(id, territoryIndex)}
-              power={unit.power} 
-              name={unit.name} />
-          )
-        })
-      })}
-    </div>
-  )
-}

@@ -49,7 +49,7 @@ const _casualties = (combatants, rolls) => {
 export const defenderCasualties = createSelector(
   combatants,
   combatRolls,
-  (combatants, rolls) => _casualties(combatants, rolls, 'defenders')
+  (combatants, rolls) => _casualties(combatants, rolls)
 )
 
 export const attackerCasualtyCount = createSelector(

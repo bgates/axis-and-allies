@@ -11,16 +11,15 @@ const mapStateToProps = (state) => {
   }
 }
 
-const returnToCombat = () => {
+const selectCasualties = () => {
   return (dispatch) => {
-    dispatch(push('resolve-combat'))
-    dispatch({ type: 'RESOLVE_COMBAT' })
+    dispatch(push('select-casualties'))
   }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
-    returnToCombat
+    selectCasualties
   }, dispatch)
 }
 

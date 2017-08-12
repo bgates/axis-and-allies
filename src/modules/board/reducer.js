@@ -6,6 +6,10 @@ import {
   uncommitUnits,
   loadTransport
 } from './moveUnitReducerFunctions';
+import {
+  removeCasualties,
+  toggleCasualties
+} from './casualtyReducerFunctions';
 
 const parsedBoard = Parser.hydrate(startingBoard)
 
@@ -23,20 +27,8 @@ const board = (state = initialBoard, action) => {
     case 'COMMIT_UNITS': return commitUnits(state, action);
     case 'UNCOMMIT_UNITS': return uncommitUnits(state, action);
     case 'LOAD_TRANSPORT': return loadTransport(state, action);
-    case 'TOGGLE_CASUALTY': {
-      const { id, territoryIndex } = action;
-      return state.map((territory, index) => {
-        if (index === territoryIndex) {
-          territory.attackerCasualties = territory.attackerCasualties || [];
-          if (territory.attackerCasualties.includes(id)) {
-            territory.attackerCasualties = territory.attackerCasualties.filter(otherId => otherId !== id)
-          } else {
-            territory.attackerCasualties = [...territory.attackerCasualties, id];
-          }
-        }
-        return territory;
-      });
-    }
+    case 'REMOVE_CASUALTIES': return removeCasualties(state, action);
+    case 'TOGGLE_CASUALTY': return toggleCasualties(state, action);
     default:
       return state
   }

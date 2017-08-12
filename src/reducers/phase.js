@@ -19,6 +19,12 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   case 'RESOLVE_COMBAT': {
     return { ...state, current: 'combat', territory: action.territory || state.territory }
   }
+  case 'SELECT_CASUALTIES': {
+    return { ...state, current: 'select-casualties' }
+  }
+  case 'REMOVE_CASUALTIES': {
+    return { ...state, current: 'remove-casualties' }
+  }
   case 'VIEW_TRANSPORT_LOAD_OPTIONS': {
     return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }
   }

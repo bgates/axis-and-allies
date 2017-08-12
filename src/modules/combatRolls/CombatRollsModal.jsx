@@ -1,7 +1,7 @@
 import React from 'react';
 import Dice from '../../components/Dice';
 
-const CombatRollsModal = ({ rolls, strengths, returnToCombat }) => {
+const CombatRollsModal = ({ rolls, strengths, selectCasualties }) => {
 
   const { attackers, defenders } = rolls
   return (
@@ -35,7 +35,7 @@ const CombatRollsModal = ({ rolls, strengths, returnToCombat }) => {
     </div>
     <h2>Attacker</h2>
     <nav className="forwardOnly">
-      <button onClick={returnToCombat}>Remove Casualties</button>
+      <button onClick={selectCasualties}>Select Casualties</button>
     </nav>
   </div>
   )
