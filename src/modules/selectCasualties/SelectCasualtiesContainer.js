@@ -28,7 +28,7 @@ const toggleCasualtyStatus = (id, territoryIndex) => {
 const removeCasualties = (dispatch) => {
   return (dispatch) => {
     dispatch({ type: 'RESOLVE_COMBAT' })
-    dispatch(push('/resolve-combat-ok'))
+    dispatch(push('/resolve-combat'))
   }
 }
 

@@ -11,44 +11,32 @@ const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
   combatants: combatants(state),
   strengths: strengths(state),
-  rollCount: rollCount(state),
   defenderCasualties: defenderCasualties(state),
   attackerCasualties: attackerCasualties(state),
   attackerCasualtyCount: attackerCasualtyCount(state)
 })
 
-const rollForCombat = (combatantCount, territoryIndex) => {
+const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
-    let state = getState()
+    const state = getState();
     dispatch({
       type: 'REMOVE_CASUALTIES',
       defenderCasualties: defenderCasualties(state),
       territoryIndex
     });
-    let rolls = dice(combatantCount);
+    const rolls = dice(rollCount(getState()));
     dispatch({
       type: 'ROLLS',
-      phase: '/combat-rolls',
+      phase: 'COMBAT_ROLLS',
       rolls
     });
     dispatch(push('combat-rolls'));
   }
 }
 
-const toggleCasualtyStatus = (id, territoryIndex) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'TOGGLE_CASUALTY',
-      id,
-      territoryIndex
-    })
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
-    rollForCombat, 
-    toggleCasualtyStatus
+    rollForCombat 
   }, dispatch)
 }
 

@@ -16,12 +16,13 @@ export const strengths = createSelector(
 
 const arrangeRolls = (combatants, strengths, rolls = []) => {
   const { attackers, defenders } = combatants;
+  let rollClone = rolls.slice(0);
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
     let attackRolls = attackers.filter(unit => unit.attack === n).reduce(unitCount, 0)
-    rollsByStrength.attackers[n] = rolls.splice(0, attackRolls)
+    rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
     let defendRolls = defenders.filter(unit => unit.defend === n).reduce(unitCount, 0)
-    rollsByStrength.defenders[n] = rolls.splice(0, defendRolls)
+    rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
   })
   return rollsByStrength
 }
@@ -29,7 +30,7 @@ const arrangeRolls = (combatants, strengths, rolls = []) => {
 export const combatRolls = createSelector(
   combatants,
   strengths,
-  state => state.rolls['/combat-rolls'],
+  state => state.rolls['COMBAT_ROLLS'],
   (combatants, strengths, rolls) => arrangeRolls(combatants, strengths, rolls)
 )
 

@@ -37,6 +37,7 @@ const SelectCasualtiesModal = ({
               units={attackers.filter(u => u.attack === n)}
               territoryIndex={territory.index}
               casualties={attackerCasualties}
+              casualtyCount={attackerCasualtyCount}
               handleClick={toggleCasualtyStatus}
             />
           )
@@ -72,7 +73,7 @@ const BattleOptions = ({ casualtyCount, casualties, removeCasualties }) => {
         <button>Back</button>
         <button 
           disabled={casualties.length < casualtyCount}
-        >Remove Casualties?</button>
+        >Remove Casualties</button>
       </nav>
     )
   }
@@ -97,7 +98,10 @@ const Defenders = ({ units, casualties }) => {
   )
 }
 
-const Attackers = ({ units, handleClick, territoryIndex, casualties }) => {
+const Attackers = ({ units, handleClick, territoryIndex, casualties, casualtyCount }) => {
+  const allowClick = (id) => (    
+    casualties.includes(id) || casualties.length < casualtyCount
+  )
   return (
     <div>
       {units.map(unit => {
@@ -107,7 +111,7 @@ const Attackers = ({ units, handleClick, territoryIndex, casualties }) => {
               key={id} 
               id={id} 
               className={casualties.includes(id) ? 'casualty' : null}
-              handleClick={(event) => handleClick(id, territoryIndex)}
+              handleClick={(event) => allowClick(id) && handleClick(id, territoryIndex)}
               power={unit.power} 
               name={unit.name} />
           )

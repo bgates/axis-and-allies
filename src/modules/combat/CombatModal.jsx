@@ -6,7 +6,6 @@ const CombatModal = ({
   combatants, 
   strengths, 
   territory,
-  rollCount, 
   rollForCombat 
 }) => {
   const { attackers, defenders } = combatants;
@@ -39,7 +38,7 @@ const CombatModal = ({
       <nav>
         <button>Back</button>
         <button 
-          onClick={rollForCombat.bind(null, rollCount, territory.index)}
+          onClick={rollForCombat.bind(null, territory.index)}
         >Roll for combat</button>
       </nav>
     </div>

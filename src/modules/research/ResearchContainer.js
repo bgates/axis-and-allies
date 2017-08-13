@@ -16,13 +16,13 @@ const mapStateToProps = (state) => {
 
 const attemptResearch = () => {
   return (dispatch, getState) => {
-    let state = getState()
-    let { research } = state 
-    let currentPower = getCurrentPower(state)
-    let rolls = dice(research.attempts)
+    const state = getState()
+    const { research } = state 
+    const currentPower = getCurrentPower(state)
+    const rolls = dice(research.attempts)
     dispatch({
       type: 'ROLLS',
-      phase: '/research/results',
+      phase: 'RESEARCH_RESULTS',
       rolls
     })
     dispatch({
