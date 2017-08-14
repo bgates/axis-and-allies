@@ -1,6 +1,6 @@
-import React from 'react'
-import { UnitImg } from '../../components/UnitFigure'
-import '../../assets/styles/combat.css'
+import React from 'react';
+import Forces from '../../components/Forces';
+import '../../assets/styles/combat.css';
 
 const CombatModal = ({ 
   combatants, 
@@ -19,7 +19,7 @@ const CombatModal = ({
         {strengths.map(n => {
           return <Forces 
                     key={n}
-                    casualties={defenderCasualties}
+                    filterFct={id => !defenderCasualties.includes(id)}
                     units={defenders.filter(u => u.defend === n)}/>
         })}
       </div>
@@ -33,7 +33,7 @@ const CombatModal = ({
           return (
             <Forces
               key={n}
-              casualties={attackerCasualties}
+              filterFct={id => !attackerCasualties.includes(id)}
               units={attackers.filter(u => u.attack === n)}
             />
           )
@@ -50,21 +50,4 @@ const CombatModal = ({
   )
 }
 export default CombatModal
-
-const Forces = ({ units, casualties }) => {
-  console.log(casualties)
-  return (
-    <div>
-      {units.map(unit => ( 
-        unit.ids.filter(id => !casualties.includes(id)).map(id => (
-          <UnitImg 
-            key={id} 
-            id={id} 
-            power={unit.power} 
-            name={unit.name} />
-        ))
-      ))}
-    </div>
-  )
-}
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import Forces from '../../components/Forces'
 import { UnitImg } from '../../components/UnitFigure'
 import '../../assets/styles/combat.css'
 
@@ -20,9 +21,13 @@ const SelectCasualtiesModal = ({
       <h2>Defender</h2>
       <div className="defenderSpace"> 
         {strengths.map(n => {
-          return <Defenders key={n}
-                    casualties={defenderCasualties}
-                    units={defenders.filter(u => u.defend === n)}/>
+          return (
+            <Forces
+              key={n}
+              units={defenders.filter(u => u.defend === n)}
+              classNameFct={(id) => defenderCasualties.includes(id) ? 'casualty' : null}
+            />
+          )
         })}
       </div>
       <div className="midSpace">
@@ -33,14 +38,16 @@ const SelectCasualtiesModal = ({
       <div className="attackerSpace"> 
         {strengths.map(n => {
           return (
-            <Attackers 
+            <Forces
               key={n}
               units={attackers.filter(u => u.attack === n)}
-              territoryIndex={territory.index}
-              casualties={attackerCasualties}
-              casualtyCount={attackerCasualtyCount}
-              handleClick={toggleCasualtyStatus}
-              attackDefeated={attackDefeated}
+              classNameFct={id => attackDefeated || attackerCasualties.includes(id) ? 'casualty' : null}
+              handleClick={id => e => (
+                !attackDefeated && 
+                (attackerCasualties.includes(id) || 
+                 attackerCasualties.length < attackerCasualtyCount) &&
+                toggleCasualtyStatus(id, territory.index)
+              )}
             />
           )
         })}
@@ -71,7 +78,7 @@ const BattleStatus = ({
   removeCasualties 
 }) => {
   if (attackDefeated) {
-    return <nav>Attackers lose!</nav>
+    return <nav>Attackers lose!<button>Continue</button></nav>
   } else if (defendersLose) {
     return <nav>Defenders lose!</nav>
   } else if (casualtyCount) {
@@ -100,53 +107,3 @@ const BattleStatus = ({
   }
 }
 
-const Defenders = ({ units, casualties }) => {
-  return (
-    <div>
-      {units.map(unit => {
-        return unit.ids.map(id => {
-          return (
-            <UnitImg 
-              key={id} 
-              id={id} 
-              power={unit.power} 
-              className={casualties.includes(id) ? 'casualty' : null}
-              name={unit.name} />
-          )
-        })
-      })}
-    </div>
-  )
-}
-
-const Attackers = ({ 
-  units, 
-  handleClick, 
-  territoryIndex, 
-  casualties, 
-  casualtyCount,
-  attackDefeated
-}) => {
-  const allowClick = (id) => (    
-    !attackDefeated && 
-    (casualties.includes(id) || casualties.length < casualtyCount)
-  )
-  return (
-    <div>
-      {units.map(unit => {
-        return unit.ids.map(id => {
-          const cn = attackDefeated || casualties.includes(id) ? 'casualty' : null;
-          return (
-            <UnitImg 
-              key={id} 
-              id={id} 
-              className={cn}
-              handleClick={(event) => allowClick(id) && handleClick(id, territoryIndex)}
-              power={unit.power} 
-              name={unit.name} />
-          )
-        })
-      })}
-    </div>
-  )
-}
