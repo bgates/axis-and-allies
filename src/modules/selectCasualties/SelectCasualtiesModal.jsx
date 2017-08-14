@@ -13,6 +13,7 @@ const SelectCasualtiesModal = ({
   removeCasualties
 }) => {
   const { attackers, defenders } = combatants;
+  const attackDefeated = attackers.reduce((total, unit) => total + unit.ids.length, 0) <= attackerCasualtyCount
   return (
     <div className="battleBoard">
       <h1>Combat in {territory.name}</h1>
@@ -39,12 +40,15 @@ const SelectCasualtiesModal = ({
               casualties={attackerCasualties}
               casualtyCount={attackerCasualtyCount}
               handleClick={toggleCasualtyStatus}
+              attackDefeated={attackDefeated}
             />
           )
         })}
       </div>
       <h2>Attacker</h2>
-      <BattleOptions
+      <BattleStatus
+        attackDefeated={attackDefeated}
+        defendersLose={defenders.reduce((total, unit) => total + unit.ids.length, 0) <= defenderCasualties.length}
         casualtyCount={attackerCasualtyCount}
         casualties={attackerCasualties}
         removeCasualties={removeCasualties}
@@ -54,8 +58,23 @@ const SelectCasualtiesModal = ({
 }
 export default SelectCasualtiesModal
 
-const BattleOptions = ({ casualtyCount, casualties, removeCasualties }) => {
-  if (casualtyCount) {
+// one option if all attackers are casualties
+// another if all defenders are casualties
+// third if there are no casualties
+// fourth if battle can continue
+
+const BattleStatus = ({ 
+  attackDefeated,
+  defendersLose,
+  casualtyCount, 
+  casualties, 
+  removeCasualties 
+}) => {
+  if (attackDefeated) {
+    return <nav>Attackers lose!</nav>
+  } else if (defendersLose) {
+    return <nav>Defenders lose!</nav>
+  } else if (casualtyCount) {
     const count = casualtyCount - casualties.length;
     const casualtyWord = casualtyCount > 1 ? 'casualties' : 'casualty';
     return (
@@ -72,9 +91,10 @@ const BattleOptions = ({ casualtyCount, casualties, removeCasualties }) => {
     return (
       <nav>
         <button>Back</button>
+        Everybody missed!
         <button 
           disabled={casualties.length < casualtyCount}
-        >Remove Casualties</button>
+        >Continue</button>
       </nav>
     )
   }
@@ -99,19 +119,28 @@ const Defenders = ({ units, casualties }) => {
   )
 }
 
-const Attackers = ({ units, handleClick, territoryIndex, casualties, casualtyCount }) => {
+const Attackers = ({ 
+  units, 
+  handleClick, 
+  territoryIndex, 
+  casualties, 
+  casualtyCount,
+  attackDefeated
+}) => {
   const allowClick = (id) => (    
-    casualties.includes(id) || casualties.length < casualtyCount
+    !attackDefeated && 
+    (casualties.includes(id) || casualties.length < casualtyCount)
   )
   return (
     <div>
       {units.map(unit => {
         return unit.ids.map(id => {
+          const cn = attackDefeated || casualties.includes(id) ? 'casualty' : null;
           return (
             <UnitImg 
               key={id} 
               id={id} 
-              className={casualties.includes(id) ? 'casualty' : null}
+              className={cn}
               handleClick={(event) => allowClick(id) && handleClick(id, territoryIndex)}
               power={unit.power} 
               name={unit.name} />
