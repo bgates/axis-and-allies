@@ -6,6 +6,8 @@ const CombatModal = ({
   combatants, 
   strengths, 
   territory,
+  attackerCasualties,
+  defenderCasualties,
   rollForCombat 
 }) => {
   const { attackers, defenders } = combatants;
@@ -15,7 +17,9 @@ const CombatModal = ({
       <h2>Defender</h2>
       <div className="defenderSpace"> 
         {strengths.map(n => {
-          return <Forces key={n}
+          return <Forces 
+                    key={n}
+                    casualties={defenderCasualties}
                     units={defenders.filter(u => u.defend === n)}/>
         })}
       </div>
@@ -29,6 +33,7 @@ const CombatModal = ({
           return (
             <Forces
               key={n}
+              casualties={attackerCasualties}
               units={attackers.filter(u => u.attack === n)}
             />
           )
@@ -46,11 +51,12 @@ const CombatModal = ({
 }
 export default CombatModal
 
-const Forces = ({ units }) => {
+const Forces = ({ units, casualties }) => {
+  console.log(casualties)
   return (
     <div>
       {units.map(unit => ( 
-        unit.ids.map(id => (
+        unit.ids.filter(id => !casualties.includes(id)).map(id => (
           <UnitImg 
             key={id} 
             id={id} 

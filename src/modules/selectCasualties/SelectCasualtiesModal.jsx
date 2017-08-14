@@ -56,11 +56,12 @@ export default SelectCasualtiesModal
 
 const BattleOptions = ({ casualtyCount, casualties, removeCasualties }) => {
   if (casualtyCount) {
+    const count = casualtyCount - casualties.length;
     const casualtyWord = casualtyCount > 1 ? 'casualties' : 'casualty';
     return (
       <nav>
         <button>Back</button>
-        <span>mark {casualtyCount} {casualtyWord}</span>
+        <span>mark {count} {casualtyWord}</span>
         <button 
           onClick={removeCasualties}
           disabled={casualties.length < casualtyCount}
