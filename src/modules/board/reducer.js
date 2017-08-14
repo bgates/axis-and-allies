@@ -8,7 +8,9 @@ import {
 } from './moveUnitReducerFunctions';
 import {
   removeCasualties,
-  toggleCasualties
+  toggleCasualties,
+  defenderWins,
+  attackerWins
 } from './casualtyReducerFunctions';
 
 const parsedBoard = Parser.hydrate(startingBoard)
@@ -29,6 +31,8 @@ const board = (state = initialBoard, action) => {
     case 'LOAD_TRANSPORT': return loadTransport(state, action);
     case 'REMOVE_CASUALTIES': return removeCasualties(state, action);
     case 'TOGGLE_CASUALTY': return toggleCasualties(state, action);
+    case 'DEFENDER_WINS': return defenderWins(state, action);
+    case 'ATTACKER_WINS': return attackerWins(state, action);
     default:
       return state
   }

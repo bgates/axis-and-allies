@@ -59,8 +59,8 @@ practice what I preach:
   -[x] display die rolls, then combat board
   -[x] display combat board
   -[x] automate defensive casualties
-  -[] allow attacker to choose casualties
-  -[] advance from one round of combat to the next
+  -[x] allow attacker to choose casualties
+  -[x] advance from one round of combat to the next
   -[] allow retreat
   -[] finish combat in one territory
     -[] mark control of territory

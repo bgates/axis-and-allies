@@ -39,3 +39,31 @@ export const toggleCasualties = (state, action) => {
     return territory;
   });
 }
+
+export const defenderWins = (state, action) => {
+  const { territoryIndex, defenderCasualties } = action;
+  return state.map((territory, index) => {
+    if (index === territoryIndex) {
+      return { 
+        ...territory, 
+        unitsFrom: [],
+        units: survivingUnits(territory.units, defenderCasualties)
+      }
+    }
+    return territory;
+  });
+}
+
+export const attackerWins = (state, action) => {
+  const { territoryIndex } = action;
+  return state.map((territory, index) => {
+    if (index === territoryIndex) {
+      return { 
+        ...territory, 
+        unitsFrom: [],
+        units: survivingUnitsFrom(territory)
+      }
+    }
+    return territory;
+  });
+}

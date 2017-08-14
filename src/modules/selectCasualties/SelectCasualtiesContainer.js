@@ -32,6 +32,24 @@ const removeCasualties = (dispatch) => {
   }
 }
 
+const defenderWins = (territoryIndex) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'DEFENDER_WINS',
+      territoryIndex
+    })
+  }
+}
+
+const attackerWins = (territoryIndex) => {
+  return (dispatch) => {
+    dispatch({
+      type: 'ATTACKER_WINS',
+      territoryIndex
+    })
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     toggleCasualtyStatus,
