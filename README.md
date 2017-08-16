@@ -86,11 +86,6 @@ could be accounted for by placing a _mission_ prop on units in unitsFrom; when a
 roll for combat: player rolls, opponent rolls
 also establishes that something irreversible has happened
 
-after seeing the rolls, calculate/choose casualties
-the casualty board will look just like the battle board, except that 
-- the defender will have casualties depicted
-- the attacker will be able to choose casualties
-- that's about it
 
 combat progression
 1st battleboard: choices are 'roll for combat' or 'back'/'choose other territory'

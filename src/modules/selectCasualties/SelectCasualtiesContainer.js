@@ -53,7 +53,9 @@ const attackerWins = (territoryIndex) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     toggleCasualtyStatus,
-    removeCasualties
+    removeCasualties,
+    defenderWins,
+    attackerWins
   }, dispatch)
 }
 

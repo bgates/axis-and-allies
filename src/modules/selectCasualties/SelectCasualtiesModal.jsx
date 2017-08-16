@@ -1,6 +1,7 @@
 import React from 'react'
 import Forces from '../../components/Forces'
 import { UnitImg } from '../../components/UnitFigure'
+import BattleStatus from './BattleStatus'
 import '../../assets/styles/combat.css'
 
 const SelectCasualtiesModal = ({ 
@@ -11,7 +12,9 @@ const SelectCasualtiesModal = ({
   attackerCasualties,
   attackerCasualtyCount,
   toggleCasualtyStatus,
-  removeCasualties
+  removeCasualties,
+  attackerWins,
+  defenderWins
 }) => {
   const { attackers, defenders } = combatants;
   const attackDefeated = attackers.reduce((total, unit) => total + unit.ids.length, 0) <= attackerCasualtyCount
@@ -59,51 +62,10 @@ const SelectCasualtiesModal = ({
         casualtyCount={attackerCasualtyCount}
         casualties={attackerCasualties}
         removeCasualties={removeCasualties}
+        attackerWins={attackerWins}
       />
     </div>
   )
 }
 export default SelectCasualtiesModal
-
-// one option if all attackers are casualties
-// another if all defenders are casualties
-// third if there are no casualties
-// fourth if battle can continue
-
-const BattleStatus = ({ 
-  attackDefeated,
-  defendersLose,
-  casualtyCount, 
-  casualties, 
-  removeCasualties 
-}) => {
-  if (attackDefeated) {
-    return <nav>Attackers lose!<button>Continue</button></nav>
-  } else if (defendersLose) {
-    return <nav>Defenders lose!</nav>
-  } else if (casualtyCount) {
-    const count = casualtyCount - casualties.length;
-    const casualtyWord = casualtyCount > 1 ? 'casualties' : 'casualty';
-    return (
-      <nav>
-        <button>Back</button>
-        <span>mark {count} {casualtyWord}</span>
-        <button 
-          onClick={removeCasualties}
-          disabled={casualties.length < casualtyCount}
-        >Remove Casualties</button>
-      </nav>
-    )
-  } else {
-    return (
-      <nav>
-        <button>Back</button>
-        Everybody missed!
-        <button 
-          disabled={casualties.length < casualtyCount}
-        >Continue</button>
-      </nav>
-    )
-  }
-}
 
