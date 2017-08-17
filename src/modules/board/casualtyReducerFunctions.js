@@ -18,6 +18,7 @@ export const removeCasualties = (state, action) => {
       return { 
         ...territory, 
         unitsFrom: survivingUnitsFrom(territory),
+        attackerCasualties: [],
         units: survivingUnits(territory.units, defenderCasualties)
       }
     }

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { combatants } from '../planCombat'
-import { getFocusTerritory, attackerCasualties } from './selectors'
+import { getFocusTerritory, attackerCasualties, victor, attackDefeated } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 
 const mapStateToProps = (state) => ({
@@ -12,7 +12,9 @@ const mapStateToProps = (state) => ({
   strengths: strengths(state),
   defenderCasualties: defenderCasualties(state),
   attackerCasualties: attackerCasualties(state),
-  attackerCasualtyCount: attackerCasualtyCount(state)
+  attackerCasualtyCount: attackerCasualtyCount(state),
+  attackDefeated: attackDefeated(state),
+  victor: victor(state)
 })
 
 const toggleCasualtyStatus = (id, territoryIndex) => {
@@ -25,6 +27,17 @@ const toggleCasualtyStatus = (id, territoryIndex) => {
   }
 }
 
+const nextStep = (victor, territoryIndex) => {
+  console.log(victor, territoryIndex);
+  if (victor === 'attacker') {
+    return attackerWins(territoryIndex)
+  } else if (victor === 'defender') {
+    return defenderWins(territoryIndex)
+  } else {
+    return removeCasualties
+  }
+}
+
 const removeCasualties = (dispatch) => {
   return (dispatch) => {
     dispatch(push('/resolve-combat'))
@@ -33,10 +46,12 @@ const removeCasualties = (dispatch) => {
 }
 
 const defenderWins = (territoryIndex) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const state = getState()
     dispatch({
       type: 'DEFENDER_WINS',
-      territoryIndex
+      territoryIndex,
+      defenderCasualties: defenderCasualties(state)
     })
   }
 }
@@ -53,9 +68,7 @@ const attackerWins = (territoryIndex) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     toggleCasualtyStatus,
-    removeCasualties,
-    defenderWins,
-    attackerWins
+    nextStep
   }, dispatch)
 }
 

@@ -1,16 +1,16 @@
 import React from 'react'
 
 const BattleStatus = ({ 
-  attackDefeated,
-  defendersLose,
+  victor,
   casualtyCount, 
   casualties, 
-  removeCasualties 
+  nextStep,
+  territoryIndex
 }) => {
   let span, disabled, btn = 'Continue';
-  if (attackDefeated) {
+  if (victor === 'defender') {
     span = 'Attackers lose!'
-  } else if (defendersLose) {
+  } else if (victor) {
     span = 'Defenders lose!'
   } else if (casualtyCount) {
     const count = casualtyCount - casualties.length;
@@ -25,7 +25,7 @@ const BattleStatus = ({
     <nav>
       <span>{span}</span>
       <button 
-        onClick={removeCasualties} 
+        onClick={(e) => { nextStep(victor, territoryIndex) }} 
         disabled={disabled}>{btn}
       </button>
     </nav>

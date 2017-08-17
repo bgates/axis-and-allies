@@ -11,13 +11,12 @@ const SelectCasualtiesModal = ({
   defenderCasualties, 
   attackerCasualties,
   attackerCasualtyCount,
+  attackDefeated,
   toggleCasualtyStatus,
-  removeCasualties,
-  attackerWins,
-  defenderWins
+  victor,
+  nextStep
 }) => {
   const { attackers, defenders } = combatants;
-  const attackDefeated = attackers.reduce((total, unit) => total + unit.ids.length, 0) <= attackerCasualtyCount
   return (
     <div className="battleBoard">
       <h1>Combat in {territory.name}</h1>
@@ -57,12 +56,11 @@ const SelectCasualtiesModal = ({
       </div>
       <h2>Attacker</h2>
       <BattleStatus
-        attackDefeated={attackDefeated}
-        defendersLose={defenders.reduce((total, unit) => total + unit.ids.length, 0) <= defenderCasualties.length}
+        victor={victor}
         casualtyCount={attackerCasualtyCount}
         casualties={attackerCasualties}
-        removeCasualties={removeCasualties}
-        attackerWins={attackerWins}
+        nextStep={nextStep}
+        territoryIndex={territory.index}
       />
     </div>
   )
