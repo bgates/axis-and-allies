@@ -55,12 +55,14 @@ export const defenderWins = (state, action) => {
   });
 }
 
+//TODO: probably need victor in unitsFrom not units, so I can ensure they don't move during noncom
 export const attackerWins = (state, action) => {
-  const { territoryIndex } = action;
+  const { territoryIndex, currentPower } = action;
   return state.map((territory, index) => {
     if (index === territoryIndex) {
       return { 
         ...territory, 
+        currentPower: currentPower,
         unitsFrom: [],
         units: survivingUnitsFrom(territory)
       }

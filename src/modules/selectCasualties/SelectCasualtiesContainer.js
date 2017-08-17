@@ -5,6 +5,7 @@ import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { combatants } from '../planCombat'
 import { getFocusTerritory, attackerCasualties, victor, attackDefeated } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
+import { getCurrentPower } from '../../selectors/getCurrentPower';
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -57,10 +58,12 @@ const defenderWins = (territoryIndex) => {
 }
 
 const attackerWins = (territoryIndex) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const state = getState();
     dispatch({
       type: 'ATTACKER_WINS',
-      territoryIndex
+      territoryIndex,
+      currentPower: getCurrentPower(state).name
     })
   }
 }
