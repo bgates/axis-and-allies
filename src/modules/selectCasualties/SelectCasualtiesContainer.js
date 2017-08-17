@@ -29,31 +29,12 @@ const toggleCasualtyStatus = (id, territoryIndex) => {
 }
 
 const nextStep = (victor, territoryIndex) => {
-  console.log(victor, territoryIndex);
   if (victor === 'attacker') {
     return attackerWins(territoryIndex)
   } else if (victor === 'defender') {
     return defenderWins(territoryIndex)
   } else {
     return removeCasualties
-  }
-}
-
-const removeCasualties = (dispatch) => {
-  return (dispatch) => {
-    dispatch(push('/resolve-combat'))
-    dispatch({ type: 'RESOLVE_COMBAT' })
-  }
-}
-
-const defenderWins = (territoryIndex) => {
-  return (dispatch, getState) => {
-    const state = getState()
-    dispatch({
-      type: 'DEFENDER_WINS',
-      territoryIndex,
-      defenderCasualties: defenderCasualties(state)
-    })
   }
 }
 
@@ -65,6 +46,26 @@ const attackerWins = (territoryIndex) => {
       territoryIndex,
       currentPower: getCurrentPower(state).name
     })
+    dispatch(push('/resolve-combat'))
+  }
+}
+
+const defenderWins = (territoryIndex) => {
+  return (dispatch, getState) => {
+    const state = getState()
+    dispatch({
+      type: 'DEFENDER_WINS',
+      territoryIndex,
+      defenderCasualties: defenderCasualties(state)
+    })
+    dispatch(push('/resolve-combat'))
+  }
+}
+
+const removeCasualties = (dispatch) => {
+  return (dispatch) => {
+    dispatch(push('/resolve-combat'))
+    dispatch({ type: 'RESOLVE_COMBAT' })
   }
 }
 

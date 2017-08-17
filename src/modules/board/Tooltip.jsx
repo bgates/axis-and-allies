@@ -59,7 +59,7 @@ const PlanCombatTooltip = () => {
 const ResolveCombatTooltip = () => {
   return (
     <div>
-      <p><strong>Resolve all combat.</strong> Click on an enemy territory or sea zone you are attacking. Territories with combat needing to be resolved are blinking.</p>
+      <p><strong>Resolve all combat.</strong> Click on an enemy territory or sea zone you are attacking. Territories with combat needing to be resolved are on fire, "The World at War"-style.</p>
       <p>You can choose the order in which the battles are fought, but you will not be able to fight more than one battle at a time. Each battle will need to be fully resolved in order to begin the next one. Amphibious assault units will need to have their sea zone battle resolved before the land battle can begin.</p>
     </div>
   )

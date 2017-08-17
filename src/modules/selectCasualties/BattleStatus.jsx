@@ -7,19 +7,22 @@ const BattleStatus = ({
   nextStep,
   territoryIndex
 }) => {
-  let span, disabled, btn = 'Continue';
-  if (victor === 'defender') {
-    span = 'Attackers lose!'
-  } else if (victor) {
-    span = 'Defenders lose!'
-  } else if (casualtyCount) {
-    const count = casualtyCount - casualties.length;
-    const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties';
-    span = `mark ${count} ${casualtyWord}`
-    disabled = casualties.length < casualtyCount
-    btn = 'Remove Casualties'
-  } else {
+  let disabled, span = '', btn = 'Continue';
+  if (!casualtyCount) {
     span = 'Everybody missed!'
+  } else {
+    if (victor === 'defender') {
+      span = 'Attackers lose!'
+    } else if (victor) {
+      span = 'Defenders lose! '
+    } 
+    if (victor !== 'defender') {
+      const count = casualtyCount - casualties.length;
+      const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties';
+      span += `Mark ${count} ${casualtyWord}.`
+      disabled = casualties.length < casualtyCount
+      btn = 'Remove Casualties'
+    }
   }
   return (
     <nav>
