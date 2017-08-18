@@ -63,7 +63,7 @@ practice what I preach:
   -[x] allow attacker to choose casualties
   -[x] advance from one round of combat to the next
   -[] allow retreat
-  -[] finish combat in one territory
+  -[x] finish combat in one territory
     -[] mark control of territory
     -[] indicate units have moved
   -[] finish all combat

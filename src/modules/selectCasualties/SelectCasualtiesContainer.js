@@ -6,7 +6,7 @@ import { combatants } from '../planCombat'
 import { getFocusTerritory, attackerCasualties, victor, attackDefeated } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { resolveCombat, LOSE_ATTACK } from '../../actions';
+import { resolveCombat, LOSE_ATTACK, winAttack } from '../../actions';
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -42,7 +42,7 @@ const nextStep = (victor, territoryIndex) => {
 const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState();
-    dispatch(attackerWins(territoryIndex, getCurrentPower(state).name))
+    dispatch(winAttack(territoryIndex, getCurrentPower(state).name))
     dispatch(push('/resolve-combat'))
   }
 }
