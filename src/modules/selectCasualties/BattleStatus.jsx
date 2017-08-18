@@ -3,12 +3,13 @@ import React from 'react'
 const BattleStatus = ({ 
   victor,
   casualtyCount, 
+  defenderCasualtiesCount,
   casualties, 
   nextStep,
   territoryIndex
 }) => {
   let disabled, span = '', btn = 'Continue';
-  if (!casualtyCount) {
+  if (!casualtyCount && !defenderCasualtiesCount) {
     span = 'Everybody missed!'
   } else {
     if (victor === 'defender') {
@@ -19,7 +20,11 @@ const BattleStatus = ({
     if (victor !== 'defender') {
       const count = casualtyCount - casualties.length;
       const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties';
-      span += `Mark ${count} ${casualtyWord}.`
+      if (count) {
+        span += `Mark ${count} ${casualtyWord}.`
+      } else {
+        span += 'Click `Remove Casualties`.'
+      }
       disabled = casualties.length < casualtyCount
       btn = 'Remove Casualties'
     }

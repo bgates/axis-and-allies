@@ -59,6 +59,7 @@ const SelectCasualtiesModal = ({
         victor={victor}
         casualtyCount={attackerCasualtyCount}
         casualties={attackerCasualties}
+        defenderCasualtiesCount={defenderCasualties.length}
         nextStep={nextStep}
         territoryIndex={territory.index}
       />

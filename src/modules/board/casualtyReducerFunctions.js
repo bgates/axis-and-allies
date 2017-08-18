@@ -22,11 +22,13 @@ export const removeCasualties = (state, action) => {
         units: survivingUnits(territory.units, defenderCasualties)
       }
     } else if (territory.unitsFrom.length && !territory.units.length) {
+      //TODO: what about sea spaces?
       return {
         ...territory,
         unitsFrom: [],
         units: territory.unitsFrom,
-        currentPower
+        currentPower,
+        newlyConquered: true
       }
     }
     return territory;
@@ -71,7 +73,8 @@ export const attackerWins = (state, action) => {
         ...territory, 
         currentPower: currentPower,
         unitsFrom: [],
-        units: survivingUnitsFrom(territory)
+        units: survivingUnitsFrom(territory),
+        newlyConquered: true
       }
     }
     return territory;

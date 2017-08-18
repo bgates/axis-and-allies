@@ -51,7 +51,7 @@ practice what I preach:
    -[] amphib assault
    -[] commit to shore bombardment
    -[] sub movement
- -[] enter undefended territory
+ -[x] enter undefended territory
 [] combat
   -[] dogfight
   -[] strategic bomb
@@ -64,7 +64,7 @@ practice what I preach:
   -[x] advance from one round of combat to the next
   -[] allow retreat
   -[x] finish combat in one territory
-    -[] mark control of territory
+    -[x] mark control of territory
     -[] indicate units have moved
   -[] finish all combat
 [] land planes
@@ -98,4 +98,3 @@ combat progression
 
 2nd battleboard: choices are 'roll for combat', 'back' (to casualty selection), or 'retreat options'.
 
-when beginning resolve-combat, check every land territory with unitsFrom, and if there's no opposition, flip ownership

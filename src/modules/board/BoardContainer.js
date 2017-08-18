@@ -9,7 +9,7 @@ import {
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
-import { planAttack, resolveCombat, winAttack } from '../../actions';
+import { planAttack, resolveCombat } from '../../actions';
 
 const mapStateToProps = (state) => {
   return {

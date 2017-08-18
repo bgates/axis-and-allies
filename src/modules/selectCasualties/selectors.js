@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { combatants } from '../planCombat';
 import { defenderCasualties, attackerCasualtyCount } from '../combatRolls'
-import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
+import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
 import { unitCount } from '../../lib/unit';
 export { getFocusTerritory }
 
@@ -40,3 +40,7 @@ export const victor = createSelector(
     }
   }
 )
+
+export const combatOver = state => state.board.filter(t => t.unitsFrom.length && t.units.length).length
+
+export const planesInAir = state => state.board.filter(t => t.unitsFrom.filter(u => u.air).length).length

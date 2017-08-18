@@ -3,7 +3,14 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { combatants } from '../planCombat'
-import { getFocusTerritory, attackerCasualties, victor, attackDefeated } from './selectors'
+import { 
+  getFocusTerritory, 
+  attackerCasualties, 
+  victor, 
+  attackDefeated,
+  combatOver,
+  planesInAir
+} from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { resolveCombat, LOSE_ATTACK, winAttack } from '../../actions';
@@ -43,7 +50,7 @@ const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState();
     dispatch(winAttack(territoryIndex, getCurrentPower(state).name))
-    dispatch(push('/resolve-combat'))
+    continueOrAdvancePhase(dispatch, state)
   }
 }
 
@@ -55,7 +62,7 @@ const defenderWins = (territoryIndex) => {
       territoryIndex,
       defenderCasualties: defenderCasualties(state)
     })
-    dispatch(push('/resolve-combat'))
+    continueOrAdvancePhase(dispatch, state)
   }
 }
 
@@ -63,6 +70,18 @@ const continueCombat = () => {
   return (dispatch) => {
     dispatch(push('/resolve-combat'))
     dispatch(resolveCombat())
+  }
+}
+
+const continueOrAdvancePhase = (dispatch, state) => {
+  if (combatOver(state)) {
+    if (planesInAir(state)) {
+      dispatch(push('/land-planes'))
+    } else {
+      dispatch(push('/noncombat-movement'))
+    }
+  } else {
+    dispatch(push('/resolve-combat'))
   }
 }
 
