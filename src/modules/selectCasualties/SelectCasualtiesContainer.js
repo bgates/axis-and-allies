@@ -35,7 +35,7 @@ const nextStep = (victor, territoryIndex) => {
   } else if (victor === 'defender') {
     return defenderWins(territoryIndex)
   } else {
-    return continueCombat
+    return continueCombat()
   }
 }
 
@@ -59,7 +59,7 @@ const defenderWins = (territoryIndex) => {
   }
 }
 
-const continueCombat = (dispatch) => {
+const continueCombat = () => {
   return (dispatch) => {
     dispatch(push('/resolve-combat'))
     dispatch(resolveCombat())
