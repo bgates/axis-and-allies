@@ -15,11 +15,12 @@ export const resolveCombat = (territory) => {
   return { type: RESOLVE_COMBAT, territory }
 }
 
-const removeCasualties = (defenderCasualties, territoryIndex) => {
+const removeCasualties = (defenderCasualties, territoryIndex, currentPower) => {
   return {
     type: REMOVE_CASUALTIES,
     defenderCasualties,
-    territoryIndex
+    territoryIndex,
+    currentPower
   }
 }
 
@@ -58,6 +59,7 @@ export {
   VIEW_TRANSPORT_LOAD_OPTIONS,
   LOAD_TRANSPORT,
   WIN_ATTACK,
+  LOSE_ATTACK,
   roll,
   removeCasualties,
   planAttack,

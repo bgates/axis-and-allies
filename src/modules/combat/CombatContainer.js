@@ -5,6 +5,7 @@ import CombatModal from './CombatModal'
 import { combatants } from '../planCombat'
 import { rollCount, getFocusTerritory, attackerCasualties } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { removeCasualties, roll } from '../../actions';
 import dice from '../../lib/numericalDieRolls'
 
@@ -20,7 +21,7 @@ const mapStateToProps = (state) => ({
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState();
-    dispatch(removeCasualties(defenderCasualties(state), territoryIndex))
+    dispatch(removeCasualties(defenderCasualties(state), territoryIndex, getCurrentPower(state).name))
     const rolls = dice(rollCount(getState()));
     dispatch(roll('COMBAT_ROLLS', rolls))
     dispatch(push('combat-rolls'));

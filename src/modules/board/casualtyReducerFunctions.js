@@ -12,7 +12,7 @@ const survivingUnits = (units, casualties) => {
 }
 
 export const removeCasualties = (state, action) => {
-  const { territoryIndex, defenderCasualties } = action;
+  const { territoryIndex, defenderCasualties, currentPower } = action;
   return state.map((territory, index) => {
     if (index === territoryIndex) {
       return { 
@@ -20,6 +20,13 @@ export const removeCasualties = (state, action) => {
         unitsFrom: survivingUnitsFrom(territory),
         attackerCasualties: [],
         units: survivingUnits(territory.units, defenderCasualties)
+      }
+    } else if (territory.unitsFrom.length && !territory.units.length) {
+      return {
+        ...territory,
+        unitsFrom: [],
+        units: territory.unitsFrom,
+        currentPower
       }
     }
     return territory;
