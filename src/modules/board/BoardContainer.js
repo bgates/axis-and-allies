@@ -9,7 +9,7 @@ import {
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
-import { planAttack, resolveCombat } from '../../actions';
+import { planAttack, resolveCombat, planMovement } from '../../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -22,6 +22,7 @@ const mapStateToProps = (state) => {
   }
 }
 
+const isUrl = (url) => router.location.pathname === url
 
 const territoryThunk = (territory) => {
   return (dispatch, getState) => {
@@ -33,14 +34,15 @@ const territoryThunk = (territory) => {
     if (phase.current === 'start') {
       let nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
       dispatch(push(nextUrl))
-
-    } else if (router.location.pathname === '/plan-combat') {
+    } else if (isUrl('/plan-combat')) {
       dispatch(planAttack(territory))
-    } else if (router.location.pathname === '/resolve-combat') {
+    } else if (isUrl('/resolve-combat')) {
       // need logic to prevent dispatch if no combat
       if (territory.unitsFrom.length && territory.units.length) {
         dispatch(resolveCombat(territory))
       }
+    } else if (isUrl('/noncombat-movement')) {
+      dispatch(planMovement(territory))
     } else {
       dispatch({ type: 'TERRITORY_CLICKED' })
     }

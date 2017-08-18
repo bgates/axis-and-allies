@@ -10,6 +10,7 @@ const LOAD_TRANSPORT = 'LOAD_TRANSPORT';
 const PLAN_ATTACK = 'PLAN_ATTACK';
 const WIN_ATTACK = 'WIN_ATTACK';
 const LOSE_ATTACK = 'LOSE_ATTACK';
+const PLAN_MOVEMENT = 'PLAN_MOVEMENT';
 
 export const resolveCombat = (territory) => {
   return { type: RESOLVE_COMBAT, territory }
@@ -47,6 +48,13 @@ const winAttack = (territoryIndex, currentPower) => {
   }
 }
 
+const planMovement = (territory) => {
+  return {
+    type: PLAN_MOVEMENT,
+    territoryIndex
+  }
+}
+
 export {
   PLAN_ATTACK,
   PLAN_COMBAT,
@@ -63,5 +71,6 @@ export {
   roll,
   removeCasualties,
   planAttack,
-  winAttack
+  winAttack,
+  planMovement
 }

@@ -66,7 +66,7 @@ practice what I preach:
   -[x] finish combat in one territory
     -[x] mark control of territory
     -[] indicate units have moved
-  -[] finish all combat
+  -[x] finish all combat
 [] land planes
   -[] carrier, land
 [] noncombat movement

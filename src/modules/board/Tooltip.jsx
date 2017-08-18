@@ -75,6 +75,17 @@ const LandPlanesTooltip = () => {
   )
 }
 
+const NonCombatMovementTooltip = () => {
+  return (
+    <div>
+      <p><strong>Make your non-combat moves.</strong> Click on any friendly territory or sea zone you wish to move units to.</p>
+      <p>When you are done making your non-combat moves, click the <strong>Done</strong> button in the compass rose.</p>
+      <p>You cannot move units used in combat this turn.</p>
+      <p>Territories <strong>to</strong> which you have made non-combat moves will blink. You may click on those territories to change your moves.</p>
+    </div>
+  )
+}
+
 const Tooltip = ({ territory, currentPower }) => {
   const { units = [], unitsFrom = [] } = territory
   const industry = units.find(unit => unit.name === 'industrial complex')
@@ -88,6 +99,7 @@ const Tooltip = ({ territory, currentPower }) => {
       <Route path="/plan-combat" component={PlanCombatTooltip} />
       <Route path="/resolve-combat" component={ResolveCombatTooltip} />
       <Route path="/land-planes" component={LandPlanesTooltip} />
+      <Route path="/noncombat-movement" component={NonCombatMovementTooltip} />
     </div>
   )
 }
