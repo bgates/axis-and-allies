@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Attacker from './Attacker'
+import { COMMIT_UNITS, UNCOMMIT_UNITS, VIEW_TRANSPORT_LOAD_OPTIONS } from '../../actions';
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps
@@ -8,7 +9,7 @@ const mapStateToProps = (state, ownProps) => ({
 
 const commitUnits = (movingUnit, destinationIndex, mission, ids) => {
   return {
-    type: 'COMMIT_UNITS',
+    type: COMMIT_UNITS,
     movingUnit,
     destinationIndex,
     mission,
@@ -18,7 +19,7 @@ const commitUnits = (movingUnit, destinationIndex, mission, ids) => {
 
 const unCommitUnits = (unit, destinationIndex, ids) => {
   return {
-    type: 'UNCOMMIT_UNITS',
+    type: UNCOMMIT_UNITS,
     unit,
     destinationIndex,
     ids
@@ -27,7 +28,7 @@ const unCommitUnits = (unit, destinationIndex, ids) => {
 
 const viewTransportLoadOptions = (transport, id) => {
   return {
-    type: 'VIEW_TRANSPORT_LOAD_OPTIONS',
+    type: VIEW_TRANSPORT_LOAD_OPTIONS,
     transport,
     id
   }

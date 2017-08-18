@@ -1,17 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { resolveCombat } from '../../actions';
 
 const mapStateToProps = (state) => ({
   phase: state.phase.current,
 })
 
-const advancePhase = () => {
-  return ({
-    type: 'RESOLVE_COMBAT'
-  })
-}
+const advancePhase = () => resolveCombat()
 
 const previousPhase = () => {
   return ({

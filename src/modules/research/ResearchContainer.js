@@ -5,6 +5,7 @@ import { getCurrentPower, research, currentPowerHasRockets } from './selectors'
 import researchOptions from '../../config/research'
 import dice from '../../lib/numericalDieRolls'
 import ResearchModal from './ResearchModal'
+import { roll } from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -20,11 +21,7 @@ const attemptResearch = () => {
     const { research } = state 
     const currentPower = getCurrentPower(state)
     const rolls = dice(research.attempts)
-    dispatch({
-      type: 'ROLLS',
-      phase: 'RESEARCH_RESULTS',
-      rolls
-    })
+    dispatch(roll('RESEARCH_RESULTS', rolls))
     dispatch({
       type: 'ATTEMPT_RESEARCH',
       cost: research.attempts * researchOptions.cost

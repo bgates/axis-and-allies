@@ -6,6 +6,7 @@ import { combatants } from '../planCombat'
 import { getFocusTerritory, attackerCasualties, victor, attackDefeated } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { resolveCombat, LOSE_ATTACK } from '../../actions';
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -34,18 +35,14 @@ const nextStep = (victor, territoryIndex) => {
   } else if (victor === 'defender') {
     return defenderWins(territoryIndex)
   } else {
-    return removeCasualties
+    return continueCombat
   }
 }
 
 const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState();
-    dispatch({
-      type: 'ATTACKER_WINS',
-      territoryIndex,
-      currentPower: getCurrentPower(state).name
-    })
+    dispatch(attackerWins(territoryIndex, getCurrentPower(state).name))
     dispatch(push('/resolve-combat'))
   }
 }
@@ -54,7 +51,7 @@ const defenderWins = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
     dispatch({
-      type: 'DEFENDER_WINS',
+      type: LOSE_ATTACK,
       territoryIndex,
       defenderCasualties: defenderCasualties(state)
     })
@@ -62,10 +59,10 @@ const defenderWins = (territoryIndex) => {
   }
 }
 
-const removeCasualties = (dispatch) => {
+const continueCombat = (dispatch) => {
   return (dispatch) => {
     dispatch(push('/resolve-combat'))
-    dispatch({ type: 'RESOLVE_COMBAT' })
+    dispatch(resolveCombat())
   }
 }
 

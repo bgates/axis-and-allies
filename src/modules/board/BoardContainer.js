@@ -9,6 +9,7 @@ import {
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
+import { planAttack, resolveCombat, winAttack } from '../../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -34,11 +35,15 @@ const territoryThunk = (territory) => {
       dispatch(push(nextUrl))
 
     } else if (router.location.pathname === '/plan-combat') {
-      dispatch({ type: 'PLAN_ATTACK', territory })
+      dispatch(planAttack(territory))
     } else if (router.location.pathname === '/resolve-combat') {
       // need logic to prevent dispatch if no combat
       if (territory.unitsFrom.length) {
-        dispatch({ type: 'RESOLVE_COMBAT', territory })
+        if (territory.units.length) {
+          dispatch(resolveCombat(territory))
+        } else {
+          dispatch(winAttack(territory.index, getCurrentPower(state).name))
+        }
       }
     } else {
       dispatch({ type: 'TERRITORY_CLICKED' })

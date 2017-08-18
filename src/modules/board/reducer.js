@@ -1,6 +1,15 @@
 import Parser from '../../lib/Parser.js'
 import startingBoard from '../../config/startingBoard'
 import territoryData from '../../config/territories.json'
+import { 
+  TOGGLE_CASUALTY,
+  REMOVE_CASUALTIES,
+  COMMIT_UNITS,
+  UNCOMMIT_UNITS,
+  LOAD_TRANSPORT,
+  WIN_ATTACK,
+  LOSE_ATTACK
+} from '../../actions';
 import {
   commitUnits,
   uncommitUnits,
@@ -26,13 +35,13 @@ const initialBoard = territoryData.map((territory, i) => {
 
 const board = (state = initialBoard, action) => {
   switch (action.type) {
-    case 'COMMIT_UNITS': return commitUnits(state, action);
-    case 'UNCOMMIT_UNITS': return uncommitUnits(state, action);
-    case 'LOAD_TRANSPORT': return loadTransport(state, action);
-    case 'REMOVE_CASUALTIES': return removeCasualties(state, action);
-    case 'TOGGLE_CASUALTY': return toggleCasualties(state, action);
-    case 'DEFENDER_WINS': return defenderWins(state, action);
-    case 'ATTACKER_WINS': return attackerWins(state, action);
+    case COMMIT_UNITS: return commitUnits(state, action);
+    case UNCOMMIT_UNITS: return uncommitUnits(state, action);
+    case LOAD_TRANSPORT: return loadTransport(state, action);
+    case REMOVE_CASUALTIES: return removeCasualties(state, action);
+    case TOGGLE_CASUALTY: return toggleCasualties(state, action);
+    case LOSE_ATTACK: return defenderWins(state, action);
+    case WIN_ATTACK: return attackerWins(state, action);
     default:
       return state
   }

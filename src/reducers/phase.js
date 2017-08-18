@@ -1,3 +1,13 @@
+import { 
+  PLAN_COMBAT,
+  PLAN_ATTACK,
+  RESOLVE_COMBAT,
+  REMOVE_CASUALTIES,
+  LOAD_TRANSPORT,
+  ROLLS,
+  VIEW_TRANSPORT_LOAD_OPTIONS
+} from '../actions';
+
 const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   switch (action.type) {
   case '@@router/LOCATION_CHANGE': {
@@ -5,30 +15,27 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     const current = pathname === '/' ? 'start' : pathname.replace('/', '');
     return { ...state, current }
   }
-  case 'ROLLS': {
+  case ROLLS: {
     return { ...state, current: action.phase, minimum: action.phase }
   } 
-  case 'PLAN_ATTACK': {
+  case PLAN_ATTACK: {
     return { ...state, current: 'plan-attack', territory: action.territory }
   } 
-  case 'PLAN_COMBAT': {
+  case PLAN_COMBAT: {
     let newState = Object.assign({}, state, { current: 'plan-combat' });
     delete newState['territory'];
     return newState;
   } 
-  case 'RESOLVE_COMBAT': {
+  case RESOLVE_COMBAT: {
     return { ...state, current: 'combat', territory: action.territory || state.territory }
   }
-  case 'SELECT_CASUALTIES': {
-    return { ...state, current: 'select-casualties' }
-  }
-  case 'REMOVE_CASUALTIES': {
+  case REMOVE_CASUALTIES: {
     return { ...state, current: 'remove-casualties' }
   }
-  case 'VIEW_TRANSPORT_LOAD_OPTIONS': {
+  case VIEW_TRANSPORT_LOAD_OPTIONS: {
     return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }
   }
-  case 'LOAD_TRANSPORT': {
+  case LOAD_TRANSPORT: {
     let newState = Object.assign({}, state, { current: 'plan-attack' });
     delete newState['transport'];
     return newState;

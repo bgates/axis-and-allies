@@ -51,6 +51,7 @@ practice what I preach:
    -[] amphib assault
    -[] commit to shore bombardment
    -[] sub movement
+ -[] enter undefended territory
 [] combat
   -[] dogfight
   -[] strategic bomb
@@ -97,4 +98,4 @@ combat progression
 
 2nd battleboard: choices are 'roll for combat', 'back' (to casualty selection), or 'retreat options'.
 
-if eventually all defenders are destroyed, moving on from casualty selection flips territory ownership
+when beginning resolve-combat, check every land territory with unitsFrom, and if there's no opposition, flip ownership
