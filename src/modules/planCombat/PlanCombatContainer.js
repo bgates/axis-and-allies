@@ -2,6 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PlanCombatModal from './PlanCombatModal'
 import { getCurrentPower, getFocusTerritory, unitsInRange, combatants } from './selectors'
+import { PLAN_COMBAT } from '../../actions'
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
@@ -12,7 +13,7 @@ const mapStateToProps = (state) => ({
 
 const planOtherAttack = () => {
   return {
-    type: 'PLAN_COMBAT'
+    type: PLAN_COMBAT
   }
 }
 

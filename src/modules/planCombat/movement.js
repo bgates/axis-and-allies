@@ -44,12 +44,16 @@ const unitsInRange = (territories, currentPowerName, type, returnFlight) => {
 }
 
 const airUnitsInRange = (board, currentPower, territory) => {
-  let territories = territoriesInRange(board, currentPower, territory, nonNeutral, 6);
-  let returnFlight = Object.keys(territories).reduce((min, range) => {
-    return territories[range].some(ter => {
-      return isLand(ter) && isFriendly(ter, currentPower)}) ? Math.min(min, range) : min;
-  }, 8);
-  return unitsInRange(territories, currentPower.name, 'air', returnFlight)
+  if (territory.units.length) {
+    let territories = territoriesInRange(board, currentPower, territory, nonNeutral, 6);
+    let returnFlight = Object.keys(territories).reduce((min, range) => {
+      return territories[range].some(ter => {
+        return isLand(ter) && isFriendly(ter, currentPower)}) ? Math.min(min, range) : min;
+    }, 8);
+    return unitsInRange(territories, currentPower.name, 'air', returnFlight)
+  } else {
+    return []
+  }
 }
 
 const landUnitsInRange = (board, currentPower, territory) => {
