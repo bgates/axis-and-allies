@@ -1,7 +1,9 @@
 import {
   territoryAfterUnitEnters,
   territoryAfterUnitMoves,
-  territoryAfterUnitWithdraws
+  territoryAfterUnitWithdraws,
+  territoryAfterTransportUnloads,
+  territoryAfterAmphibCommit
 } from './reducerUtilityFunctions';
 
 export const commitUnits = (state, action) => {
@@ -11,6 +13,27 @@ export const commitUnits = (state, action) => {
       return territoryAfterUnitMoves(territory, movingUnit, ids);
     } else if (index === destinationIndex) {
       return territoryAfterUnitEnters(territory, movingUnit, ids, mission);
+    } else {
+      return territory
+    }
+  });
+}
+// there are units present as cargo on a transport
+// I want those units committed to a land attack
+// however, they must be differentiated from others
+// for three reasons: so they can be destroyed if transport sinks,
+// so they can be returned to transport if it moves,
+// and so they can be returned to transport if plans change
+export const commitAmphibUnits = (state, action) => {
+  let { transport, destinationIndex, id } = action;
+  console.log('transport', transport);
+  console.log('id', id);
+  const units = transport.cargo[id];
+  return state.map((territory, index) => {
+    if (index === transport.originIndex) {
+      return territoryAfterTransportUnloads(territory, transport, id, destinationIndex);
+    } else if (index === destinationIndex) {
+      return territoryAfterAmphibCommit(territory, units, id, transport.originIndex);
     } else {
       return territory
     }
@@ -36,6 +59,9 @@ export const uncommitUnits = (state, action) => {
       return territory
     }
   });
+}
+export const uncommitAmphibUnits = (state, action) => {
+  return state
 }
 
 export const loadTransport = (state, action) => {

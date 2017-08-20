@@ -39,3 +39,24 @@ export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) =>
   }
   return { ...territory, unitsFrom: updatedUnitsFrom }
 }
+
+export const territoryAfterTransportUnloads = (territory, transport, id, destinationIndex) => {
+  let updatedUnitsFrom = territory.unitsFrom.map(unit => {
+    if (unitMatch(unit, transport, 'originIndex')) {
+      let destinations = unit.destinations || {}
+      let cargo = unit.cargo
+      return { ...unit, destinations: { ...destinations, [id]: destinationIndex, cargo: { ...cargo, [id]: [] } }}
+    } else {
+      return unit
+    }
+  })
+  return { ...territory, unitsFrom: updatedUnitsFrom }
+}
+
+export const territoryAfterAmphibCommit = (territory, units, transportId, originIndex) => {
+  let amphibUnits = units.map(unit => {
+    return { ...unit, transportedBy: transportId, transportedFrom: originIndex }
+  })
+  let updatedUnitsFrom = [ ...territory.unitsFrom, ...amphibUnits ]
+  return { ...territory, unitsFrom: updatedUnitsFrom }
+}

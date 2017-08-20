@@ -5,6 +5,8 @@ const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES';
 const ROLLS = 'ROLLS';
 const COMMIT_UNITS = 'COMMIT_UNITS';
 const UNCOMMIT_UNITS = 'UNCOMMIT_UNITS';
+const COMMIT_AMPHIB_UNITS = 'COMMIT_AMPHIB_UNITS';
+const UNCOMMIT_AMPHIB_UNITS = 'UNCOMMIT_AMPHIB_UNITS';
 const VIEW_TRANSPORT_LOAD_OPTIONS = 'VIEW_TRANSPORT_LOAD_OPTIONS';
 const LOAD_TRANSPORT = 'LOAD_TRANSPORT';
 const PLAN_ATTACK = 'PLAN_ATTACK';
@@ -51,7 +53,7 @@ const winAttack = (territoryIndex, currentPower) => {
 const planMovement = (territory) => {
   return {
     type: PLAN_MOVEMENT,
-    territoryIndex
+    territory
   }
 }
 
@@ -64,6 +66,8 @@ export {
   ROLLS,
   COMMIT_UNITS,
   UNCOMMIT_UNITS,
+  COMMIT_AMPHIB_UNITS,
+  UNCOMMIT_AMPHIB_UNITS,
   VIEW_TRANSPORT_LOAD_OPTIONS,
   LOAD_TRANSPORT,
   WIN_ATTACK,

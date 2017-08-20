@@ -6,6 +6,8 @@ import {
   REMOVE_CASUALTIES,
   COMMIT_UNITS,
   UNCOMMIT_UNITS,
+  COMMIT_AMPHIB_UNITS,
+  UNCOMMIT_AMPHIB_UNITS,
   LOAD_TRANSPORT,
   WIN_ATTACK,
   LOSE_ATTACK
@@ -13,6 +15,8 @@ import {
 import {
   commitUnits,
   uncommitUnits,
+  commitAmphibUnits,
+  uncommitAmphibUnits,
   loadTransport
 } from './moveUnitReducerFunctions';
 import {
@@ -37,6 +41,8 @@ const board = (state = initialBoard, action) => {
   switch (action.type) {
     case COMMIT_UNITS: return commitUnits(state, action);
     case UNCOMMIT_UNITS: return uncommitUnits(state, action);
+    case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);
+    case UNCOMMIT_AMPHIB_UNITS: return uncommitAmphibUnits(state, action);
     case LOAD_TRANSPORT: return loadTransport(state, action);
     case REMOVE_CASUALTIES: return removeCasualties(state, action);
     case TOGGLE_CASUALTY: return toggleCasualties(state, action);

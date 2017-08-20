@@ -22,37 +22,56 @@ const Transport = ({ unit, committed, ...props }) => {
   </tbody>
 }
 
-const AmphibiousAssault = ({ unit, id, destinationIndex }) => {
-  const units = unit.cargo[id];
+const AmphibiousAssault = ({ 
+  unit, 
+  id, 
+  destinationIndex,
+  commitAmphibUnits,
+  unCommitAmphibUnits 
+}) => {
+  const amphibiousUnits = unit.cargo[id];
   return (
     <tr>
       <td className="unit">
         <strong>{unit.originName}[amphib]</strong>
-        {units.map((unit, index) => (        
+        {amphibiousUnits.map((unit, index) => (        
           <TransportFigure unit={unit} key={index} />
         ))}
       </td>
       <td className="available">
         <input readOnly size={2} value={1} />
         <button 
-          onClick={e => { console.log(unit, id, units)}}
+          onClick={e => { commitAmphibUnits(unit, destinationIndex, id)}}
         >&gt;&gt;</button>
       </td>
       <td className="available">
         <input readOnly size={2} value={0} />
         <button 
-          onClick={e => console.log(unit, destinationIndex, [id])}
+          onClick={e => unCommitAmphibUnits(unit, destinationIndex, id)}
         >&lt;</button>
       </td>
     </tr>
   )
 }
-const TransportRow = ({ unit, destinationIndex, commitUnits, unCommitUnits, viewTransportLoadOptions, available, id, landAttack }) => {
+const TransportRow = ({ 
+  unit, 
+  destinationIndex, 
+  commitUnits, 
+  unCommitUnits, 
+  viewTransportLoadOptions, 
+  available, 
+  id, 
+  landAttack,
+  commitAmphibUnits,
+  unCommitAmphibUnits 
+}) => {
   if (landAttack) {
     return <AmphibiousAssault 
       unit={unit}
       id={id}
       destinationIndex={destinationIndex}
+      commitAmphibUnits={commitAmphibUnits}
+      unCommitAmphibUnits={unCommitAmphibUnits}
     />
   }
   return (

@@ -9,6 +9,8 @@ const Attacker = ({
   destinationIndex, 
   commitUnits, 
   unCommitUnits, 
+  commitAmphibUnits,
+  unCommitAmphibUnits,
   viewTransportLoadOptions, 
   landAttack, 
   hasIndustry }) => {
@@ -21,7 +23,10 @@ const Attacker = ({
         destinationIndex={destinationIndex}
         commitUnits={commitUnits}
         viewTransportLoadOptions={viewTransportLoadOptions}
-        unCommitUnits={unCommitUnits} />
+        unCommitUnits={unCommitUnits} 
+        commitAmphibUnits={commitAmphibUnits}
+        unCommitAmphibUnits={unCommitAmphibUnits}
+      />
     )
   }
   return (

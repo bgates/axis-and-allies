@@ -98,3 +98,4 @@ combat progression
 
 2nd battleboard: choices are 'roll for combat', 'back' (to casualty selection), or 'retreat options'.
 
+transport is hard. want to be able to put unit on transport, provisionally land unit from transport onto land (provisional bc it has to survive naval combat 1st), and be able to revert from amphib to transport and then back to origin
