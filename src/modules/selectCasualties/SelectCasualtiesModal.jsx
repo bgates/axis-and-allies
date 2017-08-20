@@ -1,6 +1,5 @@
 import React from 'react'
 import Forces from '../../components/Forces'
-import { UnitImg } from '../../components/UnitFigure'
 import BattleStatus from './BattleStatus'
 import '../../assets/styles/combat.css'
 

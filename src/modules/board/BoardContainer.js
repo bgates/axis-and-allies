@@ -22,7 +22,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-const isUrl = (url) => router.location.pathname === url
+const isUrl = (router, url) => router.location.pathname === url
 
 const territoryThunk = (territory) => {
   return (dispatch, getState) => {
@@ -34,14 +34,14 @@ const territoryThunk = (territory) => {
     if (phase.current === 'start') {
       let nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
       dispatch(push(nextUrl))
-    } else if (isUrl('/plan-combat')) {
+    } else if (isUrl(router, '/plan-combat')) {
       dispatch(planAttack(territory))
-    } else if (isUrl('/resolve-combat')) {
+    } else if (isUrl(router, '/resolve-combat')) {
       // need logic to prevent dispatch if no combat
       if (territory.unitsFrom.length && territory.units.length) {
         dispatch(resolveCombat(territory))
       }
-    } else if (isUrl('/noncombat-movement')) {
+    } else if (isUrl(router, '/noncombat-movement')) {
       dispatch(planMovement(territory))
     } else {
       dispatch({ type: 'TERRITORY_CLICKED' })

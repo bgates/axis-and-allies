@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { combatants } from '../planCombat';
 import { defenderCasualties, attackerCasualtyCount } from '../combatRolls'
-import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
+import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { unitCount } from '../../lib/unit';
 export { getFocusTerritory }
 
