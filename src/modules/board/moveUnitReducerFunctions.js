@@ -3,7 +3,8 @@ import {
   territoryAfterUnitMoves,
   territoryAfterUnitWithdraws,
   territoryAfterTransportCommits,
-  territoryAfterAmphibCommits
+  territoryAfterAmphibCommits,
+  territoryAfterAmphibUncommits
 } from './reducerUtilityFunctions';
 
 export const commitUnits = (state, action) => {
@@ -53,8 +54,21 @@ export const uncommitUnits = (state, action) => {
     }
   });
 }
+
 export const uncommitAmphibUnits = (state, action) => {
-  return state
+  // transport.cargoDestinations needs to lose prop based on transport id; t.cD[id] territory must lose its amphib prop
+  const { id, destinationIndex, transport } = action;
+  return state.map((territory, index) => {
+    if (index === destinationIndex) {
+      let amphib = Object.assign({}, territory.amphib);
+      delete amphib[id];
+      return { ...territory, amphib }
+    } else if (index === transport.originIndex) {
+      return territoryAfterAmphibUncommits(territory, transport, id);
+    } else {
+      return territory
+    }
+  })
 }
 
 export const loadTransport = (state, action) => {

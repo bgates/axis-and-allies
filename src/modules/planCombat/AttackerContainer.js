@@ -41,12 +41,12 @@ const unCommitUnits = (unit, destinationIndex, ids) => {
   }
 }
 
-const unCommitAmphibUnits = (transport, destinationIndex, ids) => {
+const unCommitAmphibUnits = (transport, destinationIndex, id) => {
   return {
     type: UNCOMMIT_AMPHIB_UNITS,
     transport,
     destinationIndex,
-    ids
+    id
   }
 }
 

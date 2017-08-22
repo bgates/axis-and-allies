@@ -84,10 +84,6 @@ software issues
 different types of combat (normal, amphib(?), strat bomb, shore bombard)
 could be accounted for by placing a _mission_ prop on units in unitsFrom; when a unit gets committed to a type of combat, it gets a mission assigned
 
-roll for combat: player rolls, opponent rolls
-also establishes that something irreversible has happened
-
-
 combat progression
 1st battleboard: choices are 'roll for combat' or 'back'/'choose other territory'
 * 'back'/'choose other' work the same, return user to picking territory
@@ -98,4 +94,3 @@ combat progression
 
 2nd battleboard: choices are 'roll for combat', 'back' (to casualty selection), or 'retreat options'.
 
-transport is hard. want to be able to put unit on transport, provisionally land unit from transport onto land (provisional bc it has to survive naval combat 1st), and be able to revert from amphib to transport and then back to origin

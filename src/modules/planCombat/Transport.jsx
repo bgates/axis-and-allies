@@ -30,6 +30,8 @@ const AmphibiousAssault = ({
   unCommitAmphibUnits 
 }) => {
   const amphibiousUnits = unit.cargo[id];
+  const amphibCommitted = (unit.cargoDestinations || {})[id];
+  const committedHere = amphibCommitted === destinationIndex;
   return (
     <tr>
       <td className="unit">
@@ -39,13 +41,13 @@ const AmphibiousAssault = ({
         ))}
       </td>
       <td className="available">
-        <input readOnly size={2} value={1} />
+        <input readOnly size={2} value={amphibCommitted ? 0 : 1} />
         <button 
           onClick={e => { commitAmphibUnits(unit, destinationIndex, id)}}
         >&gt;&gt;</button>
       </td>
       <td className="available">
-        <input readOnly size={2} value={0} />
+        <input readOnly size={2} value={committedHere ? 1 : 0} />
         <button 
           onClick={e => unCommitAmphibUnits(unit, destinationIndex, id)}
         >&lt;</button>

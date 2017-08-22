@@ -56,3 +56,16 @@ export const territoryAfterAmphibCommits = (territory, transportOrigin, id) => {
   const amphib = territory.amphib || {}
   return { ...territory, amphib: { ...amphib, [id]: transportOrigin } }
 }
+
+export const territoryAfterAmphibUncommits = (territory, transport, id) => {
+  let unitsFrom = territory.unitsFrom.map(unit => {
+    if (unit.ids.includes(id)) {
+      let cargoDestinations = Object.assign({}, unit.cargoDestinations);
+      delete cargoDestinations[id];
+      return { ...unit, cargoDestinations }
+    } else {
+      return unit
+    }
+  })
+  return { ...territory, unitsFrom }
+}
