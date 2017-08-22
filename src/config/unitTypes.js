@@ -71,6 +71,7 @@ const unitTypes = {
     name: 'submarine', 
     cost: 6, 
     movement: 2, 
+    ship: true,
     attack: 2, 
     defend: 1
   },
@@ -208,6 +209,7 @@ const unitTypes = {
     name: 'super submarine', 
     cost: 8, 
     movement: 2, 
+    ship: true,
     attack: 3, 
     defend: 1, tech: ['subs']
   },
