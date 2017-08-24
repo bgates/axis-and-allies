@@ -37,7 +37,7 @@ const unitsInRange = (territories, currentPowerName, type, returnFlight) => {
         return unit[type] && unit.power === currentPowerName && 
           effectiveRange >= range; 
       });
-      return [...units, ...territoryUnits.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index, distance: range }))]
+      return [...units, ...territoryUnits.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index, distance: parseInt(range, 10) }))]
     }, []);
     return [...units, ...unitsAtRange];
   }, []);
