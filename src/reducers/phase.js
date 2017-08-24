@@ -1,6 +1,7 @@
 import { 
   PLAN_COMBAT,
   PLAN_ATTACK,
+  PLAN_LAND_PLANES,
   RESOLVE_COMBAT,
   REMOVE_CASUALTIES,
   LOAD_TRANSPORT,
@@ -26,6 +27,9 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     delete newState['territory'];
     return newState;
   } 
+  case PLAN_LAND_PLANES: {
+    return { ...state, current: 'plan-land-planes', territory: action.territory }
+  }
   case RESOLVE_COMBAT: {
     return { ...state, current: 'combat', territory: action.territory || state.territory }
   }

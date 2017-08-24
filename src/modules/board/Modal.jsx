@@ -37,7 +37,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/resolve-combat" component={CombatContainer}/>
       <Route path="/combat-rolls" component={CombatRollsContainer}/>
       <Route path="/select-casualties" component={SelectCasualtiesContainer}/>
-      <Route path="/plane-landing" component={PlaneLandingModal}/>
+      <Route path="/land-planes" component={PlaneLandingModal}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
       <Route path="/movement" component={MovementModal}/>
       <Route path="/placement" component={PlacementModal}/>

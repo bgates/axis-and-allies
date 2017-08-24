@@ -103,7 +103,11 @@ path {
   transition: 0.5s fill;
 }
 
-path.active {
+path.active-combat {
   animation: blink 1s infinite;
   fill: url(#p-fire);
+}
+
+path.active {
+  animation: blink 1s infinite;
 }

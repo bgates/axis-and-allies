@@ -9,7 +9,12 @@ import {
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
-import { planAttack, resolveCombat, planMovement } from '../../actions';
+import { 
+  planAttack, 
+  resolveCombat, 
+  planLandPlanes,
+  planMovement 
+} from '../../actions';
 
 const mapStateToProps = (state) => {
   return {
@@ -40,6 +45,10 @@ const territoryThunk = (territory) => {
       // need logic to prevent dispatch if no combat
       if (territory.unitsFrom.length && territory.units.length) {
         dispatch(resolveCombat(territory))
+      }
+    } else if (isUrl(router, '/land-planes')) {
+      if (territory.newlyConquered && territory.units.filter(u => u.air).length) {
+        dispatch(planLandPlanes(territory))
       }
     } else if (isUrl(router, '/noncombat-movement')) {
       dispatch(planMovement(territory))

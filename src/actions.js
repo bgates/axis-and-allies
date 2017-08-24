@@ -1,4 +1,5 @@
 const PLAN_COMBAT = 'PLAN_COMBAT';
+const PLAN_LAND_PLANES = 'PLAN_LAND_PLANES';
 const RESOLVE_COMBAT = 'RESOLVE_COMBAT';
 const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY';
 const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES';
@@ -42,6 +43,13 @@ const planAttack = (territory) => {
   }
 }
 
+const planLandPlanes = (territory) => {
+  return {
+    type: PLAN_LAND_PLANES,
+    territory
+  }
+}
+
 const winAttack = (territoryIndex, currentPower) => {
   return { 
     type: WIN_ATTACK, 
@@ -60,6 +68,7 @@ const planMovement = (territory) => {
 export {
   PLAN_ATTACK,
   PLAN_COMBAT,
+  PLAN_LAND_PLANES,
   RESOLVE_COMBAT,
   TOGGLE_CASUALTY,
   REMOVE_CASUALTIES,
@@ -76,5 +85,6 @@ export {
   removeCasualties,
   planAttack,
   winAttack,
-  planMovement
+  planMovement,
+  planLandPlanes
 }
