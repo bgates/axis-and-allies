@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import classNames from 'classnames';
 
 const setFill = (sea, original_power, currentPower) => {
   if (sea && original_power !== 'Oceans') {
@@ -12,23 +13,24 @@ const setFill = (sea, original_power, currentPower) => {
   }
 }
 
-const klass = (sea, currentPower, unitsFrom) => {
-  if (sea) {
-    return currentPower === 'Oceans' ? 'oceans' : 'convoy'
-  } else if (currentPower) {
-    if (unitsFrom.length) {
-      return `${currentPower.toLowerCase()} active`
-    }
-    return currentPower.toLowerCase()
-  }
+const klass = ({sea, currentPower, units, unitsFrom, newlyConquered}) => {
+  currentPower = currentPower || ''
+  const isOcean = sea && currentPower === 'Oceans' 
+  const isControlled = !sea && currentPower.length
+  return classNames({
+    convoy: sea && currentPower !== 'Oceans',
+    [currentPower.toLowerCase()]: isOcean || isControlled,
+    active: newlyConquered && units.filter(u => u.air).length,
+    'active-combat': unitsFrom.length
+  })
 }
 
 const Territory = ({ territory, handleClick, setVisibility }) => {
-  const { dimensions, name, sea, original_power, currentPower, adjacentIndexes, unitsFrom } = territory;
+  const { dimensions, name, sea, original_power, currentPower, adjacentIndexes, unitsFrom, units, newlyConquered } = territory;
   return (
     <path d={dimensions}
       id={adjacentIndexes === null ? name.toLowerCase().replace(/\s/,'_') : null}
-      className={klass(sea, currentPower, unitsFrom)}
+      className={klass(territory)}
       stroke='#000'
       strokeWidth='2'
       onClick={handleClick}
