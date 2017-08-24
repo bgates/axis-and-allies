@@ -69,9 +69,11 @@ export const attackerWins = (state, action) => {
   const { territoryIndex, currentPower } = action;
   return state.map((territory, index) => {
     if (index === territoryIndex) {
+      const survivingUnits = survivingUnitsFrom(territory);
+      const groundUnits = survivingUnits.filter(unit => unit.land);
       return { 
         ...territory, 
-        currentPower: currentPower,
+        currentPower: groundUnits.length ? currentPower : territory.currentPower,
         unitsFrom: [],
         units: survivingUnitsFrom(territory),
         newlyConquered: true
