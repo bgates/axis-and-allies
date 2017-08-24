@@ -43,4 +43,4 @@ export const victor = createSelector(
 
 export const combatOver = state => state.board.filter(t => (t.unitsFrom || []).length && (t.units || []).length).length === 0
 
-export const planesInAir = state => state.board.filter(t => t.unitsFrom.filter(u => u.air).length).length
+export const planesInAir = state => state.board.filter(t => (t.units || []).filter(u => u.air).length).length
