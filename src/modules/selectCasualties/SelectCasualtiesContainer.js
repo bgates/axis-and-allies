@@ -48,20 +48,22 @@ const nextStep = (victor, territoryIndex) => {
 
 const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
-    const state = getState();
+    let state = getState();
     dispatch(winAttack(territoryIndex, getCurrentPower(state).name))
+    state = getState();
     continueOrAdvancePhase(dispatch, state)
   }
 }
 
 const defenderWins = (territoryIndex) => {
   return (dispatch, getState) => {
-    const state = getState()
+    let state = getState();
     dispatch({
       type: LOSE_ATTACK,
       territoryIndex,
       defenderCasualties: defenderCasualties(state)
     })
+    state = getState();
     continueOrAdvancePhase(dispatch, state)
   }
 }
