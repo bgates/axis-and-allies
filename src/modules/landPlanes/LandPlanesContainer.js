@@ -4,11 +4,12 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import LandPlanesModal from './LandPlanesModal'
-import { landingOptions } from './selectors'
+import { landingOptions, airUnits } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 
 const mapStateToProps = (state) => ({
   landingOptions: landingOptions(state),
+  airUnits: airUnits(state)
 })
 
 const landPlanes = (territoryIndex) => {

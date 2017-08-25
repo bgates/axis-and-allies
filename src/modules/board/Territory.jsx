@@ -26,7 +26,7 @@ const klass = ({sea, currentPower, units, unitsFrom, newlyConquered}) => {
 }
 
 const Territory = ({ territory, handleClick, setVisibility }) => {
-  const { dimensions, name, sea, original_power, currentPower, adjacentIndexes, unitsFrom, units, newlyConquered } = territory;
+  const { dimensions, name, sea, original_power, currentPower, adjacentIndexes } = territory;
   return (
     <path d={dimensions}
       id={adjacentIndexes === null ? name.toLowerCase().replace(/\s/,'_') : null}

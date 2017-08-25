@@ -4,24 +4,29 @@ import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mer
 import { territoriesInRange } from '../planCombat';
 import { nonNeutral, isLand } from '../../lib/territory';
 
+export const airUnits = createSelector(
+  getFocusTerritory,
+  territory => territory.units.filter(u => u.air).map(u => ({ ...u, options: `${u.name}-${u.originName}` }))
+)
+
 export const landingOptions = createSelector(
   mergeBoardAndTerritories,
   getCurrentPower,
   getFocusTerritory,
-  (board, currentPower, territory) => console.log('cmon man') || landingOptionsByUnit(board, currentPower, territory)
+  airUnits,
+  (board, currentPower, territory, airUnits) => landingOptionsByUnit(board, currentPower, territory, airUnits)
 )
 
 const availableForLanding = (currentPower) => (territory) => (
   isLand(territory) && !territory.newlyConquered && territory.currentPower === currentPower.name
 )
 
-const landingOptionsByUnit = (board, currentPower, territory) => {
-  const airUnits = territory.units.filter(u => u.air);
+const landingOptionsByUnit = (board, currentPower, territory, airUnits) => {
   let landingOptions = {};
   airUnits.forEach(unit => {
     const range = unit.movement - unit.distance;
     const territories = Object.values(territoriesInRange(board, currentPower, territory, nonNeutral, range)).reduce((all, elm) => [...all, ...elm], [])
-    landingOptions[`${unit.name}-${unit.originName}-${range}`] = territories.filter(availableForLanding(currentPower));
+    landingOptions[`${unit.name}-${unit.originName}`] = territories.filter(availableForLanding(currentPower));
   })
   return landingOptions;
 }
