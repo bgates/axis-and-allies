@@ -5,6 +5,7 @@ import {
   isFriendly, 
   passableByLandUnit, 
   passableBySeaUnit, 
+  nonNeutral
 } from '../../lib/territory';
 
 export const territoriesInRange = (board, currentPower, territory, accessible, n) => {
@@ -26,8 +27,6 @@ export const territoriesInRange = (board, currentPower, territory, accessible, n
   }
   return territories;
 }
-
-const nonNeutral = (territory) => !isNeutral(territory);
 
 const unitsInRange = (territories, currentPowerName, type, returnFlight) => {
   return Object.keys(territories).reduce((units, range) => {
