@@ -1,13 +1,14 @@
 import { 
   PLAN_COMBAT,
   PLAN_ATTACK,
-  PLAN_LAND_PLANES,
-  RESOLVE_COMBAT,
-  REMOVE_CASUALTIES,
-  LOAD_TRANSPORT,
-  ROLLS,
   VIEW_TRANSPORT_LOAD_OPTIONS,
-  SELECT_PLANE_LANDING_TERRITORY
+  LOAD_TRANSPORT,
+  RESOLVE_COMBAT,
+  ROLLS,
+  REMOVE_CASUALTIES,
+  PLAN_LAND_PLANES,
+  SELECT_PLANE_LANDING_TERRITORY,
+  CONFIRM_LAND_PLANES
 } from '../actions';
 
 const currentWithout = (state, current, deletedProp) => {
@@ -53,6 +54,9 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   }
   case SELECT_PLANE_LANDING_TERRITORY: {
     return currentWithout(state, 'land-planes', 'territory')
+  }
+  case CONFIRM_LAND_PLANES: {
+    return currentWithout(state, 'confirm-land-planes')
   }
   default:
     return state

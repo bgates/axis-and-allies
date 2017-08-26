@@ -13,7 +13,7 @@ const LandPlanesModal = ({
   territory, 
   selectedOptions,
   selectLandingOption,
-  selectLandingTerritory
+  landingThunk
 }) => {
   return (
     <div>
@@ -43,7 +43,7 @@ const LandPlanesModal = ({
       <nav>
         <button 
           disabled={disable(selectedOptions, airUnits)}
-          onClick={selectLandingTerritory}
+          onClick={landingThunk}
         >OK</button>
       </nav>
     </div>
