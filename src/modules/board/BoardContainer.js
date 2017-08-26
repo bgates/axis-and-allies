@@ -50,7 +50,7 @@ const territoryThunk = (territory) => {
       if (territory.newlyConquered && territory.units.filter(u => u.air).length) {
         dispatch(planLandPlanes(territory))
       }
-    } else if (isUrl(router, '/noncombat-movement')) {
+    } else if (isUrl(router, '/move-units')) {
       dispatch(planMovement(territory))
     } else {
       dispatch({ type: 'TERRITORY_CLICKED' })

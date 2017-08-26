@@ -98,7 +98,7 @@ const Tooltip = ({ territory, currentPower }) => {
       <Route path="/plan-combat" component={PlanCombatTooltip} />
       <Route path="/resolve-combat" component={ResolveCombatTooltip} />
       <Route path="/land-planes" component={LandPlanesTooltip} />
-      <Route path="/noncombat-movement" component={NonCombatMovementTooltip} />
+      <Route path="/move-units" component={NonCombatMovementTooltip} />
     </div>
   )
 }

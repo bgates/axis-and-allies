@@ -16,6 +16,6 @@ export const overlayPhase = createSelector(
 );
 
 export const advanceButtonPhase = (state) => {
-  return ['plan-combat', 'resolve-combat', 'confirm-land-planes'].includes(state.phase.current)
+  return ['plan-combat', 'resolve-combat', 'confirm-land-planes', 'move-units'].includes(state.phase.current)
 };
 

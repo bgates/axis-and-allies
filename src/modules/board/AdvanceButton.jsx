@@ -40,6 +40,11 @@ const AdvanceButtonComponent = ({ phase, advancePhase, previousPhase }) => {
         <Link to="income" className="btn">Back</Link>
       </div>
     )
+  } else if (phase === 'move-units') {
+      <div className="changePhase">
+        <Link to="place-units" className="btn">Done</Link>
+        <Link to="land-planes" className="btn">Back</Link>
+      </div>
   } else {
     return (
       <div className="changePhase">
