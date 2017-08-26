@@ -1,4 +1,5 @@
 import LandPlanesContainer from './LandPlanesContainer';
+import landPlanes from './reducer';
 
-export { LandPlanesContainer }
+export { landPlanes, LandPlanesContainer }
 
