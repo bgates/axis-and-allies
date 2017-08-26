@@ -6,8 +6,19 @@ import {
   REMOVE_CASUALTIES,
   LOAD_TRANSPORT,
   ROLLS,
-  VIEW_TRANSPORT_LOAD_OPTIONS
+  VIEW_TRANSPORT_LOAD_OPTIONS,
+  SELECT_PLANE_LANDING_TERRITORY
 } from '../actions';
+
+const currentWithout = (state, current, deletedProp) => {
+  let newState = Object.assign({}, state, { current });
+  delete newState[deletedProp];
+  return newState;
+}
+
+const currentWithTerritory = (state, current, territory) => (
+  { ...state, current, territory }
+)
 
 const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   switch (action.type) {
@@ -20,18 +31,16 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return { ...state, current: action.phase, minimum: action.phase }
   } 
   case PLAN_ATTACK: {
-    return { ...state, current: 'plan-attack', territory: action.territory }
+    return currentWithTerritory(state, 'plan-attack', action.territory)
   } 
   case PLAN_COMBAT: {
-    let newState = Object.assign({}, state, { current: 'plan-combat' });
-    delete newState['territory'];
-    return newState;
+    return currentWithout(state, 'plan-combat', 'territory')
   } 
   case PLAN_LAND_PLANES: {
-    return { ...state, current: 'plan-land-planes', territory: action.territory }
+    return currentWithTerritory(state, 'plan-land-planes', action.territory)
   }
   case RESOLVE_COMBAT: {
-    return { ...state, current: 'combat', territory: action.territory || state.territory }
+    return currentWithTerritory(state, 'combat', action.territory || state.territory)
   }
   case REMOVE_CASUALTIES: {
     return { ...state, current: 'remove-casualties' }
@@ -40,9 +49,10 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }
   }
   case LOAD_TRANSPORT: {
-    let newState = Object.assign({}, state, { current: 'plan-attack' });
-    delete newState['transport'];
-    return newState;
+    return currentWithout(state, 'plan-attack', 'transport')
+  }
+  case SELECT_PLANE_LANDING_TERRITORY: {
+    return currentWithout(state, 'land-planes', 'territory')
   }
   default:
     return state
