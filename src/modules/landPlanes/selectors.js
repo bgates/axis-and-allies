@@ -3,6 +3,7 @@ import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { territoriesInRange } from '../planCombat';
 import { nonNeutral, isLand } from '../../lib/territory';
+export { getFocusTerritory }
 
 export const airUnits = createSelector(
   getFocusTerritory,
@@ -15,6 +16,12 @@ export const landingOptions = createSelector(
   getFocusTerritory,
   airUnits,
   (board, currentPower, territory, airUnits) => landingOptionsByUnit(board, currentPower, territory, airUnits)
+)
+
+export const selectedOptions = createSelector(
+  state => state.landPlanes,
+  getFocusTerritory,
+  (landPlanes, territory) => landPlanes[territory.index]
 )
 
 const availableForLanding = (currentPower) => (territory) => (

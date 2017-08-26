@@ -1,14 +1,19 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import LandPlanesModal from './LandPlanesModal'
-import { landingOptions, airUnits } from './selectors'
+import { 
+  landingOptions, 
+  airUnits, 
+  selectedOptions,
+  getFocusTerritory
+} from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
 import { SELECT_PLANE_LANDING_OPTION } from '../../actions';
 
 const mapStateToProps = (state) => ({
   landingOptions: landingOptions(state),
   airUnits: airUnits(state),
+  selectedOptions: selectedOptions(state),
   territory: getFocusTerritory(state)
 })
 

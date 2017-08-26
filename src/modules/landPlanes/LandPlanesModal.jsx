@@ -2,10 +2,16 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { UnitFigTableData } from '../../components/UnitFigure';
 
+const disable = (selected, airUnits) => (
+  Object.keys(selected).length !== airUnits.length || 
+  Object.values(selected).filter(s => s).length !== airUnits.length
+)
+
 const LandPlanesModal = ({ 
   landingOptions, 
   airUnits, 
   territory, 
+  selectedOptions,
   landPlanes 
 }) => {
   return (
@@ -26,12 +32,14 @@ const LandPlanesModal = ({
             <LandingOptions 
               key={unit.options}
               unit={unit} 
+              selected={selectedOptions[`${unit.name}-${unit.originName}`]}
               territoryIndex={territory.index}
               handleChange={landPlanes}
               options={landingOptions[unit.options]} />
           ))}
         </tbody>
       </table>
+      <button disabled={disable(selectedOptions, airUnits)}>OK</button>
     </div>
   )
 }
@@ -40,13 +48,14 @@ const LandingOptions = ({
   unit, 
   options, 
   handleChange, 
-  territoryIndex 
+  territoryIndex,
+  selected
 }) => {
   return (
     <tr>
       <UnitFigTableData unit={unit}/>
       <td>
-        <select defaultValue={null} onChange={e => handleChange(unit, territoryIndex, e.target.value)}>
+        <select defaultValue={selected} onChange={e => handleChange(unit, territoryIndex, e.target.value)}>
           <option value="">select landing option</option>
           {options.map(territory => (
             <option 
