@@ -8,7 +8,10 @@ import {
   getFocusTerritory
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { SELECT_PLANE_LANDING_OPTION } from '../../actions';
+import { 
+  SELECT_PLANE_LANDING_OPTION,
+  SELECT_PLANE_LANDING_TERRITORY
+} from '../../actions';
 
 const mapStateToProps = (state) => ({
   landingOptions: landingOptions(state),
@@ -17,7 +20,7 @@ const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state)
 })
 
-const landPlanes = (unit, originIndex, destinationIndex) => {
+const selectLandingOption = (unit, originIndex, destinationIndex) => {
   return (dispatch) => {
     dispatch({
       type: SELECT_PLANE_LANDING_OPTION,
@@ -28,9 +31,16 @@ const landPlanes = (unit, originIndex, destinationIndex) => {
   }
 }
 
+const selectLandingTerritory = () => { 
+  return {
+    type: SELECT_PLANE_LANDING_TERRITORY
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
-    landPlanes 
+    selectLandingOption,
+    selectLandingTerritory
   }, dispatch)
 }
 

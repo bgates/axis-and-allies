@@ -12,7 +12,8 @@ const LandPlanesModal = ({
   airUnits, 
   territory, 
   selectedOptions,
-  landPlanes 
+  selectLandingOption,
+  selectLandingTerritory
 }) => {
   return (
     <div>
@@ -23,9 +24,9 @@ const LandPlanesModal = ({
         <p>Aircraft that cannot land are lost and must be destroyed.</p>
         <p>Aircraft do not have to endure antiaircraft fire during this phase.</p>
         <hr/>
-        <p>When you are done choosing where aircraft from this campaign should land, press <button>ok</button></p>
       </ReactTooltip>
-      <p>To land combat aircraft, select the desired landing territory's name. The aircraft are grouped by type and origin territory.</p>
+      <p>Select where each type of aircraft involved in combat in {territory.name} should land. Aircraft are grouped by type and origin territory.</p>
+      <p>When you have made all of your selections, press the button at the bottom of this modal.</p>
       <table>
         <tbody>
           {airUnits.map(unit => (
@@ -34,12 +35,17 @@ const LandPlanesModal = ({
               unit={unit} 
               selected={selectedOptions[`${unit.name}-${unit.originName}`]}
               territoryIndex={territory.index}
-              handleChange={landPlanes}
+              handleChange={selectLandingOption}
               options={landingOptions[unit.options]} />
           ))}
         </tbody>
       </table>
-      <button disabled={disable(selectedOptions, airUnits)}>OK</button>
+      <nav>
+        <button 
+          disabled={disable(selectedOptions, airUnits)}
+          onClick={selectLandingTerritory}
+        >OK</button>
+      </nav>
     </div>
   )
 }

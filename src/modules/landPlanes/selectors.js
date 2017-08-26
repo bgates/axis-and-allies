@@ -21,7 +21,7 @@ export const landingOptions = createSelector(
 export const selectedOptions = createSelector(
   state => state.landPlanes,
   getFocusTerritory,
-  (landPlanes, territory) => landPlanes[territory.index]
+  (landPlanes, territory) => landPlanes[territory.index] || {}
 )
 
 const availableForLanding = (currentPower) => (territory) => (
