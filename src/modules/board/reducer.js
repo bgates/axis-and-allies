@@ -10,14 +10,16 @@ import {
   UNCOMMIT_AMPHIB_UNITS,
   LOAD_TRANSPORT,
   WIN_ATTACK,
-  LOSE_ATTACK
+  LOSE_ATTACK,
+  LAND_PLANES
 } from '../../actions';
 import {
   commitUnits,
   uncommitUnits,
   commitAmphibUnits,
   uncommitAmphibUnits,
-  loadTransport
+  loadTransport,
+  landPlanes
 } from './moveUnitReducerFunctions';
 import {
   removeCasualties,
@@ -48,6 +50,7 @@ const board = (state = initialBoard, action) => {
     case TOGGLE_CASUALTY: return toggleCasualties(state, action);
     case LOSE_ATTACK: return defenderWins(state, action);
     case WIN_ATTACK: return attackerWins(state, action);
+    case LAND_PLANES: return landPlanes(state, action);
     default:
       return state
   }

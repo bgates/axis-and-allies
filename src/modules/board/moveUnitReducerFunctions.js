@@ -7,10 +7,31 @@ import {
   territoryAfterAmphibUncommits
 } from './reducerUtilityFunctions';
 
+export const landPlanes = (state, action) => {
+  const { planesFrom } = action;
+  const newState = JSON.parse(JSON.stringify(state));
+  Object.keys(planesFrom).forEach(index => {
+    let territory = newState[index];
+    let planesDestinations = planesFrom[index];
+    let planes = territory.units.filter(u => u.air);
+    territory.units = territory.units.filter(u => !u.air);
+    Object.keys(planesDestinations).forEach(planeId => {
+      let territory = newState[planesDestinations[planeId]];
+      let plane = planes.find(p => `${p.name}-${p.originName}` === planeId);
+      territory.units = [ ...territory.units, plane ]
+    })
+  })
+  return newState
+}
+
 export const commitUnits = (state, action) => {
   let { destinationIndex, movingUnit, ids, mission } = action;
+  return moveUnits(state, movingUnit, movingUnit.originIndex, destinationIndex, ids, mission);
+}
+
+const moveUnits = (state, movingUnit, originIndex, destinationIndex, ids, mission) => {
   return state.map((territory, index) => {
-    if (index === movingUnit.originIndex) {
+    if (index === originIndex) {
       return territoryAfterUnitMoves(territory, movingUnit, ids);
     } else if (index === destinationIndex) {
       return territoryAfterUnitEnters(territory, movingUnit, ids, mission);
