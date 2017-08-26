@@ -3,13 +3,14 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { combatants } from '../planCombat'
+import { planesInAir } from '../landPlanes'
+  
 import { 
   getFocusTerritory, 
   attackerCasualties, 
   victor, 
   attackDefeated,
-  combatOver,
-  planesInAir
+  combatOver
 } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
