@@ -12,7 +12,7 @@ const setFill = (sea, original_power, currentPower) => {
     return 'none'
   }
 }
-
+//TODO: active class shouldn't apply to land-planes spaces until that phase
 const klass = ({sea, currentPower, units, unitsFrom, newlyConquered}) => {
   currentPower = currentPower || ''
   const isOcean = sea && currentPower === 'Oceans' 

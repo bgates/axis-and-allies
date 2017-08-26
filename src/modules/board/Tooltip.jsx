@@ -68,9 +68,8 @@ const ResolveCombatTooltip = () => {
 const LandPlanesTooltip = () => {
   return (
     <div>
-      <p><strong>Land all combat aircraft.</strong> Click on any territory or sea zone with combat aircraft to land. Territories with combat aircraft needing to be landed are blinking.</p>
-      <p>When you have landed all your combat aircraft and are ready to move to the next phase, press the <b>Done</b> button in the compass rose.</p>
-      <p>Aircraft cannot land in territories that were captured this turn. Aircraft do not have to endure antiaircraft fire during this phase.</p>
+      <p><strong>Land all combat aircraft.</strong> Territories with combat aircraft needing to be landed are blinking.</p>
+      <p>When you have landed all your combat aircraft and are ready to move to the next phase, click the &quot;Done&quot; button in the Indian Ocean.</p>
     </div>
   )
 }

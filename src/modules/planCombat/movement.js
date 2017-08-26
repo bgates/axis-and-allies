@@ -1,5 +1,4 @@
 import { 
-  isNeutral, 
   isLand, 
   isSea, 
   isFriendly, 

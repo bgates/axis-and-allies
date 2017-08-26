@@ -8,7 +8,6 @@ import {
   getFocusTerritory,
   allLandingsPlanned
 } from './selectors'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { 
   SELECT_PLANE_LANDING_OPTION,
   SELECT_PLANE_LANDING_TERRITORY,
