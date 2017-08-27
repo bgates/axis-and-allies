@@ -48,8 +48,12 @@ table.scroll strong {
 .scroll .available {
   width: 125px;
 }
-.purchase td img {
+.purchase td img, .placement td img {
   max-height: 20px;
+}
+.placement {
+  border: 1px solid black;
+  border-collapse: collapse;
 }
 td.unit img {
   max-width: 250px;
