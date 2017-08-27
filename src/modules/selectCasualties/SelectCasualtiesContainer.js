@@ -10,7 +10,7 @@ import {
   attackerCasualties, 
   victor, 
   attackDefeated,
-  combatOver
+  noCombat
 } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
@@ -77,7 +77,7 @@ const continueCombat = () => {
 }
 
 const continueOrAdvancePhase = (dispatch, state) => {
-  if (combatOver(state)) {
+  if (noCombat(state)) {
     if (planesInAir(state)) {
       dispatch(push('/land-planes'))
     } else {
