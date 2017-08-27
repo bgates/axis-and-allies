@@ -3,13 +3,15 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import { phases } from './selectors';
 import {
   SELECT_PLANE_LANDING_TERRITORY,
   LAND_PLANES
 } from '../../actions';
 
 const mapStateToProps = (state) => ({
-  phase: state.phase.current
+  phase: state.phase.current,
+  phases: phases(state)
 })
 
 const advancePhase = () => {
@@ -32,19 +34,18 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 // the advance button won't allow forward progress during resolve-combat if any combat is unresolved, and won't allow back movement if any combat has begun.
-const AdvanceButtonComponent = ({ phase, advancePhase, previousPhase }) => {
-  if (['plan-combat', 'resolve-combat'].includes(phase)) {
-    return (
-      <div className="changePhase">
-        <Link to="resolve-combat" className="btn">Done</Link>
-        <Link to="income" className="btn">Back</Link>
-      </div>
-    )
-  } else if (phase === 'move-units') {
-      <div className="changePhase">
-        <Link to="place-units" className="btn">Done</Link>
-        <Link to="land-planes" className="btn">Back</Link>
-      </div>
+const NavLinks = ({ fwd, back }) => {
+  return (
+    <div className="changePhase">
+      <Link to={fwd} className="btn">Done</Link>
+      <Link to={back} className="btn">Back</Link>
+    </div>
+  )
+}
+
+const AdvanceButtonComponent = ({ phase, phases, advancePhase, previousPhase }) => {
+  if (['plan-combat', 'resolve-combat', 'move-units'].includes(phase)) {
+    return <NavLinks fwd={phases.next} back={phases.last} />
   } else {
     return (
       <div className="changePhase">

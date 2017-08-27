@@ -1,7 +1,8 @@
 import { createSelector } from 'reselect';
+import { noCombat } from '../selectCasualties';
 
 const pathRequiresOverlay = (pathname) => {
-  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls'].includes(pathname)
+  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls', '/place-units'].includes(pathname)
 };
 
 const phaseRequiresOverlay = (phase) => {
@@ -18,4 +19,17 @@ export const overlayPhase = createSelector(
 export const advanceButtonPhase = (state) => {
   return ['plan-combat', 'resolve-combat', 'confirm-land-planes', 'move-units'].includes(state.phase.current)
 };
+
+export const phases = createSelector(
+  noCombat,
+  state => state.phase.current,
+  (noCombat, phase) => {
+    if (['plan-combat', 'resolve-combat'].includes(phase)) {
+      const next = noCombat ? 'move-units' : 'resolve-combat';
+      return { next, last: 'income' }
+    } else if (phase === 'move-units') {
+      return { next: 'place-units', last: 'land-planes' }
+    }  
+  } 
+)
 
