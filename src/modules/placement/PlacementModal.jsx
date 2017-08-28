@@ -7,9 +7,15 @@ const PlacementModal = ({
   industrialComplexes, 
   shipyards, 
   purchases,
-  currentPower
+  placements,
+  availables,
+  currentPower,
+  commitUnitPlacement,
+  commitAllUnitPlacement,
+  unCommitUnitPlacement,
+  unCommitAllUnitPlacement
 }) => {
-  console.log(industrialComplexes)
+  console.log(placements)
   return (
     <div>
       <a data-tip className="help">?</a>
@@ -35,7 +41,12 @@ const PlacementModal = ({
             unit={unit} 
             power={currentPower}
             complexes={industrialComplexes} 
-            count={purchases[unit]} 
+            placements={placements[unit] || {}}
+            available={availables[unit]}
+            commit={commitUnitPlacement}
+            uncommit={unCommitUnitPlacement}
+            commitAll={commitAllUnitPlacement}
+            uncommitAll={unCommitAllUnitPlacement}
           />
         ))}
       </table>
@@ -49,18 +60,16 @@ const PlacementModal = ({
 
 export default PlacementModal
 
-const PlacementRows = ({ unit, complexes, count, power }) => {
+const PlacementRows = (props) => {
   return (
     <tbody className="placement">
-      {complexes.map((territory, index) => (
+      {props.complexes.map((territory, index) => (
         <PlacementRow 
           key={index}
-          index={index}
-          unit={unit} 
-          power={power.name}
+          i={index}
           territory={territory} 
-          count={count}
-          complexCount={complexes.length}
+          complexCount={props.complexes.length}
+          {...props}
         />
       ))}
     </tbody>
@@ -69,20 +78,36 @@ const PlacementRows = ({ unit, complexes, count, power }) => {
 
 const PlacementRow = ({ 
   unit, 
-  index, 
+  i, 
   territory, 
-  count, 
+  available,
+  placements,
   complexCount,
-  power
+  power,
+  commit,
+  uncommit,
+  commitAll,
+  uncommitAll
 }) => {
+  const { index, name } = territory;
   return (
     <tr>
-      {index === 0 ? <td rowSpan={complexCount}><UnitImg name={unit} power={power} /></td> : null}
-      <td><input readOnly size={2} value={count}/></td>
-      <td>{territory.name}</td>
-      <td><button>&gt;</button><button>&gt;&gt;</button></td>
-      <td><input readOnly size={2} value={0}/></td>
-      <td><button>&lt;&lt;</button><button>&lt;</button></td>
+      {i === 0 ? <td rowSpan={complexCount}><UnitImg name={unit} power={power.name} /></td> : null}
+      {i === 0 ? <td rowSpan={complexCount}><input readOnly size={2} value={available}/></td> : null}
+      <td>{name}</td>
+      <td>
+        <button 
+          disabled={available === 0}
+          onClick={()=> commit(unit, index)}>&gt;</button>
+        <button 
+          disabled={available === 0}
+          onClick={()=> commitAll(unit, index, available)}>&gt;&gt;</button>
+      </td>
+      <td><input readOnly size={2} value={placements[index] || 0}/></td>
+      <td>
+        <button onClick={()=> uncommitAll(unit, index)}>&lt;&lt;</button>
+        <button onClick={()=> uncommit(unit, index)}>&lt;</button>
+      </td>
     </tr>
   )
 }

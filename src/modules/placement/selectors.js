@@ -29,3 +29,16 @@ export const shipyards = createSelector(
 )
 
 export const purchases = state => state.purchases
+
+export const availables = createSelector(
+  state => state.placement,
+  purchases,
+  (placement, purchases) => {
+    const available = { ...purchases }
+    Object.keys(placement).forEach(unit => {
+      const placed = Object.values(placement[unit]).reduce((total, n) => total + n, 0)
+      available[unit] = available[unit] - placed
+    })
+    return available
+  }
+)

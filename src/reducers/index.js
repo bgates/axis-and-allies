@@ -6,6 +6,7 @@ import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import { landPlanes } from '../modules/landPlanes'
 import rolls from './rolls'
+import { placement } from '../modules/placement'
 import { firebaseStateReducer as firebase } from 'redux-react-firebase'
        
 export default combineReducers({
@@ -14,6 +15,7 @@ export default combineReducers({
   landPlanes,
   powers,
   phase,
+  placement,
   purchases,
   research,
   rolls
