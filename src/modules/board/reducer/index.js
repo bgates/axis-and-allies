@@ -1,34 +1,10 @@
-import Parser from '../../lib/Parser.js'
-import startingBoard from '../../config/startingBoard'
-import territoryData from '../../config/territories.json'
-import { 
-  TOGGLE_CASUALTY,
-  REMOVE_CASUALTIES,
-  COMMIT_UNITS,
-  UNCOMMIT_UNITS,
-  COMMIT_AMPHIB_UNITS,
-  UNCOMMIT_AMPHIB_UNITS,
-  LOAD_TRANSPORT,
-  WIN_ATTACK,
-  LOSE_ATTACK,
-  LAND_PLANES,
-  PLACE_UNITS
-} from '../../actions';
-import {
-  commitUnits,
-  uncommitUnits,
-  commitAmphibUnits,
-  uncommitAmphibUnits,
-  loadTransport,
-  landPlanes
-} from './moveUnitReducerFunctions';
-import {
-  removeCasualties,
-  toggleCasualties,
-  defenderWins,
-  attackerWins
-} from './casualtyReducerFunctions';
-import { placeUnits } from './placeUnitReducerFunction';
+import territoriesHelper from './territoriesHelper'
+import powersHelper from './powersHelper'
+import incomeHelper from './incomeHelper'
+import Parser from '../../../lib/Parser.js'
+import startingBoard from '../../../config/startingBoard'
+import territoryData from '../../../config/territories.json'
+import initialPowers from '../../../config/initialPowers';
 
 const parsedBoard = Parser.hydrate(startingBoard)
 
@@ -41,21 +17,18 @@ const initialBoard = territoryData.map((territory, i) => {
   //TODO: currentPower should be controllingPower
 })
 
-const board = (state = initialBoard, action) => {
-  switch (action.type) {
-    case COMMIT_UNITS: return commitUnits(state, action);
-    case UNCOMMIT_UNITS: return uncommitUnits(state, action);
-    case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);
-    case UNCOMMIT_AMPHIB_UNITS: return uncommitAmphibUnits(state, action);
-    case LOAD_TRANSPORT: return loadTransport(state, action);
-    case REMOVE_CASUALTIES: return removeCasualties(state, action);
-    case TOGGLE_CASUALTY: return toggleCasualties(state, action);
-    case LOSE_ATTACK: return defenderWins(state, action);
-    case WIN_ATTACK: return attackerWins(state, action);
-    case LAND_PLANES: return landPlanes(state, action);
-    case PLACE_UNITS: return placeUnits(state, action);
-    default:
-      return state
+const initialState = { 
+  territories: initialBoard, 
+  powers: initialPowers,
+  currentPowerIncome: 0 
+}
+
+const board = (state = initialState, action) => {
+  return { 
+    territories: territoriesHelper(state, action),
+    powers: powersHelper(state, action),
+    currentPowerIncome: incomeHelper(state, action),
   }
 }
+
 export default board

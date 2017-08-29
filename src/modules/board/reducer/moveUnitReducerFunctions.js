@@ -9,7 +9,7 @@ import {
 
 export const landPlanes = (state, action) => {
   const { planesFrom } = action;
-  const newState = JSON.parse(JSON.stringify(state));
+  const newState = JSON.parse(JSON.stringify(state.territories));
   Object.keys(planesFrom).forEach(index => {
     let territory = newState[index];
     let planesDestinations = planesFrom[index];
@@ -30,7 +30,7 @@ export const commitUnits = (state, action) => {
 }
 
 const moveUnits = (state, movingUnit, originIndex, destinationIndex, ids, mission) => {
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === originIndex) {
       return territoryAfterUnitMoves(territory, movingUnit, ids);
     } else if (index === destinationIndex) {
@@ -44,7 +44,7 @@ const moveUnits = (state, movingUnit, originIndex, destinationIndex, ids, missio
 export const commitAmphibUnits = (state, action) => {
   const { transport, destinationIndex, id } = action;
   const originIndex = transport.originIndex;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === originIndex) {
       return territoryAfterTransportCommits(territory, transport, id, destinationIndex);
     } else if (index === destinationIndex){
@@ -63,7 +63,7 @@ export const uncommitUnits = (state, action) => {
     transport = state[destinationIndex].unitsFrom.find(unit => unit.ids.includes(id))
     cargoOrigin = transport.cargo[id][0].originIndex;
   }
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === unit.originIndex) {
       return territoryAfterUnitMoves(territory, unit, ids, false);
     } else if (index === destinationIndex) {
@@ -79,7 +79,7 @@ export const uncommitUnits = (state, action) => {
 export const uncommitAmphibUnits = (state, action) => {
   // transport.cargoDestinations needs to lose prop based on transport id; t.cD[id] territory must lose its amphib prop
   const { id, destinationIndex, transport } = action;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === destinationIndex) {
       let amphib = Object.assign({}, territory.amphib);
       delete amphib[id];
@@ -94,7 +94,7 @@ export const uncommitAmphibUnits = (state, action) => {
 
 export const loadTransport = (state, action) => {
   const { units, destinationIndex, transport } = action;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === units[0].originIndex) {
       return units.reduce((t, unit) => territoryAfterUnitMoves(t, unit, unit.ids), territory);
     } else if (index === transport.unit.originIndex) {

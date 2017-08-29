@@ -13,7 +13,7 @@ const survivingUnits = (units, casualties) => {
 
 export const removeCasualties = (state, action) => {
   const { territoryIndex, defenderCasualties, currentPower } = action;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === territoryIndex) {
       return { 
         ...territory, 
@@ -37,7 +37,7 @@ export const removeCasualties = (state, action) => {
 
 export const toggleCasualties = (state, action) => {
   const { id, territoryIndex } = action;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === territoryIndex) {
       territory.attackerCasualties = territory.attackerCasualties || [];
       if (territory.attackerCasualties.includes(id)) {
@@ -52,7 +52,7 @@ export const toggleCasualties = (state, action) => {
 
 export const defenderWins = (state, action) => {
   const { territoryIndex, defenderCasualties } = action;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === territoryIndex) {
       return { 
         ...territory, 
@@ -67,7 +67,7 @@ export const defenderWins = (state, action) => {
 //TODO: probably need victor in unitsFrom not units, so I can ensure they don't move during noncom
 export const attackerWins = (state, action) => {
   const { territoryIndex, currentPower } = action;
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (index === territoryIndex) {
       const survivingUnits = survivingUnitsFrom(territory);
       const groundUnits = survivingUnits.filter(unit => unit.land);

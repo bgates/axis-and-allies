@@ -1,5 +1,5 @@
-import { id } from '../../lib/unit'
-import unitTypes from '../../config/unitTypes'
+import { id } from '../../../lib/unit'
+import unitTypes from '../../../config/unitTypes'
 
 export const placeUnits = (state, action) => {
   const { placements, currentPower } = action;
@@ -10,7 +10,7 @@ export const placeUnits = (state, action) => {
       placementsByTerritoryIndex[index][unit] = placements[unit][index];
     })
   })
-  return state.map((territory, index) => {
+  return state.territories.map((territory, index) => {
     if (placementsByTerritoryIndex[index]) {
       const purchases = placementsByTerritoryIndex[index]
       let units = territory.units

@@ -5,8 +5,8 @@ import ConvoyImages from './ConvoyImages'
 import FireImage from './FireImage'
 import Modal from './Modal'
 import AdvanceButton from './AdvanceButton'
-import '../../assets/styles/game.css'
-import '../../assets/styles/color.css'
+import '../../../assets/styles/game.css'
+import '../../../assets/styles/color.css'
 
 class Territories extends Component {
   constructor () {

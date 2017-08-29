@@ -1,4 +1,4 @@
-import { unitMatch } from '../../lib/unit'
+import { unitMatch } from '../../../lib/unit'
 
 export const territoryAfterUnitMoves = (territory, movingUnit, ids, leave = true) => {
   let updatedUnits = territory.units.map(unit => {

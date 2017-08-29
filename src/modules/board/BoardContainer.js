@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import Board from './Board'
+import Board from './components/Board'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { 
   overlayPhase,

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
 import { groupWith } from 'ramda';
-import { ImgAndQty } from '../../components/UnitFigure';
-import { matchingUnit } from '../../lib/Parser';
-import { powerData } from '../../config/initialPowers';
-import '../../assets/styles/tooltip.css';
-import industryImg from '../../assets/images/industrial_complex.png';
+import { ImgAndQty } from '../../../components/UnitFigure';
+import { matchingUnit } from '../../../lib/Parser';
+import { powerData } from '../../../config/initialPowers';
+import '../../../assets/styles/tooltip.css';
+import industryImg from '../../../assets/images/industrial_complex.png';
 
 
 const Units = ({ units, unitsFrom }) => {

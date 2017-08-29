@@ -1,4 +1,3 @@
-import initialPowers from '../../config/initialPowers';
 import { omit } from 'ramda';
 
 const updateObject = (object, newValues) => {
@@ -17,12 +16,12 @@ const gainIPCs = (power, amount) => {
   return updateObject(power, { ipc: power.ipc +  amount })
 }
 
-const powers = (state = initialPowers, action) => {
+const powers = (state, action) => {
   switch (action.type) {
     case 'NEXT_TURN':
-      const currentPower = state.find(power => power.current)
+      const currentPower = state.powers.find(power => power.current)
       const nextPowerIndex = currentPower.name === 'China' ? 0 : state.indexOf(currentPower) + 1
-      return state.map((power, n) => {
+      return state.powers.map((power, n) => {
         if(power.current) {
           return omit('current', power) 
         } else if (n === nextPowerIndex) {
@@ -35,15 +34,15 @@ const powers = (state = initialPowers, action) => {
       const assignTech = (power) => {
         return updateObject(power, { tech: power.tech.concat(action.tech) })
       }
-      return updateCurrentPower(state, assignTech)
+      return updateCurrentPower(state.powers, assignTech)
     case 'ATTEMPT_RESEARCH':
-      return updateCurrentPower(state, spendIPCs, action.cost)
+      return updateCurrentPower(state.powers, spendIPCs, action.cost)
     case 'INCREMENT_PURCHASE':
-      return updateCurrentPower(state, spendIPCs, action.unit.cost)
+      return updateCurrentPower(state.powers, spendIPCs, action.unit.cost)
     case 'DECREMENT_PURCHASE':
-      return updateCurrentPower(state, gainIPCs, action.unit.cost)
+      return updateCurrentPower(state.powers, gainIPCs, action.unit.cost)
     default:
-      return state
+      return state.powers
   }
 }
 

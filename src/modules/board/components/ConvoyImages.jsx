@@ -1,9 +1,9 @@
 import React from 'react';
-import ussrConvoy from '../../assets/images/units/ussr_convoy.png';
-import italyConvoy from '../../assets/images/units/italy_convoy.png';
-import ukConvoy from '../../assets/images/units/uk_convoy.png';
-import usConvoy from '../../assets/images/units/us_convoy.png';
-import japanConvoy from '../../assets/images/units/japan_convoy.png';
+import ussrConvoy from '../../../assets/images/units/ussr_convoy.png';
+import italyConvoy from '../../../assets/images/units/italy_convoy.png';
+import ukConvoy from '../../../assets/images/units/uk_convoy.png';
+import usConvoy from '../../../assets/images/units/us_convoy.png';
+import japanConvoy from '../../../assets/images/units/japan_convoy.png';
 
 const ConvoyImage = (props) => {
   const power = props.power;

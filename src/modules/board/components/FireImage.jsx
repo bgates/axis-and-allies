@@ -1,5 +1,5 @@
 import React from 'react';
-import fire from '../../assets/images/fire.gif';
+import fire from '../../../assets/images/fire.gif';
 
 const FireImage = () => {
   return (

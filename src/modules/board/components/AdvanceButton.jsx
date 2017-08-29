@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import { phases } from './selectors';
+import { phases } from '../selectors';
 import {
   SELECT_PLANE_LANDING_TERRITORY,
   LAND_PLANES
-} from '../../actions';
+} from '../../../actions';
 
 const mapStateToProps = (state) => ({
   phase: state.phase.current,
