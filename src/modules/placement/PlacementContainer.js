@@ -58,7 +58,7 @@ const unCommitAllUnitPlacement = (unit, territoryIndex) => {
 
 const place = () => {
   return (dispatch, getState) => {
-    const state = getState()
+    const state = getState();
     const placements = state.placement;
     const currentPower = getCurrentPower(state).name;
     dispatch({ 
@@ -66,6 +66,11 @@ const place = () => {
       placements,
       currentPower
     })
+    if (false) {
+      dispatch(push('/load-carriers'))
+    } else {
+      dispatch(push('/confirm'))
+    }
   }
 }
 

@@ -41,7 +41,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/russian-winter" component={RussianWinterModal}/>
       <Route path="/movement" component={MovementModal}/>
       <Route path="/place-units" component={PlacementContainer}/>
-      <Route path="/carrier-loading" component={CarrierLoadingModal}/>
+      <Route path="/load-carrier" component={CarrierLoadingModal}/>
       <Route path="/confirm" component={EndCheckModal}/>
       <Route path="/order" component={DefenseOrderModal}/>
     </div>
