@@ -3,7 +3,7 @@ import territoryData from '../config/territories.json';
 
 export const mergeBoardAndTerritories = createSelector(
   state => state.board,
-  board => board.map((territoryState, index) => {
+  board => board.territories.map((territoryState, index) => {
     let territoryProps = territoryData[index]
     return {...territoryState, ...territoryProps, index}
   })

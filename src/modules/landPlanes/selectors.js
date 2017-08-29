@@ -43,7 +43,7 @@ const landingOptionsByUnit = (board, currentPower, territory, airUnits) => {
 }
 
 export const planesInAir = state => (
-  state.board.filter(t => t.newlyConquered)
+  state.board.territories.filter(t => t.newlyConquered)
              .filter(t => territoryAir(t).length).length
 )
 

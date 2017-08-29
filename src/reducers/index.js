@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux'
 import { board } from '../modules/board'
-import { powers } from '../modules/powers'
 import phase from './phase'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
@@ -13,7 +12,6 @@ export default combineReducers({
   firebase,
   board,
   landPlanes,
-  powers,
   phase,
   placement,
   purchases,

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux'
 import Powers from './Powers'
-import { getCurrentPower, nplByPower } from './selectors'
+import { getPowers, getCurrentPower, nplByPower } from './selectors'
 
 const mapStateToProps = (state) => {
   return {
-    powers: state.powers,
+    powers: getPowers(state),
     currentPower: getCurrentPower(state),   
     npl: nplByPower(state)
   }

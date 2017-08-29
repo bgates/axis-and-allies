@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { getCurrentPower, getPowers } from '../../selectors/getCurrentPower';
 import { territoriesOwnedBy, calculateNPL } from '../income';
-export { getCurrentPower }
+export { getCurrentPower, getPowers }
 
 const nplFor = (power, territories) => {
   return power === 'China' ? territories.length : calculateNPL(territories)
@@ -16,7 +16,7 @@ const nplAsObject = (powers, territories) => {
 }
 
 export const nplByPower = createSelector(
-  state => state.powers,
+  getPowers,
   territoriesOwnedBy,
   nplAsObject
 )

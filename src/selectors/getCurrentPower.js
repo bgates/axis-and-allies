@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
 
+export const getPowers = (state) => state.board.powers
+
 export const getCurrentPower = createSelector(
-  state => state.powers,
+  getPowers,
   powers => powers.find(power => power.current)
 );
 
