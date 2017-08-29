@@ -8,7 +8,8 @@ import {
   COMMIT_PLACEMENT,
   UNCOMMIT_PLACEMENT,
   COMMIT_PLACE_ALL,
-  UNCOMMIT_PLACE_ALL
+  UNCOMMIT_PLACE_ALL,
+  PLACE_UNITS
 } from '../../actions';
 
 const mapStateToProps = (state) => {
@@ -55,12 +56,26 @@ const unCommitAllUnitPlacement = (unit, territoryIndex) => {
   }
 }
 
+const place = () => {
+  return (dispatch, getState) => {
+    const state = getState()
+    const placements = state.placement;
+    const currentPower = getCurrentPower(state).name;
+    dispatch({ 
+      type: PLACE_UNITS, 
+      placements,
+      currentPower
+    })
+  }
+}
+
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     commitUnitPlacement,
     commitAllUnitPlacement,
     unCommitUnitPlacement,
-    unCommitAllUnitPlacement
+    unCommitAllUnitPlacement,
+    place
   }, dispatch)
 }
 

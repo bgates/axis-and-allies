@@ -22,6 +22,7 @@ const COMMIT_PLACEMENT = 'COMMIT_PLACEMENT';
 const UNCOMMIT_PLACEMENT = 'UNCOMMIT_PLACEMENT';
 const COMMIT_PLACE_ALL = 'COMMIT_PLACE_ALL';
 const UNCOMMIT_PLACE_ALL = 'UNCOMMIT_PLACE_ALL';
+const PLACE_UNITS = 'PLACE_UNITS';
 
 export const resolveCombat = (territory) => {
   return { type: RESOLVE_COMBAT, territory }
@@ -97,6 +98,7 @@ export {
   UNCOMMIT_PLACEMENT,
   COMMIT_PLACE_ALL,
   UNCOMMIT_PLACE_ALL,
+  PLACE_UNITS,
   roll,
   removeCasualties,
   planAttack,

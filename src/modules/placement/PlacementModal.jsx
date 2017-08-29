@@ -10,12 +10,12 @@ const PlacementModal = ({
   placements,
   availables,
   currentPower,
+  place,
   commitUnitPlacement,
   commitAllUnitPlacement,
   unCommitUnitPlacement,
   unCommitAllUnitPlacement
 }) => {
-  console.log(placements)
   return (
     <div>
       <a data-tip className="help">?</a>
@@ -52,7 +52,7 @@ const PlacementModal = ({
       </table>
       <nav>
         <Link to="/" className="btn">Back</Link>
-        <Link to="/confirm" className="btn">Place</Link>
+        <button onClick={place} className="btn">Place</button>
       </nav>
     </div>
   )

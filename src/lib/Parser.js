@@ -1,5 +1,5 @@
 import { groupWith } from 'ramda'
-import uuid from 'uuid/v4'
+import { id } from './unit'
 import powers from '../config/initialPowers'
 import unitTypes from '../config/unitTypes'
 
@@ -17,8 +17,6 @@ const unitStringParser = (string) => {
 export const matchingUnit = (unit, other) => {
   return unit.name === other.name && unit.power === other.power
 }
-
-const id = () => uuid();
 
 const assignIds = (units) => {
   return { ...units[0], ids: units.map(id) }

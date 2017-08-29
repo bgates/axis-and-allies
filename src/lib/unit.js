@@ -1,3 +1,7 @@
+import uuid from 'uuid/v4'
+
+export const id = () => uuid();
+
 export const isNotSubmerged = (unit) => {
   return !unit.submerged
 }

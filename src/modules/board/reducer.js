@@ -11,7 +11,8 @@ import {
   LOAD_TRANSPORT,
   WIN_ATTACK,
   LOSE_ATTACK,
-  LAND_PLANES
+  LAND_PLANES,
+  PLACE_UNITS
 } from '../../actions';
 import {
   commitUnits,
@@ -27,6 +28,7 @@ import {
   defenderWins,
   attackerWins
 } from './casualtyReducerFunctions';
+import { placeUnits } from './placeUnitReducerFunction';
 
 const parsedBoard = Parser.hydrate(startingBoard)
 
@@ -51,6 +53,7 @@ const board = (state = initialBoard, action) => {
     case LOSE_ATTACK: return defenderWins(state, action);
     case WIN_ATTACK: return attackerWins(state, action);
     case LAND_PLANES: return landPlanes(state, action);
+    case PLACE_UNITS: return placeUnits(state, action);
     default:
       return state
   }
