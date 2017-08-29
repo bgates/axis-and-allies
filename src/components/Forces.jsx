@@ -8,7 +8,6 @@ const Forces = ({ units, filterFct, classNameFct, handleClick }) => {
         unit.ids.filter(filterFct).map(id => (
           <UnitImg 
             key={id} 
-            id={id} 
             power={unit.power} 
             className={classNameFct(id)}
             handleClick={handleClick(id)}
