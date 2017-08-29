@@ -36,7 +36,6 @@ const placement = (state = {}, action) => {
       return placeUnit(state, action.unit, action.territoryIndex)
     }
     case COMMIT_PLACE_ALL: {
-      console.log(action)
       return placeUnit(state, action.unit, action.territoryIndex, action.count)
     }
     case UNCOMMIT_PLACEMENT: {

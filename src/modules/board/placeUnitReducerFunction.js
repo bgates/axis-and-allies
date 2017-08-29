@@ -10,7 +10,6 @@ export const placeUnits = (state, action) => {
       placementsByTerritoryIndex[index][unit] = placements[unit][index];
     })
   })
-  console.log(placementsByTerritoryIndex)
   return state.map((territory, index) => {
     if (placementsByTerritoryIndex[index]) {
       const purchases = placementsByTerritoryIndex[index]
