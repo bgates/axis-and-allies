@@ -1,4 +1,4 @@
 import IncomeContainer from './IncomeContainer';
-import { territoriesOwnedBy, calculateNPL } from './selectors';
+import { territoriesOwnedBy, calculateNPL, currentPowerNPL } from './selectors';
 
-export { territoriesOwnedBy, calculateNPL, IncomeContainer }
+export { territoriesOwnedBy, calculateNPL, currentPowerNPL, IncomeContainer }

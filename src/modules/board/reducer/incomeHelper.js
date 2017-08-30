@@ -1,7 +1,16 @@
+import { currentPowerNPL } from '../../income';
+
 const incomeHelper = (state, action) => {
   switch (action.type) {
-    case 'INCOME':
-      return state.currentPowerIncome
+    case '@@router/LOCATION_CHANGE': 
+      const { pathname } = action.payload.location;
+      if (pathname === '/income' && !state.currentPowerIncome) {
+        return currentPowerNPL({ board: state })
+      } else if (pathname === '/confirm') {
+        return 0
+      } else {
+        return state.currentPowerIncome
+      }
     default: 
       return state.currentPowerIncome
   }
