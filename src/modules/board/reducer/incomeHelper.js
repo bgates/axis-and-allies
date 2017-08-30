@@ -6,7 +6,7 @@ const incomeHelper = (state, action) => {
       const { pathname } = action.payload.location;
       if (pathname === '/income' && !state.currentPowerIncome) {
         return currentPowerNPL({ board: state })
-      } else if (pathname === '/order-units') {
+      } else if (pathname === '/confirm-finish') {
         return 0
       } else {
         return state.currentPowerIncome

@@ -18,7 +18,7 @@ import RussianWinterModal from '../../russianWinter/RussianWinterModal'
 import MovementModal from '../../movement/MovementModal'
 import { PlacementContainer } from '../../placement'
 import CarrierLoadingModal from '../../carrierLoading/CarrierLoadingModal'
-import DefenseOrderModal from '../../defenseOrder/DefenseOrderModal'
+import OrderUnitsModal from '../../orderUnits/OrderUnitsModal'
 
 const Modal = ({ ctrlPressed, phase }) => {
   const classes = classNames('modal', phase, { hidden: ctrlPressed })
@@ -41,7 +41,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/movement" component={MovementModal}/>
       <Route path="/place-units" component={PlacementContainer}/>
       <Route path="/load-carrier" component={CarrierLoadingModal}/>
-      <Route path="/order-units" component={DefenseOrderModal}/>
+      <Route path="/order-units" component={OrderUnitsModal}/>
     </div>
   )
 }

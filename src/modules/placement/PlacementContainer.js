@@ -69,7 +69,7 @@ const place = () => {
     if (false) {
       dispatch(push('/load-carriers'))
     } else {
-      dispatch(push('/order-units'))
+      dispatch(push('/confirm-finish'))
     }
   }
 }
