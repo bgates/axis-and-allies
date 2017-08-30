@@ -1,4 +1,11 @@
 import { omit } from 'ramda';
+import {
+  ATTEMPT_RESEARCH,
+  DEVELOP_TECH,
+  INCREMENT_PURCHASE,
+  DECREMENT_PURCHASE,
+  NEXT_TURN
+} from '../../../actions';
 
 const updateObject = (object, newValues) => {
   return Object.assign({}, object, newValues)
@@ -18,7 +25,7 @@ const gainIPCs = (power, amount) => {
 
 const powers = (state, action) => {
   switch (action.type) {
-    case 'NEXT_TURN':
+    case NEXT_TURN:
       const currentPower = state.powers.find(power => power.current)
       const nextPowerIndex = currentPower.name === 'China' ? 0 : state.indexOf(currentPower) + 1
       return state.powers.map((power, n) => {
@@ -30,16 +37,16 @@ const powers = (state, action) => {
           return power
         }
       })
-    case 'DEVELOP_TECH':
+    case DEVELOP_TECH:
       const assignTech = (power) => {
         return updateObject(power, { tech: power.tech.concat(action.tech) })
       }
       return updateCurrentPower(state.powers, assignTech)
-    case 'ATTEMPT_RESEARCH':
+    case ATTEMPT_RESEARCH:
       return updateCurrentPower(state.powers, spendIPCs, action.cost)
-    case 'INCREMENT_PURCHASE':
+    case INCREMENT_PURCHASE:
       return updateCurrentPower(state.powers, spendIPCs, action.unit.cost)
-    case 'DECREMENT_PURCHASE':
+    case DECREMENT_PURCHASE:
       return updateCurrentPower(state.powers, gainIPCs, action.unit.cost)
     default:
       return state.powers

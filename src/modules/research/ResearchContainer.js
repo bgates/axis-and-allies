@@ -5,7 +5,14 @@ import { getCurrentPower, research, currentPowerHasRockets } from './selectors'
 import researchOptions from '../../config/research'
 import dice from '../../lib/numericalDieRolls'
 import ResearchModal from './ResearchModal'
-import { roll } from '../../actions'
+import { 
+  DEVELOP_TECH,
+  INCREMENT_RESEARCH,
+  DECREMENT_RESEARCH,
+  SET_TECH,
+  ATTEMPT_RESEARCH,
+  roll 
+} from '../../actions'
 
 const mapStateToProps = (state) => {
   return {
@@ -23,12 +30,12 @@ const attemptResearch = () => {
     const rolls = dice(research.attempts)
     dispatch(roll('RESEARCH_RESULTS', rolls))
     dispatch({
-      type: 'ATTEMPT_RESEARCH',
+      type: ATTEMPT_RESEARCH,
       cost: research.attempts * researchOptions.cost
     })
     if (rolls.includes(6)) {
       dispatch({
-        type: 'DEVELOP_TECH',
+        type: DEVELOP_TECH,
         currentPower,
         tech: research.selectedTech
       })
@@ -39,20 +46,20 @@ const attemptResearch = () => {
 
 const setTech = (tech) => {
   return {
-    type: 'SET_TECH',
+    type: SET_TECH,
     tech
   }
 }
 
 const incrementResearch = () => {
   return {
-    type: 'INCREMENT_RESEARCH'
+    type: INCREMENT_RESEARCH
   }
 }
 
 const decrementResearch = () => {
   return {
-    type: 'DECREMENT_RESEARCH'
+    type: DECREMENT_RESEARCH
   }
 }
 
