@@ -13,7 +13,8 @@ import {
   planAttack, 
   resolveCombat, 
   planLandPlanes,
-  planMovement 
+  planMovement,
+  orderUnits
 } from '../../actions';
 
 const mapStateToProps = (state) => {
@@ -36,24 +37,33 @@ const territoryThunk = (territory) => {
       return
     }
     let { router, phase } = state 
-    if (phase.current === 'start') {
-      let nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
-      dispatch(push(nextUrl))
-    } else if (isUrl(router, '/plan-combat')) {
-      dispatch(planAttack(territory))
-    } else if (isUrl(router, '/resolve-combat')) {
-      // need logic to prevent dispatch if no combat
-      if (territory.unitsFrom.length && territory.units.length) {
-        dispatch(resolveCombat(territory))
-      }
-    } else if (isUrl(router, '/land-planes')) {
-      if (territory.newlyConquered && territory.units.filter(u => u.air).length) {
-        dispatch(planLandPlanes(territory))
-      }
-    } else if (isUrl(router, '/move-units')) {
-      dispatch(planMovement(territory))
-    } else {
-      dispatch({ type: 'TERRITORY_CLICKED' })
+    switch (router.location.pathname) {
+      case '/': {
+        let nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
+        dispatch(push(nextUrl))
+      } 
+      case '/plan-combat': {
+        dispatch(planAttack(territory))
+      } 
+      case '/resolve-combat': {
+        // need logic to prevent dispatch if no combat
+        if (territory.unitsFrom.length && territory.units.length) {
+          dispatch(resolveCombat(territory))
+        }
+      } 
+      case '/land-planes': {
+        if (territory.newlyConquered && territory.units.filter(u => u.air).length) {
+          dispatch(planLandPlanes(territory))
+        }
+      } 
+      case '/move-units': {
+        dispatch(planMovement(territory))
+      } 
+      case '/order-units': {
+        dispatch(orderUnits(territory)) 
+      } 
+      default:  
+        dispatch({ type: 'TERRITORY_CLICKED' })
     }
   }
 }

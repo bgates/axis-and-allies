@@ -2,11 +2,11 @@ import { createSelector } from 'reselect';
 import { noCombat } from '../selectCasualties';
 
 const pathRequiresOverlay = (pathname) => {
-  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls', '/place-units', '/order-units'].includes(pathname)
+  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls', '/place-units'].includes(pathname)
 };
 
 const phaseRequiresOverlay = (phase) => {
-  return ['plan-attack', 'plan-land-planes', 'load-transport', 'combat', 'select-casualties'].includes(phase)
+  return ['plan-attack', 'plan-land-planes', 'load-transport', 'combat', 'select-casualties', 'order-units-territory'].includes(phase)
 };
 
 export const overlayPhase = createSelector(

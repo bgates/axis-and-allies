@@ -30,6 +30,7 @@ const UNCOMMIT_PLACEMENT = 'UNCOMMIT_PLACEMENT';
 const COMMIT_PLACE_ALL = 'COMMIT_PLACE_ALL';
 const UNCOMMIT_PLACE_ALL = 'UNCOMMIT_PLACE_ALL';
 const PLACE_UNITS = 'PLACE_UNITS';
+const ORDER_UNITS = 'ORDER_UNITS';
 const NEXT_TURN = 'NEXT_TURN';
 
 export const resolveCombat = (territory) => {
@@ -82,6 +83,13 @@ const planMovement = (territory) => {
   }
 }
 
+const orderUnits = (territory) => {
+  return {
+    type: ORDER_UNITS,
+    territory
+  }
+}
+
 export {
   DEVELOP_TECH,
   INCREMENT_RESEARCH,
@@ -114,11 +122,13 @@ export {
   COMMIT_PLACE_ALL,
   UNCOMMIT_PLACE_ALL,
   PLACE_UNITS,
+  ORDER_UNITS,
   NEXT_TURN,
   roll,
   removeCasualties,
   planAttack,
   winAttack,
   planMovement,
-  planLandPlanes
+  planLandPlanes,
+  orderUnits
 }

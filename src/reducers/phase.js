@@ -8,7 +8,8 @@ import {
   REMOVE_CASUALTIES,
   PLAN_LAND_PLANES,
   SELECT_PLANE_LANDING_TERRITORY,
-  CONFIRM_LAND_PLANES
+  CONFIRM_LAND_PLANES,
+  ORDER_UNITS
 } from '../actions';
 
 const currentWithout = (state, current, deletedProp) => {
@@ -57,6 +58,9 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   }
   case CONFIRM_LAND_PLANES: {
     return currentWithout(state, 'confirm-land-planes')
+  }
+  case ORDER_UNITS: {
+    return currentWithout(state, 'order-units-territory')
   }
   default:
     return state
