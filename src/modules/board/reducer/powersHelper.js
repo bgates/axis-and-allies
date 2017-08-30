@@ -27,7 +27,7 @@ const powers = (state, action) => {
   switch (action.type) {
     case '@@router/LOCATION_CHANGE': 
       const { pathname } = action.payload.location;
-      if (pathname === '/accrue-income') {
+      if (pathname === '/order-units') {
         return updateCurrentPower(state.powers, gainIPCs, state.currentPowerIncome)
       } else {
         return state.powers
