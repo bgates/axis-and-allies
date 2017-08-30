@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 import { noCombat } from '../selectCasualties';
 
 const pathRequiresOverlay = (pathname) => {
-  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls', '/place-units', '/confirm'].includes(pathname)
+  return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/combat-rolls', '/place-units', '/accrue-income'].includes(pathname)
 };
 
 const phaseRequiresOverlay = (phase) => {

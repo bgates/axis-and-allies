@@ -18,6 +18,7 @@ import RussianWinterModal from '../../russianWinter/RussianWinterModal'
 import MovementModal from '../../movement/MovementModal'
 import { PlacementContainer } from '../../placement'
 import CarrierLoadingModal from '../../carrierLoading/CarrierLoadingModal'
+
 import EndCheckModal from '../../endCheck/EndCheckModal'
 import DefenseOrderModal from '../../defenseOrder/DefenseOrderModal'
 
@@ -42,7 +43,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/movement" component={MovementModal}/>
       <Route path="/place-units" component={PlacementContainer}/>
       <Route path="/load-carrier" component={CarrierLoadingModal}/>
-      <Route path="/confirm" component={EndCheckModal}/>
+      <Route path="/accrue-income" component={EndCheckModal}/>
       <Route path="/order" component={DefenseOrderModal}/>
     </div>
   )
