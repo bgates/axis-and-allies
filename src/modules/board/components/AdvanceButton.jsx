@@ -34,18 +34,18 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 // the advance button won't allow forward progress during resolve-combat if any combat is unresolved, and won't allow back movement if any combat has begun.
-const NavLinks = ({ fwd, back }) => {
+const NavLinks = ({ fwd, back, text }) => {
   return (
     <div className="changePhase">
-      <Link to={fwd} className="btn">Done</Link>
+      <Link to={fwd} className="btn">{text || 'Done'}</Link>
       <Link to={back} className="btn">Back</Link>
     </div>
   )
 }
 
 const AdvanceButtonComponent = ({ phase, phases, advancePhase, previousPhase }) => {
-  if (['plan-combat', 'resolve-combat', 'move-units'].includes(phase)) {
-    return <NavLinks fwd={phases.next} back={phases.last} />
+  if (['plan-combat', 'resolve-combat', 'move-units', 'order-units'].includes(phase)) {
+    return <NavLinks fwd={phases.next} back={phases.last} text={phases.text} />
   } else {
     return (
       <div className="changePhase">

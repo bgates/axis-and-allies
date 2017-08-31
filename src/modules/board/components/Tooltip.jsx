@@ -94,6 +94,16 @@ const OrderUnitsTooltip = () => {
   )
 }
 
+const ConfirmFinishTooltip = () => {
+  return (
+    <div>
+      <p><strong>Click the Done button.</strong> If you are satisfied with your defensive assignments, click the <strong>Done</strong> button in the compass rose to end your turn.</p>
+      <p>Click a territory to change defensive assignments for combat units.</p>
+      <p><strong><span className="warning">Warning:</span> When you click the Done button, your turn will be over and you will not be able to undo any of your non-combat moves or change defensive assignments until your next turn.</strong></p>
+    </div>
+  )
+}
+
 const Tooltip = ({ territory, currentPower }) => {
   const { units = [], unitsFrom = [] } = territory
   const industry = units.find(unit => unit.name === 'industrial complex')
@@ -109,6 +119,7 @@ const Tooltip = ({ territory, currentPower }) => {
       <Route path="/land-planes" component={LandPlanesTooltip} />
       <Route path="/move-units" component={NonCombatMovementTooltip} />
       <Route path="/order-units" component={OrderUnitsTooltip} />
+      <Route path="/confirm-finish" component={ConfirmFinishTooltip} />
     </div>
   )
 }
