@@ -17,7 +17,7 @@ export const overlayPhase = createSelector(
 );
 
 export const advanceButtonPhase = (state) => {
-  return ['plan-combat', 'resolve-combat', 'confirm-land-planes', 'move-units', 'order-units'].includes(state.phase.current)
+  return ['plan-combat', 'resolve-combat', 'confirm-land-planes', 'move-units', 'order-units', 'confirm-finish'].includes(state.phase.current)
 };
 
 export const phases = createSelector(
@@ -31,7 +31,9 @@ export const phases = createSelector(
       return { next: 'place-units', last: 'land-planes' }
     } else if (phase === 'order-units') {
       return { next: 'confirm-finish', last: 'place-units', text: 'Order by Cost' }
-    } 
+    } else {
+      return {}
+    }
   } 
 )
 

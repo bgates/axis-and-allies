@@ -33,9 +33,10 @@ const powers = (state, action) => {
         return state.powers
       }
     case NEXT_TURN:
-      const currentPower = state.powers.find(power => power.current)
-      const nextPowerIndex = currentPower.name === 'China' ? 0 : state.indexOf(currentPower) + 1
-      return state.powers.map((power, n) => {
+      let powers = state.powers
+      const currentPower = powers.find(power => power.current)
+      const nextPowerIndex = currentPower.name === 'China' ? 0 : powers.indexOf(currentPower) + 1
+      return powers.map((power, n) => {
         if(power.current) {
           return omit('current', power) 
         } else if (n === nextPowerIndex) {

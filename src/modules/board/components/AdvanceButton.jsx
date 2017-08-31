@@ -6,30 +6,42 @@ import { push } from 'connected-react-router';
 import { phases } from '../selectors';
 import {
   SELECT_PLANE_LANDING_TERRITORY,
-  LAND_PLANES
+  LAND_PLANES,
+  NEXT_TURN 
 } from '../../../actions';
 
 const mapStateToProps = (state) => ({
-  phase: state.phase.current,
   phases: phases(state)
 })
 
-const advancePhase = () => {
+const changePhaseThunk = (dir = 'fwd') => {
   return (dispatch, getState) => {
     const state = getState()
-    dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes })
-    dispatch(push('/move-units'))
+    const { phase } = state 
+    const phases = {
+      'land-planes-fwd': () => {
+        console.log('landplanesfwd')
+        dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes })
+        dispatch(push('/move-units'))
+      },
+      'land-planes-back': () => dispatch({ type: SELECT_PLANE_LANDING_TERRITORY }),
+      'confirm-finish-fwd': () => {
+        dispatch({ type: NEXT_TURN })
+        dispatch(push('/'))
+      },
+      'confirm-finish-back': () => dispatch({ type: 'backToOrder' })
+    }
+    return phases[`${phase.current}-${dir}`]()
   }
 }
 
-const previousPhase = () => {
-  return { type: SELECT_PLANE_LANDING_TERRITORY }
-}
+const advancePhase = () => changePhaseThunk()
+const regressPhase = () => changePhaseThunk('back')
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     advancePhase,
-    previousPhase
+    regressPhase,
   }, dispatch)
 }
 
@@ -43,8 +55,8 @@ const NavLinks = ({ fwd, back, text }) => {
   )
 }
 
-const AdvanceButtonComponent = ({ phase, phases, advancePhase, previousPhase }) => {
-  if (['plan-combat', 'resolve-combat', 'move-units', 'order-units'].includes(phase)) {
+const AdvanceButtonComponent = ({ phases, advancePhase, previousPhase }) => {
+  if (typeof phases.next === 'string') {
     return <NavLinks fwd={phases.next} back={phases.last} text={phases.text} />
   } else {
     return (
