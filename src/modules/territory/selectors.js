@@ -5,7 +5,6 @@ import { nonIndustry } from '../../lib/unit';
 export const getFill = (territory) => {
   const { sea, original_power, currentPower } = territory;
   if (sea && original_power !== 'Oceans') {
-    console.log(currentPower, original_power)
     if (original_power === currentPower){
       return `url(#${original_power.toLowerCase()}_convoy)`
     } else {
@@ -28,7 +27,7 @@ const isOrdering = (phase, currentPowerName, territoryPower, units) => (
   phase === 'order-units' && 
   ((currentPowerName === territoryPower && 
     units.filter(nonIndustry).length > 1) || 
-  (territoryPower === 'Oceans' && 
+  (territoryPower === 'Oceans' && units &&
     units.filter(u => u.power === currentPowerName)
          .filter(nonIndustry).length > 1
   ))
