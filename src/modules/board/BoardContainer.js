@@ -28,19 +28,17 @@ const mapStateToProps = (state) => {
   }
 }
 
-const isUrl = (router, url) => router.location.pathname === url
-
 const territoryThunk = (territory) => {
   return (dispatch, getState) => {
-    let state = getState()
+    const state = getState()
     if (overlayPhase(state)) {
       return
     }
-    let { router, phase } = state 
+    const { router } = state 
     switch (router.location.pathname) {
       case '/': {
-        let nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
-        dispatch(push(nextUrl))
+        const nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
+        dispatch(push(nextUrl)) 
       } 
       case '/plan-combat': {
         dispatch(planAttack(territory))

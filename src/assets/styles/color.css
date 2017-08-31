@@ -108,6 +108,6 @@ path.active-combat {
   fill: url(#p-fire);
 }
 
-path.active {
+path.active, path.active-order-units {
   animation: blink 1s infinite;
 }

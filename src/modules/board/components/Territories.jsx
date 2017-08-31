@@ -117,9 +117,12 @@ class Territories extends Component {
           <ConvoyImages/>
           <FireImage />
           {this.props.board.map((territory, index) =>
-            <Territory territory={territory}
+            <Territory 
+              phase={this.props.phase.current}
+              territory={territory}
               setVisibility={this.setVisibility.bind(this, territory)}
               handleClick={this.props.territoryClick.bind(null, territory)}
+              activePower={this.props.currentPower.name}
               key={index} />
            )}
         </svg>

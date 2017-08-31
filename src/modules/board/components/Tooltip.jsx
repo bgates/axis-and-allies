@@ -85,6 +85,15 @@ const NonCombatMovementTooltip = () => {
   )
 }
 
+const OrderUnitsTooltip = () => {
+  return (
+    <div>
+      <p><strong>Order combat units for defense.</strong>Click on any territory or sea zone in which you have combat units to set the order in which they will be eliminated when defending.</p>
+      <p>Territories with multiple combat unit types whose defenses you have not reviewed this turn are blinking. Manually set the order for the units in as many territories as you like, then click the "Order by Cost" button.</p>
+    </div>
+  )
+}
+
 const Tooltip = ({ territory, currentPower }) => {
   const { units = [], unitsFrom = [] } = territory
   const industry = units.find(unit => unit.name === 'industrial complex')
@@ -99,6 +108,7 @@ const Tooltip = ({ territory, currentPower }) => {
       <Route path="/resolve-combat" component={ResolveCombatTooltip} />
       <Route path="/land-planes" component={LandPlanesTooltip} />
       <Route path="/move-units" component={NonCombatMovementTooltip} />
+      <Route path="/order-units" component={OrderUnitsTooltip} />
     </div>
   )
 }
