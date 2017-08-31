@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import Territory from './Territory'
-import { getFill, getClasses } from './selectors'
+import { getFill, getClasses, isOrdering } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
@@ -28,7 +28,7 @@ const territoryThunk = (territory) => {
     if (overlayPhase(state)) {
       return
     }
-    const { router } = state 
+    const { router, phase } = state 
     switch (router.location.pathname) {
       case '/': {
         const nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
@@ -52,7 +52,11 @@ const territoryThunk = (territory) => {
         dispatch(planMovement(territory))
       } 
       case '/order-units': {
-        dispatch(orderUnits(territory)) 
+        const currentPowerName = getCurrentPower(state).name;
+        const { currentPower, units } = territory;
+        if (isOrdering(phase.current, currentPowerName, currentPower, units)) {
+          dispatch(orderUnits(territory)) 
+        }
       } 
       default:  
         dispatch({ type: 'TERRITORY_CLICKED' })

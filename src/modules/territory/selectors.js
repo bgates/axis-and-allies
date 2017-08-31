@@ -23,7 +23,7 @@ const isActive = (newlyConquered, units) => (
   !!newlyConquered && units.filter(u => u.air).length
 )
 
-const isOrdering = (phase, currentPowerName, territoryPower, units) => (
+export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
   phase === 'order-units' && 
   ((currentPowerName === territoryPower && 
     units.filter(nonIndustry).length > 1) || 
