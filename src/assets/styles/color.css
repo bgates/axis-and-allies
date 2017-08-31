@@ -40,13 +40,16 @@ span.germany {
 }
 
 .italy {
-  fill: #2c3539;
-  background: #2c3539;
+  /*fill: #2c3539;
+  background: #2c3539;*/
+  fill: #152039;
+  background: #152039;
   color: #fff;
 }
 
 .italy:hover {
-  fill: #829ca8;
+  /*fill: #829ca8;*/
+  fill: #253059;
 }
 
 .us {

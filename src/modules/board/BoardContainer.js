@@ -1,6 +1,4 @@
-import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
 import Board from './components/Board'
 import { 
   overlayPhase,

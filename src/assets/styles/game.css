@@ -48,6 +48,9 @@ table.scroll strong {
 .scroll .available {
   width: 125px;
 }
+.purchase tbody td {
+  padding-left: 6px;
+}
 .purchase td img, .placement td img {
   max-height: 20px;
 }
