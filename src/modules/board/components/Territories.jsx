@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Territory from './Territory'
+import TerritoryContainer from '../../territory/TerritoryContainer'
 import Tooltip from './Tooltip'
 import ConvoyImages from './ConvoyImages'
 import FireImage from './FireImage'
@@ -117,12 +117,9 @@ class Territories extends Component {
           <ConvoyImages/>
           <FireImage />
           {this.props.board.map((territory, index) =>
-            <Territory 
-              phase={this.props.phase.current}
+            <TerritoryContainer
               territory={territory}
               setVisibility={this.setVisibility.bind(this, territory)}
-              handleClick={this.props.territoryClick.bind(null, territory)}
-              activePower={this.props.currentPower.name}
               key={index} />
            )}
         </svg>
