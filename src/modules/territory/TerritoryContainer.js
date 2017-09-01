@@ -29,10 +29,15 @@ const territoryThunk = (territory) => {
       return
     }
     const { router, phase } = state 
+    const currentPowerName = getCurrentPower(state).name
     switch (router.location.pathname) {
       case '/': {
-        const nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
-        dispatch(push(nextUrl)) 
+        if (currentPowerName === 'China') {
+          dispatch(push('/plan-combat'))
+        } else {
+          const nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
+          dispatch(push(nextUrl)) 
+        }
       } 
       case '/plan-combat': {
         dispatch(planAttack(territory))
@@ -52,7 +57,6 @@ const territoryThunk = (territory) => {
         dispatch(planMovement(territory))
       } 
       case '/order-units': {
-        const currentPowerName = getCurrentPower(state).name;
         const { currentPower, units } = territory;
         if (isOrdering(phase.current, currentPowerName, currentPower, units)) {
           dispatch(orderUnits(territory)) 
