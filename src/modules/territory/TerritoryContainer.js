@@ -30,41 +30,36 @@ const territoryThunk = (territory) => {
     }
     const { router, phase } = state 
     const currentPowerName = getCurrentPower(state).name
-    switch (router.location.pathname) {
-      case '/': {
+    const routes = {
+      '/': () => {
         if (currentPowerName === 'China') {
           dispatch(push('/plan-combat'))
         } else {
           const nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
           dispatch(push(nextUrl)) 
         }
-      } 
-      case '/plan-combat': {
-        dispatch(planAttack(territory))
-      } 
-      case '/resolve-combat': {
+      }, 
+      '/plan-combat': () => dispatch(planAttack(territory)),
+      '/resolve-combat': () => {
         // need logic to prevent dispatch if no combat
         if (territory.unitsFrom.length && territory.units.length) {
           dispatch(resolveCombat(territory))
         }
-      } 
-      case '/land-planes': {
+      },
+      '/land-planes': () => {
         if (territory.newlyConquered && territory.units.filter(u => u.air).length) {
           dispatch(planLandPlanes(territory))
         }
-      } 
-      case '/move-units': {
-        dispatch(planMovement(territory))
-      } 
-      case '/order-units': {
+      },
+      '/move-units': () => dispatch(planMovement(territory)),
+      '/order-units': () => {
         const { currentPower, units } = territory;
         if (isOrdering(phase.current, currentPowerName, currentPower, units)) {
           dispatch(orderUnits(territory)) 
         }
-      } 
-      default:  
-        dispatch({ type: 'TERRITORY_CLICKED' })
+      }
     }
+    routes[router.location.pathname]()
   }
 }
 
