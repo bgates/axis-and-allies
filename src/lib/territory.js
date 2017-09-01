@@ -4,7 +4,7 @@ import { isNotSubmerged } from './unit'
 export const isLand = (territory) => !territory.sea;
 export const isSea = (territory) => territory.sea;
 
-export const isChina = (territory) => territory.originalPower === 'China'; 
+export const isChina = (territory) => territory.original_power === 'China' || ['Hong Kong', 'Shantung', 'Shansi', 'Peking', 'Chahar', 'Northern Manchuria', 'Manchuria', 'Korea', 'Burma'].includes(territory.name); 
 
 export const isEnemy = (territory, currentPowerName) => {
   let rulingPower = territory.currentPower
@@ -39,6 +39,10 @@ export const isFriendly = (territory, currentPower) => {
   return !isNeutral(territory) && !isEnemy(territory, currentPower.name)
 }
 
+export const isAttackable = (territory, currentPower) => {
+  return currentPower === 'China' ? isChina(territory) && !isFriendly(territory, { name: currentPower }) :
+    !isFriendly(territory, { name: currentPower })
+}
 export const passableByLandUnit = (territory, currentPower) => {
   return isLand(territory) && isFriendly(territory, currentPower)
 }
