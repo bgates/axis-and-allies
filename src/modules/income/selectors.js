@@ -121,15 +121,16 @@ const AmericanNationalObjectives = (territoryNames) => {
 
 const objectivesByNation = (territories, ownedTerritories, powerName) => {
   const territoryNames = ownedTerritories.map(territory => territory.name)
-  switch (powerName) {
-    case 'Germany': return GermanNationalObjectives(territoryNames)
-    case 'USSR': return RussianNationalObjectives(territoryNames)
-    case 'Japan': return JapaneseNationalObjectives(territoryNames)
-    case 'UK': return BritishNationalObjectives(territoryNames)
-    case 'Italy': return ItalianNationalObjectives(territories, territoryNames)
-    case 'US': return AmericanNationalObjectives(territoryNames)
-    default: return []
+  const objectives = {
+    'Germany': GermanNationalObjectives(territoryNames),
+    'USSR': RussianNationalObjectives(territoryNames),
+    'Japan': JapaneseNationalObjectives(territoryNames),
+    'UK': BritishNationalObjectives(territoryNames),
+    'Italy': ItalianNationalObjectives(territories, territoryNames),
+    'US': AmericanNationalObjectives(territoryNames),
+    'China': []
   }
+  return objectives[powerName]
 }
 
 export const territoriesOwnedBy = createSelector(
