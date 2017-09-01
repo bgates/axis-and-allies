@@ -88,7 +88,7 @@ const BritishNationalObjectives = (territoryNames) => {
 }
 
 const alliedSurfaceShip = (unit) => {
-  const surfaceShips = unitTypes.filter(unit => unit.ship)
+  const surfaceShips = Object.values(unitTypes).filter(unit => unit.ship)
     .map(unit => unit.name)
   const allies = ['US', 'UK', 'USSR']
   return surfaceShips.includes(unit.name) && allies.includes(unit.power)
@@ -100,9 +100,9 @@ const mareNostrum = (territories) => {
 }
 
 const romanEmpire = (territories, territoryNames) => {
-  const originalHoldings = territories.filter(territory => territory.original_name === 'Italy')
-  const empire = ['Tobruk', 'Upper Egypt', 'Anglo-Egypt Sudan', 'Cairo', 'Cyprus', 'Malta']
-  return hasAll(originalHoldings + empire, territoryNames) ? 5 : 0
+  const originalHoldings = territories.filter(territory => territory.original_name === 'Italy').map(t => t.name)
+  const empire = ['Tobruk', 'Upper Egypt', 'Anglo-Egypt Sudan', 'Cairo', 'Cyprus', 'Malta'].concat(originalHoldings)
+  return hasAll(empire, territoryNames) ? 5 : 0
 }
 
 const ItalianNationalObjectives = (territories, territoryNames) => {
