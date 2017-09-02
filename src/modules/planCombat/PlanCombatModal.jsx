@@ -7,8 +7,8 @@ import Occupiers from './Occupiers';
 
 const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants }) => {
   const attacker = (unit, key) => {
-    let committed = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex')) || { ids: [] };
-    let strategicBombing = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex')) || { ids: [] };
+    let committed = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
+    let strategicBombing = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === 'strategicBomb') || { ids: [] };
     return (
       <Attacker 
         key={key}
@@ -66,5 +66,4 @@ const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants 
 // the rest of territory.prototype.updateDefences, getDefences, and all of WW2Defenses is basically here though
 export default PlanCombatModal
 // resources 43,44
-
 
