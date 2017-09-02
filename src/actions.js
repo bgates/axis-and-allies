@@ -59,7 +59,9 @@ export const roll = (phase, rolls) => (
   }
 )
 
-export const planAttack = (territory) => { type: PLAN_ATTACK, territory }
+export const planAttack = (territory) => (
+  { type: PLAN_ATTACK, territory }
+)
 
 export const planLandPlanes = (territory) => ( 
   {
@@ -76,7 +78,11 @@ export const winAttack = (territoryIndex, currentPower) => (
   }
  )
 
-export const planMovement = (territory) => { type: PLAN_MOVEMENT, territory }
+export const planMovement = (territory) => (
+  { type: PLAN_MOVEMENT, territory }
+)
 
-export const orderUnits = (territory) => { type: ORDER_UNITS, territory }
+export const orderUnits = (territory) => (
+  { type: ORDER_UNITS, territory }
+)
 
