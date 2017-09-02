@@ -28,7 +28,7 @@ export const consolidateUnits = (units) => {
     if (unit.name === 'transport') {
       return all.concat(unit);
     }
-    let match = all.find(u => unitMatch(u, unit, 'power')) 
+    let match = all.find(u => unitMatch(u, unit, 'power', 'attack', 'defend')) 
     if (match) {
       return all.map(u => u === match ? { ...u, ids: u.ids.concat(unit.ids) } : u)
     } else {

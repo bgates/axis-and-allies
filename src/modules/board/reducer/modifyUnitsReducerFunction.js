@@ -3,20 +3,30 @@ const count = (units, name) => (
 )
 
 const modify = (units) => {
-  let newUnits = units
-  const artilleryCount = count(units, 'artillery')
-  const infantryCount = count(units, 'infantry')
-  if (infantryCount > artilleryCount) {
-    const infantry = units.filter(u => u.name === 'infantry')
-    const supportedIds = infantry.ids.slice(0, artilleryCount)
-    const unsupportedIds = infantry.ids.slice(artilleryCount)
-    const supported = { ...infantry, attack: 2, ids: supportedIds }
-    const unsupported = { ...infantry, ids: unsupportedIds }
-    newUnits = [ unsupported, supported, ...units.filter(u => u !== infantry) ]
-  } else if (artilleryCount) {
-    newUnits = units.map(u => u.name === 'infantry' ? { ...u, attack: 2 } : u)
+  let newUnits = JSON.parse(JSON.stringify(units))
+  const supportable = Math.min(count(units, 'artillery'), count(units, 'infantry'))
+  if (supportable) {
+    newUnits = newUnits.map(u => u.name === 'infantry' ? { ...u, attack: 1 } : u)
+    let supportedCount = 0
+    let supportedInfantry = []
+    while (supportedCount < supportable) {
+      let countToBeSupported = supportable - supportedCount
+      let infantry = newUnits.find(u => u.name === 'infantry' && u.attack === 1)
+      newUnits = newUnits.filter(u => u !== infantry)
+      if (infantry.ids.length <= countToBeSupported) {
+        supportedInfantry = supportedInfantry.concat({ ...infantry, attack: 2 })
+        supportedCount += infantry.ids.length
+      } else {
+        const supportedIds = infantry.ids.slice(0, countToBeSupported)
+        const unsupportedIds = infantry.ids.slice(countToBeSupported)
+        const supported = { ...infantry, attack: 2, ids: supportedIds }
+        const unsupported = { ...infantry, ids: unsupportedIds }
+        supportedInfantry = supportedInfantry.concat(supported).concat(unsupported)
+        supportedCount += supported.ids.length
+      }
+    }
+    newUnits = [ ...supportedInfantry, ...units ]
   }
-  console.log(newUnits)
   return newUnits
 }
 
