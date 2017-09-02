@@ -1,4 +1,5 @@
 import { 
+  RESOLVE_COMBAT,
   TOGGLE_CASUALTY,
   REMOVE_CASUALTIES,
   COMMIT_UNITS,
@@ -25,10 +26,12 @@ import {
   defenderWins,
   attackerWins
 } from './casualtyReducerFunctions';
+import { modifyUnits } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
+    case RESOLVE_COMBAT: return modifyUnits(state, action);
     case COMMIT_UNITS: return commitUnits(state, action);
     case UNCOMMIT_UNITS: return uncommitUnits(state, action);
     case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);

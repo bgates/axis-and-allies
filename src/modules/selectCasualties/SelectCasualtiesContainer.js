@@ -70,9 +70,10 @@ const defenderWins = (territoryIndex) => {
 }
 
 const continueCombat = () => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const territory = getFocusTerritory(getState())
     dispatch(push('/resolve-combat'))
-    dispatch(resolveCombat())
+    dispatch(resolveCombat(territory))
   }
 }
 

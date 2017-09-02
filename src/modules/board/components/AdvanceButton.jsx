@@ -20,7 +20,6 @@ const changePhaseThunk = (dir = 'fwd') => {
     const { phase } = state 
     const phases = {
       'land-planes-fwd': () => {
-        console.log('landplanesfwd')
         dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes })
         dispatch(push('/move-units'))
       },
