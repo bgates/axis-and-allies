@@ -9,6 +9,7 @@ import { overlayPhase } from '../board'
 import { isAttackable } from '../../lib/territory'
 import { 
   planAttack, 
+  strategicBomb,
   resolveCombat, 
   planLandPlanes,
   planMovement,
@@ -48,7 +49,11 @@ const territoryThunk = (territory) => {
       '/resolve-combat': () => {
         // need logic to prevent dispatch if no combat
         if (territory.unitsFrom.length && territory.units.length) {
-          dispatch(resolveCombat(territory))
+          if (territory.unitsFrom.find(u => u.mission === 'strategicBomb')) {
+            dispatch(strategicBomb(territory))
+          } else {
+            dispatch(resolveCombat(territory))
+          }
         }
       },
       '/land-planes': () => {

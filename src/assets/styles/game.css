@@ -120,6 +120,11 @@ button.gameButton {
   left: 15%;
   width: 70%;
 }
+#modal.strategic-bomb {
+  left: 30%;
+  width: 40%;
+  top: 30%;
+}
 #modal.hidden {
   display: none
 }
