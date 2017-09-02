@@ -92,6 +92,13 @@ figcaption, .scroll span {
   height: 350px;
   overflow: scroll;
 }
+.committedUnits li {
+  position: relative;
+}
+.committedUnits li sup {
+  position: absolute;
+  top: 0;
+}
 button.gameButton {
   padding: 0 2px;
   margin: 0;
