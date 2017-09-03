@@ -145,6 +145,10 @@ button.gameButton {
     0px 9px 46px 8px rgba(0, 0, 0, 0.36);
 }
 
+#modal.strategic-bomb > div {
+  min-height: 300px;
+}
+
 #modal > div, #tooltip {
   background: #fff;
   border: 2px solid #000;

@@ -1,5 +1,5 @@
 import { sameSide } from '../config/initialPowers'
-import { isNotSubmerged } from './unit'
+import { isNotSubmerged, bombCapacity } from './unit'
 
 export const isLand = (territory) => !territory.sea;
 export const isSea = (territory) => territory.sea;
@@ -68,4 +68,8 @@ export const unitCount = (units,
       (unmovedOnly || !unit.moved) &&
       (notUsedInBattleOnly || !unit.usedInBattle)
   }).reduce((total, unit) => total + unit.ids.length)
+}
+
+export const bomberPayload = (territory) => {
+  return territory.unitsFrom.reduce((total, unit) => total + bombCapacity(unit), 0)
 }
