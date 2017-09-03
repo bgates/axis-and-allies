@@ -1,6 +1,7 @@
 import React from 'react';
 import Transport from './Transport';
 import { UnitFigTableData } from '../../components/UnitFigure';
+import { STRATEGIC_BOMB } from '../../actions';
 
 const Attacker = ({ 
   unit, 
@@ -111,7 +112,7 @@ const AirOptions = ({ unit, hasIndustry, index, action }) => {
         unit={unit} 
         index={index}
         action={action}
-        mission={'strategicBomb'}/>
+        mission={STRATEGIC_BOMB}/>
     </div>
   )
 }

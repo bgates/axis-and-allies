@@ -4,11 +4,12 @@ import { unitMatch } from '../../lib/unit';
 import { hasIndustrialComplex } from '../../lib/territory';
 import Attacker from './AttackerContainer';
 import Occupiers from './Occupiers';
+import { STRATEGIC_BOMB } from '../../actions';
 
 const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants }) => {
   const attacker = (unit, key) => {
     let committed = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
-    let strategicBombing = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === 'strategicBomb') || { ids: [] };
+    let strategicBombing = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === STRATEGIC_BOMB) || { ids: [] };
     return (
       <Attacker 
         key={key}
