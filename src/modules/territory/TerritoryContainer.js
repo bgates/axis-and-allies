@@ -6,14 +6,17 @@ import { getFill, getClasses, isOrdering } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
-import { isAttackable } from '../../lib/territory'
+import { isAttackable, bomberPayload } from '../../lib/territory'
+import dice from '../../lib/numericalDieRolls'
 import { 
   planAttack, 
+  STRATEGIC_BOMB,
   strategicBomb,
   resolveCombat, 
   planLandPlanes,
   planMovement,
-  orderUnits
+  orderUnits,
+  roll
 } from '../../actions';
 
 const mapStateToProps = (state, ownProps) => {
@@ -49,8 +52,11 @@ const territoryThunk = (territory) => {
       '/resolve-combat': () => {
         // need logic to prevent dispatch if no combat
         if (territory.unitsFrom.length && territory.units.length) {
-          if (territory.unitsFrom.find(u => u.mission === 'strategicBomb')) {
+          if (territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)) {
+            const rolls = dice(bomberPayload(territory))
+            dispatch(roll(STRATEGIC_BOMB, rolls))
             dispatch(strategicBomb(territory))
+            dispatch(push('/strategic-bomb'))
           } else {
             dispatch(resolveCombat(territory))
           }
