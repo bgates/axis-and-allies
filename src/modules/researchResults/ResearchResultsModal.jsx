@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import DiceResultsModal from '../../components/DiceResultsModal'
 
@@ -16,11 +16,10 @@ class ResearchResultsModal extends DiceResultsModal {
     const rolls = this.props.rolls.join(', ');
     const tech = this.props.developedTech
     const sentence = tech ? `You developed ${tech}!` : null;
-    const link = this.state.reveal ? this.rocketsOrPurchases() : null
     return (
       <div>
         <p>You rolled {rolls}. {sentence}</p> 
-        <nav className="forwardOnly">{link}</nav>
+        <nav className="forwardOnly">{this.rocketsOrPurchases()}</nav>
       </div>
     )
   }
