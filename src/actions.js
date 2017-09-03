@@ -14,6 +14,7 @@ export const LOAD_TRANSPORT = 'LOAD_TRANSPORT';
 export const COMMIT_AMPHIB_UNITS = 'COMMIT_AMPHIB_UNITS';
 export const UNCOMMIT_AMPHIB_UNITS = 'UNCOMMIT_AMPHIB_UNITS';
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
+export const STRATEGIC_BOMB_AFTERMATH = 'STRATEGIC_BOMB_AFTERMATH';
 export const RESOLVE_COMBAT = 'RESOLVE_COMBAT';
 export const ROLLS = 'ROLLS';
 export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY';
@@ -40,6 +41,10 @@ export const resolveCombat = (territory) => (
 
 export const strategicBomb = (territory) => (  
   { type: STRATEGIC_BOMB, territory }
+)
+
+export const strategicBombAftermath = (damage, power) => (  
+  { type: STRATEGIC_BOMB_AFTERMATH, damage, power }
 )
 
 export const removeCasualties = (defenderCasualties, territoryIndex, currentPower) => ( 

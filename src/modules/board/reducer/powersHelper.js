@@ -4,6 +4,7 @@ import {
   DEVELOP_TECH,
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
+  STRATEGIC_BOMB_AFTERMATH,
   NEXT_TURN
 } from '../../../actions';
 
@@ -32,7 +33,17 @@ const powers = (state, action) => {
       } else {
         return state.powers
       }
-    case NEXT_TURN:
+    case STRATEGIC_BOMB_AFTERMATH: {
+      let powers = state.powers 
+      return powers.map(power => {
+        if (power.name === action.power) {
+          return spendIPCs(power, action.damage)
+        } else {
+          return power
+        }
+      })
+    }
+    case NEXT_TURN: {
       let powers = state.powers
       const currentPower = powers.find(power => power.current)
       const nextPowerIndex = currentPower.name === 'China' ? 0 : powers.indexOf(currentPower) + 1
@@ -44,7 +55,8 @@ const powers = (state, action) => {
         } else {
           return power
         }
-      })
+      })              
+    }
     case DEVELOP_TECH:
       const assignTech = (power) => {
         return updateObject(power, { tech: power.tech.concat(action.tech) })
