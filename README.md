@@ -1,22 +1,7 @@
 there are multiple state components:
--turn phase
--whose turn
--board status (unit placement and territory control)
 -who is logged in
--power status (tech, cash, capital)
 
-then there are props, like territories.json (name, OP, ipc, adjacent, dimensions, sea, seaport, airport)
-
-much of what is displayed on the board is the same for every turn phase
-but what happens when a territory is clicked is phase-dependent
-the overlay is also phase-dependent
-
-it's not just that what is _displayed_ is phase-dependent, but what _events_ can occur are too. conditional event dispatch.
-the event to be dispatched from, say, a click on a territory, is phase-dependent. also, whether it is possible to use the back button ought to be phase-dependent; no going back and re-running certain actions.
-I ought to be able to generate that much: the sequence of events to get through a turn.
-
-
-now I get the first forward/back problem. when going from income to combat, currentPower has to get an amount, and when going back, that amount must be subtracted.
+whether it is possible to use the back button ought to be phase-dependent; no going back and re-running certain actions.
 
 to attack a territory,
 account for normal moves, amphib, blitz, & possible carrier landing
@@ -24,16 +9,12 @@ plus strategic bombing.
 
 there's not a clear line between units already there, and units being moved in - specifically, ships can be moved during combat phase to join existing pieces of same type.
 
-for load and move, each unit must be taken out of its origin territory and placed in destination; so must the transport
-no, the cargo can't be placed in _destination_, it must be placed in _transport_. otherwise no way to know which land units move back when a given transport uncommits.
-
-now instead of qty I keep track of ids for each unit. that way I can have per-unit data like cargo. when unit(s) move, their per-each data move with them.
 ok, in a territory, there are transports. the transports obj has an array of ids. (if only one transport, the array has a single member.)
 
 practice what I preach:
 -[] repair
 -[x] research
-  -[]save to fb
+  -[]save to firebase
   -[x]prevent back button from going too far
   -[x]if r&d spend, go back only to research results
 [] rockets
@@ -57,6 +38,7 @@ practice what I preach:
   -[] strategic bomb
   -[] sub strike
   -[] combat modifiers (banzai, etc)
+   -[x] artillery support
   -[x] display die rolls, then combat board
   -[x] display combat board
   -[x] automate defensive casualties
@@ -68,11 +50,12 @@ practice what I preach:
     -[] indicate units have moved
   -[x] finish all combat
 [] land planes
-  -[] carrier, land
+  -[x] land
+  -[] carrier
 [] noncombat movement
   -[] identify units which have not moved
-[] place purchases
-[] advance to next turn
+[x] place purchases
+[x] advance to next turn
 
 software issues
 []game creation
@@ -94,3 +77,9 @@ combat progression
 
 2nd battleboard: choices are 'roll for combat', 'back' (to casualty selection), or 'retreat options'.
 
+the problems are that I need to communicate landPlanes state to board state, and in a reversible way.
+
+I have assembled information into state.landPlanes. some action is needed to gather that state and pass it to the board reducer. the resulting state must be reversible, meaning some other action could take the landed planes out of their territories and put them back. 
+
+strategic bombing: 1st account for aa; then for dogfight; then for bomb itself
+then move on. 
