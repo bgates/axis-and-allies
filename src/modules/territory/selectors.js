@@ -37,7 +37,7 @@ export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
 export const getClasses = (state, territory) => {
   const currentPowerName = getCurrentPower(state).name;
   const phase = state.phase.current;
-  const { sea, units, unitsFrom, newlyConquered } = territory;
+  const { sea, units, unitsFrom } = territory;
   const territoryPower = territory.currentPower || ''
   const isOcean = sea && territoryPower === 'Oceans' 
   const isControlled = !sea && territoryPower.length
