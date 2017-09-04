@@ -33,17 +33,23 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   case ROLLS: {
     return { ...state, current: action.phase, minimum: action.phase }
   } 
-  case PLAN_ATTACK: {
-    return currentWithTerritory(state, 'plan-attack', action.territory)
-  } 
-  case PLAN_COMBAT: {
-    return currentWithout(state, 'plan-combat', 'territory')
-  } 
+  case STRATEGIC_BOMB: {
+    return currentWithTerritory(state, 'strategic-bomb', action.territory)
+  }
   case PLAN_LAND_PLANES: {
     return currentWithTerritory(state, 'plan-land-planes', action.territory)
   }
-  case STRATEGIC_BOMB: {
-    return currentWithTerritory(state, 'strategic-bomb', action.territory)
+  case PLAN_COMBAT: {
+    return currentWithout(state, 'plan-combat', 'territory')
+  } 
+  case PLAN_ATTACK: {
+    return currentWithTerritory(state, 'plan-attack', action.territory)
+  } 
+  case VIEW_TRANSPORT_LOAD_OPTIONS: {
+    return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }
+  }
+  case LOAD_TRANSPORT: {
+    return currentWithout(state, 'plan-attack', 'transport')
   }
   case RESOLVE_COMBAT: {
     return currentWithTerritory(state, 'combat', action.territory || state.territory)
@@ -51,20 +57,14 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   case REMOVE_CASUALTIES: {
     return { ...state, current: 'remove-casualties' }
   }
-  case VIEW_TRANSPORT_LOAD_OPTIONS: {
-    return { ...state, current: 'load-transport', transport: { unit: action.transport, id: action.id } }
-  }
-  case LOAD_TRANSPORT: {
-    return currentWithout(state, 'plan-attack', 'transport')
-  }
   case SELECT_PLANE_LANDING_TERRITORY: {
     return currentWithout(state, 'land-planes', 'territory')
   }
   case CONFIRM_LAND_PLANES: {
-    return currentWithout(state, 'confirm-land-planes')
+    return { ...state, current: 'confirm-land-planes' }
   }
   case ORDER_UNITS: {
-    return currentWithout(state, 'order-units-territory')
+    return currentWithout(state, 'order-units', 'territory')
   }
   default:
     return state
