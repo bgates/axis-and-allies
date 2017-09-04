@@ -19,11 +19,11 @@ const changePhaseThunk = (dir = 'fwd') => {
     const state = getState()
     const { phase } = state 
     const phases = {
-      'land-planes-fwd': () => {
+      'confirm-land-planes-fwd': () => {
         dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes })
         dispatch(push('/move-units'))
       },
-      'land-planes-back': () => dispatch({ type: SELECT_PLANE_LANDING_TERRITORY }),
+      'confirm-land-planes-back': () => dispatch({ type: SELECT_PLANE_LANDING_TERRITORY }),
       'confirm-finish-fwd': () => {
         dispatch({ type: NEXT_TURN })
         dispatch(push('/'))

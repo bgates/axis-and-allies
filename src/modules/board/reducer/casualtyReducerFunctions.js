@@ -1,7 +1,11 @@
-const survivingUnitsFrom = ({ unitsFrom, attackerCasualties }) => {
+const survivingUnitsFrom = ({ unitsFrom, attackerCasualties }, complete) => {
   const casualties = attackerCasualties || [];
   return unitsFrom.map(unit => (
-    { ...unit, ids: unit.ids.filter(id => !casualties.includes(id)) }
+    { 
+      ...unit, 
+      ids: unit.ids.filter(id => !casualties.includes(id)), 
+      mission: (complete ? 'complete' : undefined) 
+    }
   ))
 }
 
@@ -22,7 +26,7 @@ export const removeCasualties = (state, action) => {
         units: survivingUnits(territory.units, defenderCasualties)
       }
     } else if (territory.unitsFrom.length && !territory.units.length) {
-      //TODO: what about sea spaces?
+      //TODO: what about sea spaces? and does attackerWin replace this?
       return {
         ...territory,
         unitsFrom: [],
@@ -75,8 +79,8 @@ export const attackerWins = (state, action) => {
         ...territory, 
         currentPower: groundUnits.length ? currentPower : territory.currentPower,
         unitsFrom: [],
-        units: survivingUnitsFrom(territory),
-        newlyConquered: true
+        units: survivingUnitsFrom(territory, true),
+        newlyConquered: groundUnits.length
       }
     }
     return territory;
