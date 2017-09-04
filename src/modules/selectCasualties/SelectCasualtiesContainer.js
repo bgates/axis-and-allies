@@ -77,12 +77,12 @@ const continueCombat = () => {
   }
 }
 
-const continueOrAdvancePhase = (dispatch, state) => {
+export const continueOrAdvancePhase = (dispatch, state) => {
   if (noCombat(state)) {
     if (planesInAir(state)) {
       dispatch(push('/land-planes'))
     } else {
-      dispatch(push('/noncombat-movement'))
+      dispatch(push('/move-units'))
     }
   } else {
     dispatch(push('/resolve-combat'))
