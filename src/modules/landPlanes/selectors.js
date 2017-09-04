@@ -3,15 +3,16 @@ import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { territoriesInRange } from '../planCombat';
 import { nonNeutral, isLand } from '../../lib/territory';
+import { airComplete } from '../../lib/unit';
 export { getFocusTerritory }
 
-const territoryAir = (territory) => (
-  (territory.units || []).filter(u => u.air)
+const territoryAir = (units = []) => (
+  units.filter(airComplete)
 )
 
 export const airUnits = createSelector(
   getFocusTerritory,
-  territory => territoryAir(territory).map(u => ({ ...u, options: `${u.name}-${u.originName}` }))
+  territory => territoryAir(territory.units).map(u => ({ ...u, options: `${u.name}-${u.originName}` }))
 )
 
 export const landingOptions = createSelector(
@@ -43,8 +44,7 @@ const landingOptionsByUnit = (board, currentPower, territory, airUnits) => {
 }
 
 export const planesInAir = state => (
-  state.board.territories.filter(t => t.newlyConquered)
-             .filter(t => territoryAir(t).length).length
+  state.board.territories.filter(t => territoryAir(t.units).length).length
 )
 
 export const allLandingsPlanned = state => (

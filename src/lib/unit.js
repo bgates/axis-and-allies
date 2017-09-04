@@ -43,3 +43,5 @@ export const bombCapacity = (unit) => {
   } 
   return 0
 }
+
+export const airComplete = (unit) => unit.air && unit.mission === 'complete'

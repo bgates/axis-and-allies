@@ -6,7 +6,13 @@ import { getFill, getClasses, isOrdering } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
-import { isAttackable, bomberPayload } from '../../lib/territory'
+import { airComplete } from '../../lib/unit'
+import { 
+  isAttackable, 
+  isCombat,
+  isBombed,
+  bomberPayload,
+} from '../../lib/territory'
 import dice from '../../lib/numericalDieRolls'
 import { 
   planAttack, 
@@ -51,8 +57,8 @@ const territoryThunk = (territory) => {
       },
       '/resolve-combat': () => {
         // need logic to prevent dispatch if no combat
-        if (territory.unitsFrom.length && territory.units.length) {
-          if (territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)) {
+        if (isCombat(territory)) {
+          if (isBombed(territory)) {
             const rolls = dice(bomberPayload(territory))
             dispatch(roll(STRATEGIC_BOMB, rolls))
             dispatch(strategicBomb(territory))
@@ -63,7 +69,7 @@ const territoryThunk = (territory) => {
         }
       },
       '/land-planes': () => {
-        if (territory.newlyConquered && territory.units.filter(u => u.air).length) {
+        if (territory.units && territory.units.filter(airComplete).length) {
           dispatch(planLandPlanes(territory))
         }
       },
