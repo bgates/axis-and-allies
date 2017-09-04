@@ -41,5 +41,5 @@ export const victor = createSelector(
   }
 )
 
-export const noCombat = state => state.board.territories.filter(t => (t.unitsFrom || []).length && (t.units || []).length).length === 0
+export const noCombat = state => state.board.territories.filter(t => (t.unitsFrom || []).filter(u => u.mission !== 'complete').length && (t.units || []).length).length === 0
 

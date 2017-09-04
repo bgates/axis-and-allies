@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { continueOrAdvancePhase } from '../selectCasualties'
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
 import DiceResultsModal from '../../components/DiceResultsModal'
 import { strategicBombAftermath, STRATEGIC_BOMB } from '../../actions'
@@ -12,7 +13,13 @@ const mapStateToProps = (state) => {
   }
 }
 
-const advancePhase = (damage, power) => strategicBombAftermath(damage, power) 
+const advancePhase = (damage, power, territoryIndex) => {
+  return (dispatch, getState) => {
+    dispatch(strategicBombAftermath(damage, power, territoryIndex))
+    continueOrAdvancePhase(dispatch, getState())
+  }
+}
+
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ advancePhase }, dispatch)
@@ -32,7 +39,7 @@ class StrategicBombComponent extends DiceResultsModal {
         <div>
           <p>You rolled {rolls.join(', ')}, costing your enemy a total of {damage} I.P.C.s.</p> 
           <nav className="forwardOnly">
-            <button onClick={() => advancePhase(damage, territory.currentPower)}>
+            <button onClick={() => advancePhase(damage, territory.currentPower, territory.index)}>
               Continue
             </button>
           </nav>

@@ -1,4 +1,4 @@
-import SelectCasualtiesContainer from './SelectCasualtiesContainer';
+import SelectCasualtiesContainer, { continueOrAdvancePhase } from './SelectCasualtiesContainer';
 import { strengths, noCombat } from './selectors';
 
-export { SelectCasualtiesContainer, strengths, noCombat }
+export { SelectCasualtiesContainer, continueOrAdvancePhase, strengths, noCombat }

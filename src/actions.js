@@ -43,8 +43,13 @@ export const strategicBomb = (territory) => (
   { type: STRATEGIC_BOMB, territory }
 )
 
-export const strategicBombAftermath = (damage, power) => (  
-  { type: STRATEGIC_BOMB_AFTERMATH, damage, power }
+export const strategicBombAftermath = (damage, power, territoryIndex) => (  
+  { 
+    type: STRATEGIC_BOMB_AFTERMATH, 
+    damage, 
+    power,
+    territoryIndex
+  }
 )
 
 export const removeCasualties = (defenderCasualties, territoryIndex, currentPower) => ( 

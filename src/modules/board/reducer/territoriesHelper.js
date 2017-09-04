@@ -1,5 +1,6 @@
 import { 
   STRATEGIC_BOMB,
+  STRATEGIC_BOMB_AFTERMATH,
   RESOLVE_COMBAT,
   TOGGLE_CASUALTY,
   REMOVE_CASUALTIES,
@@ -27,13 +28,13 @@ import {
   defenderWins,
   attackerWins
 } from './casualtyReducerFunctions';
-import { strategicBomb } from './strategicBombReducerFunction';
+import { completeMission } from './completeMissionReducerFunction';
 import { modifyUnits } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
-    case STRATEGIC_BOMB: return strategicBomb(state, action);
+    case STRATEGIC_BOMB_AFTERMATH: return completeMission(state, action);
     case RESOLVE_COMBAT: return modifyUnits(state, action);
     case COMMIT_UNITS: return commitUnits(state, action);
     case UNCOMMIT_UNITS: return uncommitUnits(state, action);
