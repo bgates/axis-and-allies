@@ -25,7 +25,7 @@ const modify = (units) => {
         supportedCount += supported.ids.length
       }
     }
-    newUnits = [ ...supportedInfantry, ...units ]
+    newUnits = [ ...supportedInfantry, ...newUnits ]
   }
   return newUnits
 }
