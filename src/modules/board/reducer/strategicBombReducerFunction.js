@@ -1,3 +1,3 @@
-export const strategicBomb = () => {
-  
+export const strategicBomb = (state, action) => {
+  return state.territories 
 }

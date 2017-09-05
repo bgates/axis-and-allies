@@ -13,6 +13,7 @@ const SelectCasualtiesModal = ({
   attackDefeated,
   toggleCasualtyStatus,
   victor,
+  dogfight,
   nextStep
 }) => {
   const { attackers, defenders } = combatants;
@@ -56,6 +57,7 @@ const SelectCasualtiesModal = ({
       <h2>Attacker</h2>
       <BattleStatus
         victor={victor}
+        dogfight={dogfight}
         casualtyCount={attackerCasualtyCount}
         casualties={attackerCasualties}
         defenderCasualtiesCount={defenderCasualties.length}

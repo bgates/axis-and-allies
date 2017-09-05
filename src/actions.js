@@ -13,6 +13,7 @@ export const VIEW_TRANSPORT_LOAD_OPTIONS = 'VIEW_TRANSPORT_LOAD_OPTIONS';
 export const LOAD_TRANSPORT = 'LOAD_TRANSPORT';
 export const COMMIT_AMPHIB_UNITS = 'COMMIT_AMPHIB_UNITS';
 export const UNCOMMIT_AMPHIB_UNITS = 'UNCOMMIT_AMPHIB_UNITS';
+export const DOGFIGHT = 'DOGFIGHT';
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
 export const STRATEGIC_BOMB_AFTERMATH = 'STRATEGIC_BOMB_AFTERMATH';
 export const RESOLVE_COMBAT = 'RESOLVE_COMBAT';
@@ -34,6 +35,8 @@ export const UNCOMMIT_PLACE_ALL = 'UNCOMMIT_PLACE_ALL';
 export const PLACE_UNITS = 'PLACE_UNITS';
 export const ORDER_UNITS = 'ORDER_UNITS';
 export const NEXT_TURN = 'NEXT_TURN';
+
+export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
 export const resolveCombat = (territory) => (  
   { type: RESOLVE_COMBAT, territory }

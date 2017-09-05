@@ -4,7 +4,7 @@ const survivingUnitsFrom = ({ unitsFrom, attackerCasualties }, complete) => {
     { 
       ...unit, 
       ids: unit.ids.filter(id => !casualties.includes(id)), 
-      mission: (complete ? 'complete' : undefined) 
+      mission: (complete ? 'complete' : unit.mission) 
     }
   ))
 }
@@ -26,7 +26,7 @@ export const removeCasualties = (state, action) => {
         units: survivingUnits(territory.units, defenderCasualties)
       }
     } else if (territory.unitsFrom.length && !territory.units.length) {
-      //TODO: what about sea spaces? and does attackerWin replace this?
+      //TODO: what about sea spaces? 
       return {
         ...territory,
         unitsFrom: [],

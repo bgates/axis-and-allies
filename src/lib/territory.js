@@ -79,6 +79,10 @@ export const isCombat = (territory) => (
   territory.unitsFrom.length && territory.units.length
 )
 
+export const isDogfightable = (territory) => (
+  territory.units.find(u => u.air) && territory.unitsFrom.find(u => u.air)
+)
+
 export const isBombed = (territory) => (
   territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)
 )

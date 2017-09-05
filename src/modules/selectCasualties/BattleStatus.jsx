@@ -2,6 +2,7 @@ import React from 'react'
 
 const BattleStatus = ({ 
   victor,
+  dogfight,
   casualtyCount, 
   defenderCasualtiesCount,
   casualties, 
@@ -33,7 +34,7 @@ const BattleStatus = ({
     <nav>
       <span>{span}</span>
       <button 
-        onClick={(e) => { nextStep(victor, territoryIndex) }} 
+        onClick={(e) => { nextStep(victor, territoryIndex, dogfight) }} 
         disabled={disabled}>{btn}
       </button>
     </nav>

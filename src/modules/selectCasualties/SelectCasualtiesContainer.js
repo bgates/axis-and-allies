@@ -4,13 +4,16 @@ import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { combatants } from '../planCombat'
 import { planesInAir } from '../landPlanes'
-  
+import { bombRaid } from '../territory'
+import { isBombed } from '../../lib/territory'
+
 import { 
   getFocusTerritory, 
   attackerCasualties, 
   victor, 
   attackDefeated,
-  noCombat
+  noCombat,
+  isDogfight
 } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
@@ -18,6 +21,7 @@ import { resolveCombat, LOSE_ATTACK, winAttack } from '../../actions';
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
+  dogfight: isDogfight(state),
   combatants: combatants(state),
   strengths: strengths(state),
   defenderCasualties: defenderCasualties(state),
@@ -37,8 +41,10 @@ const toggleCasualtyStatus = (id, territoryIndex) => {
   }
 }
 
-const nextStep = (victor, territoryIndex) => {
-  if (victor === 'attacker') {
+const nextStep = (victor, territoryIndex, dogfight) => {
+  if (dogfight) {
+    return postDogfight(territoryIndex)
+  } else if (victor === 'attacker') {
     return attackerWins(territoryIndex)
   } else if (victor === 'defender') {
     return defenderWins(territoryIndex)
@@ -77,6 +83,19 @@ const continueCombat = () => {
   }
 }
 
+const postDogfight = (territoryIndex) => {
+  return (dispatch, getState) => {
+    console.log('in fct')
+    const territory = getFocusTerritory(getState())
+    if (isBombed(territory)) {
+      console.log('bombed!')
+      return bombRaid(dispatch, territory)
+    } else if (territory) {
+      // if combat, have it out
+    }
+    
+  }
+}
 export const continueOrAdvancePhase = (dispatch, state) => {
   if (noCombat(state)) {
     if (planesInAir(state)) {

@@ -30,13 +30,18 @@ const modify = (units) => {
   return newUnits
 }
 
+const changeTerritory = (territories, territoryIndex, callback) => (
+  territories.map((territory, index) => (
+    index === territoryIndex ? callback(territory) : territory
+  ))
+)
+
 export const modifyUnits = (state, action) => {
-  const territoryIndex = action.territory.index;
-  return state.territories.map((territory, index) => {
-    if (index === territoryIndex) {
-      return { ...territory, unitsFrom: modify(territory.unitsFrom) }
-    } else {
-      return territory
-    }
-  })
+  const callback = territory => ({ ...territory, unitsFrom: modify(territory.unitsFrom) })
+  return changeTerritory(state.territories, action.territory.index, callback)
+}
+
+export const dogfight = (state, action) => {
+  const callback = territory => ({ ...territory, dogfight: true })    
+  return changeTerritory(state.territories, action.territory.index, callback)
 }

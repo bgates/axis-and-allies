@@ -18,11 +18,15 @@ const _combatants = (currentPower, territory) => {
   const _attackers = combatUnits.filter(unit => {
     return sameSide(unit.power, currentPower.name);
   }).map(duplicateUnit);
-  const defenders = combatUnits.filter(unit => {
+  let defenders = combatUnits.filter(unit => {
     return !sameSide(unit.power, currentPower.name);
   }).map(duplicateUnit);
   let attackers = _attackers.concat(territory.unitsFrom || []);
   attackers = consolidateUnits(attackers);
+  if (territory.dogfight) {
+    defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
+    attackers = attackers.filter(u => u.air)
+  }
   return { attackers, defenders }
 }
 

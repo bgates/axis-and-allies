@@ -3,6 +3,7 @@ import {
   PLAN_ATTACK,
   VIEW_TRANSPORT_LOAD_OPTIONS,
   LOAD_TRANSPORT,
+  DOGFIGHT,
   STRATEGIC_BOMB,
   RESOLVE_COMBAT,
   ROLLS,
@@ -51,6 +52,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   case LOAD_TRANSPORT: {
     return currentWithout(state, 'plan-attack', 'transport')
   }
+  case DOGFIGHT: 
   case RESOLVE_COMBAT: {
     return currentWithTerritory(state, 'combat', action.territory || state.territory)
   }

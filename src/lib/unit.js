@@ -16,9 +16,11 @@ export const unitCount = (total, unit) => total + unit.ids.length;
 export const nonIndustry = (unit) => unit.name !== 'industrial complex';
 
 export const duplicateUnit = (original) => {
-  const props = ['attack', 'defend', 'power', 'name', 'originIndex', 'cargo', 'ids', 'mission'];
+  const props = ['attack', 'defend', 'power', 'name', 'originIndex', 'cargo', 'ids', 'mission', 'air'];
   return props.reduce((result, key) => { 
-    result[key] = original[key]; 
+    if (original[key]) {
+      result[key] = original[key]; 
+    }
     return result; 
   }, {});
 }

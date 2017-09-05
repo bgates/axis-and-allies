@@ -1,4 +1,5 @@
 import { 
+  DOGFIGHT,
   STRATEGIC_BOMB,
   STRATEGIC_BOMB_AFTERMATH,
   RESOLVE_COMBAT,
@@ -29,12 +30,13 @@ import {
   attackerWins
 } from './casualtyReducerFunctions';
 import { completeMission } from './completeMissionReducerFunction';
-import { modifyUnits } from './modifyUnitsReducerFunction';
+import { modifyUnits, dogfight } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
     case STRATEGIC_BOMB_AFTERMATH: return completeMission(state, action);
+    case DOGFIGHT: return dogfight(state, action);
     case RESOLVE_COMBAT: return modifyUnits(state, action);
     case COMMIT_UNITS: return commitUnits(state, action);
     case UNCOMMIT_UNITS: return uncommitUnits(state, action);

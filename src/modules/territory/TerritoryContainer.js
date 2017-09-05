@@ -9,6 +9,7 @@ import { overlayPhase } from '../board'
 import { airComplete } from '../../lib/unit'
 import { 
   isAttackable, 
+  isDogfightable,
   isCombat,
   isBombed,
   bomberPayload,
@@ -17,6 +18,7 @@ import dice from '../../lib/numericalDieRolls'
 import { 
   planAttack, 
   STRATEGIC_BOMB,
+  dogfight,
   strategicBomb,
   resolveCombat, 
   planLandPlanes,
@@ -58,11 +60,10 @@ const territoryThunk = (territory) => {
       '/resolve-combat': () => {
         // need logic to prevent dispatch if no combat
         if (isCombat(territory)) {
-          if (isBombed(territory)) {
-            const rolls = dice(bomberPayload(territory))
-            dispatch(roll(STRATEGIC_BOMB, rolls))
-            dispatch(strategicBomb(territory))
-            dispatch(push('/strategic-bomb'))
+          if (isDogfightable(territory)) {
+            dispatch(dogfight(territory))
+          } else if (isBombed(territory)) {
+            bombRaid(dispatch, territory)
           } else {
             dispatch(resolveCombat(territory))
           }
@@ -83,6 +84,13 @@ const territoryThunk = (territory) => {
     }
     routes[router.location.pathname]()
   }
+}
+
+export const bombRaid = (dispatch, territory) => {
+  const rolls = dice(bomberPayload(territory))
+  dispatch(roll(STRATEGIC_BOMB, rolls))
+  dispatch(strategicBomb(territory))
+  dispatch(push('/strategic-bomb'))
 }
 
 const mapDispatchToProps = (dispatch) => {
