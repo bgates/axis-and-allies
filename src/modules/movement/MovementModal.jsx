@@ -1,24 +1,19 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { unitMatch } from '../../lib/unit';
-//import Attacker from './AttackerContainer';
-//import Occupiers from './Occupiers';
+import Attacker from '../planCombat/AttackerContainer';
+import Occupiers from '../planCombat/Occupiers';
 
-const MovementModal = ({ territory, unitsInRange, planOtherMovement, combatants }) => {
+const MovementModal = ({ territory, unitsInRange, planOtherMovement, occupants }) => {
   const attacker = (unit, key) => {
     let committed = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
     return (
-      <div>unit</div>
-      /*
       <Attacker 
         key={key}
         unit={unit}
-        hasIndustry={hasIndustrialComplex(territory)}
         destinationIndex={territory.index}
         landAttack={!territory.sea}
-        committed={committed} 
-        />
-        */
+        committed={committed} />
     )
   }
   return (
@@ -27,7 +22,7 @@ const MovementModal = ({ territory, unitsInRange, planOtherMovement, combatants 
       <h1>Non-Combat Movement</h1>
       <p>Moving to: {territory.name}</p>
       <ReactTooltip place="bottom" type="info">
-        <p>To move units to this territory, move desired units in the "# Available" column to the "# Moved" column by pressing the <button>>></button> or <button>></button> buttons below. Remove units from the "# Attacking" column by pressing the <button>&lt;&lt;</button> or <button>&lt;</button> buttons below. Defending units are shown in the "Committed Units" column.</p>
+        <p>To move units to this territory, move desired units in the "# Available" column to the "# Moved" column by pressing the <button>>></button> or <button>></button> buttons below. Remove units from the "# Moved" column by pressing the <button>&lt;&lt;</button> or <button>&lt;</button> buttons below. Units in {territory.name} are shown in the "Committed Units" column.</p>
         <p>Note that some units may have several movement options, so be sure to choose the desired movement option for each unit.</p>
         <hr/>
         <p>When you are done choosing units to move into this territory, press <button>ok</button></p>
@@ -53,9 +48,9 @@ const MovementModal = ({ territory, unitsInRange, planOtherMovement, combatants 
         </div>
         <div className="committedUnits">
           <h3>Committed Units</h3>
-          {/*}<Occupiers 
-            combatants={combatants}
-            sea={territory.sea} />*/}
+          <Occupiers 
+            combatants={occupants}
+            sea={territory.sea} />
         </div>
       </div>
       <p>When you are done choosing units to move into this territory, press <button onClick={planOtherMovement}>ok</button></p>
