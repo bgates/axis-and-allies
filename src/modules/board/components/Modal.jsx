@@ -16,7 +16,7 @@ import { CombatRollsContainer } from '../../combatRolls'
 import { SelectCasualtiesContainer } from '../../selectCasualties'
 import { LandPlanesContainer } from '../../landPlanes'
 import RussianWinterModal from '../../russianWinter/RussianWinterModal'
-import MovementModal from '../../movement/MovementModal'
+import MovementContainer from '../../movement/MovementContainer'
 import { PlacementContainer } from '../../placement'
 import CarrierLoadingModal from '../../carrierLoading/CarrierLoadingModal'
 import OrderUnitsModal from '../../orderUnits/OrderUnitsModal'
@@ -40,7 +40,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path="/select-casualties" component={SelectCasualtiesContainer}/>
       <Route path="/land-planes" component={LandPlanesContainer}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
-      <Route path="/movement" component={MovementModal}/>
+      <Route path="/move-units" component={MovementContainer}/>
       <Route path="/place-units" component={PlacementContainer}/>
       <Route path="/load-carrier" component={CarrierLoadingModal}/>
       <Route path="/order-units" component={OrderUnitsModal}/>

@@ -34,8 +34,8 @@ practice what I preach:
    -[] sub movement
  -[x] enter undefended territory
 [] combat
-  -[] dogfight
-  -[] strategic bomb
+  -[x] dogfight
+  -[x] strategic bomb
   -[] sub strike
   -[] combat modifiers (banzai, etc)
    -[x] artillery support

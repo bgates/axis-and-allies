@@ -6,7 +6,7 @@ const pathRequiresOverlay = (pathname) => {
 };
 
 const phaseRequiresOverlay = (phase) => {
-  return ['plan-attack', 'plan-land-planes', 'load-transport', 'combat', 'select-casualties', 'order-units-territory'].includes(phase)
+  return ['plan-attack', 'plan-land-planes', 'load-transport', 'combat', 'select-casualties', 'plan-movement', 'order-units-territory'].includes(phase)
 };
 
 export const overlayPhase = createSelector(

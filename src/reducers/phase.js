@@ -8,6 +8,7 @@ import {
   RESOLVE_COMBAT,
   ROLLS,
   REMOVE_CASUALTIES,
+  PLAN_MOVEMENT,
   PLAN_LAND_PLANES,
   SELECT_PLANE_LANDING_TERRITORY,
   CONFIRM_LAND_PLANES,
@@ -64,6 +65,9 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   }
   case CONFIRM_LAND_PLANES: {
     return { ...state, current: 'confirm-land-planes' }
+  }
+  case PLAN_MOVEMENT: {
+    return currentWithTerritory(state, 'plan-movement', action.territory)
   }
   case ORDER_UNITS: {
     return currentWithout(state, 'order-units', 'territory')
