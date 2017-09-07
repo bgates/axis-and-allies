@@ -16,13 +16,13 @@ import {
 } from '../../lib/territory'
 import dice from '../../lib/numericalDieRolls'
 import { 
-  planAttack, 
+  viewAttackOptions, 
   STRATEGIC_BOMB,
   dogfight,
-  strategicBomb,
+  viewStrategicBombingResults,
   resolveCombat, 
-  planLandPlanes,
-  planMovement,
+  viewPlaneLandingOptions,
+  viewMovementOptions,
   orderUnits,
   roll
 } from '../../actions';
@@ -54,7 +54,7 @@ const territoryThunk = (territory) => {
       }, 
       '/plan-combat': () => {
         if (isAttackable(territory, currentPowerName)) {
-          dispatch(planAttack(territory))
+          dispatch(viewAttackOptions(territory))
         }
       },
       '/resolve-combat': () => {
@@ -71,10 +71,10 @@ const territoryThunk = (territory) => {
       },
       '/land-planes': () => {
         if (territory.units && territory.units.filter(airComplete).length) {
-          dispatch(planLandPlanes(territory))
+          dispatch(viewPlaneLandingOptions(territory))
         }
       },
-      '/move-units': () => dispatch(planMovement(territory)),
+      '/move-units': () => dispatch(viewMovementOptions(territory)),
       '/order-units': () => {
         const { currentPower, units } = territory;
         if (isOrdering(phase.current, currentPowerName, currentPower, units)) {
@@ -89,7 +89,7 @@ const territoryThunk = (territory) => {
 export const bombRaid = (dispatch, territory) => {
   const rolls = dice(bomberPayload(territory))
   dispatch(roll(STRATEGIC_BOMB, rolls))
-  dispatch(strategicBomb(territory))
+  dispatch(viewStrategicBombingResults(territory))
   dispatch(push('/strategic-bomb'))
 }
 

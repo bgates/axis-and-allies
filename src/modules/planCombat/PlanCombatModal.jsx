@@ -32,8 +32,8 @@ const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants 
         <hr/>
         <p>When you are done choosing your attacking units for this territory, press <button>ok</button><a>Battle Odds</a><a>Preview Battle Board</a></p>
       </ReactTooltip>
-      <div className="planAttack">
-        <div className="mobilizeAttack">
+      <div className="unitSelector">
+        <div>
           <table
             className="outer scroll"
             cellSpacing={0} 

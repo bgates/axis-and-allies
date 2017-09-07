@@ -27,8 +27,8 @@ const MovementModal = ({ territory, unitsInRange, planOtherMovement, occupants }
         <hr/>
         <p>When you are done choosing units to move into this territory, press <button>ok</button></p>
       </ReactTooltip>
-      <div className="planAttack">
-        <div className="mobilizeAttack">
+      <div className="unitSelector">
+        <div>
           <table
             className="outer scroll"
             cellSpacing={0} 

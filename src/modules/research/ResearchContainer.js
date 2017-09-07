@@ -7,8 +7,8 @@ import dice from '../../lib/numericalDieRolls'
 import ResearchModal from './ResearchModal'
 import { 
   DEVELOP_TECH,
-  INCREMENT_RESEARCH,
-  DECREMENT_RESEARCH,
+  INCREASE_RESEARCH_BUDGET,
+  DECREASE_RESEARCH_BUDGET,
   SET_TECH,
   ATTEMPT_RESEARCH,
   roll 
@@ -51,17 +51,9 @@ const setTech = (tech) => {
   }
 }
 
-const incrementResearch = () => {
-  return {
-    type: INCREMENT_RESEARCH
-  }
-}
+const incrementResearch = () => ({ type: INCREASE_RESEARCH_BUDGET })
 
-const decrementResearch = () => {
-  return {
-    type: DECREMENT_RESEARCH
-  }
-}
+const decrementResearch = () => ({ type: DECREASE_RESEARCH_BUDGET })
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 

@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import LoadTransport from './LoadTransport'
 import { getFocusTerritory, getLoadableUnits } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { LOAD_TRANSPORT, planAttack } from '../../actions';
+import { LOAD_TRANSPORT, viewAttackOptions } from '../../actions';
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
@@ -24,7 +24,7 @@ const loadUnits = (units, destinationIndex, transport) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     loadUnits,
-    planAttack
+    viewAttackOptions
   }, dispatch)
 }
 

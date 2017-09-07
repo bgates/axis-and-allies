@@ -2,7 +2,7 @@ import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { TransportFigure } from '../../components/UnitFigure';
 
-const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, planAttack }) => {
+const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAttackOptions }) => {
   return (
     <div>
       <a data-tip className="help">?</a>
@@ -33,7 +33,7 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, planAtt
         ))}
         </tbody>
       </table>
-      <p>To go back to the previous screen without loading and moving press <button onClick={planAttack.bind(null, territory)}>Cancel</button></p>
+      <p>To go back to the previous screen without loading and moving press <button onClick={viewAttackOptions.bind(null, territory)}>Cancel</button></p>
     </div> 
   )
 }

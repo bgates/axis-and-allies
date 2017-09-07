@@ -77,7 +77,7 @@ figcaption, .scroll span {
   font-style: italic;
   font-size: 75%;
 }
-.planAttack {
+.unitSelector {
   display: flex;
 }
 .committedUnits {
@@ -123,7 +123,7 @@ button.gameButton {
   top: 5%;
   width: 50%;
 }
-#modal.plan-attack {
+#modal.VIEW_ATTACK_OPTIONS {
   left: 15%;
   width: 70%;
 }

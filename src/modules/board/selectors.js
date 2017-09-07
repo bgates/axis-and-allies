@@ -1,12 +1,19 @@
 import { createSelector } from 'reselect';
 import { noCombat } from '../selectCasualties';
+import { 
+  PLAN_ATTACKS, 
+  VIEW_ATTACK_OPTIONS, 
+  VIEW_TRANSPORT_LOAD_OPTIONS, 
+  VIEW_MOVEMENT_OPTIONS,
+  VIEW_PLANE_LANDING_OPTIONS
+} from '../../actions';
 
 const pathRequiresOverlay = (pathname) => {
   return ['/research', '/research/results', '/rockets', '/purchase', '/income', '/strategic-bomb', '/combat-rolls', '/place-units'].includes(pathname)
 };
 
 const phaseRequiresOverlay = (phase) => {
-  return ['plan-attack', 'plan-land-planes', 'load-transport', 'combat', 'select-casualties', 'plan-movement', 'order-units-territory'].includes(phase)
+  return [VIEW_ATTACK_OPTIONS, VIEW_PLANE_LANDING_OPTIONS, VIEW_TRANSPORT_LOAD_OPTIONS, 'combat', 'select-casualties', VIEW_MOVEMENT_OPTIONS, 'order-units-territory'].includes(phase)
 };
 
 export const overlayPhase = createSelector(
@@ -17,14 +24,14 @@ export const overlayPhase = createSelector(
 );
 
 export const advanceButtonPhase = (state) => {
-  return ['plan-combat', 'resolve-combat', 'confirm-land-planes', 'move-units', 'order-units', 'confirm-finish'].includes(state.phase.current)
+  return [PLAN_ATTACKS, 'confirm-land-planes', 'move-units', 'order-units', 'confirm-finish'].includes(state.phase.current)
 };
 
 export const phases = createSelector(
   noCombat,
   state => state.phase.current,
   (noCombat, phase) => {
-    if (['plan-combat', 'resolve-combat'].includes(phase)) {
+    if ([PLAN_ATTACKS, 'resolve-combat'].includes(phase)) {
       const next = noCombat ? 'move-units' : 'resolve-combat';
       return { next, last: 'income' }
     } else if (phase === 'move-units') {

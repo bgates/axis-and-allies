@@ -1,8 +1,8 @@
 import {
   SET_TECH,
   DEVELOP_TECH,
-  INCREMENT_RESEARCH,
-  DECREMENT_RESEARCH
+  INCREASE_RESEARCH_BUDGET,
+  DECREASE_RESEARCH_BUDGET
 } from '../../actions';
 
 const research = (state = { attempts: 0 }, action) => {
@@ -15,9 +15,9 @@ const research = (state = { attempts: 0 }, action) => {
       }
     case DEVELOP_TECH:
       return { ...state, developedTech: action.tech }
-    case INCREMENT_RESEARCH:
+    case INCREASE_RESEARCH_BUDGET:
       return { ...state, attempts: state.attempts + 1 }
-    case DECREMENT_RESEARCH:
+    case DECREASE_RESEARCH_BUDGET:
       return { ...state, attempts: state.attempts - 1 }
     default:
       return state
