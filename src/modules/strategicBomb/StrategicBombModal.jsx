@@ -4,18 +4,19 @@ import { connect } from 'react-redux'
 import { continueOrAdvancePhase } from '../selectCasualties'
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
 import DiceResultsModal from '../../components/DiceResultsModal'
-import { strategicBombAftermath, STRATEGIC_BOMB } from '../../actions'
+import { viewStrategicBombingResults } from '../../actions'
+import PATHS from '../../paths'
 
 const mapStateToProps = (state) => {
   return {
     territory: getFocusTerritory(state),
-    rolls: state.rolls[STRATEGIC_BOMB]
+    rolls: state.rolls[PATHS.STRATEGIC_BOMB]
   }
 }
 
 const advancePhase = (damage, power, territoryIndex) => {
   return (dispatch, getState) => {
-    dispatch(strategicBombAftermath(damage, power, territoryIndex))
+    dispatch(viewStrategicBombingResults(damage, power, territoryIndex))
     continueOrAdvancePhase(dispatch, getState())
   }
 }

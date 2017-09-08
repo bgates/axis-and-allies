@@ -1,7 +1,7 @@
 import { 
   DOGFIGHT,
   STRATEGIC_BOMB,
-  STRATEGIC_BOMB_AFTERMATH,
+  VIEW_STRATEGIC_BOMBING_RESULTS,
   RESOLVE_COMBAT,
   TOGGLE_CASUALTY,
   REMOVE_CASUALTIES,
@@ -35,7 +35,7 @@ import { placeUnits } from './placeUnitReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
-    case STRATEGIC_BOMB_AFTERMATH: return completeMission(state, action);
+    case VIEW_STRATEGIC_BOMBING_RESULTS: return completeMission(state, action);
     case DOGFIGHT: return dogfight(state, action);
     case RESOLVE_COMBAT: return modifyUnits(state, action);
     case COMMIT_UNITS: return commitUnits(state, action);

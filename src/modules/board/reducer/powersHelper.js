@@ -4,7 +4,7 @@ import {
   DEVELOP_TECH,
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
-  STRATEGIC_BOMB_AFTERMATH,
+  VIEW_STRATEGIC_BOMBING_RESULTS,
   NEXT_TURN
 } from '../../../actions';
 
@@ -33,7 +33,7 @@ const powers = (state, action) => {
       } else {
         return state.powers
       }
-    case STRATEGIC_BOMB_AFTERMATH: {
+    case VIEW_STRATEGIC_BOMBING_RESULTS: {
       let powers = state.powers 
       return powers.map(power => {
         if (power.name === action.power) {
