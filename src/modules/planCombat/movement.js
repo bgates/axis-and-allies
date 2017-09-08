@@ -66,13 +66,13 @@ const transportOrMovedTo = (territory, unit) => {
 
 const amphibUnitsInRange = (board, currentPower, territory) => {
   let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
-  let transports = territories.reduce((transports, territory) => {
+  let activeTransports = territories.reduce((transports, territory) => {
     let territoryTransports = territory.unitsFrom.filter(unit => {
       return unit.cargo && unit.power === currentPower.name
     })
     return [...transports, ...territoryTransports.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index }))]
   }, []);
-  return transports;
+  return activeTransports;
 }
 
 const seaUnitsInRange = (board, currentPower, territory) => {
