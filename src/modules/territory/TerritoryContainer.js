@@ -19,13 +19,14 @@ import {
   viewAttackOptions, 
   STRATEGIC_BOMB,
   dogfight,
-  viewStrategicBombingResults,
+  strategicBombingRolls,
   resolveCombat, 
   viewPlaneLandingOptions,
   viewMovementOptions,
   orderUnits,
   roll
 } from '../../actions';
+import PATHS from '../../paths';
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -46,18 +47,18 @@ const territoryThunk = (territory) => {
     const routes = {
       '/': () => {
         if (currentPowerName === 'China') {
-          dispatch(push('/plan-combat'))
+          dispatch(push(PATHS.PLAN_ATTACKS))
         } else {
-          const nextUrl = hasDamagedShipsInHarbor(state) ? 'repair' : 'research'
+          const nextUrl = hasDamagedShipsInHarbor(state) ? PATHS.REPAIR : PATHS.RESEARCH
           dispatch(push(nextUrl)) 
         }
       }, 
-      '/plan-combat': () => {
+      [PATHS.PLAN_ATTACKS]: () => {
         if (isAttackable(territory, currentPowerName)) {
           dispatch(viewAttackOptions(territory))
         }
       },
-      '/resolve-combat': () => {
+      [PATHS.RESOLVE_COMBAT]: () => {
         // need logic to prevent dispatch if no combat
         if (isCombat(territory)) {
           if (isDogfightable(territory)) {
@@ -69,13 +70,13 @@ const territoryThunk = (territory) => {
           }
         }
       },
-      '/land-planes': () => {
+      [PATHS.LAND_PLANES]: () => {
         if (territory.units && territory.units.filter(airComplete).length) {
           dispatch(viewPlaneLandingOptions(territory))
         }
       },
-      '/move-units': () => dispatch(viewMovementOptions(territory)),
-      '/order-units': () => {
+      [PATHS.PLAN_MOVEMENT]: () => dispatch(viewMovementOptions(territory)),
+      [PATHS.ORDER_UNITS]: () => {
         const { currentPower, units } = territory;
         if (isOrdering(phase.current, currentPowerName, currentPower, units)) {
           dispatch(orderUnits(territory)) 
@@ -88,9 +89,9 @@ const territoryThunk = (territory) => {
 
 export const bombRaid = (dispatch, territory) => {
   const rolls = dice(bomberPayload(territory))
-  dispatch(roll(STRATEGIC_BOMB, rolls))
-  dispatch(viewStrategicBombingResults(territory))
-  dispatch(push('/strategic-bomb'))
+  dispatch(roll(PATHS.STRATEGIC_BOMB, rolls))
+  dispatch(strategicBombingRolls(territory))
+  dispatch(push(PATHS.STRATEGIC_BOMB))
 }
 
 const mapDispatchToProps = (dispatch) => {

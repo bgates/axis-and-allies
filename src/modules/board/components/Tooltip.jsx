@@ -6,7 +6,7 @@ import { matchingUnit } from '../../../lib/Parser';
 import { powerData } from '../../../config/initialPowers';
 import '../../../assets/styles/tooltip.css';
 import industryImg from '../../../assets/images/industrial_complex.png';
-
+import PATHS from '../../../paths';
 
 const Units = ({ units, unitsFrom }) => {
   const combatUnits = units.filter(u => u.name !== 'industrial complex' && u.ids.length);
@@ -113,13 +113,13 @@ const Tooltip = ({ territory, currentPower }) => {
       <Units units={units} unitsFrom={unitsFrom} />
       <Route exact path="/" 
         render={() => <StartTooltip currentPower={currentPower} />} />
-      <Route path="/repair" component={RepairTooltip} />
-      <Route path="/plan-combat" component={PlanCombatTooltip} />
-      <Route path="/resolve-combat" component={ResolveCombatTooltip} />
-      <Route path="/land-planes" component={LandPlanesTooltip} />
-      <Route path="/move-units" component={NonCombatMovementTooltip} />
-      <Route path="/order-units" component={OrderUnitsTooltip} />
-      <Route path="/confirm-finish" component={ConfirmFinishTooltip} />
+      <Route path={PATHS.REPAIR} component={RepairTooltip} />
+      <Route path={PATHS.PLAN_ATTACKS} component={PlanCombatTooltip} />
+      <Route path={PATHS.RESOLVE_COMBAT} component={ResolveCombatTooltip} />
+      <Route path={PATHS.LAND_PLANES} component={LandPlanesTooltip} />
+      <Route path={PATHS.PLAN_MOVEMENT} component={NonCombatMovementTooltip} />
+      <Route path={PATHS.ORDER_UNITS} component={OrderUnitsTooltip} />
+      <Route path={PATHS.CONFIRM_FINISH} component={ConfirmFinishTooltip} />
     </div>
   )
 }

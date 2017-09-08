@@ -2,8 +2,9 @@ import React from 'react';
 import { PowersContainer } from '../../powers';
 import { Route, Redirect } from 'react-router-dom'
 import Territories from './Territories';
+import PATHS from '../../../paths';
 
-const paths = ['start', 'repair', 'research', 'research/results', 'rockets', 'rockets/results', 'purchase', 'income', 'lend-lease', 'plan-combat', 'resolve-combat', 'select-casualties', 'land-planes', 'move-units', 'place-units', 'order-units', 'confirm-finish']
+const paths = Object.values(PATHS);
 
 const BoardWithRedirect = (props) => {
   const currentPath = props.router.location.pathname.replace('/', '') || 'start'

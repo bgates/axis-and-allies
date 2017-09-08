@@ -67,9 +67,9 @@ const place = () => {
       currentPower
     })
     if (false) {
-      dispatch(push('/load-carriers'))
+      dispatch(push('load-carriers'))
     } else {
-      dispatch(push('/order-units'))
+      dispatch(push('order-units'))
     }
   }
 }

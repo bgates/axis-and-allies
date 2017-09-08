@@ -13,6 +13,7 @@ import {
   ATTEMPT_RESEARCH,
   roll 
 } from '../../actions'
+import PATHS from '../../paths'
 
 const mapStateToProps = (state) => {
   return {
@@ -28,7 +29,7 @@ const attemptResearch = () => {
     const { research } = state 
     const currentPower = getCurrentPower(state)
     const rolls = dice(research.attempts)
-    dispatch(roll('RESEARCH_RESULTS', rolls))
+    dispatch(roll(PATHS.RESEARCH_RESULTS, rolls))
     dispatch({
       type: ATTEMPT_RESEARCH,
       cost: research.attempts * researchOptions.cost
@@ -40,7 +41,7 @@ const attemptResearch = () => {
         tech: research.selectedTech
       })
     }
-    dispatch(push('research/results'))
+    dispatch(push(PATHS.RESEARCH_RESULTS))
   }
 }
 

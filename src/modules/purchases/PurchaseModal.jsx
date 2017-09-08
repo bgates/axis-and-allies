@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { UnitImg } from '../../components/UnitFigure'
+import PATHS from '../../paths'
 
 const PurchaseModal = ({ budget, buildableUnits, purchases, total, increment, decrement, previous, currentPower }) => {
   return (
@@ -49,7 +50,7 @@ const PurchaseModal = ({ budget, buildableUnits, purchases, total, increment, de
       </table>
       <nav>
         <Link to={previous} className="btn">Back</Link>
-        <Link to="/income" className="btn">Purchase</Link>
+        <Link to={PATHS.INCOME} className="btn">Purchase</Link>
       </nav>
     </div>
   )

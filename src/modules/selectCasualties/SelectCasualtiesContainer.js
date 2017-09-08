@@ -78,17 +78,15 @@ const defenderWins = (territoryIndex) => {
 const continueCombat = () => {
   return (dispatch, getState) => {
     const territory = getFocusTerritory(getState())
-    dispatch(push('/resolve-combat'))
+    dispatch(push('resolve-combat'))
     dispatch(resolveCombat(territory))
   }
 }
 
 const postDogfight = (territoryIndex) => {
   return (dispatch, getState) => {
-    console.log('in fct')
     const territory = getFocusTerritory(getState())
     if (isBombed(territory)) {
-      console.log('bombed!')
       return bombRaid(dispatch, territory)
     } else if (territory) {
       // if combat, have it out
@@ -99,12 +97,12 @@ const postDogfight = (territoryIndex) => {
 export const continueOrAdvancePhase = (dispatch, state) => {
   if (noCombat(state)) {
     if (planesInAir(state)) {
-      dispatch(push('/land-planes'))
+      dispatch(push('land-planes'))
     } else {
-      dispatch(push('/move-units'))
+      dispatch(push('plan-movement'))
     }
   } else {
-    dispatch(push('/resolve-combat'))
+    dispatch(push('resolve-combat'))
   }
 }
 

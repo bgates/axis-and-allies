@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import PATHS from '../../paths'
 
 const IncomeModal = ({ currentPower, npl, objectives, nextNpl }) => {
   return (
@@ -12,8 +13,8 @@ const IncomeModal = ({ currentPower, npl, objectives, nextNpl }) => {
       <NationalObjectives objectives={objectives} />
       <p> so you will be able to use {nextNpl} <abbr title="Industrial Production Certificates">I.P.C.s</abbr> next turn</p>
       <nav>
-        <Link to="/purchase" className="btn">Back</Link>
-        <Link to="/plan-combat" className="btn">Plan Combat</Link>
+        <Link to={PATHS.PURCHASE} className="btn">Back</Link>
+        <Link to={PATHS.PLAN_ATTACKS} className="btn">Plan Combat</Link>
       </nav>
     </div>
   )

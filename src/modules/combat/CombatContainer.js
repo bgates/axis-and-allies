@@ -8,6 +8,7 @@ import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatR
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { removeCasualties, roll } from '../../actions';
 import dice from '../../lib/numericalDieRolls'
+import PATHS from '../../paths'
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -23,8 +24,8 @@ const rollForCombat = (territoryIndex) => {
     const state = getState();
     dispatch(removeCasualties(defenderCasualties(state), territoryIndex, getCurrentPower(state).name))
     const rolls = dice(rollCount(getState()));
-    dispatch(roll('COMBAT_ROLLS', rolls))
-    dispatch(push('combat-rolls'));
+    dispatch(roll(PATHS.COMBAT_ROLLS, rolls))
+    dispatch(push(PATHS.COMBAT_ROLLS));
   }
 }
 

@@ -1,8 +1,7 @@
 import { createSelector } from 'reselect';
 import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
+import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { unitsInRange as tooBroadUnits } from '../planCombat';
-import { sameSide } from '../../config/initialPowers';
 import { consolidateUnits, nonIndustry, duplicateUnit } from '../../lib/unit';
 export { getCurrentPower, getFocusTerritory }
 

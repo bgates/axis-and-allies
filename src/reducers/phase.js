@@ -29,7 +29,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   switch (action.type) {
   case '@@router/LOCATION_CHANGE': {
     const { pathname } = action.payload.location;
-    const current = pathname === '/' ? 'start' : pathname.replace('/', '');
+    const current = pathname === '/' ? 'start' : pathname;
     return { ...state, current }
   }
   case ROLLS: {

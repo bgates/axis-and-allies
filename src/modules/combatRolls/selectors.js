@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { combatants } from '../planCombat';
 import { unitCount } from '../../lib/unit';
+import PATHS from '../../paths';
 
 const _strengths = (combatants) => {
   const { attackers, defenders } = combatants;
@@ -30,7 +31,7 @@ const arrangeRolls = (combatants, strengths, rolls = []) => {
 export const combatRolls = createSelector(
   combatants,
   strengths,
-  state => state.rolls['COMBAT_ROLLS'],
+  state => state.rolls[PATHS.COMBAT_ROLLS],
   (combatants, strengths, rolls) => arrangeRolls(combatants, strengths, rolls)
 )
 

@@ -9,6 +9,7 @@ import {
   LAND_PLANES,
   NEXT_TURN 
 } from '../../../actions';
+import PATHS from '../../../paths';
 
 const mapStateToProps = (state) => ({
   phases: phases(state)
@@ -21,7 +22,7 @@ const changePhaseThunk = (dir = 'fwd') => {
     const phases = {
       'confirm-land-planes-fwd': () => {
         dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes })
-        dispatch(push('/move-units'))
+        dispatch(push(PATHS.PLAN_MOVEMENT))
       },
       'confirm-land-planes-back': () => dispatch({ type: SELECT_PLANE_LANDING_TERRITORY }),
       'confirm-finish-fwd': () => {

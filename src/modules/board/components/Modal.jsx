@@ -20,30 +20,31 @@ import MovementContainer from '../../movement/MovementContainer'
 import { PlacementContainer } from '../../placement'
 import CarrierLoadingModal from '../../carrierLoading/CarrierLoadingModal'
 import OrderUnitsModal from '../../orderUnits/OrderUnitsModal'
+import PATHS from '../../../paths'
 
 const Modal = ({ ctrlPressed, phase }) => {
   const classes = classNames('modal', phase, { hidden: ctrlPressed })
   return (
     <div id='modal' className={classes}>
-      <Route path="/repair" component={RepairModal}/>
-      <Route exact path="/research" component={ResearchContainer}/>
-      <Route path="/research/results" component={ResearchResultsContainer}/>
-      <Route exact path="/rockets" component={RocketAttackContainer}/>
-      <Route path="/rockets/results" component={RocketResultsModal}/>
-      <Route path="/purchase" component={PurchaseContainer}/>
-      <Route path="/income" component={IncomeContainer}/>
-      <Route path="/lend-lease" component={LendLeaseModal}/>
-      <Route path="/plan-combat" component={PlanContainer}/>
-      <Route path="/strategic-bomb" component={StrategicBombModal}/>
-      <Route path="/resolve-combat" component={CombatContainer}/>
-      <Route path="/combat-rolls" component={CombatRollsContainer}/>
-      <Route path="/select-casualties" component={SelectCasualtiesContainer}/>
+      <Route path={PATHS.REPAIR} component={RepairModal}/>
+      <Route path={PATHS.RESEARCH} component={ResearchContainer}/>
+      <Route path={PATHS.RESEARCH_RESULTS} component={ResearchResultsContainer}/>
+      <Route exact path={PATHS.ROCKETS} component={RocketAttackContainer}/>
+      <Route path={PATHS.ROCKET_RESULTS} component={RocketResultsModal}/>
+      <Route path={PATHS.PURCHASE} component={PurchaseContainer}/>
+      <Route path={PATHS.INCOME} component={IncomeContainer}/>
+      <Route path={PATHS.LEND_LEASE} component={LendLeaseModal}/>
+      <Route path={PATHS.PLAN_ATTACKS} component={PlanContainer}/>
+      <Route path={PATHS.STRATEGIC_BOMB} component={StrategicBombModal}/>
+      <Route path={PATHS.RESOLVE_COMBAT} component={CombatContainer}/>
+      <Route path={PATHS.COMBAT_ROLLS} component={CombatRollsContainer}/>
+      <Route path={PATHS.SELECT_CASUALTIES} component={SelectCasualtiesContainer}/>
       <Route path="/land-planes" component={LandPlanesContainer}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
-      <Route path="/move-units" component={MovementContainer}/>
-      <Route path="/place-units" component={PlacementContainer}/>
+      <Route path={PATHS.PLAN_MOVEMENT} component={MovementContainer}/>
+      <Route path={PATHS.PLACE_UNITS} component={PlacementContainer}/>
       <Route path="/load-carrier" component={CarrierLoadingModal}/>
-      <Route path="/order-units" component={OrderUnitsModal}/>
+      <Route path={PATHS.ORDER_UNITS} component={OrderUnitsModal}/>
     </div>
   )
 }
