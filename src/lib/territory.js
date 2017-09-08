@@ -41,9 +41,14 @@ export const isFriendly = (territory, currentPower) => {
 }
 
 export const isAttackable = (territory, currentPower) => {
-  return currentPower === 'China' ? isChina(territory) && !isFriendly(territory, { name: currentPower }) :
-    !isFriendly(territory, { name: currentPower })
+  const unfriendly = !isFriendly(territory, { name: currentPower }) 
+  if (currentPower === 'China') {
+    return isChina(territory) && unfriendly
+  } else {
+    return isSea(territory) || unfriendly
+  }
 }
+
 export const passableByLandUnit = (territory, currentPower) => {
   return isLand(territory) && isFriendly(territory, currentPower)
 }
