@@ -12,7 +12,6 @@ export const previousPhase = createSelector(
   hasDamagedShipsInHarbor,
   state => state.phase,
   (currentPower, board, hasRockets, hasDamagedShips, phase) => {
-    console.log(phase, PATHS.PURCHASE)
     const phases = {
       [PATHS.REPAIR]: () => 'start',
       [PATHS.RESEARCH]: () => hasDamagedShips ? PATHS.REPAIR : 'start',
