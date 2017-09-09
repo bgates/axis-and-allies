@@ -55,15 +55,15 @@ export const commitAmphibUnits = (state, action) => {
   });
 }
 
-export const uncommitUnits = (state, action) => {
+export const uncommitUnits = ({ territories }, action) => {
   let { unit, destinationIndex, ids } = action;
   let cargoOrigin, transport, id;
   if (unit.transport) {
     id = ids[0];
-    transport = state[destinationIndex].unitsFrom.find(unit => unit.ids.includes(id))
+    transport = territories[destinationIndex].unitsFrom.find(unit => unit.ids.includes(id))
     cargoOrigin = transport.cargo[id][0].originIndex;
   }
-  return state.territories.map((territory, index) => {
+  return territories.map((territory, index) => {
     if (index === unit.originIndex) {
       return territoryAfterUnitMoves(territory, unit, ids, false);
     } else if (index === destinationIndex) {
