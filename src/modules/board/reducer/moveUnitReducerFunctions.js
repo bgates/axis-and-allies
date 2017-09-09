@@ -55,16 +55,33 @@ export const commitAmphibUnits = (state, action) => {
   });
 }
 
+const byId = id => unit => unit.ids.includes(id)
+
+const unitsWithUpdatedTransport = (units, id, transport) => (
+  units.filter(u => !u.ids.includes(id)).concat(transport)
+)
+
 export const uncommitUnits = ({ territories }, action) => {
   let { unit, destinationIndex, ids } = action;
   let cargoOrigin, transport, id;
   if (unit.transport) {
     id = ids[0];
-    transport = territories[destinationIndex].unitsFrom.find(unit => unit.ids.includes(id))
+    transport = territories[destinationIndex].unitsFrom.find(byId(id)) ||
+      territories[destinationIndex].units.find(byId(id));
     cargoOrigin = transport.cargo[id][0].originIndex;
   }
+  // not handling uncommitting from transport which loads w/out moving
   return territories.map((territory, index) => {
     if (index === unit.originIndex) {
+      if (index === destinationIndex) {
+        const unloadedTransport = JSON.parse(JSON.stringify(transport))
+        delete unloadedTransport.cargo[id]
+        if (Object.keys(unloadedTransport.cargo).length === 0) {
+          delete unloadedTransport.cargo
+        }
+        const units = unitsWithUpdatedTransport(territory.units, id, unloadedTransport)
+        return { ...territory, units }
+      }
       return territoryAfterUnitMoves(territory, unit, ids, false);
     } else if (index === destinationIndex) {
       return territoryAfterUnitWithdraws(territory, unit, ids);
@@ -100,8 +117,8 @@ export const loadTransport = (state, action) => {
     } else if (index === transport.unit.originIndex) {
       if (index === destinationIndex) {
         const loadedTransport = { ...transport.unit, cargo: {...transport.unit.cargo, [transport.id]: units}}
-        const units = territory.units.filter(u => !u.ids.includes(transport.id)).concat(loadedTransport)
-        return { ...territory, units }
+        const allUnits = unitsWithUpdatedTransport(territory.units, transport.id, loadedTransport)
+        return { ...territory, units: allUnits }
       }
       return territoryAfterUnitMoves(territory, transport.unit, [transport.id]);
     } else if (index === destinationIndex) {

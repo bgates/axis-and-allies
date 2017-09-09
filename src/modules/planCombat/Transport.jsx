@@ -8,7 +8,7 @@ const Transport = ({ unit, committed, ...props }) => {
         key={id}
         unit={unit}
         id={id}
-        available={!unit.cargo}
+        available={!unit.cargo || !unit.cargo[id]}
         {...props} />
     ))}
     {committed.ids.map(id => (
@@ -43,12 +43,14 @@ const AmphibiousAssault = ({
       <td className="available">
         <input readOnly size={2} value={amphibCommitted ? 0 : 1} />
         <button 
+          disabled={amphibCommitted}
           onClick={e => { commitAmphibUnits(unit, destinationIndex, id)}}
         >&gt;&gt;</button>
       </td>
       <td className="available">
         <input readOnly size={2} value={committedHere ? 1 : 0} />
         <button 
+          disabled={!amphibCommitted}
           onClick={e => unCommitAmphibUnits(unit, destinationIndex, id)}
         >&lt;</button>
       </td>
