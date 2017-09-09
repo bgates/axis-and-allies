@@ -98,6 +98,11 @@ export const loadTransport = (state, action) => {
     if (index === units[0].originIndex) {
       return units.reduce((t, unit) => territoryAfterUnitMoves(t, unit, unit.ids), territory);
     } else if (index === transport.unit.originIndex) {
+      if (index === destinationIndex) {
+        const loadedTransport = { ...transport.unit, cargo: {...transport.unit.cargo, [transport.id]: units}}
+        const units = territory.units.filter(u => !u.ids.includes(transport.id)).concat(loadedTransport)
+        return { ...territory, units }
+      }
       return territoryAfterUnitMoves(territory, transport.unit, [transport.id]);
     } else if (index === destinationIndex) {
       const loadedTransport = { ...transport.unit, cargo: {...transport.unit.cargo, [transport.id]: units}}

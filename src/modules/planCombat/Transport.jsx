@@ -8,7 +8,7 @@ const Transport = ({ unit, committed, ...props }) => {
         key={id}
         unit={unit}
         id={id}
-        available={true}
+        available={!unit.cargo}
         {...props} />
     ))}
     {committed.ids.map(id => (
