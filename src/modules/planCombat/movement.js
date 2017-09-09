@@ -59,10 +59,9 @@ const landUnitsInRange = (board, currentPower, territory) => {
   return unitsInRange(territories, currentPower.name, 'land');
 }
 
-const transportOrMovedTo = (territory, unit) => {
-  return unit.originIndex !== territory.index || 
-         unit.name === 'transport'
-}
+const transportOrMovedTo = (territory) => ( 
+  unit => unit.originIndex !== territory.index || unit.transport
+)
 
 const amphibUnitsInRange = (board, currentPower, territory) => {
   let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
@@ -78,7 +77,7 @@ const amphibUnitsInRange = (board, currentPower, territory) => {
 const seaUnitsInRange = (board, currentPower, territory) => {
   let territories = territoriesInRange(board, currentPower, territory, passableBySeaUnit, 2);
   let units = unitsInRange(territories, currentPower.name, 'ship');
-  return units.filter(unit => transportOrMovedTo(territory, unit));
+  return units.filter(transportOrMovedTo(territory));
 }
 
 const unitSort = (a, b) => {
