@@ -82,6 +82,9 @@ figcaption, .scroll span {
 }
 .committedUnits {
   flex-basis: 100%;
+  margin-bottom: 20px;
+  border-top: 2px solid;
+  border-bottom: 2px solid;
 }
 .committedUnits h3 {
   margin: 0;
