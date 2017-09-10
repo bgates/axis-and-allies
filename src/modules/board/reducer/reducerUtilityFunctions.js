@@ -40,16 +40,19 @@ export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) =>
   return { ...territory, unitsFrom: updatedUnitsFrom }
 }
 
+const unitsWithCargoDestinations = (transport, id, destinationIndex) => unit => {
+  if (unitMatch(unit, transport) && unit.ids.includes(id)) {
+    let cargoDestinations = unit.cargoDestinations || {}
+    return { ...unit, cargoDestinations: { ...cargoDestinations, [id]: destinationIndex } }
+  } else {
+    return unit
+  }
+}
+
 export const territoryAfterTransportCommits = (territory, transport, id, destinationIndex) => {
-  let updatedUnitsFrom = territory.unitsFrom.map(unit => {
-    if (unitMatch(unit, transport) && unit.ids.includes(id)) {
-      let cargoDestinations = unit.cargoDestinations || {}
-      return { ...unit, cargoDestinations: { ...cargoDestinations, [id]: destinationIndex } }
-    } else {
-      return unit
-    }
-  })
-  return { ...territory, unitsFrom: updatedUnitsFrom }
+  const unitsFrom = territory.unitsFrom.map(unitsWithCargoDestinations(transport, id, destinationIndex));
+  const units = territory.units.map(unitsWithCargoDestinations(transport, id, destinationIndex));
+  return { ...territory, units, unitsFrom }
 }
 
 export const territoryAfterAmphibCommits = (territory, transportOrigin, id) => {
