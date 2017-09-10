@@ -88,10 +88,10 @@ const TransportRow = ({
           disabled={!available}
         >Load</button>
         <button 
-          onClick={e => commitUnits(unit, destinationIndex, [id])}
+          onClick={e => commitUnits(unit, destinationIndex, null, [id])}
           disabled={!available || unit.originIndex === destinationIndex}
         >&gt;</button>
-        {unit.cargo ? <span>carrying ...</span> : ''}
+        {unit.cargo && unit.cargo[id] ? <span title={unit.cargo[id].map(u => `${u.name} from ${u.originName}`)}>carrying ...</span> : ''}
       </td>
       <td className="available">
         <input readOnly size={2} value={available ? 0 : 1} />

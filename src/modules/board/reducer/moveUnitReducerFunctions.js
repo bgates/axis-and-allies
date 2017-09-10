@@ -68,7 +68,9 @@ export const uncommitUnits = ({ territories }, action) => {
     id = ids[0];
     transport = territories[destinationIndex].unitsFrom.find(byId(id)) ||
       territories[destinationIndex].units.find(byId(id));
-    cargoOrigin = transport.cargo[id][0].originIndex;
+    if (transport.cargo) {
+      cargoOrigin = transport.cargo[id][0].originIndex;
+    }
   }
   // not handling uncommitting from transport which loads w/out moving
   return territories.map((territory, index) => {
