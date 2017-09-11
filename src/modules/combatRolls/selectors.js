@@ -6,7 +6,7 @@ import PATHS from '../../paths';
 const _strengths = (combatants) => {
   const { attackers, defenders } = combatants;
   const dieMax = Math.max(...attackers.filter(u => u.attack).map(u => u.attack), 
-    ...defenders.map(u => u.defend));
+    ...defenders.filter(u => u.defend).map(u => u.defend));
   return Array(dieMax).fill().map((n, i) => i + 1);
 }
 
