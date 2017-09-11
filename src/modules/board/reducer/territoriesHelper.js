@@ -13,6 +13,7 @@ import {
   WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
+  PLAN_MOVEMENT,
   PLACE_UNITS
 } from '../../../actions';
 import {
@@ -30,11 +31,13 @@ import {
   attackerWins
 } from './casualtyReducerFunctions';
 import { completeMission } from './completeMissionReducerFunction';
-import { modifyUnits, dogfight } from './modifyUnitsReducerFunction';
+import { modifyUnits, dogfight, clearUnits } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
+    case '@@router/LOCATION_CHANGE':
+      return action.payload.location.pathname === PLAN_MOVEMENT ? clearUnits(state) : state.territories
     case VIEW_STRATEGIC_BOMBING_RESULTS: return completeMission(state, action);
     case DOGFIGHT: return dogfight(state, action);
     case RESOLVE_COMBAT: return modifyUnits(state, action);
