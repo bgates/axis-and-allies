@@ -1,3 +1,4 @@
+import { isLand } from '../../../lib/territory'
 import { survivors } from '../../../lib/unit'
 
 const survivingUnitsFrom = ({ unitsFrom, attackerCasualties }, complete) => {
@@ -16,13 +17,12 @@ export const removeCasualties = (state, action) => {
       }
     } else if (territory.unitsFrom.length && !territory.units.length) {
       //TODO: what about sea spaces? 
-      return {
-        ...territory,
-        unitsFrom: [],
-        units: territory.unitsFrom,
-        currentPower,
-        newlyConquered: true
+      let updatedTerritory = { ...territory, unitsFrom: [], units: territory.unitsFrom }
+      if (territory.currentPower !== 'Oceans') {
+        updatedTerritory.currentPower = currentPower
+        updatedTerritory.newlyConquered = true
       }
+      return updatedTerritory
     }
     return territory;
   });
