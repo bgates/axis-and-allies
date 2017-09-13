@@ -48,7 +48,15 @@ export const victor = createSelector(
   }
 )
 
-export const noCombat = state => state.board.territories.filter(t => (t.unitsFrom || []).filter(u => u.mission !== 'complete').length && (t.units || []).length).length === 0
+export const noCombat = state => (
+  state.board.territories.filter(t => {
+    const unitsFrom = t.unitsFrom || []
+    const units = t.units || []
+    return (unitsFrom.filter(u => u.mission !== 'complete').length &&
+     units.length) ||
+    unitsFrom.filter(u => u.cargoDestinations)
+  }).length === 0
+)
 
 export const isDogfight = createSelector(
   getFocusTerritory,
