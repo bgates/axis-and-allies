@@ -33,7 +33,6 @@ const CombatModal = ({
           return (
             <Forces
               key={n}
-              filterFct={id => !attackerCasualties.includes(id)}
               units={attackers.filter(u => u.attack === n)}
             />
           )

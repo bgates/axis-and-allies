@@ -1,4 +1,5 @@
 import uuid from 'uuid/v4'
+import unitTypes from '../config/unitTypes'
 
 export const id = () => uuid();
 
@@ -47,3 +48,31 @@ export const bombCapacity = (unit) => {
 }
 
 export const airComplete = (unit) => unit.air && unit.mission === 'complete'
+
+const damaged = (units, casualties) => {
+  const damagedUnits = units.filter(unit => unit.ids.some(id => casualties.includes(id)) && unitTypes[unit.name].canTakeDamage)
+  return damagedUnits.map(unit => {
+    const damaged = unitTypes[`damaged ${unit.name}`]
+    return { 
+      ...unit, 
+      ids: unit.ids.filter(id => casualties.includes(id)), 
+      name: damaged.name, 
+      attack: damaged.attack, 
+      defend: damaged.defend, 
+      movement: damaged.movement, 
+      landingSlots: damaged.landingSlots 
+    }
+  })
+}
+
+export const survivors = (units, casualties = [], missionComplete) => {
+  const undamagedUnits = units.map(unit => (
+    { 
+      ...unit, 
+      ids: unit.ids.filter(id => !casualties.includes(id)), 
+      mission: (missionComplete ? 'complete' : unit.mission) 
+    }
+  ))
+  const damagedUnits = damaged(units, casualties)
+  return undamagedUnits.concat(damagedUnits).filter(u => u.ids.length)
+}
