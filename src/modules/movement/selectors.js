@@ -19,5 +19,5 @@ export const occupants = createSelector(
 
 export const unitsInRange = createSelector(
   tooBroadUnits,
-  units => units.filter(unit => unit.distance)
+  units => units.filter(unit => unit.mission !== 'complete')
 )
