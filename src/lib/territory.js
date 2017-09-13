@@ -1,5 +1,6 @@
 import { sameSide } from '../config/initialPowers'
 import { isNotSubmerged, bombCapacity } from './unit'
+import { mergeBoardAndTerritories } from '../selectors/mergeBoardAndTerritories'
 import { STRATEGIC_BOMB } from '../actions'
 
 export const isLand = (territory) => !territory.sea;
@@ -80,8 +81,14 @@ export const bomberPayload = (territory) => (
   territory.unitsFrom.reduce((total, unit) => total + bombCapacity(unit), 0)
 )
 
+export const allUnits = (territory) => (
+  territory.units.concat(territory.unitsFrom || [])
+)
+
+const isAmphib = (territory) => territory.amphib && Object.keys(territory.amphib).length
+
 export const isCombat = (territory) => (
-  territory.unitsFrom.length && territory.units.length
+  (territory.unitsFrom.length && territory.units.length) || isAmphib(territory)
 )
 
 export const isDogfightable = (territory) => (
@@ -91,3 +98,20 @@ export const isDogfightable = (territory) => (
 export const isBombed = (territory) => (
   territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)
 )
+
+export const isBombardable = (board, territory, currentPower) => {
+  if (!territory.bombardmentOver) {
+    let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
+    const cp = territories.reduce((units, territory) => {
+      return units.concat(allUnits(territory).filter(unit => {
+        return unit.canBombard && unit.power === currentPower
+      }))
+    }, []);
+  }
+}
+export const awaitingNavalResolution = (territory, state) => {
+  if (isAmphib(territory)) {
+    const neighbors = mergeBoardAndTerritories(state).filter(t => Object.values(territory.amphib).includes(t.index))
+    return neighbors.some(n => isCombat(n))
+  }
+}
