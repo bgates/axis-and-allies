@@ -69,6 +69,10 @@
 .battleBoard img[alt*=bomber] {
   max-width: 70%;
 }
+.battleBoard img[alt*=destroyer], .battleBoard img[alt*=battleship], .battleBoard img[alt*=cruiser],
+.battleBoard img[alt*=carrier] {
+  max-width: 100%;
+}
 img.casualty {
   border: 2px solid red;
 }
