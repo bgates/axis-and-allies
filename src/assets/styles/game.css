@@ -126,7 +126,7 @@ button.gameButton {
   top: 5%;
   width: 50%;
 }
-#modal.VIEW_ATTACK_OPTIONS {
+#modal.VIEW_ATTACK_OPTIONS, #modal.VIEW_MOVEMENT_OPTIONS {
   left: 15%;
   width: 70%;
 }
