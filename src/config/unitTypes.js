@@ -38,7 +38,7 @@ const unitTypes = {
     cost: 6, 
     movement: 1, 
     range: 3, 
-    defend: 1
+    flak: 1
   },
   battleship: { 
     name: 'battleship', 
