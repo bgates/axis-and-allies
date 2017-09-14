@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { combatants } from '../planCombat';
 import { defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
+import { allUnits } from '../../lib/territory';
 import { unitCount } from '../../lib/unit';
 import unitTypes from '../../config/unitTypes';
 export { getFocusTerritory }
@@ -52,9 +53,10 @@ export const noCombat = state => (
   state.board.territories.filter(t => {
     const unitsFrom = t.unitsFrom || []
     const units = t.units || []
-    return (unitsFrom.filter(u => u.mission !== 'complete').length &&
-     units.length) ||
-    unitsFrom.filter(u => u.cargoDestinations)
+    const currentCombat = (unitsFrom.filter(u => u.mission !== 'complete').length &&
+      units.length) 
+    const upcomingAmphib = allUnits(t).filter(u => u.cargoDestinations).length
+    return currentCombat || upcomingAmphib
   }).length === 0
 )
 

@@ -26,10 +26,23 @@ const unitsFromIncludingAmphib = (territory, territories) => (
   [ ...territory.unitsFrom, ...amphibUnits(territory.amphib, territories) ]
 )
 
+const unitsNotCarryingCargoToObjective = index => unit => {
+  let replacement = JSON.parse(JSON.stringify(unit));
+  Object.keys(replacement.cargoDestinations || {}).forEach(id => {
+    if (replacement.cargoDestinations[id] === index) {
+      delete replacement.cargoDestinations[id]
+      if (Object.keys(replacement.cargoDestinations).length === 0) {
+        delete replacement.cargoDestinations
+      }
+    }
+  })
+  return replacement
+}
+
 //TODO: rename something like 'updateUnitStatus'
 export const removeCasualties = (state, action) => {
   const { territoryIndex, defenderCasualties, currentPower } = action;
-  const objective = state.territories[territoryIndex];
+  const { amphib } = state.territories[territoryIndex];
   return state.territories.map((territory, index) => {
     if (index === territoryIndex) {
       const unitsFrom = territory.amphib ? 
@@ -43,6 +56,10 @@ export const removeCasualties = (state, action) => {
       }
       delete updatedTerritory.amphib;
       return updatedTerritory;
+    } else if (Object.values(amphib || {}).includes(index)) {
+      const units = territory.units.map(unitsNotCarryingCargoToObjective(territoryIndex));
+      const unitsFrom = territory.unitsFrom.map(unitsNotCarryingCargoToObjective(territoryIndex));
+      return { ...territory, units, unitsFrom }
     } else if (territory.unitsFrom.length && !territory.units.length) {
       return possiblyConquered(territory, currentPower);
     }

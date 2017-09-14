@@ -82,7 +82,7 @@ export const bomberPayload = (territory) => (
 )
 
 export const allUnits = (territory) => (
-  territory.units.concat(territory.unitsFrom || [])
+  (territory.units || []).concat(territory.unitsFrom || [])
 )
 
 const isAmphib = (territory) => territory.amphib && Object.keys(territory.amphib).length
