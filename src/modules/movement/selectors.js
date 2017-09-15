@@ -3,12 +3,11 @@ import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { unitsInRange as tooBroadUnits } from '../planCombat';
 import { consolidateUnits, nonIndustry, duplicateUnit } from '../../lib/unit';
+import { allUnits } from '../../lib/territory';
 export { getCurrentPower, getFocusTerritory }
 
 const _occupants = (territory) => {
-  const units = territory.units.concat(territory.unitsFrom || [])
-    .filter(nonIndustry)
-    .map(duplicateUnit)
+  const units = allUnits(territory).filter(nonIndustry).map(duplicateUnit)
   return { attackers: consolidateUnits(units), defenders: [] }
 }
 

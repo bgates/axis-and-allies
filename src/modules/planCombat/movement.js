@@ -4,7 +4,8 @@ import {
   isFriendly, 
   passableByLandUnit, 
   passableBySeaUnit, 
-  nonNeutral
+  nonNeutral,
+  allUnits
 } from '../../lib/territory';
 
 export const territoriesInRange = (board, currentPower, territory, accessible, n) => {
@@ -64,9 +65,10 @@ const transportOrMovedTo = (territory) => (
 )
 
 const amphibUnitsInRange = (board, currentPower, territory) => {
-  let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
-  let activeTransports = territories.reduce((transports, territory) => {
-    let territoryTransports = territory.unitsFrom.filter(unit => {
+  const territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
+  const activeTransports = territories.reduce((transports, territory) => {
+    const potentialUnits = allUnits(territory)
+    const territoryTransports = potentialUnits.filter(unit => {
       return unit.cargo && unit.power === currentPower.name
     })
     return [...transports, ...territoryTransports.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index }))]
@@ -85,8 +87,10 @@ const unitSort = (a, b) => {
     return 1
   } else if (b.distance > a.distance) {
     return -1
-  } else {
+  } else if (a.originName !== b.originName) {
     return a.originName.localeCompare(b.originName)
+  } else {
+    return a.attack > b.attack ? 1 : -1
   }
 }
 
