@@ -73,6 +73,9 @@ span.germany {
 .neutrals {
   fill: #ccc;
 }
+.neutral {
+  background: #ccc;
+}
 
 .neutrals:hover {
   fill: #f2f2f2;
