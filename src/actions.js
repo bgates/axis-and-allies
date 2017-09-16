@@ -44,6 +44,7 @@ export const UNCOMMIT_PLACE_ALL = 'UNCOMMIT_PLACE_ALL';
 export const PLACE_UNITS = 'PLACE_UNITS';
 
 export const ORDER_UNITS = '/order-units';
+export const CONFIRM_FINISH = '/confirm-finish';
 export const NEXT_TURN = 'NEXT_TURN';
 
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';

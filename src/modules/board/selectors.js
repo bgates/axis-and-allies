@@ -6,7 +6,9 @@ import {
   VIEW_TRANSPORT_LOAD_OPTIONS, 
   PLAN_MOVEMENT,
   VIEW_MOVEMENT_OPTIONS,
-  VIEW_PLANE_LANDING_OPTIONS
+  VIEW_PLANE_LANDING_OPTIONS,
+  ORDER_UNITS,
+  CONFIRM_FINISH
 } from '../../actions';
 import PATHS from '../../paths';
 
@@ -27,7 +29,7 @@ export const overlayPhase = createSelector(
 );
 
 export const advanceButtonPhase = (state) => {
-  return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, 'confirm-finish'].includes(state.phase.current)
+  return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, CONFIRM_FINISH].includes(state.phase.current)
 };
 
 //TODO: combine this w previousPhase selector?
@@ -40,7 +42,7 @@ export const phases = createSelector(
       return { next, last: 'income' }
     } else if (phase === PLAN_MOVEMENT) {
       return { next: 'place-units', last: 'land-planes' }
-    } else if (phase === 'order-units') {
+    } else if (phase === ORDER_UNITS) {
       return { next: 'confirm-finish', last: 'place-units', text: 'Order by Cost' }
     } else {
       return {}
