@@ -54,8 +54,15 @@ export const passableByLandUnit = (territory, currentPower) => {
   return isLand(territory) && isFriendly(territory, currentPower)
 }
 
-export const passableBySeaUnit = (territory, currentPower) => {
-  return territory.sea && isFriendly(territory, currentPower)
+const canalOpenIfPresent = (territory, currentPower, board, lastTerritory) => {
+  return !territory.canalToIndex || 
+    territory.canalToIndex !== lastTerritory.index ||
+    isFriendly(board[territory.canalControlIndex], currentPower)
+}
+
+export const passableBySeaUnit = (territory, currentPower, board, lastTerritory) => {
+  return territory.sea && isFriendly(territory, currentPower) && 
+    canalOpenIfPresent(territory, currentPower, board, lastTerritory)
 }
 
 export const hasIndustrialComplex = (territory) => {

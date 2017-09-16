@@ -15,7 +15,7 @@ export const territoriesInRange = (board, currentPower, territory, accessible, n
     territories[range] = territories[range - 1].reduce((all, last) => {
       let newAdjacents = last.adjacentIndexes.reduce((adjacents, i) => {
         let current = board[i];
-        if (allTerritories.includes(current) || !accessible(current, currentPower)) {
+        if (allTerritories.includes(current) || !accessible(current, currentPower, board, last)) {
           return adjacents
         } else {
           allTerritories.push(current);
