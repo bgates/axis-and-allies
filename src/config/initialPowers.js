@@ -15,7 +15,8 @@ export const powerData = {
   UK: { capital: 'London', side: 'Allies' },
   Italy: { capital: 'Rome', side: 'Axis' },
   US: { capital: 'Washington', side: 'Allies' },
-  China: { side: 'Allies' }
+  China: { side: 'Allies' },
+  neutral: { side: 'None' }
 };
 
 export const side = (power) => powerData[power].side;
