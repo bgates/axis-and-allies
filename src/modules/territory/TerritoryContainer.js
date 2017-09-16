@@ -8,11 +8,13 @@ import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
 import { airComplete } from '../../lib/unit'
 import { 
+  isBombardable,
   isAttackable, 
   isDogfightable,
   isCombat,
   isBombed,
   bomberPayload,
+  awaitingNavalResolution
 } from '../../lib/territory'
 import dice from '../../lib/numericalDieRolls'
 import { 
@@ -61,6 +63,9 @@ const territoryThunk = (territory) => {
       [PATHS.RESOLVE_COMBAT]: () => {
         // need logic to prevent dispatch if no combat
         if (isCombat(territory)) {
+          if (awaitingNavalResolution(territory, state)) {
+            return alert('not yet!')
+          }
           if (isDogfightable(territory)) {
             dispatch(dogfight(territory))
           } else if (isBombed(territory)) {
