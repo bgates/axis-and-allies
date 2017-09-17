@@ -1,5 +1,6 @@
 import { isLand, allUnits } from '../../../lib/territory'
-import { survivors } from '../../../lib/unit'
+import { survivors, consolidateUnits } from '../../../lib/unit'
+import unitTypes from '../../../config/unitTypes'
 
 const survivingUnitsFrom = ({ unitsFrom, attackerCasualties }, complete) => {
   return survivors(unitsFrom, attackerCasualties, complete)
@@ -96,6 +97,14 @@ export const defenderWins = (state, action) => {
   });
 }
 
+const resetUnits = units => {
+  const reset = units.map(unit => {
+    const original = unitTypes[unit.name]
+    return { ...unit, attack: original.attack, defend: original.defend }
+  })
+  return consolidateUnits(reset)
+}
+
 //TODO: probably need victor in unitsFrom not units, so I can ensure they don't move during noncom
 export const attackerWins = (state, action) => {
   const { territoryIndex, currentPower } = action;
@@ -107,7 +116,7 @@ export const attackerWins = (state, action) => {
         ...territory, 
         currentPower: groundUnits.length ? currentPower : territory.currentPower,
         unitsFrom: [],
-        units: survivingUnitsFrom(territory, true),
+        units: resetUnits(survivingUnitsFrom(territory, true)),
         newlyConquered: groundUnits.length
       }
     }
