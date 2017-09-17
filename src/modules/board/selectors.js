@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { noCombat } from '../selectCasualties';
 import { 
   PLAN_ATTACKS, 
@@ -32,16 +33,24 @@ export const advanceButtonPhase = (state) => {
   return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, CONFIRM_FINISH].includes(state.phase.current)
 };
 
+const canPlace = createSelector(
+  getCurrentPower,
+  state => state.purchases,
+  (currentPower, purchases) => currentPower.name === 'China' || Object.keys(purchases).length
+)
+
 //TODO: combine this w previousPhase selector?
 export const phases = createSelector(
   noCombat,
   state => state.phase.current,
-  (noCombat, phase) => {
+  canPlace,
+  (noCombat, phase, canPlaceUnits) => {
     if ([PLAN_ATTACKS, 'resolve-combat'].includes(phase)) {
       const next = noCombat ? PLAN_MOVEMENT : 'resolve-combat';
       return { next, last: 'income' }
     } else if (phase === PLAN_MOVEMENT) {
-      return { next: 'place-units', last: 'land-planes' }
+      const next = canPlaceUnits ? 'place-units' : ORDER_UNITS
+      return { next, last: 'land-planes' }
     } else if (phase === ORDER_UNITS) {
       return { next: 'confirm-finish', last: 'place-units', text: 'Order by Cost' }
     } else {
