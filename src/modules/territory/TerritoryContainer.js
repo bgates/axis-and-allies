@@ -8,6 +8,7 @@ import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
 import { airComplete } from '../../lib/unit'
 import { 
+  isFriendly,
   isBombardable,
   isAttackable, 
   isDogfightable,
@@ -45,10 +46,10 @@ const territoryThunk = (territory) => {
       return
     }
     const { router, phase } = state 
-    const currentPowerName = getCurrentPower(state).name
+    const currentPower = getCurrentPower(state)
     const routes = {
       '/': () => {
-        if (currentPowerName === 'China') {
+        if (currentPower.name === 'China') {
           dispatch(push(PATHS.PLAN_ATTACKS))
         } else {
           const nextUrl = hasDamagedShipsInHarbor(state) ? PATHS.REPAIR : PATHS.RESEARCH
@@ -56,7 +57,7 @@ const territoryThunk = (territory) => {
         }
       }, 
       [PATHS.PLAN_ATTACKS]: () => {
-        if (isAttackable(territory, currentPowerName)) {
+        if (isAttackable(territory, currentPower.name)) {
           dispatch(viewAttackOptions(territory))
         }
       },
@@ -80,10 +81,14 @@ const territoryThunk = (territory) => {
           dispatch(viewPlaneLandingOptions(territory))
         }
       },
-      [PATHS.PLAN_MOVEMENT]: () => dispatch(viewMovementOptions(territory)),
+      [PATHS.PLAN_MOVEMENT]: () => {
+        if (isFriendly(territory, currentPower)) {
+          dispatch(viewMovementOptions(territory))
+        }
+      },
       [PATHS.ORDER_UNITS]: () => {
-        const { currentPower, units } = territory;
-        if (isOrdering(phase.current, currentPowerName, currentPower, units)) {
+        const { units } = territory;
+        if (isOrdering(phase.current, currentPower.name, territory.currentPower, units)) {
           dispatch(orderUnits(territory)) 
         }
       }
