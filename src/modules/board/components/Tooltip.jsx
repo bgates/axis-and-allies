@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 import { groupWith } from 'ramda';
 import { ImgAndQty } from '../../../components/UnitFigure';
 import { matchingUnit } from '../../../lib/Parser';
+import { consolidateUnits } from '../../../lib/unit';
 import { powerData } from '../../../config/initialPowers';
 import '../../../assets/styles/tooltip.css';
 import industryImg from '../../../assets/images/industrial_complex.png';
@@ -15,7 +16,7 @@ const Units = ({ units, unitsFrom }) => {
     let unit = { ...group[0], ids }
     return units.concat(unit)
   }, [])
-  const consolidatedCombatUnits = combatUnits.concat(reducedUnitsFrom)
+  const consolidatedCombatUnits = consolidateUnits(combatUnits.concat(reducedUnitsFrom))
   return (
     <div>
       {consolidatedCombatUnits.map((unit, index) => (
