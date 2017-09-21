@@ -4,13 +4,31 @@ import phase from './phase'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import { landPlanes } from '../modules/landPlanes'
-import rolls from './rolls'
 import { placement } from '../modules/placement'
+import rolls from './rolls'
+import { setPriorBoardDiff, updateBoardDiff } from './updateBoardDiff'
+import { 
+  DOGFIGHT,
+  VIEW_STRATEGIC_BOMBING_RESULTS,
+  RESOLVE_COMBAT,
+  REMOVE_CASUALTIES,
+  COMMIT_UNITS,
+  UNCOMMIT_UNITS,
+  COMMIT_AMPHIB_UNITS,
+  UNCOMMIT_AMPHIB_UNITS,
+  LOAD_TRANSPORT,
+  WIN_ATTACK,
+  LOSE_ATTACK,
+  LAND_PLANES,
+  PLAN_MOVEMENT,
+  PLACE_UNITS
+} from '../actions';
 import { firebaseStateReducer as firebase } from 'redux-react-firebase'
        
-export default combineReducers({
+const combinedReducer = combineReducers({
   firebase,
   board,
+  boardDiff: setPriorBoardDiff,
   landPlanes,
   phase,
   placement,
@@ -19,3 +37,34 @@ export default combineReducers({
   rolls
 })
 
+const crossSliceReducer = (state, action) => {
+  switch(action.type) {
+    case DOGFIGHT:
+    case VIEW_STRATEGIC_BOMBING_RESULTS:
+    case RESOLVE_COMBAT:
+    case REMOVE_CASUALTIES:
+    case COMMIT_UNITS:
+    case UNCOMMIT_UNITS:
+    case COMMIT_AMPHIB_UNITS:
+    case UNCOMMIT_AMPHIB_UNITS:
+    case LOAD_TRANSPORT:
+    case WIN_ATTACK:
+    case LOSE_ATTACK:
+    case LAND_PLANES:
+    case PLAN_MOVEMENT:
+    case PLACE_UNITS: {
+        return {
+          ...state,
+          boardDiff: updateBoardDiff(state.boardDiff, state.board.territories)
+        }        
+    }
+    default : 
+      return state;
+  }
+}
+
+const rootReducer = (state = {}, action) => {
+  const intermediateState = combinedReducer(state, action);
+  return crossSliceReducer(intermediateState, action);
+}
+export default rootReducer;

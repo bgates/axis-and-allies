@@ -1,7 +1,7 @@
 import territoriesHelper from './territoriesHelper'
 import powersHelper from './powersHelper'
 import incomeHelper from './incomeHelper'
-import Parser from '../../../lib/Parser.js'
+import Parser from '../../../lib/Parser'
 import startingBoard from '../../../config/startingBoard'
 import territoryData from '../../../config/territories.json'
 import initialPowers from '../../../config/initialPowers';
@@ -20,7 +20,8 @@ const initialBoard = territoryData.map((territory, i) => {
 const initialState = { 
   territories: initialBoard, 
   powers: initialPowers,
-  currentPowerIncome: 0 
+  currentPowerIncome: 0,
+  spectator: startingBoard
 }
 
 const board = (state = initialState, action) => {

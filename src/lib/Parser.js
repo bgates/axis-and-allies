@@ -1,5 +1,6 @@
 import { groupWith } from 'ramda'
 import { id } from './unit'
+import { allUnits } from './territory'
 import powers from '../config/initialPowers'
 import unitTypes from '../config/unitTypes'
 
@@ -28,11 +29,27 @@ const territoryStringParser = (string) => {
     .map(assignIds)
 }
 
+const unitStringCreator = (unit) => {
+  const single = powersWithNeutral.indexOf(unit.power) + 
+    String.fromCharCode(60 + unitNameArray.indexOf(unit.name))
+  return single.repeat(unit.ids.length)
+}
+
+const territoryStringCreator = (units) => (  
+  units.reduce((string, unit) => string + unitStringCreator(unit), '')
+)
+
+export const dehydrate = (board) => {
+  const wtf = board.map(allUnits).map(territoryStringCreator).join('|')
+  console.log(wtf)
+  return wtf
+}
+
 const Parser = {
   hydrate (boardString) {
     const territoryStrings = boardString.split('|')
     return territoryStrings.map(territoryStringParser)
-  }
+  },
 }
 
 export default Parser
