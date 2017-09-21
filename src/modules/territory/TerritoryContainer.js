@@ -20,7 +20,6 @@ import {
 import dice from '../../lib/numericalDieRolls'
 import { 
   viewAttackOptions, 
-  STRATEGIC_BOMB,
   dogfight,
   strategicBombingRolls,
   resolveCombat, 

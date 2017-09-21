@@ -1,4 +1,4 @@
-import { isLand, allUnits } from '../../../lib/territory'
+import { allUnits } from '../../../lib/territory'
 import { survivors, consolidateUnits } from '../../../lib/unit'
 import unitTypes from '../../../config/unitTypes'
 
