@@ -1,14 +1,21 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PlanCombatModal from './PlanCombatModal'
-import { getCurrentPower, getFocusTerritory, unitsInRange, combatants } from './selectors'
+import { 
+  getCurrentPower, 
+  getFocusTerritory, 
+  unitsInRange, 
+  combatants,
+  landingSlots
+} from './selectors'
 import { PLAN_ATTACKS } from '../../actions'
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
   territory: getFocusTerritory(state),
   unitsInRange: unitsInRange(state),
-  combatants: combatants(state)
+  combatants: combatants(state),
+  landingSlots: landingSlots(state)
 })
 
 const planOtherAttack = () => {

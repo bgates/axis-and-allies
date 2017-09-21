@@ -8,10 +8,10 @@ import {
   allUnits
 } from '../../lib/territory';
 
-export const territoriesInRange = (board, currentPower, territory, accessible, n) => {
+export const territoriesInRange = (board, currentPower, territory, accessible, maxRange) => {
   let territories = { 0: [territory] };
   let allTerritories = [territory];
-  for (let range = 1; range <= n; range ++) {
+  for (let range = 1; range <= maxRange; range ++) {
     territories[range] = territories[range - 1].reduce((all, last) => {
       let newAdjacents = last.adjacentIndexes.reduce((adjacents, i) => {
         let current = board[i];
@@ -42,12 +42,25 @@ const unitsInRange = (territories, currentPowerName, type, returnFlight) => {
   }, []);
 }
 
+const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower)
+
+const hasLandingSlots = (territory, currentPower) => (
+  allUnits(territory).reduce((total, unit) => (
+    total + ((unit.power === currentPower.name && unit.landingSlots) || 0) * unit.ids.length
+  ), 0)
+)
+
+const canLandInTerritory = (territory, currentPower) => (  
+  friendlyLand(territory, currentPower) || hasLandingSlots(territory, currentPower)
+)
+
 const airUnitsInRange = (board, currentPower, territory) => {
-  if (territory.units.length) {
+  if (territory.units.length) { //TODO: this condition is too narrow-can't noncom to carrier or empty
     let territories = territoriesInRange(board, currentPower, territory, nonNeutral, 6);
     let returnFlight = Object.keys(territories).reduce((min, range) => {
       return territories[range].some(ter => {
-        return isLand(ter) && isFriendly(ter, currentPower)}) ? Math.min(min, range) : min;
+        return canLandInTerritory(ter, currentPower)}) ? 
+        Math.min(min, range) : min;
     }, 8);
     return unitsInRange(territories, currentPower.name, 'air', returnFlight)
   } else {

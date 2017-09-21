@@ -14,6 +14,7 @@ const Attacker = ({
   unCommitAmphibUnits,
   viewTransportLoadOptions, 
   landAttack, 
+  landingSlots,
   hasIndustry }) => {
   if (unit.name === 'transport') {
     return (
@@ -37,6 +38,7 @@ const Attacker = ({
         <CommitButtons
           unit={unit} 
           index={destinationIndex}
+          landingSlots={landingSlots}
           action={commitUnits} />
         {unit.air && hasIndustry && <AirOptions 
           unit={unit} 
@@ -62,18 +64,20 @@ const Attacker = ({
   )
 }
 
-const CommitButtons = ({ unit, index, action, mission }) => {
+const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
   const qty = unit.ids.length;
+  const allDisabled = qty === 0 || (unit.air && qty > landingSlots)
+  const oneDisabled = qty === 0 || (unit.air && !landingSlots)
   return (
     <div>
       <input readOnly size={2} value={qty} />
       <button 
         onClick={e => { action(unit, index, mission, unit.ids)}}
-        disabled={qty === 0}
+        disabled={allDisabled}
       >&gt;&gt;</button>
       <button 
         onClick={e => { action(unit, index, mission, [unit.ids[0]])}}
-        disabled={qty === 0}
+        disabled={oneDisabled}
       >&gt;</button>
     </div>
   )

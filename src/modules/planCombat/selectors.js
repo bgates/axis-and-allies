@@ -4,7 +4,7 @@ import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mer
 import { combatUnitsInRange } from './movement';
 import { sameSide } from '../../config/initialPowers';
 import { consolidateUnits, nonIndustry, duplicateUnit } from '../../lib/unit';
-import { allUnits } from '../../lib/territory';
+import { allUnits, isLand } from '../../lib/territory';
 export { getCurrentPower, getFocusTerritory }
 
 export const unitsInRange = createSelector(
@@ -49,3 +49,17 @@ export const combatants = createSelector(
   (board, currentPower, territory) => _combatants(board, currentPower, territory)
 )
 
+export const landingSlots = createSelector(
+  getCurrentPower,
+  getFocusTerritory,
+  (currentPower, territory) => {
+    if (isLand(territory)) {
+      return 1000
+    }
+    const requiredLandingSlots = territory.unitsFrom.filter(unit => unit.air && unit.distance === unit.movement)
+      .reduce((total, unit) => total + unit.ids.length, 0)
+    const totalLandingSlots = allUnits(territory).filter(unit => unit.power === currentPower.name && unit.landingSlots)
+      .reduce((total, unit) => total + unit.ids.length * unit.landingSlots, 0)
+    return totalLandingSlots - requiredLandingSlots
+  }
+)
