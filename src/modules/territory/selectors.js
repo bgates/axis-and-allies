@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { nonIndustry, airComplete } from '../../lib/unit';
-import { RESOLVE_COMBAT } from '../../actions';
+import { RESOLVE_COMBAT, ORDER_UNITS } from '../../actions';
 
 export const getFill = (territory) => {
   const { sea, original_power, currentPower } = territory;
@@ -25,7 +25,7 @@ const hasAirComplete = (units = []) => (
 )
 
 export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
-  phase === 'order-units' && 
+  phase === ORDER_UNITS && 
   ((currentPowerName === territoryPower && 
     units.filter(nonIndustry).length > 1) || 
   (territoryPower === 'Oceans' && units &&
