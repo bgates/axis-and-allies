@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
+import { compose } from 'redux'
 import { connect } from 'react-redux'
-import { firebase, helpers } from 'redux-react-firebase'
-
-const { isLoaded, isEmpty, dataToJS } = helpers
+import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 
 class Chat extends Component {
 
@@ -33,10 +32,14 @@ class Chat extends Component {
     )
   }
 }
-const fbWrappedChat = firebase(['/messages'])(Chat)
-export default connect(
-  ({ firebase }) => ({
-    messages: dataToJS(firebase, 'messages')
-  })
-)(fbWrappedChat)
 
+export default compose(
+  firebaseConnect([
+    '/messages' 
+  ]),
+  connect(
+    ({ firebase: { data: { messages } } }) => ({ // state.firebase.data.todos
+      messages // Connect props.todos to state.firebase.data.todos
+    })
+  )
+)(Chat)

@@ -23,7 +23,7 @@ import {
   PLAN_MOVEMENT,
   PLACE_UNITS
 } from '../actions';
-import { firebaseStateReducer as firebase } from 'redux-react-firebase'
+import { firebaseStateReducer as firebase } from 'react-redux-firebase'
        
 const combinedReducer = combineReducers({
   firebase,

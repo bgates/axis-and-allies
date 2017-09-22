@@ -12,10 +12,10 @@
     "react-dom": "^15.5.4",
     "react-inline-transition-group": "^2.1.6",
     "react-redux": "^5.0.5",
+    "react-redux-firebase": "^2.0.0-beta.8",
     "react-router-dom": "^4.1.1",
     "react-tooltip": "^3.3.0",
     "redux": "^3.6.0",
-    "redux-react-firebase": "^2.6.1",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
     "uuid": "^3.0.1"
