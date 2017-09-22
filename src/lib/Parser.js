@@ -29,8 +29,10 @@ const territoryStringParser = (string) => {
     .map(assignIds)
 }
 
+const powerNames = powersWithNeutral.map(p => p.name)
+
 const unitStringCreator = (unit) => {
-  const single = powersWithNeutral.indexOf(unit.power) + 
+  const single = powerNames.indexOf(unit.power) + 
     String.fromCharCode(60 + unitNameArray.indexOf(unit.name))
   return single.repeat(unit.ids.length)
 }
@@ -39,11 +41,9 @@ const territoryStringCreator = (units) => (
   units.reduce((string, unit) => string + unitStringCreator(unit), '')
 )
 
-export const dehydrate = (board) => {
-  const wtf = board.map(allUnits).map(territoryStringCreator).join('|')
-  console.log(wtf)
-  return wtf
-}
+export const dehydrate = (board) => (  
+  board.map(allUnits).map(territoryStringCreator).join('|')
+)
 
 const Parser = {
   hydrate (boardString) {
