@@ -35,7 +35,7 @@ class Chat extends Component {
 
 export default compose(
   firebaseConnect([
-    '/messages' 
+    '/messages'
   ]),
   connect(
     ({ firebase: { data: { messages } } }) => ({ // state.firebase.data.todos
