@@ -1,0 +1,20 @@
+.create-game {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.create-game div {
+  margin: 1.5em 0;
+}
+
+.create-game label {
+  display: inline-block;
+  width: 8em;
+}
+.create-game input {
+  margin-right: 1em;
+  width: 20em;
+}
+.create-game select {
+  margin-right: 20em;
+}
