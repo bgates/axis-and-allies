@@ -1,7 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import { Route } from 'react-router-dom'
-import { LoginContainer } from '../../login'
 import RepairModal from '../../repair/RepairModal'
 import { ResearchContainer } from '../../research'
 import ResearchResultsContainer from '../../researchResults/ResearchResultsContainer'
@@ -27,7 +26,6 @@ const Modal = ({ ctrlPressed, phase }) => {
   const classes = classNames('modal', phase, { hidden: ctrlPressed })
   return (
     <div id='modal' className={classes}>
-      <Route path="/login" component={LoginContainer} />
       <Route path={PATHS.REPAIR} component={RepairModal}/>
       <Route path={PATHS.RESEARCH} component={ResearchContainer}/>
       <Route path={PATHS.RESEARCH_RESULTS} component={ResearchResultsContainer}/>

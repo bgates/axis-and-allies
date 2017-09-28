@@ -14,7 +14,7 @@ import {
 import PATHS from '../../paths';
 
 const pathRequiresOverlay = (pathname) => {
-  return ['/login', PATHS.RESEARCH, PATHS.RESEARCH_RESULTS, PATHS.ROCKETS, PATHS.PURCHASE, 
+  return [PATHS.RESEARCH, PATHS.RESEARCH_RESULTS, PATHS.ROCKETS, PATHS.PURCHASE, 
     PATHS.INCOME, PATHS.STRATEGIC_BOMB, PATHS.COMBAT_ROLLS, PATHS.PLACE_UNITS].includes(pathname)
 };
 
