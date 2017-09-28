@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 import CreateGame from './CreateGame'
+import { setGameId } from '../../actions'
 import initialPowers from '../../config/initialPowers'
 
 const setupGame = (formData) => {
@@ -16,11 +17,13 @@ const setupGame = (formData) => {
   return game
 }
 
-const createGame = (formData, firebase) => {
-  return (dispatch) => {
+const createGame = (formData) => {
+  return (dispatch, _, getFirebase) => {
     const game = setupGame(formData)
+    const firebase = getFirebase()
     firebase.push('/games', game)
       .then(snapshot => {
+        dispatch(setGameId(snapshot.key))
         connectEachPlayerToGame(firebase, game.powers, snapshot.key)
       })
       .then(() => dispatch(push('/')))
@@ -62,9 +65,9 @@ const connectEachPlayerToGame = (firebase, powers, gameId) => {
   })
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
-    createGame: (formData) => createGame(formData, ownProps.firebase)
+    createGame
   }, dispatch)
 }
 

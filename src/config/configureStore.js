@@ -1,6 +1,6 @@
 import { createStore, compose, applyMiddleware } from 'redux'
 import * as firebase from 'firebase'
-import { reactReduxFirebase } from 'react-redux-firebase'
+import { reactReduxFirebase, getFirebase } from 'react-redux-firebase'
 import { createBrowserHistory } from 'history'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import thunk from 'redux-thunk'
@@ -18,7 +18,7 @@ const reducerWithRouteState = connectRouter(history)(reducer)
 
 const configureStore = (initialState) => {
   const createStoreWithMiddleware = compose(
-    applyMiddleware(routerMiddleware(history), thunk),
+    applyMiddleware(routerMiddleware(history), thunk.withExtraArgument(getFirebase)),
     reactReduxFirebase(firebase, rrfConfig),
     typeof window === 'object' && typeof window.devToolsExtension !== 'undefined' ? window.devToolsExtension() : f => f
   )(createStore)
