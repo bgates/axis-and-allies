@@ -23,9 +23,11 @@ import {
   PLAN_MOVEMENT,
   PLACE_UNITS
 } from '../actions';
+import { game } from './game'
 import { firebaseStateReducer as firebase } from 'react-redux-firebase'
        
 const combinedReducer = combineReducers({
+  game,
   firebase,
   board,
   boardString: (state = '', action) => state,

@@ -1,7 +1,7 @@
 import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { firebaseConnect } from 'react-redux-firebase'
 import CreateGame from './CreateGame'
 import { setGameId } from '../../actions'
 import initialPowers from '../../config/initialPowers'

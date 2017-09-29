@@ -50,6 +50,8 @@ export const NEXT_TURN = 'NEXT_TURN';
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
 export const COMBAT = 'COMBAT';
 
+export const SET_GAME_ID = 'SET_GAME_ID';
+
 export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
 export const resolveCombat = (territory) => (  
@@ -113,3 +115,6 @@ export const orderUnits = (territory) => (
   { type: ORDER_UNITS, territory }
 )
 
+export const setGameId = id => (
+  { type: SET_GAME_ID, id }
+)
