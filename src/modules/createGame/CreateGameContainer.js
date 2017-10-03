@@ -45,8 +45,12 @@ const setCurrentGame = (emails, emailKeys, gameId, firebase) => {
   emailKeys.forEach((emailKey, index)=> {
     firebase.ref(`/users/${emails[emailKey] || emailKey}`)
       .transaction(user => {
-        if (!user || !user.currentGame) {
-          return { currentGameId: gameId, axis: (index % 2 == 0 && index < 5) }
+        if (!user || !user.currentGameId) {
+          return { 
+            ...user, 
+            currentGameId: gameId, 
+            axis: index % 2 == 0 && index < 5 
+          }
         }
       })
   })
@@ -61,9 +65,9 @@ const connectEachPlayerToGame = (firebase, powers, gameId) => {
     let updates = {}
     invites.forEach(invite => updates[invite] = true)
     powers.forEach((power, index) => {  
-      updates[`${userUpdates[index]}/${gameId}/${power.name}`] = power.screenName
+      updates[`${userUpdates[index]}/${gameId}/${power.name}`] = power.screenname
     })
-    firebase.ref('/').update(JSON.parse(JSON.stringify(updates)))
+    firebase.ref().update(updates)
       .then(() => setCurrentGame(emails, emailKeys, gameId, firebase))
   })
 }
