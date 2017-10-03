@@ -5,10 +5,10 @@ import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
 
 class Chat extends Component {
 
-  handleAdd () {
-    const { newMessage } = this.refs
-    this.props.firebase.push('/messages', { text: newMessage.value })
-    newMessage.value = ''
+  handleAdd (chat, gameId) {
+    const msg = this[chat]
+    this.props.firebase.push(`/${chat}/${gameId}`, { text: msg.value })
+    msg.value = ''
   }
 
   messageList (messages) {
@@ -20,26 +20,49 @@ class Chat extends Component {
       return Object.keys(messages).map(key => <li key={key}>{messages[key].text}</li>)
     }
   }
+
   render () {
-    const { messages } = this.props /* also firebase is in props */
+    const { chat, sideChat, profile } = this.props 
+    const { axis, currentGameId }= profile
+    const side = axis ? 'axisChat' : 'alliesChat'
     return (
       <section id="chat">
-        <h2>Messages</h2>
-        <ul>{this.messageList(messages)}</ul>
-        <input type="text" ref="newMessage" />
-        <button onClick={this.handleAdd.bind(this)}>Add</button>
+        <section id="public">
+          <h2>Public Messages</h2>
+          <ul>{this.messageList(chat)}</ul>
+          <input type="text" ref={node => this.chat = node} />
+          <button onClick={() => this.handleAdd('chat', currentGameId)}>Add</button>
+        </section>
+        <section id="private">
+          <h2>Private Messages</h2>
+          <ul>{this.messageList(sideChat)}</ul>
+          <input type="text" ref={node => this[side] = node} />
+          <button onClick={() => this.handleAdd(side, currentGameId)}>Add</button>
+        </section>
       </section>
     )
   }
 }
 
+const chats = ({ profile: { currentGameId, axis }}) => {
+  return [
+    { 
+      path: `/chat/${currentGameId}`, 
+      storeAs: 'chat'
+    }, 
+    { 
+      path: `/${axis ? 'axis' : 'allies'}Chat/${currentGameId}`,
+      storeAs: 'sideChat' 
+    }
+  ]
+}
+
 export default compose(
-  firebaseConnect([
-    '/messages'
-  ]),
+  firebaseConnect(chats),
   connect(
-    ({ firebase: { data: { messages } } }) => ({ // state.firebase.data.todos
-      messages // Connect props.todos to state.firebase.data.todos
+    ({ firebase: { data: {chat, sideChat }} }) => ({ 
+      chat,
+      sideChat
     })
   )
 )(Chat)
