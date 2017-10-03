@@ -1,18 +1,22 @@
 import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
-import LoginModal from './LoginModal'
+import { firebaseConnect } from 'react-redux-firebase'
+import { setUserId } from '../../actions'
+import Login from './Login'
 
-const login = (email, password, firebase) => {
-  return (dispatch) => {
-    firebase.login({ email, password }).then(() => dispatch(push('/')))
+const login = (email, password) => {
+  return (dispatch, _, getFirebase) => {
+    const firebase = getFirebase()
+    return firebase.login({ email, password })
+      .then(response => dispatch(setUserId(response.user.uid)))
+      .then(console.log)
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators({ 
-    login: (email, password) => login(email, password, ownProps.firebase)
+    login
   }, dispatch)
 }
 
@@ -24,7 +28,7 @@ const LoginContainer = compose(
     }),
     mapDispatchToProps
   )
-)(LoginModal)
+)(Login)
 
 export default LoginContainer
 
