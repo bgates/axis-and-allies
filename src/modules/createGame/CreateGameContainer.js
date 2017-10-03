@@ -42,10 +42,13 @@ const updateForPower = (emails, emailKeys) => (
 )
 
 const setCurrentGame = (emails, emailKeys, gameId, firebase) => {
-  emailKeys.forEach(emailKey => {
+  emailKeys.forEach((emailKey, index)=> {
     firebase.ref(`/users/${emails[emailKey] || emailKey}`)
-      .child('currentGame')
-      .transaction(currentGameId => currentGameId || gameId)
+      .transaction(user => {
+        if (!user || !user.currentGame) {
+          return { currentGameId: gameId, axis: (index % 2 == 0 && index < 5) }
+        }
+      })
   })
 }
 
