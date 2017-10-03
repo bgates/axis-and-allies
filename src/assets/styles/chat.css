@@ -1,0 +1,6 @@
+section.chat {
+  display: flex;
+}
+.chat section {
+  flex: 1;
+}
