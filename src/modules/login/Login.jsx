@@ -36,7 +36,8 @@ class Login extends Component {
           <h1>Login / Signup</h1>
           <a data-tip className="help">?</a>
           <ReactTooltip place="bottom">
-            <p><strong>Login to your account.</strong> If you are already playing a single game in progress, you will automatically join that game. If you are playing multiple games, you will be given the option of choosing which one to join. If you are not part of a current game, you will be taken to a dialog to let you create one.</p>
+            <p><strong>Login to your account.</strong> If you are already playing a single game in progress, you will automatically join that game. If you are playing multiple games, you will be given the option of choosing which one to join. If you are not part of a current game, you will be taken to a page to create one.</p>
+            <p>If this is your first visit, click 'SIGNUP' after you fill in your email and password, and you will be taken to a page to create a game.</p>
           </ReactTooltip>
           {this.state.error && <h2>{this.state.error}</h2>}
           <input 
