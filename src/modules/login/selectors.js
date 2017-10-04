@@ -1,25 +1,14 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import unitTypes from '../../config/unitTypes';
-export { getCurrentPower }
-
-export const purchaseCost = createSelector(
-  state => state.purchases,
-  purchases => {
-    return Object.keys(purchases).reduce((total, unitName) => {
-      return total + purchases[unitName] * unitTypes[unitName].cost
-    }, 0)
-  }
-);
-
-const powerCanBuild = (unit, power) => {
-  return !unit.name.includes('damaged') && 
-    (!unit.tech || unit.tech.every(tech => power.tech.includes(tech)))
-};
-
-export const buildableUnits = createSelector(
-  getCurrentPower,
-  power => Object.values(unitTypes).filter(unit => powerCanBuild(unit, power))
-);
-
+export const getLoggedInPower = (firebase, { uid, email }) => {
+  const db = firebase.database()
+  return db.ref(`/users/${uid}`).once('value').then(snapshot => (    
+    snapshot.val().currentGameId
+  )).then(gameId => (
+    db.ref(`/games/${gameId}`).once('value')
+  )).then(snapshot => {
+    const game = snapshot.val()  
+    const { powers, currentPowerIndex } = game 
+    const powersInOrder = [...powers.slice(currentPowerIndex), ...powers.slice(0, currentPowerIndex)]
+    return powersInOrder.find(power => power.email === email)
+  })
+}
 

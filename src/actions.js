@@ -51,7 +51,8 @@ export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
 export const COMBAT = 'COMBAT';
 
 export const SET_GAME_ID = 'SET_GAME_ID';
-export const SET_USER_ID = 'SET_USER_ID';
+export const SET_LOGGED_IN_POWER = 'SET_LOGGED_IN_POWER';
+export const LOGOUT = 'LOGOUT';
 
 export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
@@ -120,6 +121,12 @@ export const setGameId = id => (
   { type: SET_GAME_ID, id }
 )
 
-export const setUserId = id => (
-  { type: SET_USER_ID, id }
+export const setLoggedInPower = power => (
+  { type: SET_LOGGED_IN_POWER, power }
 )
+
+export const logoutUser = () => (
+  { type: LOGOUT }
+)
+
+

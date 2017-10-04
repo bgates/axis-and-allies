@@ -1,4 +1,4 @@
 import LoginContainer from './LoginContainer';
-//import currentUser from './reducer';
+import { getLoggedInPower } from './selectors';
 
-export { LoginContainer }
+export { LoginContainer, getLoggedInPower }

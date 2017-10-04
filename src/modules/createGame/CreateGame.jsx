@@ -20,6 +20,23 @@ class CreateGame extends Component {
     this.setState({ select: event.target.value })
   }
 
+  showSelect () {
+    if (!this.props.auth.uid) {
+      return (
+        <select onChange={this.setSelect}>
+          <option>Who are you playing?</option>
+          <option value="germany">Germany</option>
+          <option value="ussr">USSR</option>
+          <option value="japan">Japan</option>
+          <option value="uk">United Kingdom</option>
+          <option value="italy">Italy</option>
+          <option value="china">China</option>
+          <option value="us">USA</option>
+        </select>
+      )
+    }
+  }
+
   render () {
     return (
       <div className="create-game">
@@ -62,17 +79,8 @@ class CreateGame extends Component {
             <input name="email_us" placeholder="Email for American player"/>
             <input name="screenname_us" placeholder="American screen name"/>
           </div>
-          <select onChange={this.setSelect}>
-            <option>Who are you playing?</option>
-            <option value="germany">Germany</option>
-            <option value="ussr">USSR</option>
-            <option value="japan">Japan</option>
-            <option value="uk">United Kingdom</option>
-            <option value="italy">Italy</option>
-            <option value="china">China</option>
-            <option value="us">USA</option>
-          </select>
-          <button disabled={!this.state.select}>Create Game</button>
+          {this.showSelect()}
+          <button disabled={!this.state.select && !this.props.auth.uid}>Create Game</button>
         </form>
       </div>
     )

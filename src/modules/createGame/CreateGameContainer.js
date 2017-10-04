@@ -3,17 +3,17 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { firebaseConnect } from 'react-redux-firebase'
 import CreateGame from './CreateGame'
-import { setGameId } from '../../actions'
+import { getLoggedInPower } from '../login'
+import { setGameId, setLoggedInPower } from '../../actions'
 import initialPowers from '../../config/initialPowers'
 
 const setupGame = (formData) => {
-  let game = { powers: [ ...initialPowers] }
+  let game = { powers: initialPowers, currentPowerIndex: 0 }
   for (const pair of formData.entries()) {
     const [attr, name] = pair[0].split('_')
     let power = game.powers.find(p => p.name.toLowerCase() === name)
     power[attr] = pair[1]
   }
-  game.currentPlayer = game.powers[0].email
   return game
 }
 
@@ -25,13 +25,17 @@ const createGame = (formData) => {
       .then(snapshot => {
         dispatch(setGameId(snapshot.key))
         connectEachPlayerToGame(firebase, game.powers, snapshot.key)
+        if (firebase.auth().currentUser) {
+          getLoggedInPower(firebase, firebase.auth().currentUser)
+            .then(power => dispatch(setLoggedInPower(power)))
+        }
       })
       .then(() => dispatch(push('/')))
   }
 }
 
 const emailToKey = emailAddress => btoa(emailAddress)
-const keyToEmail = key => atob(key)
+//const keyToEmail = key => atob(key)
 
 const invitesBasedOn = (emails, emailKeys) => (  
   emailKeys.filter(emailKey => !emails[emailKey]).map(emailKey => `/invites/${emailKey}`)
@@ -81,8 +85,8 @@ const mapDispatchToProps = (dispatch) => {
 const CreateGameContainer = compose(
   firebaseConnect(),
   connect(
-    ({ firebase: { authError } }) => ({ 
-      authError 
+    ({ firebase: { authError, auth, profile } }) => ({ 
+      authError, auth, profile
     }),
     mapDispatchToProps
   )
