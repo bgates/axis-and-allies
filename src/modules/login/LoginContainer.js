@@ -22,18 +22,20 @@ const logout = () => {
   }
 }
 
+const signup = (email, password) => {
+  return (dispatch, _, getFirebase) => {
+    const firebase = getFirebase()
+    return firebase.createUser({ email, password })
+      .then(dispatch(push('/create-game')))
+  }
+}
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators({ 
     login,
+    signup,
     logout
   }, dispatch)
-}
-
-const mapStateToProps = (state) => {
-  return {
-    authError: state.firebase.authError,
-    auth: state.firebase.auth
-  }
 }
 
 const LoginContainer = compose(
