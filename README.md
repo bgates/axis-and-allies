@@ -29,9 +29,12 @@ practice what I preach:
  -[x] strategic bombing/escort
  -[x] normal sea
    -[x] transport
-   -[] amphib assault
+   -[x] amphib assault
    -[] commit to shore bombardment
    -[] sub movement
+   -[] convoy attack
+   -[x] straits
+   -[x] prevent amphib battle until naval battle concludes
  -[x] enter undefended territory
 [] combat
   -[x] dogfight
@@ -39,6 +42,7 @@ practice what I preach:
   -[] sub strike
   -[] combat modifiers (banzai, etc)
    -[x] artillery support
+   -[] somehow no arty support on amphib - is that right?
   -[x] display die rolls, then combat board
   -[x] display combat board
   -[x] automate defensive casualties
@@ -47,7 +51,7 @@ practice what I preach:
   -[] allow retreat
   -[x] finish combat in one territory
     -[x] mark control of territory
-    -[] indicate units have moved
+    -[x] indicate units have moved
   -[x] finish all combat
 [] land planes
   -[x] land
@@ -82,4 +86,8 @@ the problems are that I need to communicate landPlanes state to board state, and
 I have assembled information into state.landPlanes. some action is needed to gather that state and pass it to the board reducer. the resulting state must be reversible, meaning some other action could take the landed planes out of their territories and put them back. 
 
 strategic bombing: 1st account for aa; then for dogfight; then for bomb itself
-then move on. 
+
+rules for harbor: enemy air attack only; harbor has automatic aa
+
+prevent noncom movement of air unit to sea space unless carrier present
+
