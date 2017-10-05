@@ -1,6 +1,7 @@
 import React from 'react';
-import { PowersContainer } from '../../powers';
 import { Route, Redirect } from 'react-router-dom'
+import { isEmpty } from 'react-redux-firebase'
+import { PowersContainer } from '../../powers';
 import Territories from './Territories';
 import PATHS from '../../../paths';
 
@@ -16,7 +17,7 @@ const BoardWithRedirect = (props) => {
       return <Redirect to={minPath} />
     } 
   }
-
+  
   return (
     <div>
       <Route path='/start' render={routeProps => <Redirect to='/' />}/>
@@ -25,11 +26,14 @@ const BoardWithRedirect = (props) => {
   )
 }
 
-const Board = ({ board, phase, hasOverlay, advanceBtn, currentPower }) => {
+const Board = ({ board, phase, hasOverlay, advanceBtn, currentPower, game }) => {
+  const playing = isEmpty(game) || 
+    game.loggedInPower.name === currentPower.name
   return (
     <div>
       <PowersContainer />
       <Territories 
+        playing={playing}
         board={board}
         currentPower={currentPower}
         hasOverlay={hasOverlay}

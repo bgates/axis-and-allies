@@ -26,14 +26,22 @@ const Units = ({ units, unitsFrom }) => {
   )
 }
 
-const StartTooltip = ({ currentPower }) => {
-
-  return(
-    <div>
-      <p>This is the start of your turn. You are playing <strong>{currentPower.name}</strong> for the <strong>{powerData[currentPower.name].side}</strong>.</p>
-      <p>Click anywhere on the map to start.</p>
-    </div>
-  )
+const StartTooltip = ({ playing, currentPower }) => {
+  if (playing) {
+    return (
+      <div>
+        <p>This is the start of your turn. You are playing <strong>{currentPower.name}</strong> for the <strong>{powerData[currentPower.name].side}</strong>.</p>
+        <p>Click anywhere on the map to start.</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <p>It is <strong>{currentPower.name}</strong>'s turn.</p>
+        <p>You may send messages to other players while you wait for your next turn.</p>
+      </div>
+    )
+  }
 }
 
 const RepairTooltip = () => {
@@ -105,7 +113,7 @@ const ConfirmFinishTooltip = () => {
   )
 }
 
-const Tooltip = ({ territory, currentPower }) => {
+const Tooltip = ({ playing, territory, currentPower }) => {
   const { units = [], unitsFrom = [] } = territory
   const industry = units.find(unit => unit.name === 'industrial complex')
   return (
@@ -113,7 +121,7 @@ const Tooltip = ({ territory, currentPower }) => {
       <h1>{territory.name}{industry ? <img src={industryImg} alt="industrial complex" style={{height: 20}}/> : null}</h1>
       <Units units={units} unitsFrom={unitsFrom} />
       <Route exact path="/" 
-        render={() => <StartTooltip currentPower={currentPower} />} />
+        render={() => <StartTooltip playing={playing} currentPower={currentPower} />} />
       <Route path={PATHS.REPAIR} component={RepairTooltip} />
       <Route path={PATHS.PLAN_ATTACKS} component={PlanCombatTooltip} />
       <Route path={PATHS.RESOLVE_COMBAT} component={ResolveCombatTooltip} />

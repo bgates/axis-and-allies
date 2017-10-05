@@ -15,6 +15,7 @@ const mapStateToProps = (state) => {
     hasOverlay: overlayPhase(state),
     advanceBtn: advanceButtonPhase(state),
     currentPower: getCurrentPower(state),
+    game: state.game
   }
 }
 

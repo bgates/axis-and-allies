@@ -5,7 +5,8 @@ const Territory = ({
   classNames,
   handleClick, 
   setVisibility, 
-  fill
+  fill,
+  playing
 }) => {
   const { dimensions, adjacentIndexes, name } = territory;
   return (
@@ -14,7 +15,7 @@ const Territory = ({
       className={classNames}
       stroke='#000'
       strokeWidth='2'
-      onClick={handleClick.bind(null, territory)}
+      onClick={playing && handleClick.bind(null, territory)}
       onMouseOver={setVisibility}
       fill={fill} >
     </path>

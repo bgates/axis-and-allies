@@ -53,6 +53,7 @@ class Territories extends Component {
           ref={ (component) => this.tooltip = component }>
           <Tooltip
             territory={this.state.tooltipTerritory}
+            playing={this.props.playing}
             currentPower={this.props.currentPower} />
         </div>
       )
@@ -118,6 +119,7 @@ class Territories extends Component {
           <FireImage />
           {this.props.board.map((territory, index) =>
             <TerritoryContainer
+              playing={this.props.playing}
               territory={territory}
               setVisibility={this.setVisibility.bind(this, territory)}
               key={index} />
