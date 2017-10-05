@@ -1,4 +1,4 @@
-import { omit } from 'ramda';
+import { omit } from 'ramda'
 import { 
   SET_GAME_ID,
   SET_LOGGED_IN_POWER,
