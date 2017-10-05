@@ -17,6 +17,12 @@ const setupGame = (formData) => {
   return game
 }
 
+const setLoggedInPowerIfPossible = (firebase, dispatch) => {
+  if (firebase.auth().currentUser) {
+    getLoggedInPower(firebase, firebase.auth().currentUser)
+      .then(power => dispatch(setLoggedInPower(power)))
+  }
+}
 const createGame = (formData) => {
   return (dispatch, _, getFirebase) => {
     const game = setupGame(formData)
@@ -25,10 +31,7 @@ const createGame = (formData) => {
       .then(snapshot => {
         dispatch(setGameId(snapshot.key))
         connectEachPlayerToGame(firebase, game.powers, snapshot.key)
-        if (firebase.auth().currentUser) {
-          getLoggedInPower(firebase, firebase.auth().currentUser)
-            .then(power => dispatch(setLoggedInPower(power)))
-        }
+          .then(() => setLoggedInPowerIfPossible(firebase, dispatch))
       })
       .then(() => dispatch(push('/')))
   }
@@ -53,7 +56,7 @@ const setCurrentGame = (emails, emailKeys, gameId, firebase) => {
           return { 
             ...user, 
             currentGameId: gameId, 
-            axis: index % 2 == 0 && index < 5 
+            axis: index % 2 === 0 && index < 5 
           }
         }
       })
@@ -61,7 +64,7 @@ const setCurrentGame = (emails, emailKeys, gameId, firebase) => {
 }
 
 const connectEachPlayerToGame = (firebase, powers, gameId) => {
-  firebase.ref('/emails').once('value').then(snapshot => {
+  return firebase.ref('/emails').once('value').then(snapshot => {
     const emails = snapshot.val()
     const emailKeys = powers.map(power => emailToKey(power.email))
     const invites = invitesBasedOn(emails, emailKeys)
@@ -71,7 +74,7 @@ const connectEachPlayerToGame = (firebase, powers, gameId) => {
     powers.forEach((power, index) => {  
       updates[`${userUpdates[index]}/${gameId}/${power.name}`] = power.screenname
     })
-    firebase.ref().update(updates)
+    return firebase.ref().update(updates)
       .then(() => setCurrentGame(emails, emailKeys, gameId, firebase))
   })
 }
