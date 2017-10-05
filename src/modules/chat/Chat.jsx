@@ -8,7 +8,8 @@ class Messages extends Component {
 
   handleAdd () {
     const msg = this.msg
-    this.props.firebase.push(this.props.node, { text: msg.value })
+    const { power, firebase } = this.props
+    firebase.push(this.props.node, { text: msg.value, author: power.screenname, power: power.name })
     msg.value = ''
   }
 
@@ -35,27 +36,26 @@ class Messages extends Component {
   }
 }
 
-class Chat extends Component {
+const Chat = ({ chat, sideChat, firebase, profile, loggedInPower }) => {
 
-  render () {
-    const { chat, sideChat, profile, firebase } = this.props 
-    const { axis, currentGameId }= profile
-    const side = axis ? 'axisChat' : 'alliesChat'
-    return (
-      <section className="chat">
-        <Messages 
-          type="Public" 
-          list={chat} 
-          firebase={firebase}
-          node={`/chat/${currentGameId}`} />
-        <Messages 
-          type="Private" 
-          list={sideChat} 
-          firebase={firebase}
-          node={`/${side}/${currentGameId}`} />
-      </section>
-    )
-  }
+  const { axis, currentGameId } = profile
+  const side = axis ? 'axisChat' : 'alliesChat'
+  return (
+    <section className="chat">
+      <Messages 
+        type="Public" 
+        list={chat} 
+        firebase={firebase}
+        power={loggedInPower}
+        node={`/chat/${currentGameId}`} />
+      <Messages 
+        type="Private" 
+        list={sideChat} 
+        firebase={firebase}
+        power={loggedInPower}
+        node={`/${side}/${currentGameId}`} />
+    </section>
+  )
 }
 
 const chats = ({ profile: { currentGameId, axis }}) => {
@@ -74,9 +74,11 @@ const chats = ({ profile: { currentGameId, axis }}) => {
 export default compose(
   firebaseConnect(chats),
   connect(
-    ({ firebase: { data: {chat, sideChat }} }) => ({ 
+    ({ firebase: { profile, data: {chat, sideChat }}, game: { loggedInPower } }) => ({ 
       chat,
-      sideChat
+      sideChat,
+      loggedInPower,
+      profile
     })
   )
 )(Chat)
