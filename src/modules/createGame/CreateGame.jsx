@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import '../../assets/styles/login.css'
 
 class CreateGame extends Component {
