@@ -36,7 +36,8 @@ function observeProfileChanges (store) {
   function handleChange () {
     const nextFirebase = store.getState().firebase
     let nextProfile = nextFirebase.profile
-    if (nextProfile.currentGameId !== currentProfile.currentGameId) {
+    if (nextProfile.currentGameId && 
+      nextProfile.currentGameId !== currentProfile.currentGameId) {
       currentProfile = nextProfile
       const firebase = getFirebase()
       const { currentGameId } = nextProfile
