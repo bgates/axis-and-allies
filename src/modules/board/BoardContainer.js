@@ -1,4 +1,6 @@
+import { compose } from 'redux'
 import { connect } from 'react-redux'
+import { firebaseConnect } from 'react-redux-firebase'
 import Board from './components/Board'
 import { 
   overlayPhase,
@@ -19,7 +21,18 @@ const mapStateToProps = (state) => {
   }
 }
 
-const BoardContainer = connect(mapStateToProps)(Board)
+const patches = ({ profile: { currentGameId }}) => {
+  return [
+    { 
+      path: `/games/${currentGameId}/patches`, 
+      storeAs: 'patches'
+    } 
+  ]
+}
+
+const BoardContainer = compose(
+  firebaseConnect(patches),
+  connect(mapStateToProps)
+)(Board)
 
 export default BoardContainer
-

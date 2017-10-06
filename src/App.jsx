@@ -14,7 +14,7 @@ import { CreateGameContainer } from './modules/createGame'
 const Game = ({ authError, auth, profile }) => (    
   <div>
     <LoginContainer />
-    <BoardContainer />
+    <BoardContainer profile={profile} />
     {!isEmpty(auth) && <Chat profile={profile} />}
   </div>
 )
