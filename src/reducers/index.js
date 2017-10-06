@@ -7,6 +7,7 @@ import { landPlanes } from '../modules/landPlanes'
 import { placement } from '../modules/placement'
 import rolls from './rolls'
 import { updateBoardString } from './updateBoardString'
+import Board from '../config/startingBoard'
 import { 
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
@@ -30,7 +31,7 @@ const combinedReducer = combineReducers({
   game,
   firebase,
   board,
-  boardString: (state = '', action) => state,
+  boardString: (state = Board, action) => state,
   landPlanes,
   phase,
   placement,
