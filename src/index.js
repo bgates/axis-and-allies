@@ -16,16 +16,20 @@ function observeBoardChanges (store) {
   let currentBoardString = '';
 
   function handleChange() {
-    let nextBoardString = store.getState().boardString;
-    if (nextBoardString !== currentBoardString) {
-      let diffs = dmp.diff_main(currentBoardString, nextBoardString)
-      dmp.diff_cleanupEfficiency(diffs)
-      const patches = dmp.patch_make(currentBoardString, diffs)
-      console.log({ diffs, patches })
+    const state = store.getState()
+    let nextBoardString = state.boardString;
+    const currentGameId = state.firebase.profile.currentGameId
+    if (currentGameId && nextBoardString !== currentBoardString) {
+      if (currentBoardString.length) {
+        const firebase = getFirebase()
+        let diffs = dmp.diff_main(currentBoardString, nextBoardString)
+        dmp.diff_cleanupEfficiency(diffs)
+        const patches = dmp.patch_make(currentBoardString, diffs)
+        firebase.push(`/games/${currentGameId}/patches`, patches)
+      }
       currentBoardString = nextBoardString;
     }
   }
-
   store.subscribe(handleChange);
   handleChange();
 }
