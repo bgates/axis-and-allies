@@ -90,7 +90,8 @@ const territoryThunk = (territory) => {
         if (isOrdering(phase.current, currentPower.name, territory.currentPower, units)) {
           dispatch(orderUnits(territory)) 
         }
-      }
+      },
+      [PATHS.CONFIRM_FINISH]: () => {}
     }
     routes[router.location.pathname]()
   }
