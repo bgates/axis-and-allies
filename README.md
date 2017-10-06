@@ -62,8 +62,8 @@ practice what I preach:
 [x] advance to next turn
 
 software issues
-[]game creation
-[]logging in
+[x]game creation
+[x]logging in
 []what do non-logged-in users see?
 []log
 
