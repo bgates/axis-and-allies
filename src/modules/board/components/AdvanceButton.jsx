@@ -7,7 +7,7 @@ import { phases } from '../selectors';
 import {
   SELECT_PLANE_LANDING_TERRITORY,
   LAND_PLANES,
-  NEXT_TURN,
+  nextTurn,
   CONFIRM_FINISH
 } from '../../../actions';
 import PATHS from '../../../paths';
@@ -27,7 +27,7 @@ const changePhaseThunk = (dir = 'fwd') => {
       },
       'confirm-land-planes-back': () => dispatch({ type: SELECT_PLANE_LANDING_TERRITORY }),
       [`${CONFIRM_FINISH}-fwd`]: () => {
-        dispatch({ type: NEXT_TURN })
+        dispatch(nextTurn())
         dispatch(push('/'))
       },
       [`${CONFIRM_FINISH}-back`]: () => dispatch({ type: 'backToOrder' })

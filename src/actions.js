@@ -1,3 +1,4 @@
+import { getFirebase } from 'react-redux-firebase'
 export const ROLLS = 'ROLLS';
 
 export const SET_TECH = 'SET_TECH';
@@ -82,11 +83,32 @@ export const removeCasualties = (defenderCasualties, territoryIndex, currentPowe
   }
 )
 
+const sendToFirebase = (state, getFirebase, action, node, data) => {
+  const { currentGameId } = state.firebase.profile
+  if (currentGameId) {
+    const firebase = getFirebase()
+    firebase[action](`/games/${currentGameId}/${node}`, data)
+  }
+}
+
 export const roll = (phase, rolls) => ( 
-  {
-    type: ROLLS,
-    phase,
-    rolls
+  (dispatch, getState, getFirebase) => {
+    dispatch({
+      type: ROLLS,
+      phase,
+      rolls
+    })
+    const state = getState()
+    sendToFirebase(state, getFirebase, 'push', 'rolls', { phase, rolls })
+  }
+)
+
+export const nextTurn = () => (
+  (dispatch, getState, getFirebase) => {
+    dispatch({ type: NEXT_TURN })
+    const state = getState()
+    const index = state.board.powers.findIndex(power => power.current)
+    sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', index)
   }
 )
 
