@@ -6,6 +6,7 @@ import startingBoard from '../../../config/startingBoard'
 import territoryData from '../../../config/territories.json'
 import initialPowers from '../../../config/initialPowers';
 import { NEXT_TURN } from '../../../actions'
+import { actionTypes } from 'react-redux-firebase'
 
 const parsedBoard = Parser.hydrate(startingBoard)
 
@@ -29,6 +30,8 @@ const initialState = {
 const indexHelper = (state, action) => {
   if (action.type === NEXT_TURN) {
     return (state.currentPowerIndex + 1) % 7
+  } else if (action.type === actionTypes.SET && action.path === 'currentPowerIndex') {
+    return action.data
   } else {
     return state.currentPowerIndex
   }

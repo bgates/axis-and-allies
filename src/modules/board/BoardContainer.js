@@ -21,17 +21,25 @@ const mapStateToProps = (state) => {
   }
 }
 
-const patches = ({ profile: { currentGameId }}) => {
-  return [
-    { 
-      path: `/games/${currentGameId}/patches`, 
-      storeAs: 'patches'
-    } 
-  ]
+const topLevel = ({ profile: { currentGameId }}) => {
+  if (currentGameId) {
+    return [
+      { 
+        path: `/games/${currentGameId}/patches`, 
+        storeAs: 'patches'
+      },
+      {
+        path: `/games/${currentGameId}/currentPowerIndex`,
+        storeAs: 'currentPowerIndex'
+      }
+    ]
+  } else {
+    return []
+  }
 }
 
 const BoardContainer = compose(
-  firebaseConnect(patches),
+  firebaseConnect(topLevel),
   connect(mapStateToProps)
 )(Board)
 
