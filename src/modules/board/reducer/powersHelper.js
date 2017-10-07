@@ -1,19 +1,17 @@
-import { omit } from 'ramda';
 import {
   ATTEMPT_RESEARCH,
   DEVELOP_TECH,
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
-  VIEW_STRATEGIC_BOMBING_RESULTS,
-  NEXT_TURN
+  VIEW_STRATEGIC_BOMBING_RESULTS
 } from '../../../actions';
 
 const updateObject = (object, newValues) => {
   return Object.assign({}, object, newValues)
 }
 
-const updateCurrentPower = (powers, updateCallback, callbackArg) => {
-  return powers.map(power => power.current ? updateCallback(power, callbackArg) : power)
+const updateCurrentPower = (powers, cPI, updateCallback, callbackArg) => {
+  return powers.map((power, i) => i === cPI ? updateCallback(power, callbackArg) : power)
 }
 
 const spendIPCs = (power, amount) => {
@@ -25,11 +23,12 @@ const gainIPCs = (power, amount) => {
 }
 
 const powers = (state, action) => {
+  const { currentPowerIndex } = state
   switch (action.type) {
     case '@@router/LOCATION_CHANGE': 
       const { pathname } = action.payload.location;
       if (pathname === '/confirm-finish') {
-        return updateCurrentPower(state.powers, gainIPCs, state.currentPowerIncome)
+        return updateCurrentPower(state.powers, currentPowerIndex, gainIPCs, state.currentPowerIncome)
       } else {
         return state.powers
       }
@@ -43,31 +42,17 @@ const powers = (state, action) => {
         }
       })
     }
-    case NEXT_TURN: {
-      let powers = state.powers
-      const currentPower = powers.find(power => power.current)
-      const nextPowerIndex = currentPower.name === 'China' ? 0 : powers.indexOf(currentPower) + 1
-      return powers.map((power, n) => {
-        if(power.current) {
-          return omit('current', power) 
-        } else if (n === nextPowerIndex) {
-          return {...power, current: true}
-        } else {
-          return power
-        }
-      })              
-    }
     case DEVELOP_TECH:
       const assignTech = (power) => {
         return updateObject(power, { tech: power.tech.concat(action.tech) })
       }
-      return updateCurrentPower(state.powers, assignTech)
+      return updateCurrentPower(state.powers, currentPowerIndex, assignTech)
     case ATTEMPT_RESEARCH:
-      return updateCurrentPower(state.powers, spendIPCs, action.cost)
+      return updateCurrentPower(state.powers, currentPowerIndex, spendIPCs, action.cost)
     case INCREMENT_PURCHASE:
-      return updateCurrentPower(state.powers, spendIPCs, action.unit.cost)
+      return updateCurrentPower(state.powers, currentPowerIndex, spendIPCs, action.unit.cost)
     case DECREMENT_PURCHASE:
-      return updateCurrentPower(state.powers, gainIPCs, action.unit.cost)
+      return updateCurrentPower(state.powers, currentPowerIndex, gainIPCs, action.unit.cost)
     default:
       return state.powers
   }

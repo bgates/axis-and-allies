@@ -107,7 +107,7 @@ export const nextTurn = () => (
   (dispatch, getState, getFirebase) => {
     dispatch({ type: NEXT_TURN })
     const state = getState()
-    const index = state.board.powers.findIndex(power => power.current)
+    const index = state.board.currentPowerIndex
     sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', index)
   }
 )

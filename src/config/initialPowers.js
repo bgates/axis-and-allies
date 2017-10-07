@@ -1,5 +1,5 @@
 export default [
-  {name: 'Germany', ipc: 56, tech: [], current: true},
+  {name: 'Germany', ipc: 56, tech: []},
   {name: 'USSR', ipc: 46, tech: []},
   {name: 'Japan', ipc: 41, tech: []},
   {name: 'UK', ipc: 70, tech: []},
