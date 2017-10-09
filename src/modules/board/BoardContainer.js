@@ -31,6 +31,10 @@ const topLevel = ({ profile: { currentGameId }}) => {
       {
         path: `/games/${currentGameId}/currentPowerIndex`,
         storeAs: 'currentPowerIndex'
+      },
+      {
+        path: `/games/${currentGameId}/boardStrings`,
+        storeAs: 'boardStrings'
       }
     ]
   } else {

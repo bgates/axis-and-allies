@@ -51,10 +51,6 @@ export const NEXT_TURN = 'NEXT_TURN';
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
 export const COMBAT = 'COMBAT';
 
-export const SET_GAME_ID = 'SET_GAME_ID';
-export const SET_LOGGED_IN_POWER = 'SET_LOGGED_IN_POWER';
-export const LOGOUT = 'LOGOUT';
-
 export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
 export const resolveCombat = (territory) => (  
@@ -107,8 +103,10 @@ export const nextTurn = () => (
   (dispatch, getState, getFirebase) => {
     dispatch({ type: NEXT_TURN })
     const state = getState()
+    const boardString = state.boardString
     const index = state.board.currentPowerIndex
     sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', index)
+    sendToFirebase(state, getFirebase, 'push', 'boardStrings', boardString)
   }
 )
 
@@ -138,17 +136,4 @@ export const viewMovementOptions = (territory) => (
 export const orderUnits = (territory) => (
   { type: ORDER_UNITS, territory }
 )
-
-export const setGameId = id => (
-  { type: SET_GAME_ID, id }
-)
-
-export const setLoggedInPower = power => (
-  { type: SET_LOGGED_IN_POWER, power }
-)
-
-export const logoutUser = () => (
-  { type: LOGOUT }
-)
-
 

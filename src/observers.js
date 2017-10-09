@@ -1,7 +1,6 @@
 import { getFirebase } from 'react-redux-firebase'
 import DiffMatchPatch from 'diff-match-patch'
 import Board from './config/startingBoard'
-import { setLoggedInPower } from './actions'
 
 const observeBoardChanges = (store) => {
   const dmp = new DiffMatchPatch();
@@ -40,8 +39,6 @@ const observeProfileChanges = (store) => {
         const { powers, currentPowerIndex } = snapshot.val()
         const powersInOrder = [...powers.slice(currentPowerIndex), ...powers.slice(0, currentPowerIndex)]
         return powersInOrder.find(power => power.email === email)
-      }).then(power => {
-        store.dispatch(setLoggedInPower(power))
       })
     }
   }

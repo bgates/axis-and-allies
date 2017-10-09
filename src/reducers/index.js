@@ -6,7 +6,7 @@ import { research } from '../modules/research'
 import { landPlanes } from '../modules/landPlanes'
 import { placement } from '../modules/placement'
 import rolls from './rolls'
-import { updateBoardString } from './updateBoardString'
+import { boardString, updateBoardString } from './updateBoardString'
 import Board from '../config/startingBoard'
 import { 
   DOGFIGHT,
@@ -24,14 +24,12 @@ import {
   PLAN_MOVEMENT,
   PLACE_UNITS
 } from '../actions';
-import { game } from './game'
 import { firebaseStateReducer as firebase } from 'react-redux-firebase'
        
 const combinedReducer = combineReducers({
-  game,
   firebase,
   board,
-  boardString: (state = Board, action) => state,
+  boardString,
   landPlanes,
   phase,
   placement,
@@ -58,7 +56,7 @@ const crossSliceReducer = (state, action) => {
     case PLACE_UNITS: {
         return {
           ...state,
-          boardString: updateBoardString(state.boardString, state.board.territories)
+          boardString: updateBoardString(state.board.territories)
         }        
     }
     default : 

@@ -11,7 +11,7 @@ import Chat from './modules/chat'
 import { LoginContainer } from './modules/login'
 import { CreateGameContainer } from './modules/createGame'
 
-const Game = ({ authError, auth, profile }) => (    
+const Game = ({ auth, profile }) => (    
   <div>
     <LoginContainer />
     <BoardContainer profile={profile} />
@@ -21,8 +21,8 @@ const Game = ({ authError, auth, profile }) => (
 
 const GameContainer = compose(firebaseConnect(),
   connect(
-    ({ firebase: { authError, auth, profile } }) => ({ 
-      authError, auth, profile
+    ({ firebase: { auth, profile } }) => ({ 
+      auth, profile
     })
   )
 )(Game)

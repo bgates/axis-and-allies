@@ -3,8 +3,6 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { firebaseConnect } from 'react-redux-firebase'
 import CreateGame from './CreateGame'
-import { getLoggedInPower } from '../login'
-import { setGameId, setLoggedInPower } from '../../actions'
 import initialPowers from '../../config/initialPowers'
 
 const setupGame = (formData) => {
@@ -17,21 +15,13 @@ const setupGame = (formData) => {
   return game
 }
 
-const setLoggedInPowerIfPossible = (firebase, dispatch) => {
-  if (firebase.auth().currentUser) {
-    getLoggedInPower(firebase, firebase.auth().currentUser)
-      .then(power => dispatch(setLoggedInPower(power)))
-  }
-}
 const createGame = (formData) => {
   return (dispatch, _, getFirebase) => {
     const game = setupGame(formData)
     const firebase = getFirebase()
     firebase.push('/games', game)
       .then(snapshot => {
-        dispatch(setGameId(snapshot.key))
         connectEachPlayerToGame(firebase, game.powers, snapshot.key)
-          .then(() => setLoggedInPowerIfPossible(firebase, dispatch))
       })
       .then(() => dispatch(push('/')))
   }

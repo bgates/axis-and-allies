@@ -1,3 +1,4 @@
+import { actionTypes } from 'react-redux-firebase'
 import territoriesHelper from './territoriesHelper'
 import powersHelper from './powersHelper'
 import incomeHelper from './incomeHelper'
@@ -6,7 +7,6 @@ import startingBoard from '../../../config/startingBoard'
 import territoryData from '../../../config/territories.json'
 import initialPowers from '../../../config/initialPowers';
 import { NEXT_TURN } from '../../../actions'
-import { actionTypes } from 'react-redux-firebase'
 
 const parsedBoard = Parser.hydrate(startingBoard)
 
