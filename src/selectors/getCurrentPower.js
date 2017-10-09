@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect';
+import { isEmpty } from 'react-redux-firebase'
 
 export const getPowers = (state) => state.board.powers
 
@@ -29,4 +30,11 @@ export const getLoggedInPower = createSelector(
       return {}
     }
   }
+)
+
+export const isCurrentPower = createSelector(
+  state => state.firebase.auth,
+  getCurrentPower,
+  getLoggedInPower,
+  (auth, currentPower, loggedInPower) => isEmpty(auth) || currentPower.name === loggedInPower.name
 )

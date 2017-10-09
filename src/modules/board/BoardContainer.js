@@ -6,7 +6,7 @@ import {
   overlayPhase,
   advanceButtonPhase,
 } from './selectors'
-import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { getCurrentPower, isCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
 
 const mapStateToProps = (state) => {
@@ -17,7 +17,7 @@ const mapStateToProps = (state) => {
     hasOverlay: overlayPhase(state),
     advanceBtn: advanceButtonPhase(state),
     currentPower: getCurrentPower(state),
-    game: state.game
+    isCurrentPower: isCurrentPower(state)
   }
 }
 

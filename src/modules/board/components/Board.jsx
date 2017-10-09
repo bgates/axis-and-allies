@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom'
-import { isEmpty } from 'react-redux-firebase'
 import { PowersContainer } from '../../powers';
 import Territories from './Territories';
 import PATHS from '../../../paths';
@@ -26,14 +25,12 @@ const BoardWithRedirect = (props) => {
   )
 }
 
-const Board = ({ board, phase, hasOverlay, advanceBtn, currentPower, game }) => {
-  const playing = isEmpty(game) || 
-    game.loggedInPower.name === currentPower.name
+const Board = ({ board, phase, hasOverlay, advanceBtn, currentPower, isCurrentPower }) => {
   return (
     <div>
       <PowersContainer />
       <Territories 
-        playing={playing}
+        playing={isCurrentPower}
         board={board}
         currentPower={currentPower}
         hasOverlay={hasOverlay}
