@@ -7,6 +7,7 @@
     "connected-react-router": "^4.2.1",
     "diff-match-patch": "^1.0.0",
     "firebase": "^4.1.2",
+    "gh-pages": "^1.0.0",
     "ramda": "^0.24.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
@@ -26,9 +27,12 @@
     "react-scripts": "1.0.7"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
-  }
+  },
+  "homepage": "https://bgates.github.io/axis-and-allies"
 }
