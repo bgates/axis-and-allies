@@ -1,23 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
-import germanyFlag from '../../assets/images/germany.svg'
-import ussrFlag from '../../assets/images/ussr.svg'
-import japanFlag from '../../assets/images/japan.svg'
-import ukFlag from '../../assets/images/uk.svg'
-import italyFlag from '../../assets/images/italy.svg'
-import usFlag from '../../assets/images/us.svg'
-import chinaFlag from '../../assets/images/china.svg'
-import '../../assets/styles/powers.css'
+import { flags } from '../../config/initialPowers'
 
-const flags = {
-  germany: germanyFlag,
-  ussr: ussrFlag,
-  japan: japanFlag,
-  uk: ukFlag,
-  italy: italyFlag,
-  us: usFlag,
-  china: chinaFlag
-}
+import '../../assets/styles/powers.css'
 
 const Powers = ({ powers, currentPower, npl }) => {
   return (

@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { firebaseConnect, isLoaded, isEmpty } from 'react-redux-firebase'
+import { isLoaded, isEmpty } from 'react-redux-firebase'
+import { flags } from '../../config/initialPowers'
 import '../../assets/styles/chat.css'
+
+const Message = ({ author, power, text }) => (
+  <li>
+    <div className={power.toLowerCase()}>
+      <img className="round" src={flags[power.toLowerCase()]} alt={power} />
+    </div>{author}: {text}
+  </li>
+)
 
 class Messages extends Component {
 
   handleAdd () {
-    const msg = this.msg
-    const { power, firebase } = this.props
-    firebase.push(this.props.node, { text: msg.value, author: power.screenname, power: power.name })
+    const { msg } = this
+    const { power, firebase, node } = this.props
+    firebase.push(node, { text: msg.value, author: power.screenname, power: power.name })
     msg.value = ''
   }
 
@@ -19,7 +26,7 @@ class Messages extends Component {
     } else if (isEmpty(messages)) {
       return <li>No messages yet</li>
     } else {
-      return Object.keys(messages).map(key => <li key={key}>{messages[key].text}</li>)
+      return Object.keys(messages).map(key => <Message key={key} {...messages[key]} />)
     }
   }
 
@@ -36,9 +43,8 @@ class Messages extends Component {
   }
 }
 
-const Chat = ({ chat, sideChat, firebase, profile, loggedInPower }) => {
-
-  const { axis, currentGameId } = profile
+const Chat = ({ firebase, loggedInPower }) => {
+  const { profile: { axis, currentGameId }, data: { chat, sideChat } } = firebase
   const side = axis ? 'axisChat' : 'alliesChat'
   return (
     <section className="chat">
@@ -58,27 +64,4 @@ const Chat = ({ chat, sideChat, firebase, profile, loggedInPower }) => {
   )
 }
 
-const chats = ({ profile: { currentGameId, axis }}) => {
-  return [
-    { 
-      path: `/chat/${currentGameId}`, 
-      storeAs: 'chat'
-    }, 
-    { 
-      path: `/${axis ? 'axis' : 'allies'}Chat/${currentGameId}`,
-      storeAs: 'sideChat' 
-    }
-  ]
-}
-
-export default compose(
-  firebaseConnect(chats),
-  connect(
-    ({ firebase: { profile, data: {chat, sideChat }}, game: { loggedInPower } }) => ({ 
-      chat,
-      sideChat,
-      loggedInPower,
-      profile
-    })
-  )
-)(Chat)
+export default Chat

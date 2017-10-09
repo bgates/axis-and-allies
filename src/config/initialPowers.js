@@ -1,3 +1,21 @@
+import germanyFlag from '../assets/images/germany.svg'
+import ussrFlag from '../assets/images/ussr.svg'
+import japanFlag from '../assets/images/japan.svg'
+import ukFlag from '../assets/images/uk.svg'
+import italyFlag from '../assets/images/italy.svg'
+import usFlag from '../assets/images/us.svg'
+import chinaFlag from '../assets/images/china.svg'
+
+export const flags = {
+  germany: germanyFlag,
+  ussr: ussrFlag,
+  japan: japanFlag,
+  uk: ukFlag,
+  italy: italyFlag,
+  us: usFlag,
+  china: chinaFlag
+}
+
 export default [
   {name: 'Germany', ipc: 56, tech: []},
   {name: 'USSR', ipc: 46, tech: []},

@@ -4,3 +4,23 @@ section.chat {
 .chat section {
   flex: 1;
 }
+.chat ul {
+  padding: 0;
+}
+.chat li {
+  margin-bottom: 0.5em;
+}
+.chat li div {
+  padding: 0;
+  margin-right: 0.5em;
+  border-radius: 50%;
+  height: 1.4em;
+  width: 1.4em;
+}
+.chat img.round {
+  height: 1em;
+  width: 1em;            
+  margin-left: 0.2em;
+  margin-top: 0.2em;
+}
+
