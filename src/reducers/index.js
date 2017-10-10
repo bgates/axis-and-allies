@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import { board } from '../modules/board'
+import { board, updateBoard } from '../modules/board'
 import phase from './phase'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
@@ -24,7 +24,7 @@ import {
   PLAN_MOVEMENT,
   PLACE_UNITS
 } from '../actions';
-import { firebaseStateReducer as firebase } from 'react-redux-firebase'
+import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
        
 const combinedReducer = combineReducers({
   firebase,
@@ -58,6 +58,12 @@ const crossSliceReducer = (state, action) => {
           ...state,
           boardString: updateBoardString(state.board.territories)
         }        
+    }
+    case actionTypes.SET: {
+      return {
+        ...state,
+        board: updateBoard(action, state)
+      }
     }
     default : 
       return state;

@@ -8,8 +8,8 @@ export const updateBoardString = (currentBoard) => {
 
 export const boardString = (state = Board, action) => {
   if (action.type === actionTypes.SET && action.path === 'boardStrings') {
-    console.log('data', action.data)
-    return state
+    const boardStrings = action.ordered
+    return boardStrings[boardStrings.length - 1].value
   } else {
     return state
   }

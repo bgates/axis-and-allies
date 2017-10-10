@@ -39,11 +39,13 @@ const boardStatus = ({ isCurrentPower, profile: { currentGameId }}) => {
     return [
       { 
         path: `/games/${currentGameId}/patches`, 
-        storeAs: 'patches'
+        storeAs: 'patches',
+        queryParams: ['orderByKey']
       },
       {
         path: `/games/${currentGameId}/boardStrings`,
-        storeAs: 'boardStrings'
+        storeAs: 'boardStrings',
+        queryParams: ['orderByKey']
       }
     ]
   } else {

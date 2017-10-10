@@ -8,23 +8,22 @@ import territoryData from '../../../config/territories.json'
 import initialPowers from '../../../config/initialPowers';
 import { NEXT_TURN } from '../../../actions'
 
-const parsedBoard = Parser.hydrate(startingBoard)
-
-const initialBoard = territoryData.map((territory, i) => {
-  return {
-    units: parsedBoard[i],
-    unitsFrom: [],
-    currentPower: territory.original_power
-  }
-  //TODO: currentPower should be controllingPower
-})
+const boardFromString = boardString => {
+  const parsedBoard = Parser.hydrate(boardString)
+  return territoryData.map((territory, i) => (
+    {
+      units: parsedBoard[i],
+      unitsFrom: [],
+      currentPower: territory.original_power //TODO: how to update currentPower?
+    }
+  ))
+}
 
 const initialState = { 
-  territories: initialBoard, 
+  territories: boardFromString(startingBoard), 
   powers: initialPowers,
   currentPowerIncome: 0,
-  currentPowerIndex: 0,
-  spectator: startingBoard
+  currentPowerIndex: 0
 }
 
 const indexHelper = (state, action) => {
@@ -37,7 +36,7 @@ const indexHelper = (state, action) => {
   }
 }
 
-const board = (state = initialState, action) => {
+export const board = (state = initialState, action) => {
   return { 
     territories: territoriesHelper(state, action),
     powers: powersHelper(state, action),
@@ -46,4 +45,10 @@ const board = (state = initialState, action) => {
   }
 }
 
-export default board
+export const updateBoard = (action, state) => {
+  if (action.path === 'boardStrings') {
+    return { ...state.board, territories: boardFromString(state.boardString) }
+  } else {
+    return state.board
+  }
+}
