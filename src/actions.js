@@ -107,6 +107,7 @@ export const nextTurn = () => (
     const index = state.board.currentPowerIndex
     sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', index)
     sendToFirebase(state, getFirebase, 'push', 'boardStrings', boardString)
+    sendToFirebase(state, getFirebase, 'remove', 'patches')
   }
 )
 
