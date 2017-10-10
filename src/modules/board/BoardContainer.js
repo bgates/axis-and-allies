@@ -21,16 +21,25 @@ const mapStateToProps = (state) => {
   }
 }
 
-const topLevel = ({ profile: { currentGameId }}) => {
+const loginStatus = ({ profile: { currentGameId } }) => {
   if (currentGameId) {
+    return [
+      {
+        path: `/games/${currentGameId}/currentPowerIndex`,
+        storeAs: 'currentPowerIndex'
+      }
+    ]
+  } else {
+    return []
+  }
+}
+
+const boardStatus = ({ isCurrentPower, profile: { currentGameId }}) => {
+  if (currentGameId && !isCurrentPower) {
     return [
       { 
         path: `/games/${currentGameId}/patches`, 
         storeAs: 'patches'
-      },
-      {
-        path: `/games/${currentGameId}/currentPowerIndex`,
-        storeAs: 'currentPowerIndex'
       },
       {
         path: `/games/${currentGameId}/boardStrings`,
@@ -43,8 +52,9 @@ const topLevel = ({ profile: { currentGameId }}) => {
 }
 
 const BoardContainer = compose(
-  firebaseConnect(topLevel),
-  connect(mapStateToProps)
+  connect(mapStateToProps),
+  firebaseConnect(loginStatus),
+  firebaseConnect(boardStatus)
 )(Board)
 
 export default BoardContainer
