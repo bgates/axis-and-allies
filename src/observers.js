@@ -15,7 +15,8 @@ const observeBoardChanges = (store) => {
       let diffs = dmp.diff_main(currentBoardString, nextBoardString)
       dmp.diff_cleanupEfficiency(diffs)
       const patches = dmp.patch_make(currentBoardString, diffs)
-      firebase.push(`/games/${currentGameId}/patches`, patches)
+      console.log({ currentBoardString, nextBoardString })
+      //firebase.push(`/games/${currentGameId}/patches`, patches)
       currentBoardString = nextBoardString;
     }
   }
