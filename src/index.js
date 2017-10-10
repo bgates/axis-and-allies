@@ -10,10 +10,9 @@ import './assets/styles/index.css'
 const store = configureStore()
 observe(store) 
 
-const basename = process.env.NODE_ENV === 'production' ? '/axis-and-allies' : ''
 reactDOM.render(
   <Provider store={store}>
-    <Router history={history} basename={basename}>
+    <Router history={history}>
       <App />
     </Router>
   </Provider>, document.getElementById('root')

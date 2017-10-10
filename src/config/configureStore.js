@@ -12,7 +12,8 @@ const rrfConfig = {
   userProfile: 'users'
 }
 
-export const history = createBrowserHistory()
+const basename = process.env.NODE_ENV === 'production' ? '/axis-and-allies' : ''
+export const history = createBrowserHistory({ basename })
 
 const reducerWithRouteState = connectRouter(history)(reducer)
 
