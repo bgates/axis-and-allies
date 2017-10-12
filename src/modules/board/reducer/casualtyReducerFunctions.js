@@ -102,7 +102,7 @@ const resetUnits = units => {
     const original = unitTypes[unit.name]
     return { ...unit, attack: original.attack, defend: original.defend }
   })
-  return consolidateUnits(reset)
+  return consolidateUnits(reset, 'distance', 'movement')
 }
 
 //TODO: probably need victor in unitsFrom not units, so I can ensure they don't move during noncom
