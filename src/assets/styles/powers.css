@@ -5,8 +5,8 @@ li {
   margin-bottom: 0;
   display: flex;
   font-family: 'Diplomata SC';
-  -webkit-margin-before: 0;
-  -webkit-padding-start: 0;
+  margin-top: 0;
+  padding-left: 0;
   background: #000;
 }
 

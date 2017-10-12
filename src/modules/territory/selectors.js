@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { nonIndustry, airComplete } from '../../lib/unit';
-import { RESOLVE_COMBAT, ORDER_UNITS } from '../../actions';
+import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions';
 
 export const getFill = (territory) => {
   const { sea, original_power, currentPower } = territory;
@@ -45,7 +45,7 @@ export const getClasses = (state, territory) => {
   return classNames({
     convoy: isConvoy(sea, territoryPower),
     [territoryPower.toLowerCase()]: isOcean || isControlled,
-    active: hasAirComplete(units) || (unitsFrom.length && phase !== RESOLVE_COMBAT),
+    active: (hasAirComplete(units) && phase === LAND_PLANES) || (unitsFrom.length && phase !== RESOLVE_COMBAT),
     'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT,
     'active-order-units': isOrdering(phase, currentPowerName, territoryPower, units)
   })
