@@ -18,11 +18,40 @@ const logout = () => {
   }
 }
 
+const emailToKey = emailAddress => btoa(emailAddress)
+
+const moveInviteDataToUser = (firebase, email, uid) => {
+  const key = emailToKey(email)       
+  firebase.update(`/emails`, { [key]:  uid })
+  const invite = firebase.ref(`/invites/${key}`)
+  return invite.once('value').then(snapshot => {
+    if (snapshot.val()) {
+      const oldRef = firebase.ref(`/users/${key}`)
+      oldRef.once('value').then(snapshot => {
+        firebase.ref(`/users/${uid}`).update(snapshot.val())
+      })
+      .then(() => {
+        oldRef.set(null)
+        invite.set(null)
+      })
+    }
+  })
+}
+
 const signup = (email, password) => {
-  return (dispatch, _, getFirebase) => {
-    const firebase = getFirebase()
-    return firebase.createUser({ email, password })
-      .then(dispatch(push('/create-game')))
+  return (dispatch, getState, getFirebase) => {
+    const fb = getFirebase()
+    return fb.createUser({ email, password })
+      .then(user => {
+        const { email } = user
+        const state = getState()
+        const { firebase } = state
+        moveInviteDataToUser(fb, email, firebase.auth.uid).then(() => {
+          if (!firebase.profile.currentGameId) {
+            dispatch(push('/create-game'))  
+          }
+        })
+      })
   }
 }
 
