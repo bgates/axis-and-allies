@@ -28,7 +28,6 @@ const createGame = (formData) => {
 }
 
 const emailToKey = emailAddress => btoa(emailAddress)
-//const keyToEmail = key => atob(key)
 
 const invitesBasedOn = (emails, emailKeys) => (  
   emailKeys.filter(emailKey => !emails[emailKey]).map(emailKey => `/invites/${emailKey}`)
@@ -54,7 +53,7 @@ const setCurrentGame = (emails, emailKeys, gameId, firebase) => {
 }
 
 const connectEachPlayerToGame = (firebase, powers, gameId) => {
-  return firebase.ref('/emails').once('value').then(snapshot => {
+  firebase.ref('/emails').once('value').then(snapshot => {
     const emails = snapshot.val()
     const emailKeys = powers.map(power => emailToKey(power.email))
     const invites = invitesBasedOn(emails, emailKeys)
@@ -64,7 +63,7 @@ const connectEachPlayerToGame = (firebase, powers, gameId) => {
     powers.forEach((power, index) => {  
       updates[`${userUpdates[index]}/${gameId}/${power.name}`] = power.screenname
     })
-    return firebase.ref().update(updates)
+    firebase.ref().update(updates)
       .then(() => setCurrentGame(emails, emailKeys, gameId, firebase))
   })
 }
