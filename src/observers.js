@@ -1,5 +1,6 @@
 import { getFirebase } from 'react-redux-firebase'
 import DiffMatchPatch from 'diff-match-patch'
+import { isCurrentPower } from './selectors/getCurrentPower'
 import Board from './config/startingBoard'
 
 const observeBoardChanges = (store) => {
@@ -10,13 +11,12 @@ const observeBoardChanges = (store) => {
     const state = store.getState()
     let nextBoardString = state.boardString;
     const currentGameId = state.firebase.profile.currentGameId
-    if (currentGameId && nextBoardString !== currentBoardString) {
+    if (currentGameId && nextBoardString !== currentBoardString && isCurrentPower(state)) {
       const firebase = getFirebase()
       let diffs = dmp.diff_main(currentBoardString, nextBoardString)
       dmp.diff_cleanupEfficiency(diffs)
       const patches = dmp.patch_make(currentBoardString, diffs)
-      console.log({ currentBoardString, nextBoardString })
-      //firebase.push(`/games/${currentGameId}/patches`, patches)
+      firebase.push(`/games/${currentGameId}/patches`, patches)
       currentBoardString = nextBoardString;
     }
   }
