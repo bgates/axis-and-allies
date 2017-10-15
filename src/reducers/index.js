@@ -7,7 +7,6 @@ import { landPlanes } from '../modules/landPlanes'
 import { placement } from '../modules/placement'
 import rolls from './rolls'
 import { boardString, updateBoardString } from './updateBoardString'
-import Board from '../config/startingBoard'
 import { 
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,

@@ -1,4 +1,3 @@
-import { getFirebase } from 'react-redux-firebase'
 export const ROLLS = 'ROLLS';
 
 export const SET_TECH = 'SET_TECH';

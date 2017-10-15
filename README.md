@@ -1,6 +1,3 @@
-there are multiple state components:
--who is logged in
-
 whether it is possible to use the back button ought to be phase-dependent; no going back and re-running certain actions.
 
 to attack a territory,
@@ -9,9 +6,6 @@ plus strategic bombing.
 
 there's not a clear line between units already there, and units being moved in - specifically, ships can be moved during combat phase to join existing pieces of same type.
 
-ok, in a territory, there are transports. the transports obj has an array of ids. (if only one transport, the array has a single member.)
-
-practice what I preach:
 -[] repair
 -[x] research
   -[]save to firebase

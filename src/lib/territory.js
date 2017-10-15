@@ -116,6 +116,7 @@ export const isBombardable = (board, territory, currentPower) => {
     }, []);
   }
 }
+
 export const awaitingNavalResolution = (territory, state) => {
   if (isAmphib(territory)) {
     const neighbors = mergeBoardAndTerritories(state).filter(t => Object.values(territory.amphib).includes(t.index))
