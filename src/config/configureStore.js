@@ -23,20 +23,28 @@ export const history = createBrowserHistory({ basename })
 
 const reducerWithRouteState = connectRouter(history)(reducer)
 
-const configureStore = (initialState) => {
-  const store = createStore(
-    reducerWithRouteState,
-    initialState,
-    compose(
-      applyMiddleware(
-        routerMiddleware(history),
-        thunk.withExtraArgument(getFirebase)
-      ),
-      reactReduxFirebase(firebase, rrfConfig),
-      devTools
-    )
-  )
-  return store
+const stateReconciler = (state, inboundState, reducedState, log) => {
+  let newState = {...reducedState}
+  Object.keys(inboundState).forEach(key => {
+   newState[key] = {...state[key], ...inboundState[key]} // shallow merge
+  })
+  return newState
 }
-export default configureStore
+
+const store = createStore(
+  reducerWithRouteState,
+  {},
+  compose(
+    applyMiddleware(
+      routerMiddleware(history),
+      thunk.withExtraArgument(getFirebase)
+    ),
+    reactReduxFirebase(firebase, rrfConfig),
+    autoRehydrate({ log: true, stateReconciler }),
+    devTools
+  )
+)
+persistStore(store)
+
+export default store
 
