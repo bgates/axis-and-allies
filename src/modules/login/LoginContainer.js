@@ -2,6 +2,8 @@ import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { firebaseConnect } from 'react-redux-firebase'
+import { persistor } from '../../config/configureStore'
+import { RESET } from '../../actions'
 import Login from './Login'
                          
 const login = (email, password) => {
@@ -15,6 +17,14 @@ const logout = () => {
   return (dispatch, _, getFirebase) => {
     const firebase = getFirebase()
     firebase.logout()
+  }
+}
+
+const reset = () => {
+  return dispatch => {
+    persistor.purge()
+    dispatch({ type: RESET })
+    dispatch(push('/'))
   }
 }
 
@@ -59,7 +69,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return bindActionCreators({ 
     login,
     signup,
-    logout
+    logout,
+    reset
   }, dispatch)
 }
 

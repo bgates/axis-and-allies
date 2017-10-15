@@ -22,7 +22,8 @@ import {
   LOSE_ATTACK,
   LAND_PLANES,
   PLAN_MOVEMENT,
-  PLACE_UNITS
+  PLACE_UNITS,
+  RESET
 } from '../actions';
 import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
        
@@ -71,6 +72,9 @@ const crossSliceReducer = (state, action) => {
 }
 
 const rootReducer = (state = {}, action) => {
+  if (action.type === RESET) {
+    state = {}
+  }
   const intermediateState = combinedReducer(state, action);
   return crossSliceReducer(intermediateState, action);
 }

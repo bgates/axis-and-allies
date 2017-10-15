@@ -50,6 +50,7 @@ class Login extends Component {
             ref={node => this.password = node} />
           <button onClick={this.handleLogin}>Login</button>
           <button onClick={this.handleSignup}>Signup</button>
+          <button onClick={this.props.reset}>Reset</button>
         </div>
       )
     } else {
