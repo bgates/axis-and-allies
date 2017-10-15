@@ -46,6 +46,11 @@ export const dogfight = (state, action) => {
   return changeTerritory(state.territories, action.territory.index, callback)
 }
 
+export const continueCombat = (state, action) => {
+  const callback = territory => ({ ...territory, continueCombat: true })
+  return changeTerritory(state.territories, action.territory.index, callback)
+}
+
 export const clearUnits = (state, action) => (  
   state.territories.map(territory => (
     territory.units ? { ...territory, units: territory.units.filter(u => u.ids.length) } : territory

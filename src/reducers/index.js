@@ -11,6 +11,7 @@ import {
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RESOLVE_COMBAT,
+  RETREAT,
   REMOVE_CASUALTIES,
   COMMIT_UNITS,
   UNCOMMIT_UNITS,
@@ -43,6 +44,7 @@ const crossSliceReducer = (state, action) => {
     case DOGFIGHT:
     case VIEW_STRATEGIC_BOMBING_RESULTS:
     case RESOLVE_COMBAT:
+    case RETREAT:
     case REMOVE_CASUALTIES:
     case COMMIT_UNITS:
     case UNCOMMIT_UNITS:

@@ -131,3 +131,13 @@ export const loadTransport = (state, action) => {
     }
   });
 }
+
+export const retreat = (state, action) => {
+  return state.territories.map((territory, index) => {
+    if (index === action.territoryIndex) {
+      return territory
+    } else {
+      return territory
+    }
+  })
+}

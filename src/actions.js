@@ -23,10 +23,12 @@ export const STRATEGIC_BOMBING_ROLLS = 'STRATEGIC_BOMBING_ROLLS';
 export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS';
 
 export const RESOLVE_COMBAT = '/resolve-combat';
+export const CONTINUE_COMBAT = 'CONTINUE_COMBAT';
 export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY';
 export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES';
 export const WIN_ATTACK = 'WIN_ATTACK';
 export const LOSE_ATTACK = 'LOSE_ATTACK';
+export const RETREAT = 'RETREAT';
 
 export const LAND_PLANES = '/land-planes';
 export const VIEW_PLANE_LANDING_OPTIONS = 'VIEW_PLANE_LANDING_OPTIONS';
@@ -56,6 +58,10 @@ export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
 export const resolveCombat = (territory) => (  
   { type: RESOLVE_COMBAT, territory }
+)
+
+export const markCombatUnderway = (territory) => (
+  { type: CONTINUE_COMBAT, territory }
 )
 
 export const strategicBombingRolls = (territory) => (  

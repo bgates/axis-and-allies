@@ -85,3 +85,6 @@ rules for harbor: enemy air attack only; harbor has automatic aa
 
 prevent noncom movement of air unit to sea space unless carrier present
 
+I want to handle retreat.
+Retreat should not be an option until after 1st attack
+which means not until after [something]

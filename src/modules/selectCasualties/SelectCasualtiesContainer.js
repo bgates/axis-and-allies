@@ -17,7 +17,7 @@ import {
 } from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { resolveCombat, LOSE_ATTACK, winAttack } from '../../actions';
+import { resolveCombat, markCombatUnderway, LOSE_ATTACK, winAttack } from '../../actions';
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -78,6 +78,7 @@ const defenderWins = (territoryIndex) => {
 const continueCombat = () => {
   return (dispatch, getState) => {
     const territory = getFocusTerritory(getState())
+    dispatch(markCombatUnderway(territory))
     dispatch(push('resolve-combat'))
     dispatch(resolveCombat(territory))
   }

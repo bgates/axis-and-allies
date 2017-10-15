@@ -26,6 +26,14 @@ export const duplicateUnit = (original, ...extraAttributes) => {
   }, {});
 }
 
+const matchedUnit = (unit1, unit2) => (
+  { 
+    ...unit1, 
+    ids: unit1.ids.concat(unit2.ids), 
+    originIndexes: (unit1.originIndexes || [unit1.originIndex]).concat(unit2.originIndex) 
+  }
+)
+
 export const consolidateUnits = (units, ...extraAttributes) => {
   const attributes = [ 'power', 'attack', 'defend', 'mission', ...extraAttributes ]
   return units.reduce((all, unit) => {
@@ -34,7 +42,7 @@ export const consolidateUnits = (units, ...extraAttributes) => {
     }
     let match = all.find(u => unitMatch(u, unit, ...attributes)) 
     if (match) {
-      return all.map(u => u === match ? { ...u, ids: u.ids.concat(unit.ids) } : u)
+      return all.map(u => u === match ? matchedUnit(u, unit) : u)
     } else {
       return all.concat(duplicateUnit(unit, ...extraAttributes));
     }

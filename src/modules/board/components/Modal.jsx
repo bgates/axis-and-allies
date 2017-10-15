@@ -12,6 +12,7 @@ import LendLeaseModal from '../../lendLease/LendLeaseModal'
 import { PlanContainer } from '../../planCombat'
 import { StrategicBombModal } from '../../strategicBomb'
 import { CombatContainer } from '../../combat'
+import { RetreatContainer } from '../../retreat'
 import { CombatRollsContainer } from '../../combatRolls'
 import { SelectCasualtiesContainer } from '../../selectCasualties'
 import { LandPlanesContainer } from '../../landPlanes'
@@ -37,6 +38,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path={PATHS.PLAN_ATTACKS} component={PlanContainer}/>
       <Route path={PATHS.STRATEGIC_BOMB} component={StrategicBombModal}/>
       <Route path={PATHS.RESOLVE_COMBAT} component={CombatContainer}/>
+      <Route path={PATHS.RETREAT} component={RetreatContainer}/>
       <Route path={PATHS.COMBAT_ROLLS} component={CombatRollsContainer}/>
       <Route path={PATHS.SELECT_CASUALTIES} component={SelectCasualtiesContainer}/>
       <Route path="/land-planes" component={LandPlanesContainer}/>

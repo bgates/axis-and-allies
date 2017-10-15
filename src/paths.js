@@ -11,6 +11,7 @@ const PATHS = {
   PLAN_ATTACKS: '/plan-attacks',
   STRATEGIC_BOMB: '/strategic-bomb',
   RESOLVE_COMBAT: '/resolve-combat',
+  RETREAT: '/retreat',
   COMBAT_ROLLS: '/combat-rolls',
   SELECT_CASUALTIES: '/select-casualties',
   LAND_PLANES: '/land-planes',

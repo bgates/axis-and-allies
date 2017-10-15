@@ -2,6 +2,8 @@ import {
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RESOLVE_COMBAT,
+  RETREAT,
+  CONTINUE_COMBAT,
   TOGGLE_CASUALTY,
   REMOVE_CASUALTIES,
   COMMIT_UNITS,
@@ -21,7 +23,8 @@ import {
   commitAmphibUnits,
   uncommitAmphibUnits,
   loadTransport,
-  landPlanes
+  landPlanes,
+  retreat
 } from './moveUnitReducerFunctions';
 import {
   removeCasualties,
@@ -30,7 +33,7 @@ import {
   attackerWins
 } from './casualtyReducerFunctions';
 import { completeMission } from './completeMissionReducerFunction';
-import { modifyUnits, dogfight, clearUnits } from './modifyUnitsReducerFunction';
+import { modifyUnits, dogfight, continueCombat, clearUnits } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
 
 const boardHelper = (state, action) => {
@@ -39,7 +42,9 @@ const boardHelper = (state, action) => {
       return action.payload.location.pathname === PLAN_MOVEMENT ? clearUnits(state) : state.territories
     case VIEW_STRATEGIC_BOMBING_RESULTS: return completeMission(state, action);
     case DOGFIGHT: return dogfight(state, action);
+    case CONTINUE_COMBAT: return continueCombat(state, action);
     case RESOLVE_COMBAT: return modifyUnits(state, action);
+    case RETREAT: return retreat(state, action);
     case COMMIT_UNITS: return commitUnits(state, action);
     case UNCOMMIT_UNITS: return uncommitUnits(state, action);
     case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);
