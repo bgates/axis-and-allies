@@ -46,7 +46,7 @@ export const getClasses = (state, territory) => {
     convoy: isConvoy(sea, territoryPower),
     [territoryPower.toLowerCase()]: isOcean || isControlled,
     active: (hasAirComplete(units) && phase === LAND_PLANES) || (unitsFrom.length && phase !== RESOLVE_COMBAT),
-    'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT,
+    'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT && territoryPower !== currentPowerName,
     'active-order-units': isOrdering(phase, currentPowerName, territoryPower, units)
   })
 }
