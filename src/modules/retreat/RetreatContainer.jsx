@@ -4,6 +4,7 @@ import { push } from 'connected-react-router'
 import PATHS from '../../paths'
 import RetreatModal from './RetreatModal'
 import { defenderCasualties } from '../combatRolls'
+import { continueOrAdvancePhase } from '../selectCasualties'
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { removeCasualties, resolveCombat, RETREAT } from '../../actions'
@@ -19,7 +20,7 @@ const retreat = (battleTerritoryIndex, retreatTerritoryIndex) => (
     const state = getState()
     dispatch(removeCasualties(defenderCasualties(state), battleTerritoryIndex, getCurrentPower(state).name))
     dispatch({ type: RETREAT, battleTerritoryIndex, retreatTerritoryIndex })
-    dispatch(push(PATHS.RESOLVE_COMBAT))
+    continueOrAdvancePhase(dispatch, state)
   }
 )
 
