@@ -7,7 +7,7 @@ const RetreatModal = ({ territory, retreatOptions, retreat, returnToCombat }) =>
       <p>You may retreat all your units to one adjacent friendly territory or sea zone by pressing a button below. You can retreat only to a territory or sea zone from which one of your attacking units came. You will not be able to reassign retreated units to other embattled territories this turn, nor make non-combat moves with them later this turn.</p>
       <ul>
         {retreatOptions.map(option => (
-         <li key={option.index}><button onClick={retreat.bind(null, option.index)}>{option.name}</button></li>)
+         <li key={option.index}><button onClick={retreat.bind(null, territory.index, option.index)}>{option.name}</button></li>)
         )}
       </ul>
       

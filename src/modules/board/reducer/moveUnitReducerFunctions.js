@@ -133,9 +133,13 @@ export const loadTransport = (state, action) => {
 }
 
 export const retreat = (state, action) => {
+  const { battleTerritoryIndex, retreatTerritoryIndex } = action
+  const battleTerritory = state.territories[battleTerritoryIndex]
   return state.territories.map((territory, index) => {
-    if (index === action.territoryIndex) {
-      return territory
+    if (index === battleTerritoryIndex) {
+      return { ...territory, unitsFrom: [] }
+    } else if (index === retreatTerritoryIndex) {
+      return battleTerritory.unitsFrom.reduce((t, unit) => territoryAfterUnitEnters(t, unit, unit.ids, 'retreat'), territory)
     } else {
       return territory
     }
