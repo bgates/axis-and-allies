@@ -58,6 +58,9 @@ export const landingSlots = createSelector(
     }
     const requiredLandingSlots = territory.unitsFrom.filter(unit => unit.air && unit.distance === unit.movement)
       .reduce((total, unit) => total + unit.ids.length, 0)
+    if (!requiredLandingSlots) {
+      return 1000
+    }
     const totalLandingSlots = allUnits(territory).filter(unit => unit.power === currentPower.name && unit.landingSlots)
       .reduce((total, unit) => total + unit.ids.length * unit.landingSlots, 0)
     return totalLandingSlots - requiredLandingSlots
