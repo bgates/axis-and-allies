@@ -2,7 +2,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
-import { rollCount, getFocusTerritory, shoreBombardment, attackerCasualties, combatants } from './selectors'
+import { 
+  rollCount, 
+  getFocusTerritory, 
+  shoreBombardment, 
+  attackerCasualties, 
+  combatants,
+  allowRetreat 
+} from './selectors'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { removeCasualties, roll } from '../../actions';
@@ -15,7 +22,8 @@ const mapStateToProps = (state) => ({
   strengths: strengths(state),
   defenderCasualties: defenderCasualties(state),
   attackerCasualties: attackerCasualties(state),
-  attackerCasualtyCount: attackerCasualtyCount(state)
+  attackerCasualtyCount: attackerCasualtyCount(state),
+  allowRetreat: allowRetreat(state)
 })
 
 const rollForCombat = (territoryIndex) => {

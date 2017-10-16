@@ -10,7 +10,8 @@ const CombatModal = ({
   territory,
   attackerCasualties,
   defenderCasualties,
-  rollForCombat 
+  rollForCombat,
+  allowRetreat
 }) => {
   const { attackers, defenders } = combatants;
   return (
@@ -43,7 +44,7 @@ const CombatModal = ({
       <h2>Attacker</h2>
       <nav>
         <button>Back</button>
-        {territory.continueCombat && <Link className="btn" to={PATHS.RETREAT}>View Retreat Options</Link>}
+        {allowRetreat && <Link className="btn" to={PATHS.RETREAT}>View Retreat Options</Link>}
         <button 
           onClick={rollForCombat.bind(null, territory.index)}
         >Roll for combat</button>

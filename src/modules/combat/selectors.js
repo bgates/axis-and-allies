@@ -22,3 +22,14 @@ export const combatants = createSelector(
     return { attackers: survivors(attackers, attackerCasualties), defenders }
   }
 )
+
+const noAmphibiousUnits = (territory, attackers) => {
+  const ids = Object.keys(territory.amphib)
+  return !ids.some(id => attackers.find(attacker => attacker.ids.includes(id)))
+}
+
+export const allowRetreat = createSelector(
+  getFocusTerritory,
+  combatants,
+  (territory, { attackers }) => territory.continueCombat && (!territory.amphib || noAmphibiousUnits(territory, attackers))
+)
