@@ -2,9 +2,7 @@ import { createSelector } from 'reselect';
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { territoriesInRange, canLandInTerritory } from '../planCombat'
-import unitTypes from '../../config/unitTypes'
-
-const flightRange = unit => unit.movement - unit.distance
+import { flightRange } from '../../lib/unit'
 
 const _retreatOptions = (currentPower, territory, territories) => {
   const survivingAttackers = territory.unitsFrom.filter(unit => (

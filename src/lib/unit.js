@@ -58,6 +58,8 @@ export const bombCapacity = (unit) => {
 
 export const airComplete = (unit) => unit.air && unit.mission === 'complete'
 
+export const flightRange = unit => unit.movement - unit.distance
+
 const damaged = (units, casualties) => {
   const damagedUnits = units.filter(unit => unit.ids.some(id => casualties.includes(id)) && unitTypes[unit.name].canTakeDamage)
   return damagedUnits.map(unit => {

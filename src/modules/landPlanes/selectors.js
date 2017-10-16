@@ -3,7 +3,7 @@ import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { territoriesInRange } from '../planCombat';
 import { nonNeutral, isLand } from '../../lib/territory';
-import { airComplete } from '../../lib/unit';
+import { airComplete, flightRange } from '../../lib/unit';
 export { getFocusTerritory }
 
 const territoryAir = (units = []) => (
@@ -36,9 +36,9 @@ const availableForLanding = (currentPower) => (territory) => (
 const landingOptionsByUnit = (board, currentPower, territory, airUnits) => {
   let landingOptions = {};
   airUnits.forEach(unit => {
-    const range = unit.movement - unit.distance;
+    const range = flightRange(unit)
     const territories = Object.values(territoriesInRange(board, currentPower, territory, nonNeutral, range)).reduce((all, elm) => [...all, ...elm], [])
-    landingOptions[`${unit.name}-${unit.originName}`] = territories.filter(availableForLanding(currentPower));
+    landingOptions[`${unit.name}-${unit.originName}`] = territories.filter(availableForLanding(currentPower))
   })
   return landingOptions;
 }
