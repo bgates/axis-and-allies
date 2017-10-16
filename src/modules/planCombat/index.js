@@ -1,5 +1,5 @@
 import PlanContainer from './PlanContainer';
 import { combatants, unitsInRange } from './selectors';
-import { territoriesInRange } from './movement';
+import { territoriesInRange, canLandInTerritory } from './movement';
 
-export { PlanContainer, combatants, unitsInRange, territoriesInRange }
+export { PlanContainer, combatants, unitsInRange, territoriesInRange, canLandInTerritory }

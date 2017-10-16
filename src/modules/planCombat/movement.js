@@ -50,7 +50,7 @@ const hasLandingSlots = (territory, currentPower) => (
   ), 0)
 )
 
-const canLandInTerritory = (territory, currentPower) => (  
+export const canLandInTerritory = (territory, currentPower) => (  
   friendlyLand(territory, currentPower) || hasLandingSlots(territory, currentPower)
 )
 

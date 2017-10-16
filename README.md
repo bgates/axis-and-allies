@@ -42,7 +42,7 @@ there's not a clear line between units already there, and units being moved in -
   -[x] automate defensive casualties
   -[x] allow attacker to choose casualties
   -[x] advance from one round of combat to the next
-  -[] allow retreat
+  -[x] allow retreat
   -[x] finish combat in one territory
     -[x] mark control of territory
     -[x] indicate units have moved
