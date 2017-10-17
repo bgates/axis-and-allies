@@ -1,6 +1,12 @@
-import { INCREMENT_PURCHASE, DECREMENT_PURCHASE } from '../../actions';
+import { 
+  INCREMENT_PURCHASE, 
+  DECREMENT_PURCHASE, 
+  NEXT_TURN 
+} from '../../actions';
+  
+const origin = {}
 
-const purchases = (state = {}, action) => {
+const purchases = (state = origin, action) => {
   switch (action.type) {
     case INCREMENT_PURCHASE: {
       const unitName = action.unit.name
@@ -14,6 +20,8 @@ const purchases = (state = {}, action) => {
       const unitName = action.unit.name
       return { ...state, [unitName]: state[unitName] - 1 }
     }
+    case NEXT_TURN:
+      return origin
     default:
       return state
   }

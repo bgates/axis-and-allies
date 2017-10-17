@@ -2,7 +2,8 @@ import {
   COMMIT_PLACEMENT,
   UNCOMMIT_PLACEMENT,
   COMMIT_PLACE_ALL,
-  UNCOMMIT_PLACE_ALL
+  UNCOMMIT_PLACE_ALL,
+  NEXT_TURN
 } from '../../actions';
 
 const placeUnit = (state, unitName, index, count = 1) => {
@@ -30,7 +31,8 @@ const placeUnit = (state, unitName, index, count = 1) => {
   }
 }
 
-const placement = (state = {}, action) => {
+const origin = {}
+const placement = (state = origin, action) => {
   switch (action.type) {
     case COMMIT_PLACEMENT: {
       return placeUnit(state, action.unit, action.territoryIndex)
@@ -62,6 +64,8 @@ const placement = (state = {}, action) => {
         }
       }
     }
+    case NEXT_TURN: 
+      return origin
     default:
       return state
   }
