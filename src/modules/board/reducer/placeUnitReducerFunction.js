@@ -13,7 +13,7 @@ export const placeUnits = (state, action) => {
   return state.territories.map((territory, index) => {
     if (placementsByTerritoryIndex[index]) {
       const purchases = placementsByTerritoryIndex[index]
-      let units = territory.units
+      let { units } = territory
       Object.keys(purchases).forEach(unitName => {
         const unit = units.find(u => u.name === unitName && u.power === currentPower)
         const count = purchases[unitName]
