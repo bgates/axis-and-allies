@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect';
 import { combatants as combatantsWithoutDamage } from '../planCombat';
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
-import { unitCount, survivors } from '../../lib/unit';
+import { totalCount, survivors } from '../../lib/unit';
 export { getFocusTerritory }
 
 export const rollCount = createSelector(
   combatantsWithoutDamage,
-  combatants => (combatants.attackers.concat(combatants.defenders)).reduce(unitCount, 0)
+  combatants => (combatants.attackers.concat(combatants.defenders)).reduce(totalCount, 0)
 )
 
 export const attackerCasualties = createSelector(

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { combatants } from '../planCombat';
-import { unitCount } from '../../lib/unit';
+import { totalCount } from '../../lib/unit';
 import PATHS from '../../paths';
 
 const _strengths = (combatants) => {
@@ -20,9 +20,9 @@ const arrangeRolls = (combatants, strengths, rolls = []) => {
   let rollClone = rolls.slice(0);
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
-    let attackRolls = attackers.filter(unit => unit.attack === n).reduce(unitCount, 0)
+    let attackRolls = attackers.filter(unit => unit.attack === n).reduce(totalCount, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
-    let defendRolls = defenders.filter(unit => unit.defend === n).reduce(unitCount, 0)
+    let defendRolls = defenders.filter(unit => unit.defend === n).reduce(totalCount, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
   })
   return rollsByStrength

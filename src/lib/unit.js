@@ -12,7 +12,9 @@ export const unitMatch = (unit, unit2, ...props) => {
     props.every(prop => unit[prop] === unit2[prop])
 }
 
-export const unitCount = (total, unit) => total + unit.ids.length;
+export const totalCount = (total, unit) => total + unitCount(unit)
+
+export const unitCount = unit => unit.ids.length
 
 export const nonIndustry = (unit) => unit.name !== 'industrial complex';
 
@@ -85,5 +87,5 @@ export const survivors = (units, casualties = [], missionComplete) => {
     }
   ))
   const damagedUnits = damaged(units, casualties)
-  return undamagedUnits.concat(damagedUnits).filter(u => u.ids.length)
+  return undamagedUnits.concat(damagedUnits).filter(unitCount)
 }
