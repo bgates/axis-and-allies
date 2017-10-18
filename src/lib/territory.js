@@ -69,21 +69,6 @@ export const hasIndustrialComplex = (territory) => {
   return territory.units.some(unit => unit.name === 'industrial complex')
 }
 
-export const unitCount = (units, 
-  unitName, 
-  power, 
-  unmovedOnly = false, 
-  notUsedInBattleOnly = true, 
-  jointStrike = false) => {
-  //if (arguments.length<2) powerIndex=this.holdingPowerIndex;
-  return units.filter(unit => {
-    return unit.name === unitName && 
-      (unit.power === power || (jointStrike && unit.power === 'UK')) &&
-      (unmovedOnly || !unit.moved) &&
-      (notUsedInBattleOnly || !unit.usedInBattle)
-  }).reduce((total, unit) => total + unit.ids.length)
-}
-
 export const bomberPayload = (territory) => (  
   territory.unitsFrom.reduce((total, unit) => total + bombCapacity(unit), 0)
 )
