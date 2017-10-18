@@ -15,7 +15,8 @@ import {
   LOSE_ATTACK,
   LAND_PLANES,
   PLAN_MOVEMENT,
-  PLACE_UNITS
+  PLACE_UNITS,
+  NEXT_TURN
 } from '../../../actions';
 import {
   commitUnits,
@@ -35,6 +36,7 @@ import {
 import { completeMission } from './completeMissionReducerFunction';
 import { modifyUnits, dogfight, continueCombat, clearUnits } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
+import { finalizeUnitMovements } from './finalizeUnitMovementReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
@@ -56,6 +58,7 @@ const boardHelper = (state, action) => {
     case WIN_ATTACK: return attackerWins(state, action);
     case LAND_PLANES: return landPlanes(state, action);
     case PLACE_UNITS: return placeUnits(state, action);
+    case NEXT_TURN: return finalizeUnitMovements(state);
     default:
       return state.territories
   }
