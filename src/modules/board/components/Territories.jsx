@@ -25,6 +25,9 @@ class Territories extends Component {
   componentDidMount () {
     document.addEventListener('keydown', this.handleKeydown)
     document.addEventListener('keyup', this.handleKeyup)
+    this.verticalCenter = 0.5 * this.box.clientWidth 
+    this.horizontalCenter = this.box.offsetTop + this.box.clientHeight * 0.57 
+    this.heightNormalizer = 20 / (this.box.clientHeight - this.horizontalCenter)
   }
 
   componentWillUnmount () {
@@ -84,14 +87,24 @@ class Territories extends Component {
   }
 
   tooltipLeft (mousePosition, tooltipWidth) {
-    const verticalCenter = 600 + tooltipWidth 
+    const verticalCenter = this.verticalCenter + tooltipWidth 
     if (mousePosition <= 10) {
       return 10
     } else if (mousePosition <= verticalCenter) {
-      return mousePosition * (600 / verticalCenter)
+      return mousePosition * (this.verticalCenter / verticalCenter)
     } else {
       return mousePosition - tooltipWidth 
     }
+  }
+
+  tooltipTop (mousePosition, tooltipHeight) {
+    let adjustment = this.box.offsetTop
+    if (mousePosition > this.horizontalCenter) {
+      adjustment += tooltipHeight + this.heightNormalizer * (mousePosition - this.horizontalCenter)  
+    } else {
+      adjustment -= 10 + this.heightNormalizer * (this.box.offsetTop + this.horizontalCenter - mousePosition) 
+    }
+    return mousePosition - adjustment 
   }
 
   handleMouseMove (event) {
@@ -100,16 +113,17 @@ class Territories extends Component {
       const left = this.tooltipLeft(event.clientX, width)
       this.tooltip.style.left = left + 'px'
 
-      const yPos = event.clientY
-      const yAdjustment = yPos > 550 ? height + 75 : 45
-      const top = yPos - yAdjustment + 'px'
-      this.tooltip.style.top = top
+      const top = this.tooltipTop(event.clientY, height)
+      this.tooltip.style.top = top + 'px'
     }
   }
 
   render () {
     return (
-      <div id='container' onMouseOut={this.handleMouseOut}>
+      <div 
+        id='container' 
+        onMouseOut={this.handleMouseOut} 
+        ref={element => this.box = element} >
         {this.conditionalTooltip()}
         <svg
           preserveAspectRatio='xMinYMin meet'

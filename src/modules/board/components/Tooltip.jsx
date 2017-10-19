@@ -60,7 +60,6 @@ const PlanCombatTooltip = () => {
     <div>
       <p><strong>Make your combat moves.</strong> Click on an enemy territory or sea zone you wish to attack, any sea zone you need to move supporting units to, or friendly territory you wish to blitz to.</p> 
       <p><strong>When you are done making your combat moves, click the &quot;Done&quot; button in the Indian Ocean.</strong></p>
-      <p><strong className="warning">Warning:</strong> Any land or sea units moved during this phase can not be moved during the non-combat phase of your turn. Units on a transport that gets loaded or moved during this phase will only be allowed to unload from where they are. <strong className="notice">Use F.A.Q.s link above.</strong></p>
     </div>
   )
 }
