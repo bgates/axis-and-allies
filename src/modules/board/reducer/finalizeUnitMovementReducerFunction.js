@@ -1,7 +1,7 @@
 import { unitMatch, unitCount } from '../../../lib/unit'
 
 export const finalizeUnitMovements = state => {
-  return state.territories.map((territory, index) => {
+  return state.territories.map(territory => {
     if (territory.unitsFrom && territory.unitsFrom.length) {
       let units
       if (territory.units && territory.units.length) {

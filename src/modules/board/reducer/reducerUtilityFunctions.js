@@ -1,4 +1,4 @@
-import { unitMatch, unitCount } from '../../../lib/unit'
+import { unitMatch, unitCount, totalCount } from '../../../lib/unit'
 
 export const territoryAfterUnitMoves = (territory, movingUnit, ids, leave = true) => {
   let updatedUnits = territory.units.map(unit => {
@@ -13,20 +13,26 @@ export const territoryAfterUnitMoves = (territory, movingUnit, ids, leave = true
 }
 
 export const territoryAfterUnitWithdraws = (territory, movingUnit, ids) => {
-  let updatedUnitsFrom = territory.unitsFrom.map(unit => {
+  let unitsFrom = territory.unitsFrom.map(unit => {
     if (unitMatch(unit, movingUnit, 'originIndex')) {
       return { ...unit, ids: unit.ids.filter(id => !ids.includes(id)) }
     } else {
       return unit
     }
   })
-  updatedUnitsFrom = updatedUnitsFrom.filter(unitCount)
-  return { ...territory, unitsFrom: updatedUnitsFrom }
+  unitsFrom = unitsFrom.filter(unitCount)
+  if (!unitsFrom.length && territory.newlyConquered) {
+    let replacementTerritory = { ...territory, unitsFrom, currentPower: territory.original_power }
+    delete replacementTerritory.newlyConquered
+    return replacementTerritory
+  } else {
+    return { ...territory, unitsFrom }
+  }
 }
 
 export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) => {
   let newUnit = true;
-  let updatedUnitsFrom = territory.unitsFrom.map(unit => {
+  let unitsFrom = territory.unitsFrom.map(unit => {
     if (unitMatch(unit, movingUnit, mission, 'originIndex')) {
       newUnit = false;
       return { ...unit, ids: unit.ids.concat(ids), mission }
@@ -35,9 +41,13 @@ export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) =>
     }
   })
   if (newUnit) {
-    updatedUnitsFrom.push({ ...movingUnit, ids, mission })
+    unitsFrom.push({ ...movingUnit, ids, mission })
   }
-  return { ...territory, unitsFrom: updatedUnitsFrom }
+  if (territory.currentPower !== 'Oceans' && !territory.units.reduce(totalCount, 0)) {
+    return { ...territory, unitsFrom, currentPower: unitsFrom[0].power }
+  } else {
+    return { ...territory, unitsFrom }
+  }
 }
 
 const unitsWithCargoDestinations = (transport, id, destinationIndex) => unit => {
