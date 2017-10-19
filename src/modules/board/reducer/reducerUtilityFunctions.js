@@ -1,4 +1,7 @@
+import { isSea } from '../../../lib/territory'
 import { unitMatch, unitCount, totalCount } from '../../../lib/unit'
+import territoryData from '../../../config/territories.json'
+
 
 export const territoryAfterUnitMoves = (territory, movingUnit, ids, leave = true) => {
   let updatedUnits = territory.units.map(unit => {
@@ -30,7 +33,7 @@ export const territoryAfterUnitWithdraws = (territory, movingUnit, ids) => {
   }
 }
 
-export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) => {
+export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission, index) => {
   let newUnit = true;
   let unitsFrom = territory.unitsFrom.map(unit => {
     if (unitMatch(unit, movingUnit, mission, 'originIndex')) {
@@ -44,7 +47,15 @@ export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) =>
     unitsFrom.push({ ...movingUnit, ids, mission })
   }
   if (territory.currentPower !== 'Oceans' && !territory.units.reduce(totalCount, 0)) {
-    return { ...territory, unitsFrom, currentPower: unitsFrom[0].power, newlyConquered: true, originalPower: territory.currentPower }
+    //TODO: there's gotta be a better way
+    const currentPower = isSea(territoryData[index]) ? null : unitsFrom[0].power
+    return { 
+      ...territory, 
+      unitsFrom, 
+      currentPower, 
+      newlyConquered: true, 
+      originalPower: territory.currentPower 
+    }
   } else {
     return { ...territory, unitsFrom }
   }

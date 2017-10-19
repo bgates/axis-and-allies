@@ -34,7 +34,7 @@ const moveUnits = (state, movingUnit, originIndex, destinationIndex, ids, missio
     if (index === originIndex) {
       return territoryAfterUnitMoves(territory, movingUnit, ids);
     } else if (index === destinationIndex) {
-      return territoryAfterUnitEnters(territory, movingUnit, ids, mission);
+      return territoryAfterUnitEnters(territory, movingUnit, ids, mission, index);
     } else {
       return territory
     }
@@ -125,13 +125,14 @@ export const loadTransport = (state, action) => {
       return territoryAfterUnitMoves(territory, transport.unit, [transport.id]);
     } else if (index === destinationIndex) {
       const loadedTransport = { ...transport.unit, cargo: {...transport.unit.cargo, [transport.id]: units}}
-      return territoryAfterUnitEnters(territory, loadedTransport, [transport.id]);
+      return territoryAfterUnitEnters(territory, loadedTransport, [transport.id], null, index);
     } else {
       return territory
     }
   });
 }
 
+//TODO: if retreat includes loaded transport, cancel amphib
 export const retreat = (state, action) => {
   const { battleTerritoryIndex, retreatTerritoryIndex } = action
   const battleTerritory = state.territories[battleTerritoryIndex]
@@ -139,7 +140,7 @@ export const retreat = (state, action) => {
     if (index === battleTerritoryIndex) {
       return { ...territory, unitsFrom: [] }
     } else if (index === retreatTerritoryIndex) {
-      return battleTerritory.unitsFrom.reduce((t, unit) => territoryAfterUnitEnters(t, unit, unit.ids, 'retreat'), territory)
+      return battleTerritory.unitsFrom.reduce((t, unit) => territoryAfterUnitEnters(t, unit, unit.ids, 'retreat', index), territory)
     } else {
       return territory
     }
