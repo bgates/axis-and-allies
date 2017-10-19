@@ -22,7 +22,7 @@ export const territoryAfterUnitWithdraws = (territory, movingUnit, ids) => {
   })
   unitsFrom = unitsFrom.filter(unitCount)
   if (!unitsFrom.length && territory.newlyConquered) {
-    let replacementTerritory = { ...territory, unitsFrom, currentPower: territory.original_power }
+    let replacementTerritory = { ...territory, unitsFrom, currentPower: territory.originalPower }
     delete replacementTerritory.newlyConquered
     return replacementTerritory
   } else {
@@ -44,7 +44,7 @@ export const territoryAfterUnitEnters = (territory, movingUnit, ids, mission) =>
     unitsFrom.push({ ...movingUnit, ids, mission })
   }
   if (territory.currentPower !== 'Oceans' && !territory.units.reduce(totalCount, 0)) {
-    return { ...territory, unitsFrom, currentPower: unitsFrom[0].power }
+    return { ...territory, unitsFrom, currentPower: unitsFrom[0].power, newlyConquered: true, originalPower: territory.currentPower }
   } else {
     return { ...territory, unitsFrom }
   }
