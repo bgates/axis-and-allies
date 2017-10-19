@@ -3,7 +3,7 @@ import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { combatUnitsInRange } from './movement';
 import { sameSide } from '../../config/initialPowers';
-import { consolidateUnits, nonIndustry, duplicateUnit } from '../../lib/unit';
+import { consolidateUnits, nonIndustry, duplicateUnit, unitCount, totalCount } from '../../lib/unit';
 import { allUnits, isLand } from '../../lib/territory';
 export { getCurrentPower, getFocusTerritory }
 
@@ -57,12 +57,12 @@ export const landingSlots = createSelector(
       return 1000
     }
     const requiredLandingSlots = territory.unitsFrom.filter(unit => unit.air && unit.distance === unit.movement)
-      .reduce((total, unit) => total + unit.ids.length, 0)
+      .reduce(totalCount, 0)
     if (!requiredLandingSlots) {
       return 1000
     }
     const totalLandingSlots = allUnits(territory).filter(unit => unit.power === currentPower.name && unit.landingSlots)
-      .reduce((total, unit) => total + unit.ids.length * unit.landingSlots, 0)
+      .reduce((total, unit) => total + unitCount(unit) * unit.landingSlots, 0)
     return totalLandingSlots - requiredLandingSlots
   }
 )

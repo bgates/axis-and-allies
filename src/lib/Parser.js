@@ -1,5 +1,5 @@
 import { groupWith } from 'ramda'
-import { id } from './unit'
+import { id, unitCount } from './unit'
 import { allUnits } from './territory'
 import powers from '../config/initialPowers'
 import unitTypes from '../config/unitTypes'
@@ -34,7 +34,7 @@ const powerNames = powersWithNeutral.map(p => p.name)
 const unitStringCreator = (unit) => {
   const single = powerNames.indexOf(unit.power) + 
     String.fromCharCode(60 + unitNameArray.indexOf(unit.name))
-  return single.repeat(unit.ids.length)
+  return single.repeat(unitCount(unit))
 }
 
 const territoryStringCreator = (units) => (  

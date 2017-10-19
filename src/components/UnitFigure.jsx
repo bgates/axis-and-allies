@@ -1,4 +1,5 @@
 import React from 'react';
+import { unitCount } from '../lib/unit'
 
 const path = (power, name) => {
   let unitName = name.replace(/\s/g,'_')
@@ -20,7 +21,7 @@ export const UnitImg = ({ power, name, handleClick, className }) => {
 
 export const ImgAndQty = ({ unit }) => {
   const { power, name } = unit;
-  const qty = unit.ids.length;
+  const qty = unitCount(unit);
   return (
     <span>
       <UnitImg power={power} name={name} />
@@ -40,7 +41,7 @@ export const UnitFigure = ({ unit }) => {
 
 export const TransportFigure = ({ unit }) => {
   const { name, power, attack } = unit;
-  const qty = unit.ids.length;
+  const qty = unitCount(unit);
   return (
     <figure className="transported">
       <UnitImg name={name} power={power} />

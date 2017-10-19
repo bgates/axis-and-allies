@@ -2,6 +2,7 @@ import React from 'react';
 import Transport from './Transport';
 import { UnitFigTableData } from '../../components/UnitFigure';
 import { STRATEGIC_BOMB } from '../../actions';
+import { unitCount } from '../../lib/unit';
 
 const Attacker = ({ 
   unit, 
@@ -65,7 +66,7 @@ const Attacker = ({
 }
 
 const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
-  const qty = unit.ids.length;
+  const qty = unitCount(unit);
   const allDisabled = qty === 0 || (unit.air && qty > landingSlots)
   const oneDisabled = qty === 0 || (unit.air && !landingSlots)
   return (
@@ -84,7 +85,7 @@ const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
 }
 
 const UncommitButtons = ({ unit, index, units, action }) => {
-  const commitQty = units.ids.length;
+  const commitQty = unitCount(units);
   return (
     <div>
       <input readOnly size={2} value={commitQty} />

@@ -1,5 +1,7 @@
+import { unitCount } from '../../../lib/unit'
+
 const count = (units, name) => (  
-  units.reduce((total, unit) => total + (unit.name === name ? unit.ids.length : 0), 0)
+  units.reduce((total, unit) => total + (unit.name === name ? unitCount(unit) : 0), 0)
 )
 
 const modify = (units) => {
@@ -13,16 +15,16 @@ const modify = (units) => {
       let countToBeSupported = supportable - supportedCount
       let infantry = newUnits.find(u => u.name === 'infantry' && u.attack === 1)
       newUnits = newUnits.filter(u => u !== infantry)
-      if (infantry.ids.length <= countToBeSupported) {
+      if (unitCount(infantry) <= countToBeSupported) {
         supportedInfantry = supportedInfantry.concat({ ...infantry, attack: 2 })
-        supportedCount += infantry.ids.length
+        supportedCount += unitCount(infantry)
       } else {
         const supportedIds = infantry.ids.slice(0, countToBeSupported)
         const unsupportedIds = infantry.ids.slice(countToBeSupported)
         const supported = { ...infantry, attack: 2, ids: supportedIds }
         const unsupported = { ...infantry, ids: unsupportedIds }
         supportedInfantry = supportedInfantry.concat(supported).concat(unsupported)
-        supportedCount += supported.ids.length
+        supportedCount += unitCount(supported)
       }
     }
     newUnits = [ ...supportedInfantry, ...newUnits ]
@@ -53,6 +55,6 @@ export const continueCombat = (state, action) => {
 
 export const clearUnits = (state, action) => (  
   state.territories.map(territory => (
-    territory.units ? { ...territory, units: territory.units.filter(u => u.ids.length) } : territory
+    territory.units ? { ...territory, units: territory.units.filter(unitCount) } : territory
   ))
 )

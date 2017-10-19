@@ -2,6 +2,7 @@ import { createSelector } from 'reselect';
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { isLand, isSea, isFriendly } from '../../lib/territory';
+import { unitCount } from '../../lib/unit';
 import unitTypes from '../../config/unitTypes';
 export { getFocusTerritory }
 
@@ -51,11 +52,11 @@ const loadableUnits = (currentPower, destination, origin, board) => {
       const unit = source.units.find(u => {
         return u.power === currentPower.name && u.name === unitType.name
       })
-      if (unit && unit.ids.length) {
+      if (unit && unitCount(unit)) {
         const ids = unit.ids;
         options.push({ origin: source, units: [{...unit, ids: [ids[0]]}] })
         if (unit.name === 'infantry') {
-          if (inf.ids.length > 1) {
+          if (unitCount(inf) > 1) {
             options.push({ origin: source, units: [{...unit, ids: ids.slice(0, 2) }] })
           }
         } else if (inf) {

@@ -1,4 +1,4 @@
-import { unitMatch } from '../../../lib/unit'
+import { unitMatch, unitCount } from '../../../lib/unit'
 
 export const territoryAfterUnitMoves = (territory, movingUnit, ids, leave = true) => {
   let updatedUnits = territory.units.map(unit => {
@@ -20,7 +20,7 @@ export const territoryAfterUnitWithdraws = (territory, movingUnit, ids) => {
       return unit
     }
   })
-  updatedUnitsFrom = updatedUnitsFrom.filter(unit => unit.ids.length)
+  updatedUnitsFrom = updatedUnitsFrom.filter(unitCount)
   return { ...territory, unitsFrom: updatedUnitsFrom }
 }
 

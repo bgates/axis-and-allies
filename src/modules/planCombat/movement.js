@@ -7,6 +7,7 @@ import {
   nonNeutral,
   allUnits
 } from '../../lib/territory';
+import { unitCount } from '../../lib/unit';
 
 export const territoriesInRange = (board, currentPower, territory, accessible, maxRange) => {
   let territories = { 0: [territory] };
@@ -46,7 +47,7 @@ const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendl
 
 const hasLandingSlots = (territory, currentPower) => (
   allUnits(territory).reduce((total, unit) => (
-    total + ((unit.power === currentPower.name && unit.landingSlots) || 0) * unit.ids.length
+    total + ((unit.power === currentPower.name && unit.landingSlots) || 0) * unitCount(unit)
   ), 0)
 )
 

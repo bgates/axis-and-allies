@@ -3,7 +3,7 @@ import { combatants } from '../planCombat';
 import { defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { allUnits } from '../../lib/territory';
-import { totalCount } from '../../lib/unit';
+import { unitCount, totalCount } from '../../lib/unit';
 import unitTypes from '../../config/unitTypes';
 export { getFocusTerritory }
 
@@ -28,7 +28,7 @@ const multiplier = (unit, side) => (
 )
 
 const noneLeft = (side, strength, casualtyCount) => (
-  side.reduce((total, unit) => total + unit.ids.length * multiplier(unit, strength), 0) <= casualtyCount
+  side.reduce((total, unit) => total + unitCount(unit) * multiplier(unit, strength), 0) <= casualtyCount
 )
 
 const defendersDefeated = createSelector(
