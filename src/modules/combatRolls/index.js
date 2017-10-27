@@ -2,6 +2,7 @@ import CombatRollsContainer from './combatRollsContainer';
 import { 
   combatRolls, 
   strengths, 
+  bombardingUnits,
   defenderCasualties, 
   attackerCasualtyCount 
 } from './selectors';
@@ -9,6 +10,7 @@ import {
 export { 
   combatRolls, 
   strengths, 
+  bombardingUnits,
   defenderCasualties, 
   attackerCasualtyCount,
   CombatRollsContainer 

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
 import { UnitFigTableData } from '../../components/UnitFigure';
-import { unitCount } from '../../lib/unit';
 
 const Bombardment = ({ 
   territory, 

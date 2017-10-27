@@ -13,7 +13,8 @@ const CombatModal = ({
   rollForCombat,
   allowRetreat
 }) => {
-  const { attackers, defenders } = combatants;
+  const { attackers, defenders, bombardingUnits } = combatants;
+  const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   return (
     <div className="battleBoard">
       <h1>Combat in {territory.name}</h1>
@@ -36,7 +37,7 @@ const CombatModal = ({
           return (
             <Forces
               key={n}
-              units={attackers.filter(u => u.attack === n)}
+              units={supportedAttackers.filter(u => u.attack === n)}
             />
           )
         })}

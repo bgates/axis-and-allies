@@ -9,7 +9,6 @@ import { VIEW_BOMBARDMENT_OPTIONS } from '../../actions';
 import { 
   rollCount, 
   getFocusTerritory, 
-  shoreBombardment, 
   attackerCasualties, 
   combatants,
   allowRetreat 

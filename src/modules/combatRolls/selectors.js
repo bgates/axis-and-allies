@@ -1,18 +1,33 @@
 import { createSelector } from 'reselect';
+import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
 import { combatants } from '../planCombat';
 import { totalCount } from '../../lib/unit';
+import { allUnits } from '../../lib/territory'
 import PATHS from '../../paths';
 
-const _strengths = (combatants) => {
+const _strengths = (combatants, bombardingUnits) => {
   const { attackers, defenders } = combatants;
-  const dieMax = Math.max(...attackers.filter(u => u.attack).map(u => u.attack), 
+  const supportedAttackers = [ ...attackers, ...bombardingUnits ]
+  const dieMax = Math.max(...supportedAttackers.filter(u => u.attack).map(u => u.attack), 
     ...defenders.filter(u => u.defend).map(u => u.defend));
   return Array(dieMax).fill().map((n, i) => i + 1);
 }
 
+export const bombardingUnits = createSelector(
+  mergeBoardAndTerritories,
+  getFocusTerritory,
+  (board, territory) => Object.keys(territory.bombard)
+  .map(key => {
+    const ids = territory.bombard[key]
+    const units = allUnits(board[key])
+    return ids.map(id => units.find(u => u.ids.includes(id)))
+  }).reduce((total, each) => [ ...total, ...each ], [])
+)
+
 export const strengths = createSelector(
   combatants,
-  combatants => _strengths(combatants)
+  bombardingUnits,
+  (combatants, bombardingUnits) => _strengths(combatants, bombardingUnits)
 );
 
 const arrangeRolls = (combatants, strengths, rolls = []) => {

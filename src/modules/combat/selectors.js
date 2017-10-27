@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { combatants as combatantsWithoutDamage } from '../planCombat';
+import { bombardingUnits } from '../combatRolls';
 import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
 import { totalCount, survivors } from '../../lib/unit';
 export { getFocusTerritory }
@@ -17,9 +18,10 @@ export const attackerCasualties = createSelector(
 export const combatants = createSelector(
   combatantsWithoutDamage,
   attackerCasualties,
-  (combatants, attackerCasualties) => {
+  bombardingUnits,
+  (combatants, attackerCasualties, bombardingUnits) => {
     let { attackers, defenders } = combatants 
-    return { attackers: survivors(attackers, attackerCasualties), defenders }
+    return { attackers: survivors(attackers, attackerCasualties), defenders, bombardingUnits }
   }
 )
 
