@@ -1,5 +1,5 @@
 import { sameSide } from '../config/initialPowers'
-import { isNotSubmerged, bombCapacity } from './unit'
+import { isNotSubmerged, bombCapacity, canBombard } from './unit'
 import { mergeBoardAndTerritories } from '../selectors/mergeBoardAndTerritories'
 import { STRATEGIC_BOMB } from '../actions'
 
@@ -43,6 +43,7 @@ export const isFriendly = (territory, currentPower) => {
 
 export const isAttackable = (territory, currentPower) => {
   const unfriendly = !isFriendly(territory, { name: currentPower }) 
+                     || territory.newlyConquered
   if (currentPower === 'China') {
     return isChina(territory) && unfriendly
   } else {
@@ -91,14 +92,24 @@ export const isBombed = (territory) => (
   territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)
 )
 
-export const isBombardable = (board, territory, currentPower) => {
-  if (!territory.bombardmentOver) {
-    let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
-    const cp = territories.reduce((units, territory) => {
+export const bombardmentCapableUnits = (board, territory, currentPower) => {
+    let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea)
+    return territories.reduce((units, territory) => {
       return units.concat(allUnits(territory).filter(unit => {
-        return unit.canBombard && unit.power === currentPower
-      }))
-    }, []);
+        return canBombard(unit) && 
+          unit.mission !== 'complete' && 
+          unit.power === currentPower.name &&
+          (!unit.bombard || Object.keys(unit.bombard).length < unit.ids.length)
+      })
+      .map(unit => ({ ...unit, locationIndex: territory.index })))
+    }, [])
+}
+
+export const isBombardable = (territory, currentPower, state) => {
+  if (!territory.bombardmentOver) {
+    const board = mergeBoardAndTerritories(state)
+    const units = bombardmentCapableUnits(board, territory, currentPower)
+    return !!units.length
   }
 }
 
@@ -107,4 +118,13 @@ export const awaitingNavalResolution = (territory, state) => {
     const neighbors = mergeBoardAndTerritories(state).filter(t => Object.values(territory.amphib).includes(t.index))
     return neighbors.some(n => isCombat(n))
   }
+}
+
+export const conquered = (territory, currentPower) => {
+  let updatedTerritory = { ...territory, unitsFrom: [], units: territory.unitsFrom }
+  if (territory.currentPower !== 'Oceans') {
+    updatedTerritory.currentPower = currentPower
+    updatedTerritory.newlyConquered = true
+  }
+  return updatedTerritory
 }

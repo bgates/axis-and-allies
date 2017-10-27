@@ -2,6 +2,7 @@ import {
   PLAN_ATTACKS,
   VIEW_ATTACK_OPTIONS,
   VIEW_TRANSPORT_LOAD_OPTIONS,
+  VIEW_BOMBARDMENT_OPTIONS,
   LOAD_TRANSPORT,
   DOGFIGHT,
   STRATEGIC_BOMB,
@@ -46,6 +47,9 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   } 
   case VIEW_ATTACK_OPTIONS: {
     return currentWithTerritory(state, VIEW_ATTACK_OPTIONS, action.territory)
+  } 
+  case VIEW_BOMBARDMENT_OPTIONS: {
+    return currentWithTerritory(state, VIEW_BOMBARDMENT_OPTIONS, action.territory)
   } 
   case VIEW_TRANSPORT_LOAD_OPTIONS: {
     return { ...state, current: VIEW_TRANSPORT_LOAD_OPTIONS, transport: { unit: action.transport, id: action.id } }

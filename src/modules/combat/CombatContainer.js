@@ -1,7 +1,11 @@
+import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
+import BombardmentContainer from '../bombardment'
+import { VIEW_BOMBARDMENT_OPTIONS } from '../../actions';
+
 import { 
   rollCount, 
   getFocusTerritory, 
@@ -42,7 +46,21 @@ const mapDispatchToProps = (dispatch) => {
   }, dispatch)
 }
 
-const CombatContainer = connect(mapStateToProps, mapDispatchToProps)(CombatModal)
+const ActualCombatContainer = connect(mapStateToProps, mapDispatchToProps)(CombatModal)
+
+const mapOuterStateToProps = (state) => ({
+  phase: state.phase
+})
+
+const OuterCombatModal = ({ phase }) => {
+  if (phase.current === VIEW_BOMBARDMENT_OPTIONS) {
+    return <BombardmentContainer />
+  } else {
+    return <ActualCombatContainer />
+  }
+}
+
+const CombatContainer = connect(mapOuterStateToProps)(OuterCombatModal)
 
 export default CombatContainer
 

@@ -5,6 +5,7 @@ import {
   PLAN_ATTACKS, 
   VIEW_ATTACK_OPTIONS, 
   VIEW_TRANSPORT_LOAD_OPTIONS, 
+  VIEW_BOMBARDMENT_OPTIONS,
   PLAN_MOVEMENT,
   VIEW_MOVEMENT_OPTIONS,
   VIEW_PLANE_LANDING_OPTIONS,
@@ -19,7 +20,7 @@ const pathRequiresOverlay = (pathname) => {
 };
 
 const phaseRequiresOverlay = (phase) => {
-  return [VIEW_ATTACK_OPTIONS, VIEW_PLANE_LANDING_OPTIONS, VIEW_TRANSPORT_LOAD_OPTIONS, 'combat', PATHS.SELECT_CASUALTIES, VIEW_MOVEMENT_OPTIONS, 'order-units-territory'].includes(phase)
+  return [VIEW_ATTACK_OPTIONS, VIEW_TRANSPORT_LOAD_OPTIONS, VIEW_BOMBARDMENT_OPTIONS, VIEW_PLANE_LANDING_OPTIONS, 'combat', PATHS.SELECT_CASUALTIES, VIEW_MOVEMENT_OPTIONS, 'order-units-territory'].includes(phase)
 };
 
 export const overlayPhase = createSelector(

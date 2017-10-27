@@ -89,3 +89,7 @@ export const survivors = (units, casualties = [], missionComplete) => {
   const damagedUnits = damaged(units, casualties)
   return undamagedUnits.concat(damagedUnits).filter(unitCount)
 }
+
+export const canBombard = unit => (
+  unitTypes[unit.name].canBombard
+)

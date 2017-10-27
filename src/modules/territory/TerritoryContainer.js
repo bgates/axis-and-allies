@@ -25,6 +25,7 @@ import {
   resolveCombat, 
   viewPlaneLandingOptions,
   viewMovementOptions,
+  viewBombardmentOptions,
   orderUnits,
   roll
 } from '../../actions';
@@ -70,6 +71,8 @@ const territoryThunk = (territory) => {
             dispatch(dogfight(territory))
           } else if (isBombed(territory)) {
             bombRaid(dispatch, territory)
+          } else if (isBombardable(territory, currentPower, state)) {
+            dispatch(viewBombardmentOptions(territory))
           } else {
             dispatch(resolveCombat(territory))
           }

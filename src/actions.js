@@ -17,6 +17,9 @@ export const VIEW_TRANSPORT_LOAD_OPTIONS = 'VIEW_TRANSPORT_LOAD_OPTIONS';
 export const LOAD_TRANSPORT = 'LOAD_TRANSPORT';
 export const COMMIT_AMPHIB_UNITS = 'COMMIT_AMPHIB_UNITS';
 export const UNCOMMIT_AMPHIB_UNITS = 'UNCOMMIT_AMPHIB_UNITS';
+export const VIEW_BOMBARDMENT_OPTIONS = 'VIEW_BOMBARDMENT_OPTIONS';
+export const COMMIT_BOMBARDMENT_UNITS = 'COMMIT_BOMBARDMENT_UNITS';
+export const UNCOMMIT_BOMBARDMENT_UNITS = 'UNCOMMIT_BOMBARDMENT_UNITS';
 
 export const DOGFIGHT = 'DOGFIGHT';
 export const STRATEGIC_BOMBING_ROLLS = 'STRATEGIC_BOMBING_ROLLS';
@@ -122,11 +125,12 @@ export const viewAttackOptions = (territory) => (
   { type: VIEW_ATTACK_OPTIONS, territory }
 )
 
+export const viewBombardmentOptions = (territory) => (
+  { type: VIEW_BOMBARDMENT_OPTIONS, territory }
+)
+
 export const viewPlaneLandingOptions = (territory) => ( 
-  {
-    type: VIEW_PLANE_LANDING_OPTIONS,
-    territory
-  }
+  { type: VIEW_PLANE_LANDING_OPTIONS, territory }
 )
 
 export const winAttack = (territoryIndex, currentPower) => ( 
