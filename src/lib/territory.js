@@ -92,14 +92,14 @@ export const isBombed = (territory) => (
   territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)
 )
 
-export const bombardmentCapableUnits = (board, territory, currentPower) => {
-    let territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea)
+export const bombardmentCapableUnits = (board, targetTerritory, currentPower) => {
+    let territories = targetTerritory.adjacentIndexes.map(index => board[index]).filter(isSea)
     return territories.reduce((units, territory) => {
       return units.concat(allUnits(territory).filter(unit => {
         return canBombard(unit) && 
           unit.mission !== 'complete' && 
           unit.power === currentPower.name &&
-          (!unit.bombard || Object.keys(unit.bombard).length < unit.ids.length)
+          (!unit.bombard || Object.keys(unit.bombard).length < unit.ids.length || Object.values(unit.bombard).includes(targetTerritory.index))
       })
       .map(unit => ({ ...unit, locationIndex: territory.index })))
     }, [])
