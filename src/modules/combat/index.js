@@ -1,4 +1,3 @@
-import CombatContainer from './CombatContainer';
-import { strengths } from './selectors';
+import CombatContainer from './CombatContainer'
 
-export { CombatContainer, strengths }
+export { CombatContainer }
