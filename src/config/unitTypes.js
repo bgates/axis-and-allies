@@ -98,7 +98,8 @@ const unitTypes = {
     movement: 2, 
     attack: 4, 
     defend: 3,
-    ship: true
+    ship: true,
+    canBombard: true
   },
   'tactical bomber': { 
     name: 'tactical bomber', 

@@ -8,6 +8,7 @@ import PATHS from '../../paths';
 const _strengths = (combatants, bombardingUnits) => {
   const { attackers, defenders } = combatants;
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
+  console.log(supportedAttackers)
   const dieMax = Math.max(...supportedAttackers.filter(u => u.attack).map(u => u.attack), 
     ...defenders.filter(u => u.defend).map(u => u.defend));
   return Array(dieMax).fill().map((n, i) => i + 1);
@@ -30,12 +31,13 @@ export const strengths = createSelector(
   (combatants, bombardingUnits) => _strengths(combatants, bombardingUnits)
 );
 
-const arrangeRolls = (combatants, strengths, rolls = []) => {
+const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
   const { attackers, defenders } = combatants;
+  const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   let rollClone = rolls.slice(0);
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
-    let attackRolls = attackers.filter(unit => unit.attack === n).reduce(totalCount, 0)
+    let attackRolls = supportedAttackers.filter(unit => unit.attack === n).reduce(totalCount, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
     let defendRolls = defenders.filter(unit => unit.defend === n).reduce(totalCount, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
@@ -45,9 +47,10 @@ const arrangeRolls = (combatants, strengths, rolls = []) => {
 
 export const combatRolls = createSelector(
   combatants,
+  bombardingUnits,
   strengths,
   state => state.rolls[PATHS.COMBAT_ROLLS],
-  (combatants, strengths, rolls) => arrangeRolls(combatants, strengths, rolls)
+  (combatants, bombardingUnits, strengths, rolls) => arrangeRolls(combatants, bombardingUnits, strengths, rolls)
 )
 
 const hits = (rolls, side) => {

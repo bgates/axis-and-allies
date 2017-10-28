@@ -26,7 +26,7 @@ there's not a clear line between units already there, and units being moved in -
    -[x] amphib assault
    -[] commit to shore bombardment
    -[] sub movement
-   -[] convoy attack
+   -[x] convoy attack
    -[x] straits
    -[x] prevent amphib battle until naval battle concludes
  -[x] enter undefended territory
@@ -85,3 +85,8 @@ rules for harbor: enemy air attack only; harbor has automatic aa
 
 prevent noncom movement of air unit to sea space unless carrier present
 
+this was taking up too much space in tooltip
+      <p><strong className="warning">Warning:</strong> Any land or sea units moved during this phase can not be moved during the non-combat phase of your turn. Units on a transport that gets loaded or moved during this phase will only be allowed to unload from where they are. <strong className="notice">Use F.A.Q.s link above.</strong></p>
+
+bombardment: bb+ca w no prior combat get 1 shot during 1st round of attack
+they cannot be hit themselves

@@ -14,7 +14,7 @@ export const unitMatch = (unit, unit2, ...props) => {
 
 export const totalCount = (total, unit) => total + unitCount(unit)
 
-export const unitCount = unit => unit.ids.length
+export const unitCount = unit => console.log(unit) || unit.ids.length
 
 export const nonIndustry = (unit) => unit.name !== 'industrial complex';
 

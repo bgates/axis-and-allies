@@ -7,7 +7,8 @@ export { getFocusTerritory }
 
 export const rollCount = createSelector(
   combatantsWithoutDamage,
-  combatants => (combatants.attackers.concat(combatants.defenders)).reduce(totalCount, 0)
+  bombardingUnits,
+  combatants => (combatants.attackers.concat(bombardingUnits).concat(combatants.defenders)).reduce(totalCount, 0)
 )
 
 export const attackerCasualties = createSelector(

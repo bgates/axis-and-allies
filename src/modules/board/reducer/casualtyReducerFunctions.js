@@ -1,18 +1,9 @@
-import { allUnits } from '../../../lib/territory'
+import { allUnits, conquered } from '../../../lib/territory'
 import { survivors, consolidateUnits } from '../../../lib/unit'
 import unitTypes from '../../../config/unitTypes'
 
 const survivingUnitsFrom = ({ unitsFrom, attackerCasualties }, complete) => {
   return survivors(unitsFrom, attackerCasualties, complete)
-}
-
-const possiblyConquered = (territory, currentPower) => {
-  let updatedTerritory = { ...territory, unitsFrom: [], units: territory.unitsFrom }
-  if (territory.currentPower !== 'Oceans') {
-    updatedTerritory.currentPower = currentPower
-    updatedTerritory.newlyConquered = true
-  }
-  return updatedTerritory
 }
 
 const amphibUnits = (amphib, territories) => {
@@ -62,7 +53,7 @@ export const removeCasualties = (state, action) => {
       const unitsFrom = territory.unitsFrom.map(unitsNotCarryingCargoToObjective(territoryIndex));
       return { ...territory, units, unitsFrom }
     } else if (territory.unitsFrom.length && !territory.units.length) {
-      return possiblyConquered(territory, currentPower);
+      return conquered(territory, currentPower);
     }
     return territory;
   });
@@ -117,7 +108,7 @@ export const attackerWins = (state, action) => {
         currentPower: groundUnits.length ? currentPower : territory.currentPower,
         unitsFrom: [],
         units: resetUnits(survivingUnitsFrom(territory, true)),
-        newlyConquered: groundUnits.length
+        newlyConquered: !!groundUnits.length
       }
     }
     return territory;
