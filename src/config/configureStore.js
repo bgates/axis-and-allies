@@ -30,7 +30,7 @@ const reducerWithRouteState = connectRouter(history)(reducer)
 const stateReconciler = (state, inboundState, reducedState, log) => {
   let newState = {...reducedState}
   Object.keys(inboundState).forEach(key => {
-   newState[key] = {...state[key], ...inboundState[key]} // shallow merge
+   newState[key] = Array.isArray(state[key]) ? inboundState[key] : {...state[key], ...inboundState[key]} // shallow merge
   })
   return newState
 }
