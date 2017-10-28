@@ -33,7 +33,7 @@ import PATHS from '../../paths';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    fill: getFill(ownProps.territory),
+    fill: getFill(state, ownProps.territoryIndex),
     classNames: getClasses(state, ownProps.territory),
     ...ownProps
   }

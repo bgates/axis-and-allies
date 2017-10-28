@@ -38,11 +38,11 @@ const stateReconciler = (state, inboundState, reducedState, log) => {
 let initialUnits = {}
 let initialTerritories = []
 newParse(Board).forEach((territoryUnits, index) => {
-  initialTerritories[index] = { units: [], currentPower: territoryData[index].original_power }
+  initialTerritories[index] = { unitIds: [], currentPower: territoryData[index].original_power }
   territoryUnits.forEach(unit => {
     const _id = id()
     initialUnits[_id] = unit
-    initialTerritories[index].units.push(_id)
+    initialTerritories[index].unitIds.push(_id)
   })
 })
 

@@ -134,6 +134,7 @@ class Territories extends Component {
             <TerritoryContainer
               playing={this.props.playing}
               territory={territory}
+              territoryIndex={index}
               setVisibility={this.setVisibility.bind(this, index)}
               key={index} />
            )}

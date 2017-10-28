@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const Territory = ({ 
   territory, 
@@ -11,7 +11,7 @@ const Territory = ({
   const { dimensions, adjacentIndexes, name } = territory;
   return (
     <path d={dimensions}
-      id={adjacentIndexes === null ? name.toLowerCase().replace(/\s/,'_') : null}
+      id={adjacentIndexes ? null : name.toLowerCase().replace(/\s/,'_')}
       className={classNames}
       stroke='#000'
       strokeWidth='2'
