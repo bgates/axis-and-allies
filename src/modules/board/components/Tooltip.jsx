@@ -10,7 +10,7 @@ import industryImg from '../../../assets/images/industrial_complex.png';
 import PATHS from '../../../paths';
 
 const Units = ({ units, unitsFrom }) => {
-  const combatUnits = units.filter(u => u.name !== 'industrial complex' && unitCount(u));
+  const combatUnits = units.filter(u => u.name !== 'industrial complex');
   const reducedUnitsFrom = groupWith(matchingUnit, unitsFrom).reduce((units, group) => {
     let ids = group.reduce((ids, u) => ids.concat(u.ids), []);
     let unit = { ...group[0], ids }

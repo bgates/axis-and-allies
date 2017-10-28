@@ -1,7 +1,7 @@
-import uuid from 'uuid/v4'
 import unitTypes from '../config/unitTypes'
 
-export const id = () => uuid();
+let n = 0
+export const id = () => n += 1
 
 export const isNotSubmerged = (unit) => {
   return !unit.submerged

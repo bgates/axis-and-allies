@@ -5,8 +5,11 @@ import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import { landPlanes } from '../modules/landPlanes'
 import { placement } from '../modules/placement'
+import territories from './territories'
+import units from './units'
 import rolls from './rolls'
 import { boardString, updateBoardString } from './updateBoardString'
+import { id } from '../lib/unit'
 import { 
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
@@ -26,7 +29,10 @@ import {
   RESET
 } from '../actions';
 import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
-       
+import { newParse } from '../lib/Parser'
+import Board from '../config/startingBoard'
+import territoryData from '../config/territories.json'
+
 const combinedReducer = combineReducers({
   firebase,
   board,
@@ -36,7 +42,9 @@ const combinedReducer = combineReducers({
   placement,
   purchases,
   research,
-  rolls
+  rolls,
+  territories,
+  units
 })
 
 const crossSliceReducer = (state, action) => {
@@ -72,9 +80,21 @@ const crossSliceReducer = (state, action) => {
   }
 }
 
-const rootReducer = (state = {}, action) => {
+let initialUnits = {}
+let initialTerritories = []
+newParse(Board).forEach((territoryUnits, index) => {
+  initialTerritories[index] = { units: [], currentPower: territoryData[index].original_power }
+  territoryUnits.forEach(unit => {
+    const _id = id()
+    initialUnits[_id] = unit
+    initialTerritories[index].units.push(_id)
+  })
+})
+
+const initialState = { units: initialUnits, territories: initialTerritories }
+const rootReducer = (state = initialState, action) => {
   if (action.type === RESET) {
-    state = {}
+    state = initialState
   }
   const intermediateState = combinedReducer(state, action);
   return crossSliceReducer(intermediateState, action);
