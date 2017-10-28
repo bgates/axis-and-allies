@@ -121,8 +121,8 @@ export const nextTurn = () => (
   }
 )
 
-export const viewAttackOptions = (territory) => (
-  { type: VIEW_ATTACK_OPTIONS, territory }
+export const viewAttackOptions = (territoryIndex) => (
+  { type: VIEW_ATTACK_OPTIONS, territoryIndex }
 )
 
 export const viewBombardmentOptions = (territory) => (

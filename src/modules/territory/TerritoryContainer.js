@@ -68,7 +68,7 @@ const territoryThunk = (territoryIndex) => {
       }, 
       [PATHS.PLAN_ATTACKS]: () => {
         if (isAttackable(state, territoryIndex)) {
-          dispatch(viewAttackOptions(territory))
+          dispatch(viewAttackOptions(territoryIndex))
         }
       },
       [PATHS.RESOLVE_COMBAT]: () => {

@@ -22,8 +22,8 @@ const currentWithout = (state, current, deletedProp) => {
   return newState;
 }
 
-const currentWithTerritory = (state, current, territory) => (
-  { ...state, current, territory }
+const currentWithTerritory = (state, current, territoryIndex) => (
+  { ...state, current, territoryIndex }
 )
 
 const phase = (state = { current: 'start', minimum: 'start' }, action) => {
@@ -46,7 +46,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return currentWithout(state, PLAN_ATTACKS, 'territory')
   } 
   case VIEW_ATTACK_OPTIONS: {
-    return currentWithTerritory(state, VIEW_ATTACK_OPTIONS, action.territory)
+    return currentWithTerritory(state, VIEW_ATTACK_OPTIONS, action.territoryIndex)
   } 
   case VIEW_BOMBARDMENT_OPTIONS: {
     return currentWithTerritory(state, VIEW_BOMBARDMENT_OPTIONS, action.territory)
