@@ -20,11 +20,10 @@ export const UnitImg = ({ power, name, handleClick, className }) => {
 }
 
 export const ImgAndQty = ({ unit }) => {
-  const { power, name } = unit;
-  const qty = unitCount(unit);
+  const { power, type, qty } = unit;
   return (
     <span>
-      <UnitImg power={power} name={name} />
+      <UnitImg power={power} name={type} />
       {qty > 1 ? <span className={power.toLowerCase()}>{qty}</span> : null}
     </span>
   )

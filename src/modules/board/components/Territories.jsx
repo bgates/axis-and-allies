@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TerritoryContainer from '../../territory/TerritoryContainer'
-import Tooltip from './Tooltip'
+import { TooltipContainer } from '../../tooltip'
 import ConvoyImages from './ConvoyImages'
 import FireImage from './FireImage'
 import Modal from './Modal'
@@ -12,7 +12,7 @@ class Territories extends Component {
   constructor () {
     super()
     this.state = {
-      tooltipTerritory: {units: []},
+      tooltipTerritoryIndex: 0,
       ctrlPressed: false
     }
     this.handleKeydown = this.handleKeydown.bind(this)
@@ -54,28 +54,27 @@ class Territories extends Component {
         <div
           id='tooltip'
           ref={ (component) => this.tooltip = component }>
-          <Tooltip
-            territory={this.state.tooltipTerritory}
-            playing={this.props.playing}
-            currentPower={this.props.currentPower} />
+          <TooltipContainer
+            territoryIndex={this.state.tooltipTerritoryIndex}
+            playing={this.props.playing} />
         </div>
       )
     }
     return null
   }
 
-  setVisibility (territory) {
+  setVisibility (territoryIndex) {
     if (this.tooltip) {
-      let { tooltipTerritory } = this.state
+      let { tooltipTerritoryIndex } = this.state
       let display
-      if (territory) {
+      if (territoryIndex) {
         display = 'block'
-        tooltipTerritory = territory
+        tooltipTerritoryIndex = territoryIndex
       } else {
         display = 'none'
       }
       this.tooltip.style.display = display
-      this.setState({ tooltipTerritory })
+      this.setState({ tooltipTerritoryIndex })
     }
   }
 
@@ -135,7 +134,7 @@ class Territories extends Component {
             <TerritoryContainer
               playing={this.props.playing}
               territory={territory}
-              setVisibility={this.setVisibility.bind(this, territory)}
+              setVisibility={this.setVisibility.bind(this, index)}
               key={index} />
            )}
         </svg>

@@ -9,7 +9,6 @@ import territories from './territories'
 import units from './units'
 import rolls from './rolls'
 import { boardString, updateBoardString } from './updateBoardString'
-import { id } from '../lib/unit'
 import { 
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
@@ -29,9 +28,7 @@ import {
   RESET
 } from '../actions';
 import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
-import { newParse } from '../lib/Parser'
-import Board from '../config/startingBoard'
-import territoryData from '../config/territories.json'
+import { initialState } from '../config/configureStore'
 
 const combinedReducer = combineReducers({
   firebase,
@@ -80,18 +77,6 @@ const crossSliceReducer = (state, action) => {
   }
 }
 
-let initialUnits = {}
-let initialTerritories = []
-newParse(Board).forEach((territoryUnits, index) => {
-  initialTerritories[index] = { units: [], currentPower: territoryData[index].original_power }
-  territoryUnits.forEach(unit => {
-    const _id = id()
-    initialUnits[_id] = unit
-    initialTerritories[index].units.push(_id)
-  })
-})
-
-const initialState = { units: initialUnits, territories: initialTerritories }
 const rootReducer = (state = initialState, action) => {
   if (action.type === RESET) {
     state = initialState
