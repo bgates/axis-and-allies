@@ -9,7 +9,12 @@ export const getCurrentPower = createSelector(
   getPowers,
   currentPowerIndex,
   (powers, index) => powers[index]
-);
+)
+
+export const getCurrentPowerName = createSelector(
+  getCurrentPower,
+  currentPower => currentPower.name
+)
 
 export const loggedInAsCurrentPower = createSelector(
   getCurrentPower

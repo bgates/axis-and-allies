@@ -1,8 +1,6 @@
 import { createSelector } from 'reselect'
 import { groupBy, values } from 'ramda'
-import { getTerritory, getTerritoryData } from '../../selectors/getTerritory'
-
-const getAllUnits = (state) => state.units
+import { getTerritoryData, getTerritoryUnits } from '../../selectors/getTerritory'
 
 const same = unit => unit.type + unit.power
 
@@ -11,19 +9,13 @@ const groupedUnits = (units) => (
     .map(group => ({ ...group[0], qty: group.length }))
 )
 
-const territoryUnits = createSelector(
-  getTerritory,
-  getAllUnits,
-  (territory, units) => territory.unitIds.map(id => units[id])
-)
-
 export const getUnits = createSelector(
-  territoryUnits,
+  getTerritoryUnits,
   units => groupedUnits(units)
 )
 
 export const getIndustry = createSelector(
-  territoryUnits,
+  getTerritoryUnits,
   units => units.find(unit => unit.type === 'industrial complex')
 )
 

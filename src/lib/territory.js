@@ -6,8 +6,6 @@ import { STRATEGIC_BOMB } from '../actions'
 export const isLand = (territory) => !territory.sea;
 export const isSea = (territory) => territory.sea;
 
-export const isChina = (territory) => territory.original_power === 'China' || ['Hong Kong', 'Shantung', 'Shansi', 'Peking', 'Chahar', 'Northern Manchuria', 'Manchuria', 'Korea', 'Burma'].includes(territory.name); 
-
 export const isEnemy = (territory, currentPowerName) => {
   let rulingPower = territory.currentPower
   if (rulingPower && !['Neutrals', 'Oceans'].includes(rulingPower)) {
@@ -39,16 +37,6 @@ export const isNeutral = (territory) => territory.currentPower === 'Neutrals'
 
 export const isFriendly = (territory, currentPower) => {
   return !isNeutral(territory) && !isEnemy(territory, currentPower.name)
-}
-
-export const isAttackable = (territory, currentPower) => {
-  const unfriendly = !isFriendly(territory, { name: currentPower }) 
-                     || territory.newlyConquered
-  if (currentPower === 'China') {
-    return isChina(territory) && unfriendly
-  } else {
-    return isSea(territory) || unfriendly
-  }
 }
 
 export const passableByLandUnit = (territory, currentPower) => {
