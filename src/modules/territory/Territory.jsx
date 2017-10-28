@@ -1,23 +1,24 @@
 import React from 'react'
 
 const Territory = ({ 
-  territory, 
+  territoryIndex, 
+  dimensions,
   classNames,
+  fill,
+  id,
   handleClick, 
   setVisibility, 
-  fill,
   playing
 }) => {
-  const { dimensions, adjacentIndexes, name } = territory;
   return (
     <path d={dimensions}
-      id={adjacentIndexes ? null : name.toLowerCase().replace(/\s/,'_')}
+      id={id}
       className={classNames}
-      stroke='#000'
-      strokeWidth='2'
-      onClick={playing && handleClick.bind(null, territory)}
-      onMouseOver={setVisibility}
-      fill={fill} >
+      stroke="#000"
+      strokeWidth="2"
+      fill={fill} 
+      onClick={playing && handleClick.bind(null, territoryIndex)}
+      onMouseOver={setVisibility} >
     </path>
   )
 }

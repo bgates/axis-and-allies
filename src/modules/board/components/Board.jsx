@@ -25,14 +25,13 @@ const BoardWithRedirect = (props) => {
   )
 }
 
-const Board = ({ board, phase, hasOverlay, advanceBtn, currentPower, isCurrentPower }) => {
+const Board = ({ territories, phase, hasOverlay, advanceBtn, isCurrentPower }) => {
   return (
     <div>
       <PowersContainer />
       <Territories 
         playing={isCurrentPower}
-        board={board}
-        currentPower={currentPower}
+        territories={territories}
         hasOverlay={hasOverlay}
         advanceBtn={advanceBtn}
         phase={phase} />

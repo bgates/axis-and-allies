@@ -2,7 +2,14 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import Territory from './Territory'
-import { getFill, getClasses, isOrdering } from './selectors'
+import { 
+  getFill, 
+  getTerritoryId,
+  getTerritoryDimensions,
+  getClasses, 
+  isAttackable, 
+  isOrdering 
+} from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
@@ -10,7 +17,6 @@ import { airComplete } from '../../lib/unit'
 import { 
   isFriendly,
   isBombardable,
-  isAttackable, 
   isDogfightable,
   isCombat,
   isBombed,
@@ -32,19 +38,23 @@ import {
 import PATHS from '../../paths';
 
 const mapStateToProps = (state, ownProps) => {
+  const { territoryIndex } = ownProps
   return {
-    fill: getFill(state, ownProps.territoryIndex),
-    classNames: getClasses(state, ownProps.territory),
+    fill: getFill(state, territoryIndex),
+    dimensions: getTerritoryDimensions(state, territoryIndex),
+    id: getTerritoryId(state, territoryIndex),
+    classNames: getClasses(state, territoryIndex),
     ...ownProps
   }
 }
 
-const territoryThunk = (territory) => {
+const territoryThunk = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
     if (overlayPhase(state)) {
       return
     }
+    const territory = state.territories[territoryIndex]
     const { router, phase } = state 
     const currentPower = getCurrentPower(state)
     const routes = {
@@ -57,7 +67,7 @@ const territoryThunk = (territory) => {
         }
       }, 
       [PATHS.PLAN_ATTACKS]: () => {
-        if (isAttackable(territory, currentPower.name)) {
+        if (isAttackable(state, territoryIndex)) {
           dispatch(viewAttackOptions(territory))
         }
       },

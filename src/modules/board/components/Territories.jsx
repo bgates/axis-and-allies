@@ -130,10 +130,9 @@ class Territories extends Component {
           onMouseMove={this.handleMouseMove}>
           <ConvoyImages/>
           <FireImage />
-          {this.props.board.map((territory, index) =>
+          {this.props.territories.map((_, index) =>
             <TerritoryContainer
               playing={this.props.playing}
-              territory={territory}
               territoryIndex={index}
               setVisibility={this.setVisibility.bind(this, index)}
               key={index} />

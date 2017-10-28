@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import classNames from 'classnames'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { getTerritory, getTerritoryData } from '../../selectors/getTerritory'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { getTerritory, getTerritoryData, getAllUnits, isEnemy } from '../../selectors/getTerritory'
 import { nonIndustry, airComplete } from '../../lib/unit'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
 
@@ -19,6 +19,18 @@ export const getFill = createSelector(
       return 'none'
     }
   }
+)
+
+const snakeCase = name => name.toLowerCase().replace(/\s/,'_')
+
+export const getTerritoryId = createSelector(
+  getTerritoryData,
+  ({ adjacentIndexes, name }) => adjacentIndexes ? null : snakeCase(name)
+)
+      
+export const getTerritoryDimensions = createSelector(
+  getTerritoryData,
+  ({ dimensions }) => dimensions
 )
 
 const isConvoy = (sea, territoryPower) => (
@@ -40,19 +52,51 @@ export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
 )
 
 //TODO: active class shouldn't apply to land-planes spaces until that phase
-export const getClasses = (state, territory) => {
-  const currentPowerName = getCurrentPower(state).name;
-  const phase = state.phase.current;
-  const { sea, units, unitsFrom } = territory;
-  const territoryPower = territory.currentPower || ''
-  const isOcean = sea && territoryPower === 'Oceans' 
-  const isControlled = !sea && territoryPower.length
-  return classNames({
-    convoy: isConvoy(sea, territoryPower),
-    [territoryPower.toLowerCase()]: isOcean || isControlled,
-    active: (hasAirComplete(units) && phase === LAND_PLANES) || (unitsFrom.length && phase !== RESOLVE_COMBAT),
-    'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT && territoryPower !== currentPowerName,
-    'active-order-units': isOrdering(phase, currentPowerName, territoryPower, units)
-  })
-}
+export const getClasses = createSelector(
+  getCurrentPowerName,
+  getTerritory,
+  getTerritoryData,
+  state => state.phase.current,
+  (currentPower, territory, { sea }, phase) => {
+    const { units } = territory
+    const territoryPower = territory.currentPower || ''
+    const isOcean = sea && territoryPower === 'Oceans' 
+    const isControlled = !sea && territoryPower.length
+    return classNames({
+      convoy: isConvoy(sea, territoryPower),
+      [territoryPower.toLowerCase()]: isOcean || isControlled,
+      //active: (hasAirComplete(units) && phase === LAND_PLANES) || (unitsFrom.length && phase !== RESOLVE_COMBAT),
+      //'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT && territoryPower !== currentPowerName,
+      'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
+    })
+
+  }
+)
+
+const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
+
+const isFriendly = (territory, currentPower, units) => (  
+  !isNeutral(territory) && !isEnemy(territory, currentPower, units)
+)
+
+const isChina = ({ name }, original_power) => (
+  original_power === 'China' || 
+  ['Hong Kong', 'Shantung', 'Shansi', 'Peking', 'Chahar', 'Northern Manchuria', 'Manchuria', 'Korea', 'Burma'].includes(name)
+)
+
+export const isAttackable = createSelector(
+  getCurrentPowerName,
+  getTerritoryData,
+  getTerritory,
+  getAllUnits,
+  (currentPower, { original_power, sea }, territory, units) => {
+    const unfriendly = !isFriendly(territory, currentPower, units) 
+                       || territory.newlyConquered
+    if (currentPower === 'China') {
+      return isChina(territory, original_power) && unfriendly
+    } else {
+      return sea || unfriendly
+    }
+  }
+)
 

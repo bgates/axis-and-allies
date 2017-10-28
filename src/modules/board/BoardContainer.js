@@ -6,17 +6,15 @@ import {
   overlayPhase,
   advanceButtonPhase,
 } from './selectors'
-import { getCurrentPower, isCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
+import { isCurrentPower } from '../../selectors/getCurrentPower'
 
 const mapStateToProps = (state) => {
   return {
-    board: mergeBoardAndTerritories(state),
+    territories: state.territories,
     phase: state.phase,
     router: state.router,
     hasOverlay: overlayPhase(state),
     advanceBtn: advanceButtonPhase(state),
-    currentPower: getCurrentPower(state),
     isCurrentPower: isCurrentPower(state)
   }
 }
