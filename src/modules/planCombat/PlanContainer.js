@@ -1,8 +1,8 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import PlanCombatContainer from './PlanCombatContainer';
-import LoadTransportContainer from '../loadTransport/LoadTransportContainer';
-import { VIEW_TRANSPORT_LOAD_OPTIONS } from '../../actions';
+import React from 'react'
+import { connect } from 'react-redux'
+import PlanCombatContainer from './PlanCombatContainer'
+import LoadTransportContainer from '../loadTransport/LoadTransportContainer'
+import { VIEW_TRANSPORT_LOAD_OPTIONS } from '../../actions'
 
 const mapStateToProps = (state) => ({
   phase: state.phase

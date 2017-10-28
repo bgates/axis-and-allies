@@ -216,4 +216,4 @@ const unitTypes = {
   },
 }
 
-export default unitTypes;
+export default unitTypes
