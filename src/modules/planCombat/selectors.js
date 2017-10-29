@@ -1,10 +1,10 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
-import { combatUnitsInRange } from './movement';
-import { sameSide } from '../../config/initialPowers';
-import { consolidateUnits, nonIndustry, duplicateUnit, unitCount, totalCount } from '../../lib/unit';
-import { allUnits, isLand } from '../../lib/territory';
+import { createSelector } from 'reselect'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/getTerritory'
+import { combatUnitsInRange } from './movement'
+import { sameSide } from '../../config/initialPowers'
+import { consolidateUnits, nonIndustry, duplicateUnit, unitCount, totalCount } from '../../lib/unit'
+import { allUnits, isLand } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory }
 
 export const unitsInRange = createSelector(
@@ -56,7 +56,7 @@ export const landingSlots = createSelector(
     if (isLand(territory)) {
       return 1000
     }
-    const requiredLandingSlots = territory.unitsFrom.filter(unit => unit.air && unit.distance === unit.movement)
+    const requiredLandingSlots = territory.units.filter(unit => unit.air && unit.distance === unit.movement)
       .reduce(totalCount, 0)
     if (!requiredLandingSlots) {
       return 1000

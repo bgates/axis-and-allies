@@ -1,14 +1,14 @@
-import { createSelector } from 'reselect';
-import territoryData from '../config/territories.json';
+import { createSelector } from 'reselect'
+import territoryData from '../config/territories.json'
 
 export const mergeBoardAndTerritories = createSelector(
   state => state.board,
   board => board.territories.map((territoryState, index) => {
-    let territoryProps = territoryData[index]
-    return {...territoryState, ...territoryProps, index}
+    const { name, original_power, sea, adjacentIndexes }= territoryData[index]
+    return {...territoryState, name, original_power, sea, adjacentIndexes, index}
   })
 );
-
+   
 export const getFocusTerritory = createSelector(
   state => state.phase,
   mergeBoardAndTerritories,
