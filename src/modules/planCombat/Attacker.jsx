@@ -17,7 +17,7 @@ const Attacker = ({
   landAttack, 
   landingSlots,
   hasIndustry }) => {
-  if (unit.name === 'transport') {
+  if (unit.type === 'transport') {
     return (
       <Transport 
         unit={unit} 
@@ -66,7 +66,7 @@ const Attacker = ({
 }
 
 const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
-  const qty = unitCount(unit);
+  const qty = 1//TODO:FIX!
   const allDisabled = qty === 0 || (unit.air && qty > landingSlots)
   const oneDisabled = qty === 0 || (unit.air && !landingSlots)
   return (
@@ -85,7 +85,7 @@ const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
 }
 
 const UncommitButtons = ({ unit, index, units, action }) => {
-  const commitQty = unitCount(units);
+  const commitQty = 1//TODO:FIX! unitCount(units);
   return (
     <div>
       <input readOnly size={2} value={commitQty} />

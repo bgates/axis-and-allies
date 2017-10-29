@@ -1,26 +1,21 @@
 import React from 'react';
 import { UnitFigTableData, TransportFigure } from '../../components/UnitFigure';
 
-const Transport = ({ unit, committed, ...props }) => {
-  return <tbody>
-    {unit.ids.map(id => (
-      <TransportRow
-        key={id}
-        unit={unit}
-        id={id}
-        available={!unit.cargo || !unit.cargo[id]}
-        {...props} />
-    ))}
-    {committed.ids.map(id => (
+const Transport = ({ unit, committed, id, ...props }) => (
+  <TransportRow
+    unit={unit}
+    id={id}
+    available={!unit.cargo || !unit.cargo[id]}
+    {...props} />
+)
+  /*    {committed.ids.map(id => (
       <TransportRow
         key={id}
         unit={unit}
         id={id}
         available={false}
         {...props} />
-    ))}
-  </tbody>
-}
+    ))}*/
 
 const AmphibiousAssault = ({ 
   unit, 

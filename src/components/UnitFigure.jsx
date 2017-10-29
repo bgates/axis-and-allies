@@ -10,18 +10,16 @@ const path = (power, name) => {
   return require(`../assets/images/units/${power}/${unitName}.png`)
 }
 
-export const UnitImg = ({ power, name, handleClick, className }) => {
-  return (
-    <img 
-      src={path(power, name)} 
-      alt={`${power} ${name}`} 
-      className={className}
-      onClick={handleClick} />
-  )
-}
+export const UnitImg = ({ power, name, handleClick, className }) => (
+  <img 
+    src={path(power, name)} 
+    alt={`${power} ${name}`} 
+    className={className}
+    onClick={handleClick} />
+)
 
 export const ImgAndQty = ({ unit }) => {
-  const { power, type, qty } = unit;
+  const { power, type, qty } = unit
   return (
     <span>
       <UnitImg power={power} name={type} />

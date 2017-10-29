@@ -74,7 +74,7 @@ const unitsAtRange = (territories, currentPower, medium, returnFlight) => (total
 
 const unitsInRange = (territories, currentPower, medium, returnFlight) => (
   Object.keys(territories)
-    .reduce(unitsAtRange(territories, currentPower, medium, returnFlight))
+    .reduce(unitsAtRange(territories, currentPower, medium, returnFlight), [])
 )
 
 const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower)
@@ -142,21 +142,25 @@ const unitSort = (a, b) => {
   }
 }
 
-export const combatUnitsInRange = (board, currentPower, territory) => {
+const unitsByMedium = (board, currentPower, territory) => {
   if (isLand(territory)) {
     return [
       ...landUnitsInRange(board, currentPower, territory),
       ...amphibUnitsInRange(board, currentPower, territory),
       ...airUnitsInRange(board, currentPower, territory)
-    ].sort(unitSort)
-
+    ]
   } else if (isFriendly(territory, currentPower)) {
-    return seaUnitsInRange(board, currentPower, territory).sort(unitSort)
+    return seaUnitsInRange(board, currentPower, territory)
   } else {
     return [
       ...seaUnitsInRange(board, currentPower, territory),
       ...airUnitsInRange(board, currentPower, territory)
-    ].sort(unitSort)
+    ]
   }
+}
+
+export const combatUnitsInRange = (board, currentPower, territory, committed) => {
+  const uncommitted = unit => !committed.includes(unit.id)
+  return unitsByMedium(board, currentPower, territory).filter(uncommitted).sort(unitSort)
 }
 

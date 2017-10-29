@@ -1,18 +1,21 @@
 import { createSelector } from 'reselect'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/getTerritory'
 import { combatUnitsInRange } from './movement'
-import { sameSide } from '../../config/initialPowers'
+import { sameSide, allyOf, enemyOf } from '../../config/initialPowers'
 import { consolidateUnits, nonIndustry, duplicateUnit, unitCount, totalCount } from '../../lib/unit'
 import { allUnits, isLand } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory }
+
+const committedUnits = (state) => []
 
 export const unitsInRange = createSelector(
   mergeBoardAndTerritories,
   getCurrentPower,
   getFocusTerritory,
+  committedUnits,
   combatUnitsInRange
-);
+)
 
 const amphibFor = ({ amphib }, board) => {
   return Object.keys(amphib).reduce((array, id) => {
@@ -23,18 +26,14 @@ const amphibFor = ({ amphib }, board) => {
 }
 
 const _combatants = (board, currentPower, territory) => {
-  const combatUnits = territory.units.filter(nonIndustry);
-  const _attackers = combatUnits.filter(unit => {
-    return sameSide(unit.power, currentPower.name);
-  }).map(duplicateUnit);
-  let defenders = combatUnits.filter(unit => {
-    return !sameSide(unit.power, currentPower.name);
-  }).map(duplicateUnit);
-  let attackers = _attackers.concat(territory.unitsFrom || []);
+  const combatUnits = territory.units.filter(nonIndustry)
+  const _attackers = combatUnits.filter(allyOf(currentPower))
+  let defenders = combatUnits.filter(enemyOf(currentPower))
+  let attackers = _attackers.concat(territory.unitsFrom || [])
   if (territory.amphib) {
     attackers = attackers.concat(amphibFor(territory, board))
   }
-  attackers = consolidateUnits(attackers);
+  attackers = consolidateUnits(attackers)
   if (territory.dogfight) {
     defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
     attackers = attackers.filter(u => u.air)
@@ -44,7 +43,7 @@ const _combatants = (board, currentPower, territory) => {
 
 export const combatants = createSelector(
   mergeBoardAndTerritories,
-  getCurrentPower,
+  getCurrentPowerName,
   getFocusTerritory,
   (board, currentPower, territory) => _combatants(board, currentPower, territory)
 )

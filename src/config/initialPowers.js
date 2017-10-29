@@ -39,5 +39,9 @@ export const powerData = {
 
 export const side = (power) => powerData[power].side;
 
+export const allyOf = power => unit => sameSide(power, unit.power)
+
+export const enemyOf = power => unit => !sameSide(power, unit.power)
+
 export const sameSide = (power1, power2) => powerData[power1].side === powerData[power2].side;
 
