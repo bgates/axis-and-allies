@@ -159,8 +159,25 @@ const unitsByMedium = (board, currentPower, territory) => {
   }
 }
 
+const match = unit1 => unit2 => (
+  ['type', 'power', 'originName']
+    .every(attr => unit1[attr] === unit2[attr])
+)
+
+const combineUnits = (total, unit) => {
+  let present = total.find(match(unit))
+  if (present && unit.type !== 'transport') {
+    return [ ...total.filter(u => u !== present), { ...present, ids: [...present.ids, unit.id] } ]
+  } else {
+    return [ ...total, { ...unit, ids: [unit.id] } ]
+  }
+}
+
 export const combatUnitsInRange = (board, currentPower, territory, committed) => {
   const uncommitted = unit => !committed.includes(unit.id)
-  return unitsByMedium(board, currentPower, territory).filter(uncommitted).sort(unitSort)
+  return unitsByMedium(board, currentPower, territory)      
+    .filter(uncommitted)
+    .reduce(combineUnits, [])
+    .sort(unitSort)
 }
 

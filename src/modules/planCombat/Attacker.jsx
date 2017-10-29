@@ -66,7 +66,7 @@ const Attacker = ({
 }
 
 const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
-  const qty = 1//TODO:FIX!
+  const qty = unit.ids.length
   const allDisabled = qty === 0 || (unit.air && qty > landingSlots)
   const oneDisabled = qty === 0 || (unit.air && !landingSlots)
   return (

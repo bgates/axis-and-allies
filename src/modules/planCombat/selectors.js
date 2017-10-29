@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/getTerritory'
 import { combatUnitsInRange } from './movement'
-import { sameSide, allyOf, enemyOf } from '../../config/initialPowers'
-import { consolidateUnits, nonIndustry, duplicateUnit, unitCount, totalCount } from '../../lib/unit'
+import { allyOf, enemyOf } from '../../config/initialPowers'
+import { consolidateUnits, nonIndustry, unitCount, totalCount } from '../../lib/unit'
 import { allUnits, isLand } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory }
 
