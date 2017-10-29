@@ -1,4 +1,4 @@
-import { id } from '../../../lib/unit'
+import { nextId } from '../../../lib/unit'
 import unitTypes from '../../../config/unitTypes'
 
 export const placeUnits = (state, action) => {
@@ -17,7 +17,7 @@ export const placeUnits = (state, action) => {
       Object.keys(purchases).forEach(unitName => {
         const unit = units.find(u => u.name === unitName && u.power === currentPower)
         const count = purchases[unitName]
-        let ids = new Array(count).fill('_').map(id)
+        let ids = new Array(count).fill('_').map(nextId)
         if (unit) {
           ids = unit.ids.concat(ids)
           units = units.map(u => u === unit ? { ...unit, ids } : u )

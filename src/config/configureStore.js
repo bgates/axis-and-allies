@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'
 import reducer from '../reducers'
 import firebaseConfig from './firebase'
 import { newParse } from '../lib/Parser'
-import { id } from '../lib/unit'
+import { nextId } from '../lib/unit'
 import Board from './startingBoard'
 import territoryData from './territories.json'
 
@@ -40,9 +40,9 @@ let initialTerritories = []
 newParse(Board).forEach((territoryUnits, index) => {
   initialTerritories[index] = { unitIds: [], currentPower: territoryData[index].original_power }
   territoryUnits.forEach(unit => {
-    const _id = id()
-    initialUnits[_id] = unit
-    initialTerritories[index].unitIds.push(_id)
+    const id = nextId()
+    initialUnits[id] = { ...unit, id }
+    initialTerritories[index].unitIds.push(id)
   })
 })
 

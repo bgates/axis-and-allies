@@ -1,7 +1,7 @@
 import unitTypes from '../config/unitTypes'
 
 let n = 0
-export const id = () => n += 1
+export const nextId = () => n += 1
 
 export const isNotSubmerged = (unit) => {
   return !unit.submerged
