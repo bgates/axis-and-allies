@@ -48,9 +48,16 @@ export const mergeBoardAndTerritories = createSelector(
   getAllUnits,
   getAllTerritories,
   (allUnits, territories) => territories.map(({ currentPower, unitIds }, index) => {
-    const { name, original_power, sea, adjacentIndexes }= territoryData[index]
+    const { name, original_power, sea, adjacentIndexes } = territoryData[index]
     const units = idsToUnits(unitIds, allUnits)
     return { currentPower, units, name, original_power, sea, adjacentIndexes, index}
   })
 )
    
+export const getTerritoriesWithIpcValues = createSelector(
+  getAllTerritories,
+  territories => territories.map(({ currentPower }, index) => {
+    const { ipc_value } = territoryData[index]
+    return { currentPower, ipc_value }
+  })
+)
