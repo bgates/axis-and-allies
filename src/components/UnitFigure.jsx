@@ -1,5 +1,6 @@
 import React from 'react';
 import { unitCount } from '../lib/unit'
+import unitTypes from '../config/unitTypes'
 
 const path = (power, name) => {
   let unitName = name.replace(/\s/g,'_')
@@ -29,14 +30,12 @@ export const ImgAndQty = ({ unit }) => {
   )
 }
 
-export const UnitFigure = ({ unit }) => {
-  return (
-    <figure>
-      <UnitImg name={unit.name} power={unit.power}/>
-      <figcaption>{unit.name} - attacks @ {unit.attack}{unit.air && `; ${unit.distance} spaces`}</figcaption>
-    </figure>
-  )
-}
+export const UnitFigure = ({ unit: { type, power, distance } }) => (
+  <figure>
+    <UnitImg name={type} power={power}/>
+    <figcaption>{type} - attacks @ {unitTypes[type].attack}{unitTypes[type].air && `; ${distance} spaces`}</figcaption>
+  </figure>
+)
 
 export const TransportFigure = ({ unit }) => {
   const { name, power, attack } = unit;
