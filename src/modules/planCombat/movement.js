@@ -44,26 +44,44 @@ export const territoriesInRange = (board, currentPower, territory, accessible, m
   return territories
 }
 
-const unitsInRange = (territories, currentPowerName, type, returnFlight) => {
-  return Object.keys(territories).reduce((units, range) => {
-    let unitsAtRange = territories[range].reduce((units, territory) => {
-      let territoryUnits = territory.units.filter(unit => {
-        const movement = unitTypes[unit.type].movement
-        let effectiveRange = type === 'air' ? movement - returnFlight : movement;
-        return unit[type] && unit.power === currentPowerName && 
-          effectiveRange >= range
-      });
-      return [...units, ...territoryUnits.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index, distance: parseInt(range, 10) }))]
-    }, [])
-    return [...units, ...unitsAtRange]
-  }, [])
+const availableUnit = (range, currentPower, medium, returnFlight) => unit => {
+  const { movement } = unitTypes[unit.type]
+  const effectiveRange = medium === 'air' ? movement - returnFlight : movement
+  return unitTypes[unit.type][medium] && 
+    unit.power === currentPower && 
+    effectiveRange >= range
 }
+
+const unitWithOrigin = ({ name, index }, range) => unit => (
+  { 
+    ...unit, 
+    originName: name, 
+    originIndex: index, 
+    distance: parseInt(range, 10) 
+  } 
+)
+
+const unitsWithOrigin = (range, currentPower, medium, returnFlight) => (units, territory) => {
+  const territoryUnits = territory.units.filter(availableUnit(range, currentPower, medium, returnFlight))
+  return [...units, ...territoryUnits.map(unitWithOrigin(territory, range))]
+}
+
+const unitsAtRange = (territories, currentPower, medium, returnFlight) => (total, range) => {
+  const units = territories[range]
+    .reduce(unitsWithOrigin(range, currentPower, medium, returnFlight), [])
+  return [...total, ...units]
+}
+
+const unitsInRange = (territories, currentPower, medium, returnFlight) => (
+  Object.keys(territories)
+    .reduce(unitsAtRange(territories, currentPower, medium, returnFlight))
+)
 
 const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower)
 
 const hasLandingSlots = ({ units }, currentPower) => (
   units.reduce((total, unit) => (
-    total + (unit.power === currentPower.name && unit.landingSlots) ? 1 : 0
+    total + (unit.power === currentPower.name && unitTypes[unit.type].landingSlots) ? 1 : 0
   ), 0)
 )
 
@@ -71,14 +89,14 @@ export const canLandInTerritory = (territory, currentPower) => (
   friendlyLand(territory, currentPower) || hasLandingSlots(territory, currentPower)
 )
 
+const landable = currentPower => territory => canLandInTerritory(territory, currentPower)
+
 const airUnitsInRange = (board, currentPower, territory) => {
   if (territory.units.length) { //TODO: this condition is too narrow-can't noncom to carrier or empty
-    let territories = territoriesInRange(board, currentPower, territory, nonNeutral, 6);
-    let returnFlight = Object.keys(territories).reduce((min, range) => {
-      return territories[range].some(ter => {
-        return canLandInTerritory(ter, currentPower)}) ? 
-        Math.min(min, range) : min;
-    }, 8);
+    const territories = territoriesInRange(board, currentPower, territory, nonNeutral, 6)
+    const returnFlight = Object.keys(territories).reduce((min, range) => (
+      territories[range].some(landable(currentPower)) ? Math.min(min, range) : min
+    ), 8)
     return unitsInRange(territories, currentPower.name, 'air', returnFlight)
   } else {
     return []
@@ -86,7 +104,7 @@ const airUnitsInRange = (board, currentPower, territory) => {
 }
 
 const landUnitsInRange = (board, currentPower, territory) => {
-  let territories = territoriesInRange(board, currentPower, territory, passableByLandUnit, 2);
+  let territories = territoriesInRange(board, currentPower, territory, passableByLandUnit, 2)
   return unitsInRange(territories, currentPower.name, 'land');
 }
 
@@ -95,21 +113,21 @@ const transportOrMovedTo = (territory) => (
 )
 
 const amphibUnitsInRange = (board, currentPower, territory) => {
-  const territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea);
+  const territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea)
   const activeTransports = territories.reduce((transports, territory) => {
     const potentialUnits = allUnits(territory)
     const territoryTransports = potentialUnits.filter(unit => {
       return unit.cargo && unit.power === currentPower.name
     })
     return [...transports, ...territoryTransports.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index }))]
-  }, []);
-  return activeTransports;
+  }, [])
+  return activeTransports
 }
 
 const seaUnitsInRange = (board, currentPower, territory) => {
-  let territories = territoriesInRange(board, currentPower, territory, passableBySeaUnit, 2);
-  let units = unitsInRange(territories, currentPower.name, 'ship');
-  return units.filter(transportOrMovedTo(territory));
+  let territories = territoriesInRange(board, currentPower, territory, passableBySeaUnit, 2)
+  let units = unitsInRange(territories, currentPower.name, 'ship')
+  return units.filter(transportOrMovedTo(territory))
 }
 
 const unitSort = (a, b) => {
