@@ -21,14 +21,14 @@ const StartTooltip = ({ playing, currentPower }) => {
   if (playing) {
     return (
       <div>
-        <p>This is the start of your turn. You are playing <strong>{currentPower.name}</strong> for the <strong>{powerData[currentPower.name].side}</strong>.</p>
+        <p>This is the start of your turn. You are playing <strong>{currentPower}</strong> for the <strong>{powerData[currentPower].side}</strong>.</p>
         <p>Click anywhere on the map to start.</p>
       </div>
     )
   } else {
     return (
       <div>
-        <p>It is <strong>{currentPower.name}</strong>'s turn.</p>
+        <p>It is <strong>{currentPower}</strong>'s turn.</p>
         <p>You may send messages to other players while you wait for your next turn.</p>
       </div>
     )

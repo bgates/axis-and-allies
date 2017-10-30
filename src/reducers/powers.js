@@ -3,8 +3,8 @@ import {
   DEVELOP_TECH,
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
-  VIEW_STRATEGIC_BOMBING_RESULTS
-} from '../../../actions'
+  VIEW_STRATEGIC_BOMBING_RESULTS 
+} from '../actions'
 
 const updateCurrentPower = (powers, cPI, updateCallback, callbackArg) => (
   powers.map((power, i) => i === cPI ? updateCallback(power, callbackArg) : power)
@@ -19,10 +19,10 @@ const gainIPCs = (power, amount) => (
 )
 
 const powers = (state, action) => {
-  const { currentPowerIndex } = state
+  const { currentPowerIndex } = action //state
   switch (action.type) {
     case '@@router/LOCATION_CHANGE': 
-      const { pathname } = action.payload.location;
+      const { pathname } = action.payload.location
       if (pathname === '/confirm-finish') {
         return updateCurrentPower(state.powers, currentPowerIndex, gainIPCs, state.currentPowerIncome)
       } else {
@@ -55,4 +55,5 @@ const powers = (state, action) => {
 }
 
 export default powers
+
 
