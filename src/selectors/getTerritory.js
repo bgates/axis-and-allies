@@ -33,6 +33,7 @@ const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (
   { 
     ...omit('dimensions', getTerritoryData(state, territoryIndex)), 
     ...getTerritory(state, territoryIndex),
+    index: territoryIndex,
     units
   }
 )
