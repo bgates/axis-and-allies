@@ -26,18 +26,18 @@ const mapStateToProps = (state) => {
 const attemptResearch = () => {
   return (dispatch, getState) => {
     const state = getState()
-    const { research } = state 
-    const currentPower = getCurrentPower(state)
+    const { research, currentPowerIndex } = state 
     const rolls = dice(research.attempts)
     dispatch(roll(PATHS.RESEARCH_RESULTS, rolls))
     dispatch({
       type: ATTEMPT_RESEARCH,
-      cost: research.attempts * researchOptions.cost
+      cost: research.attempts * researchOptions.cost,
+      currentPowerIndex
     })
     if (rolls.includes(6)) {
       dispatch({
         type: DEVELOP_TECH,
-        currentPower,
+        currentPowerIndex,
         tech: research.selectedTech
       })
     }
