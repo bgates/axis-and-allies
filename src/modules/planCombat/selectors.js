@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/getTerritory'
+import { 
+  getAllUnits,
+  getFocusTerritory, 
+  mergeBoardAndTerritories 
+} from '../../selectors/getTerritory'
 import { combineUnits } from '../../selectors/units'
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
@@ -26,17 +30,19 @@ const amphibFor = ({ amphib }, board) => {
   }, [])
 }
 
-const _combatants = (board, currentPower, territory) => {
+const _combatants = (currentPower, territory, units, unitIds) => {
   const combatUnits = territory.units.filter(nonIndustry)
-  const _attackers = combatUnits.filter(allyOf(currentPower))
+  let attackers = combatUnits
+    .filter(allyOf(currentPower))
+    .concat(unitIds.map(id => units[id]))
+    .reduce(combineUnits, [])
   let defenders = combatUnits
     .filter(enemyOf(currentPower))
     .reduce(combineUnits, [])
-  let attackers = _attackers.concat(territory.unitsFrom || [])
-  if (territory.amphib) {
+    /*if (territory.amphib) {
     attackers = attackers.concat(amphibFor(territory, board))
-  }
-  attackers = consolidateUnits(attackers)
+  }*/
+  //attackers = consolidateUnits(attackers)
   if (territory.dogfight) {
     defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
     attackers = attackers.filter(u => u.air)
@@ -53,10 +59,11 @@ export const committed = createSelector(
 )
 
 export const combatants = createSelector(
-  mergeBoardAndTerritories,
   getCurrentPowerName,
   getFocusTerritory,
-  (board, currentPower, territory) => _combatants(board, currentPower, territory)
+  getAllUnits,
+  committed,
+  (currentPower, territory, units, unitIds) => _combatants(currentPower, territory, units, unitIds)
 )
 
 export const landingSlots = createSelector(

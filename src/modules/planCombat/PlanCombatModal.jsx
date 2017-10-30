@@ -8,9 +8,8 @@ import { STRATEGIC_BOMB } from '../../actions'
 
 const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants, committed, landingSlots }) => {
   const attacker = (unit, key) => {
-    const committedUnits = committed.filter(id => unit.ids.includes(id)) //committed = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
+    const committedUnits = committed.filter(id => unit.ids.includes(id)) 
     let strategicBombing = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === STRATEGIC_BOMB) || { ids: [] };
-    console.log(committedUnits)
     return (
       <Attacker 
         key={key}
