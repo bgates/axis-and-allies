@@ -1,6 +1,9 @@
 import { combineReducers } from 'redux'
 import { board, updateBoard } from '../modules/board'
+import currentPowerIndex from './currentPower'
+import movements from './movement'
 import phase from './phase'
+import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import { landPlanes } from '../modules/landPlanes'
@@ -33,10 +36,13 @@ import { initialState } from '../config/configureStore'
 const combinedReducer = combineReducers({
   firebase,
   board,
+  currentPowerIndex,
   boardString,
   landPlanes,
+  movements,
   phase,
   placement,
+  powers,
   purchases,
   research,
   rolls,
