@@ -4,23 +4,19 @@ import {
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
   VIEW_STRATEGIC_BOMBING_RESULTS
-} from '../../../actions';
+} from '../../../actions'
 
-const updateObject = (object, newValues) => {
-  return Object.assign({}, object, newValues)
-}
+const updateCurrentPower = (powers, cPI, updateCallback, callbackArg) => (
+  powers.map((power, i) => i === cPI ? updateCallback(power, callbackArg) : power)
+)
 
-const updateCurrentPower = (powers, cPI, updateCallback, callbackArg) => {
-  return powers.map((power, i) => i === cPI ? updateCallback(power, callbackArg) : power)
-}
+const spendIPCs = (power, amount) => (
+  { ...power, ipc: power.ipc - amount }
+)
 
-const spendIPCs = (power, amount) => {
-  return updateObject(power, { ipc: power.ipc - amount })
-}
-
-const gainIPCs = (power, amount) => {
-  return updateObject(power, { ipc: power.ipc +  amount })
-}
+const gainIPCs = (power, amount) => (
+  { ...power, ipc: power.ipc +  amount }
+)
 
 const powers = (state, action) => {
   const { currentPowerIndex } = state
@@ -44,7 +40,7 @@ const powers = (state, action) => {
     }
     case DEVELOP_TECH:
       const assignTech = (power) => {
-        return updateObject(power, { tech: power.tech.concat(action.tech) })
+        return { ...power, tech: power.tech.concat(action.tech) }
       }
       return updateCurrentPower(state.powers, currentPowerIndex, assignTech)
     case ATTEMPT_RESEARCH:
