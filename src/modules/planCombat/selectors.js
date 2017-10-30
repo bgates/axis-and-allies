@@ -8,7 +8,7 @@ import {
 import { combineUnits } from '../../selectors/units'
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
-import { consolidateUnits, nonIndustry, unitCount, totalCount } from '../../lib/unit'
+import { nonIndustry, unitCount, totalCount } from '../../lib/unit'
 import { allUnits, isLand } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory }
 

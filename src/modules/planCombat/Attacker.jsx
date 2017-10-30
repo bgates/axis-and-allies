@@ -76,18 +76,19 @@ const CommitButtons = ({
   landingSlots 
 }) => {
   const { ids, originIndex, type } = unit
-  const qty = ids.filter(id => !committed.includes(id)).length
+  const available = ids.filter(id => !committed.includes(id))
+  const qty = available.length
   const allDisabled = qty === 0 || (air && qty > landingSlots)
   const oneDisabled = qty === 0 || (air && !landingSlots)
   return (
     <div>
       <input readOnly size={2} value={qty} />
       <button 
-        onClick={e => { action(originIndex, destinationIndex, ids)}}
+        onClick={e => { action(originIndex, destinationIndex, available)}}
         disabled={allDisabled}
       >&gt;&gt;</button>
       <button 
-        onClick={e => { action(originIndex, destinationIndex, [ids[0]])}}
+        onClick={e => { action(originIndex, destinationIndex, [available[0]])}}
         disabled={oneDisabled}
       >&gt;</button>
     </div>
