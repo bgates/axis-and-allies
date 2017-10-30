@@ -1,16 +1,16 @@
-import React from 'react';
-import { ImgAndQty } from '../../components/UnitFigure';
+import React from 'react'
+import { ImgAndQty } from '../../components/UnitFigure'
 
 const Occupiers = ({ combatants, sea, showStrength }) => {
-  const { attackers, defenders } = combatants;
+  const { attackers, defenders } = combatants
   if (defenders.length === 0 && attackers.length === 0) {
     return <p>There are no units {sea ? 'occupying this sea zone' : 'defending this territory' }.</p>
   } else {
-    let allUnits = defenders.concat(attackers);
+    let allUnits = defenders.concat(attackers)
     return (
       <ul>
       {allUnits.map((unit, index) => {
-        let isDefender = defenders.includes(unit);
+        let isDefender = defenders.includes(unit)
         return <Occupier 
           key={index} 
           unit={unit} 
@@ -23,7 +23,7 @@ const Occupiers = ({ combatants, sea, showStrength }) => {
 }
 
 const Occupier = ({ unit, isDefender, showStrength }) => {
-  let value = isDefender ? `defends @${unit.defend}` : `attacks @${unit.attack}`;
+  let value = isDefender ? `defends @${unit.defend}` : `attacks @${unit.attack}`
   if (unit.cargo) {
     return (
       <div>
@@ -46,4 +46,4 @@ const Occupier = ({ unit, isDefender, showStrength }) => {
   )
 }
 
-export default Occupiers;
+export default Occupiers
