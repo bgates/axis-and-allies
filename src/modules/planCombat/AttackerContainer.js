@@ -7,37 +7,42 @@ import {
   COMMIT_AMPHIB_UNITS,
   UNCOMMIT_AMPHIB_UNITS,
   VIEW_TRANSPORT_LOAD_OPTIONS 
-} from '../../actions';
+} from '../../actions'
 
 const mapStateToProps = (state, ownProps) => ({
   ...ownProps
 })
 
-const commitUnits = (movingUnit, destinationIndex, mission, ids) => {
+const commitUnits = (originIndex, destinationIndex, unitIds) => {
   return {
     type: COMMIT_UNITS,
-    movingUnit,
+    originIndex,
     destinationIndex,
-    mission,
-    ids
+    unitIds
   }
 }
 
-const commitAmphibUnits = (transport, destinationIndex, id) => {
+const commitAmphibUnits = (transportOriginIndex, cargoOriginIndex, destinationIndex, transportId, ids) => {
   return {
     type: COMMIT_AMPHIB_UNITS,
-    transport,
+    transportOriginIndex,
+    cargoOriginIndex,
     destinationIndex,
-    id
+    transportId,
+    ids
   }
 }
 
-const unCommitUnits = (unit, destinationIndex, ids) => {
-  return {
-    type: UNCOMMIT_UNITS,
-    unit,
-    destinationIndex,
-    ids
+const unCommitUnits = (destinationIndex, unitIds) => {
+  return (dispatch, getState) => {
+    const { movements: { outbound } } = getState()
+    const originIndex = outbound[unitIds[0]]
+    dispatch({ 
+      type: UNCOMMIT_UNITS, 
+      originIndex, 
+      destinationIndex, 
+      unitIds 
+    })
   }
 }
 

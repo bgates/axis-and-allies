@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { getFocusTerritory, mergeBoardAndTerritories } from '../../selectors/getTerritory'
+import { combineUnits } from '../../selectors/units'
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { consolidateUnits, nonIndustry, unitCount, totalCount } from '../../lib/unit'
@@ -28,7 +29,9 @@ const amphibFor = ({ amphib }, board) => {
 const _combatants = (board, currentPower, territory) => {
   const combatUnits = territory.units.filter(nonIndustry)
   const _attackers = combatUnits.filter(allyOf(currentPower))
-  let defenders = combatUnits.filter(enemyOf(currentPower))
+  let defenders = combatUnits
+    .filter(enemyOf(currentPower))
+    .reduce(combineUnits, [])
   let attackers = _attackers.concat(territory.unitsFrom || [])
   if (territory.amphib) {
     attackers = attackers.concat(amphibFor(territory, board))
@@ -40,6 +43,14 @@ const _combatants = (board, currentPower, territory) => {
   }
   return { attackers, defenders }
 }
+
+const getMovedUnitIds = state => state.movements.destination
+
+export const committed = createSelector(
+  getFocusTerritory,
+  getMovedUnitIds,
+  ({ index }, movedUnitIds) => movedUnitIds[index] || []
+)
 
 export const combatants = createSelector(
   mergeBoardAndTerritories,

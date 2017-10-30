@@ -6,6 +6,7 @@ import {
   getFocusTerritory, 
   unitsInRange, 
   combatants,
+  committed,
   landingSlots
 } from './selectors'
 import { PLAN_ATTACKS } from '../../actions'
@@ -15,6 +16,7 @@ const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
   unitsInRange: unitsInRange(state),
   combatants: combatants(state),
+  committed: committed(state),
   landingSlots: landingSlots(state)
 })
 

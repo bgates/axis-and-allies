@@ -57,8 +57,8 @@ const crossSliceReducer = (state, action) => {
     case RESOLVE_COMBAT:
     case RETREAT:
     case REMOVE_CASUALTIES:
-    case COMMIT_UNITS:
-    case UNCOMMIT_UNITS:
+      //case COMMIT_UNITS:
+      //case UNCOMMIT_UNITS:
     case COMMIT_AMPHIB_UNITS:
     case UNCOMMIT_AMPHIB_UNITS:
     case LOAD_TRANSPORT:

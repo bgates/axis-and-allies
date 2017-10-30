@@ -6,11 +6,11 @@ import Attacker from './AttackerContainer'
 import Occupiers from './Occupiers'
 import { STRATEGIC_BOMB } from '../../actions'
 
-const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants, landingSlots }) => {
-  console.log(unitsInRange)
+const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants, committed, landingSlots }) => {
   const attacker = (unit, key) => {
-    let committed = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
+    const committedUnits = committed.filter(id => unit.ids.includes(id)) //committed = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
     let strategicBombing = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === STRATEGIC_BOMB) || { ids: [] };
+    console.log(committedUnits)
     return (
       <Attacker 
         key={key}
@@ -19,7 +19,7 @@ const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants,
         destinationIndex={territory.index}
         landAttack={!territory.sea}
         landingSlots={landingSlots}
-        committed={committed} 
+        committed={committedUnits} 
         strategicBombing={strategicBombing} />
     )
   }

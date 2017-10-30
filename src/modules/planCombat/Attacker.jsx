@@ -1,8 +1,8 @@
-import React from 'react';
-import Transport from './Transport';
-import { UnitFigTableData } from '../../components/UnitFigure';
-import { STRATEGIC_BOMB } from '../../actions';
-import { unitCount } from '../../lib/unit';
+import React from 'react'
+import Transport from './Transport'
+import { UnitFigTableData } from '../../components/UnitFigure'
+import { STRATEGIC_BOMB } from '../../actions'
+import unitTypes from '../../config/unitTypes'
 
 const Attacker = ({ 
   unit, 
@@ -32,16 +32,19 @@ const Attacker = ({
       />
     )
   }
+  const air = unitTypes[unit.type].air
   return (
     <tr>
       <UnitFigTableData unit={unit} />
       <td className="available">
         <CommitButtons
           unit={unit} 
-          index={destinationIndex}
+          committed={committed}
+          destinationIndex={destinationIndex}
+          air={air}
           landingSlots={landingSlots}
           action={commitUnits} />
-        {unit.air && hasIndustry && <AirOptions 
+        {air && hasIndustry && <AirOptions 
           unit={unit} 
           hasIndustry={hasIndustry} 
           index={destinationIndex} 
@@ -50,11 +53,10 @@ const Attacker = ({
       </td>
       <td className="available">
         <UncommitButtons
-          unit={unit} 
-          index={destinationIndex}
-          units={committed}
+          destinationIndex={destinationIndex}
+          committed={committed}
           action={unCommitUnits} />
-        {unit.air && hasIndustry && <UncommitButtons
+        {air && hasIndustry && <UncommitButtons
           unit={unit} 
           index={destinationIndex} 
           units={strategicBombing}
@@ -65,36 +67,49 @@ const Attacker = ({
   )
 }
 
-const CommitButtons = ({ unit, index, action, landingSlots, mission }) => {
-  const qty = unit.ids.length
-  const allDisabled = qty === 0 || (unit.air && qty > landingSlots)
-  const oneDisabled = qty === 0 || (unit.air && !landingSlots)
+const CommitButtons = ({ 
+  unit, 
+  committed,
+  destinationIndex, 
+  action, 
+  air, 
+  landingSlots 
+}) => {
+  const { ids, originIndex, type } = unit
+  const qty = ids.filter(id => !committed.includes(id)).length
+  const allDisabled = qty === 0 || (air && qty > landingSlots)
+  const oneDisabled = qty === 0 || (air && !landingSlots)
   return (
     <div>
       <input readOnly size={2} value={qty} />
       <button 
-        onClick={e => { action(unit, index, mission, unit.ids)}}
+        onClick={e => { action(originIndex, destinationIndex, ids)}}
         disabled={allDisabled}
       >&gt;&gt;</button>
       <button 
-        onClick={e => { action(unit, index, mission, [unit.ids[0]])}}
+        onClick={e => { action(originIndex, destinationIndex, [ids[0]])}}
         disabled={oneDisabled}
       >&gt;</button>
     </div>
   )
 }
 
-const UncommitButtons = ({ unit, index, units, action }) => {
-  const commitQty = 1//TODO:FIX! unitCount(units);
+const UncommitButtons = ({ 
+  unit, 
+  committed,
+  destinationIndex, 
+  action 
+}) => {
+  const commitQty = committed.length
   return (
     <div>
       <input readOnly size={2} value={commitQty} />
       <button 
-        onClick={e => action(unit, index, units.ids)}
+        onClick={e => action(destinationIndex, committed)}
         disabled={commitQty === 0}
       >&lt;&lt;</button>
       <button 
-        onClick={e => action(unit, index, [units.ids[0]])}
+        onClick={e => action(destinationIndex, [committed[0]])}
         disabled={commitQty === 0}
       >&lt;</button>
     </div>

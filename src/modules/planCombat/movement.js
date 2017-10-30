@@ -1,14 +1,18 @@
 import { 
   isFriendly, 
-  nonNeutral,
   allUnits
 } from '../../lib/territory'
+import {
+  combineUnits
+} from '../../selectors/units'
 import {
   isLand, 
   isSea
 } from '../../selectors/getTerritory'
 import unitTypes from '../../config/unitTypes'
 
+const nonNeutral = ({ currentPower }) => currentPower !== "Neutrals"
+   
 const passableByLandUnit = (territory, currentPower) => {
   return isLand(territory) && isFriendly(territory, currentPower)
 }
@@ -156,20 +160,6 @@ const unitsByMedium = (board, currentPower, territory) => {
       ...seaUnitsInRange(board, currentPower, territory),
       ...airUnitsInRange(board, currentPower, territory)
     ]
-  }
-}
-
-const match = unit1 => unit2 => (
-  ['type', 'power', 'originName']
-    .every(attr => unit1[attr] === unit2[attr])
-)
-
-const combineUnits = (total, unit) => {
-  let present = total.find(match(unit))
-  if (present && unit.type !== 'transport') {
-    return [ ...total.filter(u => u !== present), { ...present, ids: [...present.ids, unit.id] } ]
-  } else {
-    return [ ...total, { ...unit, ids: [unit.id] } ]
   }
 }
 
