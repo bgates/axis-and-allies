@@ -1,7 +1,9 @@
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import IncomeModal from './IncomeModal'
-import { getCurrentPower } from '../../selectors/getCurrentPower';
+import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { nationalObjectives, currentPowerNPL, nextNPL } from './selectors'
+import { SET_INCOME } from '../../actions'
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
@@ -10,7 +12,20 @@ const mapStateToProps = (state) => ({
   nextNpl: nextNPL(state)
 })
 
-const IncomeContainer = connect(mapStateToProps)(IncomeModal)
+const setIncome = () => {
+  return (dispatch, getState) => {
+    const state = getState()
+    dispatch({ type: SET_INCOME, amount: currentPowerNPL(state) })
+  }
+}
+
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators({ 
+    setIncome
+  }, dispatch)
+)
+
+const IncomeContainer = connect(mapStateToProps, mapDispatchToProps)(IncomeModal)
 
 export default IncomeContainer
 

@@ -1,20 +1,19 @@
-import { currentPowerNPL } from '../../income'
+import { currentPowerNPL } from './selectors'
 
-const incomeHelper = (state, action) => {
+const income = (state = 0, action) => {
   switch (action.type) {
     case '@@router/LOCATION_CHANGE': 
       const { pathname } = action.payload.location
-      if (pathname === '/income' && !state.currentPowerIncome) {
+      if (pathname === '/income' && !state) {
         return currentPowerNPL(state)
       } else if (pathname === '/confirm-finish') {
         return 0
       } else {
-        return state.currentPowerIncome
+        return state
       }
     default: 
-      return state.currentPowerIncome
+      return state
   }
 }
 
-export default incomeHelper
-
+export default income

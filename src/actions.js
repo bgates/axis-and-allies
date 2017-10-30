@@ -9,6 +9,8 @@ export const DEVELOP_TECH = 'DEVELOP_TECH';
 export const INCREMENT_PURCHASE = 'INCREMENT_PURCHASE';
 export const DECREMENT_PURCHASE = 'DECREMENT_PURCHASE';
 
+export const SET_INCOME = 'SET_INCOME';
+
 export const PLAN_ATTACKS = '/plan-attacks';
 export const VIEW_ATTACK_OPTIONS = 'VIEW_ATTACK_OPTIONS';
 export const COMMIT_UNITS = 'COMMIT_UNITS';
