@@ -3,6 +3,8 @@ import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrent
 import { 
   getAllUnits,
   getFocusTerritory, 
+  getCommittedIds,
+  getCommittedUnits,
   mergeBoardAndTerritories 
 } from '../../selectors/getTerritory'
 import { combineUnits } from '../../selectors/units'
@@ -10,15 +12,15 @@ import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { nonIndustry, unitCount, totalCount } from '../../lib/unit'
 import { allUnits, isLand } from '../../lib/territory'
-export { getCurrentPower, getFocusTerritory }
+export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
-const committedUnits = (state) => []
+const _committedUnits = (state) => []
 
 export const unitsInRange = createSelector(
   mergeBoardAndTerritories,
   getCurrentPower,
   getFocusTerritory,
-  committedUnits,
+  _committedUnits,
   combatUnitsInRange
 )
 
@@ -30,11 +32,11 @@ const amphibFor = ({ amphib }, board) => {
   }, [])
 }
 
-const _combatants = (currentPower, territory, units, unitIds) => {
+const _combatants = (currentPower, territory, committedUnits) => {
   const combatUnits = territory.units.filter(nonIndustry)
   let attackers = combatUnits
     .filter(allyOf(currentPower))
-    .concat(unitIds.map(id => units[id]))
+    .concat(committedUnits)
     .reduce(combineUnits, [])
   let defenders = combatUnits
     .filter(enemyOf(currentPower))
@@ -50,20 +52,11 @@ const _combatants = (currentPower, territory, units, unitIds) => {
   return { attackers, defenders }
 }
 
-const getMovedUnitIds = state => state.movements.destination
-
-export const committed = createSelector(
-  getFocusTerritory,
-  getMovedUnitIds,
-  ({ index }, movedUnitIds) => movedUnitIds[index] || []
-)
-
 export const combatants = createSelector(
   getCurrentPowerName,
   getFocusTerritory,
-  getAllUnits,
-  committed,
-  (currentPower, territory, units, unitIds) => _combatants(currentPower, territory, units, unitIds)
+  getCommittedUnits,
+  (currentPower, territory, units) => _combatants(currentPower, territory, units)
 )
 
 export const landingSlots = createSelector(

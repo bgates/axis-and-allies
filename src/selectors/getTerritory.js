@@ -14,6 +14,14 @@ export const getTerritoryData = (_, territoryIndex) => territoryData[territoryIn
 
 export const getTerritory = (state, territoryIndex) => state.territories[territoryIndex]
 
+export const getOutboundUnits = (state, territoryIndex) => (
+  state.movements.origin[territoryIndex] || []
+)
+
+export const getInboundUnits = (state, territoryIndex) => (
+  state.movements.destination[territoryIndex] || []
+)
+
 const idsToUnits = (ids, units) => ids.map(id => units[id])
 
 export const getTerritoryUnits = createSelector(
@@ -21,6 +29,8 @@ export const getTerritoryUnits = createSelector(
   getAllUnits,
   ({ unitIds }, units) => idsToUnits(unitIds, units)
 )
+
+const getMovedUnitIds = state => state.movements.destination
 
 export const isEnemy = ({ currentPower, unitIds }, activePower, units) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
@@ -43,6 +53,18 @@ export const getFocusTerritory = createSelector(
   state => state,
   state => state.phase,
   (units, state, { territoryIndex }) => getStaticAndDynamicTerritory(state, territoryIndex, units)
+)
+
+export const getCommittedIds = createSelector(
+  getFocusTerritory,
+  getMovedUnitIds,
+  ({ index }, movedUnitIds) => movedUnitIds[index] || []
+)
+
+export const getCommittedUnits = createSelector(
+  getCommittedIds,
+  getAllUnits,
+  idsToUnits
 )
 
 export const mergeBoardAndTerritories = createSelector(
