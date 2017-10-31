@@ -35,8 +35,8 @@ const commitAmphibUnits = (transportOriginIndex, cargoOriginIndex, destinationIn
 
 const unCommitUnits = (destinationIndex, unitIds) => {
   return (dispatch, getState) => {
-    const { movements: { outbound } } = getState()
-    const originIndex = outbound[unitIds[0]]
+    const { outboundUnits } = getState()
+    const originIndex = outboundUnits[unitIds[0]]
     dispatch({ 
       type: UNCOMMIT_UNITS, 
       originIndex, 

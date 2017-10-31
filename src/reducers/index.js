@@ -1,15 +1,18 @@
 import { combineReducers } from 'redux'
 import { board, updateBoard } from '../modules/board'
 import currentPowerIndex from './currentPower'
-import movements from './movement'
+import inboundUnits from './inboundUnits'
+import { landPlanes } from '../modules/landPlanes'
+import outboundUnits from './outboundUnits'
 import phase from './phase'
+import { placement } from '../modules/placement'
 import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
-import { landPlanes } from '../modules/landPlanes'
-import { placement } from '../modules/placement'
 import territories from './territories'
 import units from './units'
+import unitDestination from './unitDestination'
+import unitOrigin from './unitOrigin'
 import rolls from './rolls'
 import { boardString, updateBoardString } from './updateBoardString'
 import { 
@@ -34,12 +37,13 @@ import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-fireb
 import { initialState } from '../config/configureStore'
 
 const combinedReducer = combineReducers({
-  firebase,
-  board,
   currentPowerIndex,
+  board,
   boardString,
+  firebase,
+  inboundUnits,
   landPlanes,
-  movements,
+  outboundUnits,
   phase,
   placement,
   powers,
@@ -47,7 +51,9 @@ const combinedReducer = combineReducers({
   research,
   rolls,
   territories,
-  units
+  units,
+  unitOrigin,
+  unitDestination
 })
 
 const crossSliceReducer = (state, action) => {

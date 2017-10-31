@@ -15,11 +15,11 @@ export const getTerritoryData = (_, territoryIndex) => territoryData[territoryIn
 export const getTerritory = (state, territoryIndex) => state.territories[territoryIndex]
 
 export const getOutboundUnits = (state, territoryIndex) => (
-  state.movements.origin[territoryIndex] || []
+  state.unitOrigin[territoryIndex] || []
 )
 
 export const getInboundUnits = (state, territoryIndex) => (
-  state.movements.destination[territoryIndex] || []
+  state.unitDestination[territoryIndex] || []
 )
 
 const idsToUnits = (ids, units) => ids.map(id => units[id])
@@ -30,7 +30,7 @@ export const getTerritoryUnits = createSelector(
   ({ unitIds }, units) => idsToUnits(unitIds, units)
 )
 
-const getMovedUnitIds = state => state.movements.destination
+const getMovedUnitIds = state => state.unitDestination
 
 export const isEnemy = ({ currentPower, unitIds }, activePower, units) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
