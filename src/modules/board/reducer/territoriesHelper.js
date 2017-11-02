@@ -56,8 +56,8 @@ const boardHelper = (state, action) => {
     case CONTINUE_COMBAT: return continueCombat(state, action);
     case RESOLVE_COMBAT: return modifyUnits(state, action);
     case RETREAT: return retreat(state, action);
-    case COMMIT_UNITS: return commitUnits(state, action);
-    case UNCOMMIT_UNITS: return uncommitUnits(state, action);
+      //case COMMIT_UNITS: return commitUnits(state, action);
+      //case UNCOMMIT_UNITS: return uncommitUnits(state, action);
     case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);
     case UNCOMMIT_AMPHIB_UNITS: return uncommitAmphibUnits(state, action);
     case COMMIT_BOMBARDMENT_UNITS: return commitBombardmentUnits(state, action);
