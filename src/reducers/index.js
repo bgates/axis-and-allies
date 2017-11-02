@@ -10,6 +10,7 @@ import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import territories from './territories'
+import transport from './transport'
 import units from './units'
 import unitDestination from './unitDestination'
 import unitOrigin from './unitOrigin'
@@ -51,6 +52,7 @@ const combinedReducer = combineReducers({
   research,
   rolls,
   territories,
+  transport,
   units,
   unitOrigin,
   unitDestination
