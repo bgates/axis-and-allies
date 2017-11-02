@@ -10,7 +10,7 @@ const outboundUnits = (state = {}, action) => {
     return outbound 
   }
   case UNCOMMIT_UNITS: {
-    return omit(unitIds, state)
+    return omit(unitIds.map(String), state)
   }
   default:
     return state
