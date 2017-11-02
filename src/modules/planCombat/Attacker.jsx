@@ -1,5 +1,4 @@
 import React from 'react'
-import Transport from './Transport'
 import { UnitFigTableData } from '../../components/UnitFigure'
 import { STRATEGIC_BOMB } from '../../actions'
 import unitTypes from '../../config/unitTypes'
@@ -11,27 +10,8 @@ const Attacker = ({
   destinationIndex, 
   commitUnits, 
   unCommitUnits, 
-  commitAmphibUnits,
-  unCommitAmphibUnits,
-  viewTransportLoadOptions, 
-  landAttack, 
   landingSlots,
   hasIndustry }) => {
-  if (unit.type === 'transport') {
-    return (
-      <Transport 
-        unit={unit} 
-        committed={committed}
-        landAttack={landAttack}
-        destinationIndex={destinationIndex}
-        commitUnits={commitUnits}
-        viewTransportLoadOptions={viewTransportLoadOptions}
-        unCommitUnits={unCommitUnits} 
-        commitAmphibUnits={commitAmphibUnits}
-        unCommitAmphibUnits={unCommitAmphibUnits}
-      />
-    )
-  }
   const air = unitTypes[unit.type].air
   return (
     <tr>
