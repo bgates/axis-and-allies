@@ -25,11 +25,11 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAtt
         cellSpacing={0} 
         cellPadding={1}>
         <tbody>
-        {loadableUnits.map((units, index) => ( 
+        {loadableUnits.map((option, index) => ( 
           <LoadableUnit 
             key={index}
-            loadUnits={loadUnits.bind(null, units, territory.index, transport)}
-            units={units} />
+            loadUnits={loadUnits.bind(null, option.units, territory.index, transport)}
+            option={option} />
         ))}
         </tbody>
       </table>
@@ -40,10 +40,10 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAtt
 
 export default LoadTransport
 
-const LoadableUnit = ({ units, loadUnits }) => {
+const LoadableUnit = ({ option: { originName, units }, loadUnits }) => {
   return (
     <tr>
-      <td><strong>{units[0].originName}</strong></td>
+      <td><strong>{originName}</strong></td>
       {units.map((unit, index) => (        
         <td key={index} className="unit" colSpan={3 - units.length}>
           <TransportFigure unit={unit} />

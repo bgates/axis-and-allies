@@ -30,7 +30,13 @@ export const getTerritoryUnits = createSelector(
   ({ unitIds }, units) => idsToUnits(unitIds, units)
 )
 
-const getMovedUnitIds = state => state.unitDestination
+export const getMovedUnitIds = state => state.unitDestination
+
+const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
+
+export const isFriendly = (territory, currentPower, units) => (  
+  !isNeutral(territory) && !isEnemy(territory, currentPower, units)
+)
 
 export const isEnemy = ({ currentPower, unitIds }, activePower, units) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {

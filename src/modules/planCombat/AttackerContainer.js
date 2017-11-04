@@ -5,8 +5,7 @@ import TransportContainer from '../transport'
 import Attacker from './Attacker'
 import { 
   COMMIT_UNITS, 
-  UNCOMMIT_UNITS, 
-  VIEW_TRANSPORT_LOAD_OPTIONS 
+  UNCOMMIT_UNITS 
 } from '../../actions'
 
 const mapStateToProps = (state, ownProps) => {

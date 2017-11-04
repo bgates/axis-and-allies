@@ -1,7 +1,13 @@
 import { createSelector } from 'reselect'
 import classNames from 'classnames'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { getTerritory, getTerritoryData, getAllUnits, isEnemy } from '../../selectors/getTerritory'
+import { 
+  getTerritory, 
+  getTerritoryData, 
+  getAllUnits, 
+  isFriendly,
+  isEnemy 
+} from '../../selectors/getTerritory'
 import { nonIndustry, airComplete } from '../../lib/unit'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
 
@@ -71,12 +77,6 @@ export const getClasses = createSelector(
     })
 
   }
-)
-
-const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
-
-const isFriendly = (territory, currentPower, units) => (  
-  !isNeutral(territory) && !isEnemy(territory, currentPower, units)
 )
 
 const isChina = ({ name }, original_power) => (

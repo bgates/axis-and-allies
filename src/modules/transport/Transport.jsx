@@ -15,7 +15,7 @@ const Transport = ({
     <td className="available">
       <input readOnly size={2} value={available ? 1 : 0} />
       <button 
-        onClick={e => { viewTransportLoadOptions(unit, unit.id)}}
+        onClick={e => { viewTransportLoadOptions(unit, destinationIndex)}}
         disabled={!available}
       >Load</button>
       <button 
@@ -27,7 +27,7 @@ const Transport = ({
     <td className="available">
       <input readOnly size={2} value={available ? 0 : 1} />
       <button 
-        onClick={e => unCommitUnits(unit, destinationIndex, [unit.id])}
+        onClick={e => unCommitUnits(destinationIndex, [unit.id])}
         disabled={available}
       >&lt;</button>
       <span>attacks @{unit.attack}</span>

@@ -1,29 +1,35 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
-import { isLand, isSea, isFriendly } from '../../lib/territory';
-import { unitCount } from '../../lib/unit';
-import unitTypes from '../../config/unitTypes';
+import { createSelector } from 'reselect'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { 
+  mergeBoardAndTerritories, 
+  getFocusTerritory,
+  getMovedUnitIds,
+  isFriendly,
+  isLand,
+  isSea
+} from '../../selectors/getTerritory'
+import { unitCount } from '../../lib/unit'
+import unitTypes from '../../config/unitTypes'
 export { getFocusTerritory }
 
 const _hasLoadable = (territory, currentPower) => {
   return isFriendly(territory, currentPower) && 
-    territory.units.some(u => u.land && u.power === currentPower.name)
+    territory.units.some(u => unitTypes[u.type].land && u.power === currentPower)
 }
 
 const notBy = (i, territory) => !territory.adjacentIndexes.includes(i);
 
-const loadableSources = (currentPower, destination, origin, board) => {
-  const onMap = (i) => board[i];
-  const notByOrigin = (i) => notBy(i, origin);
-  const notByDestination = (i) => notBy(i, destination);
-  const hasLoadableUnits = (territory) => _hasLoadable(territory, currentPower);
+const loadableSources = (currentPower, destination, origin, territories) => {
+  const onMap = (i) => territories[i]
+  const notByOrigin = (i) => notBy(i, origin)
+  const notByDestination = (i) => notBy(i, destination)
+  const hasLoadableUnits = (territory) => _hasLoadable(territory, currentPower)
   const landBorderingOrigin = origin.adjacentIndexes
-    .map(onMap).filter(isLand).filter(hasLoadableUnits);
+    .map(onMap).filter(isLand).filter(hasLoadableUnits)
   const landBorderingDestination = destination.adjacentIndexes
     .filter(notByOrigin).map(onMap)
-    .filter(isLand).filter(hasLoadableUnits);
-  const landBorderingSeaBetween = origin.adjacentIndexes
+    .filter(isLand).filter(hasLoadableUnits)
+  return origin.adjacentIndexes
     .filter(i => destination.adjacentIndexes.includes(i))
     .map(onMap)
     .filter(isSea)
@@ -34,49 +40,46 @@ const loadableSources = (currentPower, destination, origin, board) => {
         .map(onMap).filter(isLand).filter(hasLoadableUnits)
         .filter(territory => !arr.includes(territory))
         .concat(arr)
-    }, []);
-  return [...landBorderingOrigin,
-    ...landBorderingDestination,
-    ...landBorderingSeaBetween]
+    }, [...landBorderingOrigin, ...landBorderingDestination])
 }
 
-const loadableUnits = (currentPower, destination, origin, board) => {
-  const sources = loadableSources(currentPower, destination, origin, board);
-  let options = [];
-  let landUnits = Object.values(unitTypes).filter(u => u.land);
-  sources.forEach(source => {
-    let inf = source.units.find(u => {
-      return u.power === currentPower.name && u.name === 'infantry'
-    });
-    landUnits.forEach(unitType => {
-      const unit = source.units.find(u => {
-        return u.power === currentPower.name && u.name === unitType.name
-      })
-      if (unit && unitCount(unit)) {
-        const ids = unit.ids;
-        options.push({ origin: source, units: [{...unit, ids: [ids[0]]}] })
-        if (unit.name === 'infantry') {
-          if (unitCount(inf) > 1) {
-            options.push({ origin: source, units: [{...unit, ids: ids.slice(0, 2) }] })
+const loadableUnits = (currentPower, destination, movedUnitIds, origin, board) => {
+  const territories = board.map(territory => (
+    { ...territory, units: territory.units.filter(({ id }) => !movedUnitIds[id]) }
+  ))
+  const sources = loadableSources(currentPower, destination, origin, territories)
+  const landUnits = Object.values(unitTypes).filter(u => u.land)
+  const isType = type => u => u.power === currentPower && u.type === type
+  return sources.reduce((all, source) => {
+    const inf = source.units.find(isType('infantry'))
+    const { name, index } = source
+    const currentOption = { originName: name, originIndex: index }
+    return all.concat(landUnits.reduce((options, { name }) => {
+      const unit = source.units.find(isType(name))
+      if (unit) {
+        options.push({ ...currentOption, units: [unit] })
+        if (unit.type === 'infantry') {
+          const infantry = source.units.filter(isType('infantry'))
+          if (infantry.length > 1) {
+            options.push({ ...currentOption, units: infantry.slice(0, 2) })
           }
         } else if (inf) {
-          options.push({ origin: source, units: [{...inf, ids: [inf.ids[0]]}, { ...unit, ids: [ids[0]] }] })
+          options.push({ ...currentOption, units: [inf, unit] })
         }
       }
-    })
-  })
-  return options.map(option => {
-    return option.units.map(unit => {
-      return { ...unit, originName: option.origin.name, originIndex: option.origin.index }
-    })
-  })
+      return options
+    }, []))
+  }, [])
 }
 
 export const getLoadableUnits = createSelector(
-  getCurrentPower,
+  getCurrentPowerName,
   getFocusTerritory,
+  getMovedUnitIds,
   state => state.phase.transport,
   mergeBoardAndTerritories,
-  (currentPower, territory, transport, board) => loadableUnits(currentPower, territory, board[transport.unit.originIndex], board)
+  (currentPower, territory, movedUnitIds, transport, board) => (
+    loadableUnits(currentPower, territory, movedUnitIds, board[transport.unit.originIndex], board)
+  )
 )
 

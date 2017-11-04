@@ -36,13 +36,12 @@ export const UnitFigure = ({ unit: { type, power, distance } }) => (
 )
 
 export const TransportFigure = ({ unit }) => {
-  const { name, power, attack } = unit;
-  const qty = unitCount(unit);
+  const { type, power, attack, qty } = unit
   return (
     <figure className="transported">
-      <UnitImg name={name} power={power} />
-      {qty > 1 ? <span className={power.toLowerCase()}>{qty}</span> : null}
-      <figcaption>{name} (attacks @{attack})</figcaption>
+      <UnitImg name={type} power={power} />
+      {qty ? <span className={power.toLowerCase()}>{qty}</span> : null}
+      <figcaption>{type} (attacks @{attack})</figcaption>
     </figure>
   )
 }
