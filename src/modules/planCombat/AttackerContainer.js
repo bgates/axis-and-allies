@@ -25,16 +25,28 @@ const commitUnits = (originIndex, destinationIndex, unitIds) => {
   }
 }
 
+const uncommitCreator = (originIndex, destinationIndex, unitIds) => ({
+  type: UNCOMMIT_UNITS,
+  originIndex,
+  destinationIndex,
+  unitIds
+})
+
 const unCommitUnits = (destinationIndex, unitIds) => {
   return (dispatch, getState) => {
-    const { outboundUnits } = getState()
-    const originIndex = outboundUnits[unitIds[0]]
-    dispatch({ 
-      type: UNCOMMIT_UNITS, 
-      originIndex, 
-      destinationIndex, 
-      unitIds 
-    })
+    const { outboundUnits, transport } = getState()
+    const transportId = unitIds.find(id => transport.newlyLoaded.includes(id))
+    if (transportId) {
+        // just loaded; uncommit separately
+      let originIndex = outboundUnits[transportId]
+      dispatch(uncommitCreator(originIndex, destinationIndex, [transportId]))
+      originIndex = outboundUnits[unitIds.find(id => !transport.newlyLoaded.includes(id))]
+      const ids = unitIds.filter(id => !transport.newlyLoaded.includes(id))
+      dispatch(uncommitCreator(originIndex, destinationIndex, ids))
+    } else {
+      const originIndex = outboundUnits[unitIds[0]]
+      dispatch(uncommitCreator(originIndex, destinationIndex, unitIds))
+    }
   }
 }
 

@@ -1,13 +1,15 @@
-import React from 'react';
-import ReactTooltip from 'react-tooltip';
-import { TransportFigure } from '../../components/UnitFigure';
+import React from 'react'
+import ReactTooltip from 'react-tooltip'
+import { TransportFigure } from '../../components/UnitFigure'
 
 const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAttackOptions }) => {
+  console.log({transport, territory})
+  const handleClick = loadUnits.bind(null, transport, territory.index)
   return (
     <div>
       <a data-tip className="help">?</a>
       <h1>Load Transport</h1>
-      <p>From {transport.unit.originName}, bound for {territory.name}</p>
+      <p>From {transport.originName}, bound for {territory.name}</p>
       <ReactTooltip place="bottom" type="info">
         <p>A transport can carry one infantry unit <strong>plus</strong> either</p>
         <ul>
@@ -25,11 +27,12 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAtt
         cellSpacing={0} 
         cellPadding={1}>
         <tbody>
-        {loadableUnits.map((option, index) => ( 
+        {loadableUnits.map(({ originName, originIndex, units }, index) => ( 
           <LoadableUnit 
             key={index}
-            loadUnits={loadUnits.bind(null, option.units, territory.index, transport)}
-            option={option} />
+            handleClick={handleClick.bind(null, units.map(u => u.id), originIndex)}
+            name={originName}
+            units={units} />
         ))}
         </tbody>
       </table>
@@ -40,18 +43,16 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAtt
 
 export default LoadTransport
 
-const LoadableUnit = ({ option: { originName, units }, loadUnits }) => {
-  return (
-    <tr>
-      <td><strong>{originName}</strong></td>
-      {units.map((unit, index) => (        
-        <td key={index} className="unit" colSpan={3 - units.length}>
-          <TransportFigure unit={unit} />
-        </td>
-        ))}
-      <td className="available">
-        <button onClick={loadUnits}>Load &amp; Move</button>
+const LoadableUnit = ({ name, units, handleClick }) => (
+  <tr>
+    <td><strong>{name}</strong></td>
+    {units.map((unit, index) => (        
+      <td key={index} className="unit" colSpan={3 - units.length}>
+        <TransportFigure unit={unit} />
       </td>
-    </tr>
-  )
-}
+      ))}
+    <td className="available">
+      <button onClick={handleClick}>Load &amp; Move</button>
+    </td>
+  </tr>
+)

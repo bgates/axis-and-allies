@@ -1,4 +1,4 @@
-import { COMMIT_UNITS, UNCOMMIT_UNITS } from '../actions'
+import { COMMIT_UNITS, UNCOMMIT_UNITS, LOAD_TRANSPORT } from '../actions'
 
 const add = (array = [], ids) => array.concat(ids)
 
@@ -17,6 +17,13 @@ const unitDestination = (state = {}, action) => {
     return { 
       ...state,
       [destinationIndex]: remove(state[destinationIndex], unitIds)
+    }
+  }
+  case LOAD_TRANSPORT: {
+    const { transport, unitIds, destinationIndex } = action
+    return {
+      ...state,
+      [destinationIndex]: add(state[destinationIndex], unitIds.concat(transport.id))
     }
   }
   default:

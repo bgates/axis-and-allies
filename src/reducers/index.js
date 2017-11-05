@@ -69,7 +69,7 @@ const crossSliceReducer = (state, action) => {
       //case UNCOMMIT_UNITS:
     case COMMIT_AMPHIB_UNITS:
     case UNCOMMIT_AMPHIB_UNITS:
-    case LOAD_TRANSPORT:
+      //case LOAD_TRANSPORT:
     case WIN_ATTACK:
     case LOSE_ATTACK:
     case LAND_PLANES:

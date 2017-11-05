@@ -1,5 +1,5 @@
 import { omit } from 'ramda'
-import { COMMIT_UNITS, UNCOMMIT_UNITS } from '../actions'
+import { COMMIT_UNITS, UNCOMMIT_UNITS, LOAD_TRANSPORT } from '../actions'
 
 const inboundUnits = (state = {}, action) => {
   const { destinationIndex, unitIds } = action
@@ -11,6 +11,12 @@ const inboundUnits = (state = {}, action) => {
   }
   case UNCOMMIT_UNITS: {
     return omit(unitIds.map(String), state)
+  }
+  case LOAD_TRANSPORT: {
+    const { transport, destinationIndex, unitIds } = action
+    let inbound = { ...state }
+    unitIds.concat(transport.id).forEach(id => inbound[id] = destinationIndex)
+    return inbound
   }
   default:
     return state

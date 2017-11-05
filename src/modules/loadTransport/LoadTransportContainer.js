@@ -2,8 +2,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LoadTransport from './LoadTransport'
 import { getFocusTerritory, getLoadableUnits } from './selectors'
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { LOAD_TRANSPORT, viewAttackOptions } from '../../actions';
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { LOAD_TRANSPORT, viewAttackOptions } from '../../actions'
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
@@ -12,12 +12,13 @@ const mapStateToProps = (state) => ({
   transport: state.phase.transport
 })
 
-const loadUnits = (units, destinationIndex, transport) => {
+const loadUnits = (transport, destinationIndex, unitIds, originIndex) => {
   return {
     type: LOAD_TRANSPORT,
-    units,
+    transport,
     destinationIndex,
-    transport
+    unitIds,
+    originIndex
   }
 }
 

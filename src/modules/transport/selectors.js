@@ -1,6 +1,14 @@
 import { createSelector } from 'reselect'
+import { getAllUnits, idsToUnits, getTerritoryData } from '../../selectors/getTerritory'
 
-export const getCargo = (state, id) => state.transport.transporting[id] || []
+const getCargoIds = (state, id) => state.transport.transporting[id] || []
+
+export const getCargo = createSelector(
+  getCargoIds,
+  getAllUnits,
+  state => state.outboundUnits,
+  (ids, units, outbound) => idsToUnits(ids, units).map(unit => ({ ...unit, originName: getTerritoryData(null, outbound[unit.id]).name }))
+)
 
 const hasUnitMoved = (state, id) => state.outboundUnits[id]
 

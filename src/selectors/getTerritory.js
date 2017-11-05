@@ -22,7 +22,7 @@ export const getInboundUnits = (state, territoryIndex) => (
   state.unitDestination[territoryIndex] || []
 )
 
-const idsToUnits = (ids, units) => ids.map(id => units[id])
+export const idsToUnits = (ids, units) => ids.map(id => units[id])
 
 export const getTerritoryUnits = createSelector(
   getTerritory,

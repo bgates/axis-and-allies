@@ -79,7 +79,7 @@ export const getLoadableUnits = createSelector(
   state => state.phase.transport,
   mergeBoardAndTerritories,
   (currentPower, territory, movedUnitIds, transport, board) => (
-    loadableUnits(currentPower, territory, movedUnitIds, board[transport.unit.originIndex], board)
+    loadableUnits(currentPower, territory, movedUnitIds, board[transport.originIndex], board)
   )
 )
 

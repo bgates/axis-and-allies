@@ -1,3 +1,4 @@
+import { omit } from 'ramda'
 import { 
   PLAN_ATTACKS,
   VIEW_ATTACK_OPTIONS,
@@ -14,12 +15,10 @@ import {
   SELECT_PLANE_LANDING_TERRITORY,
   CONFIRM_LAND_PLANES,
   ORDER_UNITS
-} from '../actions';
+} from '../actions'
 
-const currentWithout = (state, current, deletedProp) => {
-  let newState = Object.assign({}, state, { current });
-  delete newState[deletedProp];
-  return newState;
+const currentWithout = (state, current, ...deletedProps) => {
+  return omit(deletedProps, { ...state, current })
 }
 
 const currentWithTerritory = (state, current, territoryIndex) => (
@@ -52,7 +51,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return currentWithTerritory(state, VIEW_BOMBARDMENT_OPTIONS, action.territory)
   } 
   case VIEW_TRANSPORT_LOAD_OPTIONS: {
-    return { ...state, current: VIEW_TRANSPORT_LOAD_OPTIONS, transport: { unit: action.transport, id: action.id } }
+    return { ...state, current: VIEW_TRANSPORT_LOAD_OPTIONS, territoryIndex: action.destinationIndex, transport: action.transport }
   }
   case LOAD_TRANSPORT: {
     return currentWithout(state, VIEW_ATTACK_OPTIONS, 'transport')

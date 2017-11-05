@@ -22,8 +22,8 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const commitAmphibUnits = (transportOriginIndex, cargoOriginIndex, destinationIndex, transportId, ids) => {
-  return {
+const commitAmphibUnits = (transportOriginIndex, cargoOriginIndex, destinationIndex, transportId, ids) => (
+  {
     type: COMMIT_AMPHIB_UNITS,
     transportOriginIndex,
     cargoOriginIndex,
@@ -31,24 +31,24 @@ const commitAmphibUnits = (transportOriginIndex, cargoOriginIndex, destinationIn
     transportId,
     ids
   }
-}
+)
 
-const unCommitAmphibUnits = (transport, destinationIndex, id) => {
-  return {
+const unCommitAmphibUnits = (transport, destinationIndex, id) => (
+  {
     type: UNCOMMIT_AMPHIB_UNITS,
     transport,
     destinationIndex,
     id
   }
-}
+)
 
-const viewTransportLoadOptions = (transport, id) => {
-  return {
+const viewTransportLoadOptions = (transport, destinationIndex) => (
+  {
     type: VIEW_TRANSPORT_LOAD_OPTIONS,
     transport,
-    id
+    destinationIndex
   }
-}
+)
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
@@ -85,6 +85,7 @@ const GenericTransport = (props) => {
         unit={unit}
         available={available}
         cargo={cargo}
+        unitIds={[unit.id].concat(cargo.map(u => u.id))}
         destinationIndex={destinationIndex}
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}

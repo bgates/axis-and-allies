@@ -10,20 +10,21 @@ const initialState = {
 const transport = (state = initialState, action) => {
   switch (action.type) {
   case LOAD_TRANSPORT: {
-    const { transportId, unitIds } = action
-    const transporting = { ...state.transporting, [transportId]: unitIds }
+    const { transport: { id }, unitIds } = action
+    const transporting = { ...state.transporting, [id]: unitIds }
     let transportedBy = { ...state.transportedBy }
-    let { newlyLoaded } = state
-    unitIds.forEach(id => transportedBy[id] = transportId)
-    return { transporting , transportedBy, newlyLoaded: newlyLoaded.concat(transportId) }
+    const { newlyLoaded } = state
+    unitIds.forEach(_id => transportedBy[_id] = id)
+    return { transporting , transportedBy, newlyLoaded: newlyLoaded.concat(id) }
   }
   case UNCOMMIT_UNITS: {
     const { unitIds } = action
     const transportId = unitIds[0]
     if (state.newlyLoaded.includes(transportId)) {
-      const transporting = omit(transportId, state.transporting)
-      const transportedBy = omit(state.transporting[transportId], state.transportedBy)
-      return { transporting, transportedBy }
+      const transporting = omit(String(transportId), state.transporting)
+      const transportedBy = omit(state.transporting[transportId].map(String), state.transportedBy)
+      const newlyLoaded = state.newlyLoaded.filter(id => id !== transportId)
+      return { transporting, transportedBy, newlyLoaded }
     } else {
       return state
     }
