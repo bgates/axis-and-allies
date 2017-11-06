@@ -11,7 +11,7 @@ import {
 const mapStateToProps = (state, ownProps) => {
   const { committed, unit: { ids } } = ownProps
   return {
-    committed: committed.filter(id => ids.includes(id)),
+    committed: committed,
     ...ownProps
   }
 }

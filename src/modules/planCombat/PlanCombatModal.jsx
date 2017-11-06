@@ -13,7 +13,7 @@ const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants,
       <Attacker 
         key={key}
         unit={unit}
-        committed={committed}
+        committed={committed.filter(id => unit.ids.includes(id))}
         hasIndustry={hasIndustrialComplex(territory)}
         destinationIndex={territory.index}
         landAttack={!territory.sea}
