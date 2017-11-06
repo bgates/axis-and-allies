@@ -1,5 +1,4 @@
 import React from 'react';
-import { unitCount } from '../lib/unit'
 import unitTypes from '../config/unitTypes'
 
 const path = (power, name) => {
@@ -36,12 +35,12 @@ export const UnitFigure = ({ unit: { type, power, distance } }) => (
 )
 
 export const TransportFigure = ({ unit }) => {
-  const { type, power, attack, qty } = unit
+  const { type, power, qty } = unit
   return (
     <figure className="transported">
       <UnitImg name={type} power={power} />
       {qty ? <span className={power.toLowerCase()}>{qty}</span> : null}
-      <figcaption>{type} (attacks @{attack})</figcaption>
+      <figcaption>{type} (attacks @{unitTypes[type].attack})</figcaption>
     </figure>
   )
 }

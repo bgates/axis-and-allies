@@ -8,7 +8,6 @@ import {
   isLand,
   isSea
 } from '../../selectors/getTerritory'
-import { unitCount } from '../../lib/unit'
 import unitTypes from '../../config/unitTypes'
 export { getFocusTerritory }
 

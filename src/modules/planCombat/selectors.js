@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
-  getAllUnits,
   getFocusTerritory, 
   getCommittedIds,
   getCommittedUnits,
@@ -24,13 +23,13 @@ export const unitsInRange = createSelector(
   combatUnitsInRange
 )
 
-const amphibFor = ({ amphib }, board) => {
+  /*const amphibFor = ({ amphib }, board) => {
   return Object.keys(amphib).reduce((array, id) => {
     const territory = board[amphib[id]];
     const transport = (allUnits(territory)).find(unit => unit.ids.includes(id));
     return array.concat(transport.cargo[id]);
   }, [])
-}
+}*/
 
 const _combatants = (currentPower, territory, committedUnits) => {
   const combatUnits = territory.units.filter(nonIndustry)
@@ -58,6 +57,8 @@ export const combatants = createSelector(
   getCommittedUnits,
   (currentPower, territory, units) => _combatants(currentPower, territory, units)
 )
+
+export const getTransport = state => state.transport
 
 export const landingSlots = createSelector(
   getCurrentPower,

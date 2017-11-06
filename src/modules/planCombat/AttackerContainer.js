@@ -8,13 +8,7 @@ import {
   UNCOMMIT_UNITS 
 } from '../../actions'
 
-const mapStateToProps = (state, ownProps) => {
-  const { committed, unit: { ids } } = ownProps
-  return {
-    committed: committed,
-    ...ownProps
-  }
-}
+const mapStateToProps = (state, ownProps) => ownProps
 
 const commitUnits = (originIndex, destinationIndex, unitIds) => {
   return {

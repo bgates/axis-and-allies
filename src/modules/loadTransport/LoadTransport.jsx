@@ -3,7 +3,6 @@ import ReactTooltip from 'react-tooltip'
 import { TransportFigure } from '../../components/UnitFigure'
 
 const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAttackOptions }) => {
-  console.log({transport, territory})
   const handleClick = loadUnits.bind(null, transport, territory.index)
   return (
     <div>

@@ -22,11 +22,8 @@ import {
   RESOLVE_COMBAT,
   RETREAT,
   REMOVE_CASUALTIES,
-  COMMIT_UNITS,
-  UNCOMMIT_UNITS,
   COMMIT_AMPHIB_UNITS,
   UNCOMMIT_AMPHIB_UNITS,
-  LOAD_TRANSPORT,
   WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
@@ -60,16 +57,16 @@ const combinedReducer = combineReducers({
 
 const crossSliceReducer = (state, action) => {
   switch(action.type) {
+      //case COMMIT_UNITS:
+      //case UNCOMMIT_UNITS:
+      //case LOAD_TRANSPORT:
     case DOGFIGHT:
     case VIEW_STRATEGIC_BOMBING_RESULTS:
     case RESOLVE_COMBAT:
     case RETREAT:
     case REMOVE_CASUALTIES:
-      //case COMMIT_UNITS:
-      //case UNCOMMIT_UNITS:
     case COMMIT_AMPHIB_UNITS:
     case UNCOMMIT_AMPHIB_UNITS:
-      //case LOAD_TRANSPORT:
     case WIN_ATTACK:
     case LOSE_ATTACK:
     case LAND_PLANES:

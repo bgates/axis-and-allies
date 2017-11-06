@@ -1,10 +1,8 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { unitMatch } from '../../lib/unit'
 import { hasIndustrialComplex } from '../../lib/territory'
 import Attacker from './AttackerContainer'
 import Occupiers from './Occupiers'
-import { STRATEGIC_BOMB } from '../../actions'
 
 const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants, committed, landingSlots }) => {
   const attacker = (unit, key) => {

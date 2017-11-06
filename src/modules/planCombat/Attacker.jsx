@@ -55,7 +55,7 @@ const CommitButtons = ({
   air, 
   landingSlots 
 }) => {
-  const { ids, originIndex, type } = unit
+  const { ids, originIndex } = unit
   const available = ids.filter(id => !committed.includes(id))
   const qty = available.length
   const allDisabled = qty === 0 || (air && qty > landingSlots)

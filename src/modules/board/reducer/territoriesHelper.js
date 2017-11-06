@@ -6,13 +6,10 @@ import {
   CONTINUE_COMBAT,
   TOGGLE_CASUALTY,
   REMOVE_CASUALTIES,
-  COMMIT_UNITS,
-  UNCOMMIT_UNITS,
   COMMIT_AMPHIB_UNITS,
   UNCOMMIT_AMPHIB_UNITS,
   COMMIT_BOMBARDMENT_UNITS,
   UNCOMMIT_BOMBARDMENT_UNITS,
-  LOAD_TRANSPORT,
   WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
@@ -21,11 +18,8 @@ import {
   NEXT_TURN
 } from '../../../actions';
 import {
-  commitUnits,
-  uncommitUnits,
   commitAmphibUnits,
   uncommitAmphibUnits,
-  loadTransport,
   landPlanes,
   retreat
 } from './moveUnitReducerFunctions';
