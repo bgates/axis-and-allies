@@ -23,7 +23,7 @@ const Transport = ({
         onClick={e => commitUnits(unit.originIndex, destinationIndex, [unit.id])}
         disabled={!available || unit.originIndex === destinationIndex}
       >&gt;</button>
-      {cargo.length ? <span title={cargo.map(u => `${u.type} from ${u.originName}`)}>carrying ...</span> : ''}
+      {cargo.length ? <span title={`${cargo.map(u => u.type)} from ${cargo[0].originName}`}>carrying ...</span> : ''}
     </td>
     <td className="available">
       <input readOnly size={2} value={available ? 0 : 1} />
