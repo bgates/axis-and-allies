@@ -7,19 +7,17 @@ import {
   unitsInRange, 
   combatants,
   getCommittedIds,
-  getTransport,
   landingSlots
 } from './selectors'
 import { PLAN_ATTACKS } from '../../actions'
 
 const mapStateToProps = (state) => ({
-  currentPower: getCurrentPower(state),
-  territory: getFocusTerritory(state),
-  unitsInRange: unitsInRange(state),
   combatants: combatants(state),
   committed: getCommittedIds(state),
-  transport: getTransport(state),
-  landingSlots: landingSlots(state)
+  currentPower: getCurrentPower(state),
+  landingSlots: landingSlots(state),
+  territory: getFocusTerritory(state),
+  unitsInRange: unitsInRange(state)
 })
 
 const planOtherAttack = () => {

@@ -4,7 +4,14 @@ import { hasIndustrialComplex } from '../../lib/territory'
 import Attacker from './AttackerContainer'
 import Occupiers from './Occupiers'
 
-const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants, committed, landingSlots }) => {
+const PlanCombatModal = ({ 
+  combatants, 
+  committed, 
+  landingSlots,
+  territory, 
+  unitsInRange, 
+  planOtherAttack 
+}) => {
   const attacker = (unit, key) => {
     let strategicBombing = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === STRATEGIC_BOMB) || { ids: [] };
     return (
@@ -53,7 +60,8 @@ const PlanCombatModal = ({ territory, unitsInRange, planOtherAttack, combatants,
           <h3>Committed Units</h3>
           <Occupiers 
             combatants={combatants}
-            sea={territory.sea} />
+            sea={territory.sea} 
+          />
         </div>
       </div>
       <p>When you are done choosing your attacking units for this territory, press <button onClick={planOtherAttack}>ok</button></p>

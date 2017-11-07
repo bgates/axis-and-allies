@@ -25,15 +25,11 @@ const Occupier = ({ unit, isDefender, showStrength }) => {
   const value = isDefender ? `defends @${unit.defend}` : `attacks @${unit.attack}`
   if (unit.cargo) {
     return (
-      <div>
-        {unit.ids.map(id => (
-          <li key={id}>
-            <ImgAndQty unit={unit}/>
-            {showStrength ? <span>{value}</span> : null}
-            {(unit.cargo[id] || []).map((u, index) => <ImgAndQty key={index} unit={u} />)}
-          </li>
-        ))}
-      </div>
+      <li>
+        <ImgAndQty unit={unit}/>
+        {showStrength ? <span>{value}</span> : null}
+        {unit.cargo.map((u, index) => <ImgAndQty key={index} unit={u} />)}
+      </li>
     )
   }
   return (

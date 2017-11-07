@@ -31,14 +31,28 @@ export const unitsInRange = createSelector(
   }, [])
 }*/
 
-const _combatants = (currentPower, territory, committedUnits) => {
+const placeCargoOnTransports = transports => (units, unit, _, allUnits) => {
+  const { transporting, transportedBy } = transports
+  if (transportedBy[unit.id]) {
+    return units
+  } else if (transporting[unit.id]) {
+    const cargo = transporting[unit.id].map(id => allUnits.find(u => u.id === id))
+    return [ ...units, { ...unit, cargo } ]
+  } else {
+    return units.concat(unit)
+  }
+}
+
+const _combatants = (currentPower, territory, committedUnits, transport) => {
   const combatUnits = territory.units.filter(nonIndustry)
   let attackers = combatUnits
     .filter(allyOf(currentPower))
     .concat(committedUnits)
+    .reduce(placeCargoOnTransports(transport), [])
     .reduce(combineUnits, [])
   let defenders = combatUnits
     .filter(enemyOf(currentPower))
+    .reduce(placeCargoOnTransports(transport), [])
     .reduce(combineUnits, [])
     /*if (territory.amphib) {
     attackers = attackers.concat(amphibFor(territory, board))
@@ -51,14 +65,15 @@ const _combatants = (currentPower, territory, committedUnits) => {
   return { attackers, defenders }
 }
 
+const getTransport = state => state.transport
+
 export const combatants = createSelector(
   getCurrentPowerName,
   getFocusTerritory,
   getCommittedUnits,
-  (currentPower, territory, units) => _combatants(currentPower, territory, units)
+  getTransport,
+  _combatants
 )
-
-export const getTransport = state => state.transport
 
 export const landingSlots = createSelector(
   getCurrentPower,
