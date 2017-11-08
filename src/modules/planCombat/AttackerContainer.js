@@ -54,13 +54,14 @@ const mapDispatchToProps = (dispatch) => {
 const GenericAttacker = (props) => {
   const { unit: { type }} = props
   if (type === 'transport') {
-    const { unit, destinationIndex, commitUnits, unCommitUnits } = props
+    const { unit, destinationIndex, landAttack, commitUnits, unCommitUnits } = props
     return (
       <TransportContainer
         unit={unit}
         destinationIndex={destinationIndex}
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}
+        landAttack={landAttack}
       />
     )
   } else {

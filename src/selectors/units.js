@@ -1,3 +1,7 @@
+export const getAllUnits = state => state.units
+export const getAllOutbound = state => state.outboundUnits
+export const getAllInbound = state => state.inboundUnits
+
 const match = unit1 => unit2 => (
   ['type', 'power', 'originName']
     .every(attr => unit1[attr] === unit2[attr])

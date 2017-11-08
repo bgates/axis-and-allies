@@ -4,10 +4,12 @@ import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   getTerritory, 
   getTerritoryData, 
-  getAllUnits, 
+  getMovedUnitIds,
+  getUnits,
   isFriendly,
   isEnemy 
 } from '../../selectors/getTerritory'
+import { getAllUnits } from '../../selectors/units'
 import { nonIndustry, airComplete } from '../../lib/unit'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
 
@@ -62,18 +64,20 @@ export const getClasses = createSelector(
   getCurrentPowerName,
   getTerritory,
   getTerritoryData,
+  getMovedUnitIds,
   state => state.phase.current,
-  (currentPower, territory, { sea }, phase) => {
-    const { units } = territory
+  (state, index) => index,
+  (currentPower, territory, { sea }, movedUnitIds, phase, territoryIndex) => {
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       [territoryPower.toLowerCase()]: isOcean || isControlled,
-      //active: (hasAirComplete(units) && phase === LAND_PLANES) || (unitsFrom.length && phase !== RESOLVE_COMBAT),
+      active: movedUnitIds[territoryIndex] && phase !== RESOLVE_COMBAT,
+      //active: (hasAirComplete(units) && phase === LAND_PLANES) || (units.length && phase !== RESOLVE_COMBAT),
       //'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT && territoryPower !== currentPowerName,
-      'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
+      //'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
     })
 
   }

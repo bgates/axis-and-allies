@@ -4,22 +4,27 @@ import {
   getFocusTerritory, 
   getCommittedIds,
   getCommittedUnits,
+  getMovedUnitIds,
   mergeBoardAndTerritories 
 } from '../../selectors/getTerritory'
-import { combineUnits } from '../../selectors/units'
+import { getAllUnits, getAllInbound, combineUnits } from '../../selectors/units'
+  
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { nonIndustry, unitCount, totalCount } from '../../lib/unit'
 import { allUnits, isLand } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
-const _committedUnits = (state) => []
+const getTransport = state => state.transport
 
 export const unitsInRange = createSelector(
   mergeBoardAndTerritories,
   getCurrentPower,
   getFocusTerritory,
-  _committedUnits,
+  getAllInbound,
+  getMovedUnitIds,
+  getTransport,
+  getAllUnits,
   combatUnitsInRange
 )
 
@@ -64,8 +69,6 @@ const _combatants = (currentPower, territory, committedUnits, transport) => {
   }
   return { attackers, defenders }
 }
-
-const getTransport = state => state.transport
 
 export const combatants = createSelector(
   getCurrentPowerName,

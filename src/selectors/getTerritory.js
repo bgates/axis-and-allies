@@ -1,12 +1,11 @@
 import { createSelector } from 'reselect'
-import { omit } from 'ramda'
+import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories.json'
+import { getAllUnits } from './units'
 
 export const isLand = (territory) => !territory.sea
 export const isSea = (territory) => territory.sea
-
-export const getAllUnits = (state) => state.units
 
 export const getAllTerritories = (state) => state.territories
 
@@ -90,3 +89,26 @@ export const getTerritoriesWithIpcValues = createSelector(
     return { currentPower, ipc_value }
   })
 )
+
+const same = unit => unit.type + unit.power
+
+const groupedUnits = (units) => (
+  values(groupBy(same)(units))
+    .map(group => ({ ...group[0], qty: group.length }))
+)
+
+const remove = (array) => id => !array.includes(id)
+
+export const getUnits = createSelector(
+  getTerritory,
+  getAllUnits,
+  getOutboundUnits,
+  getInboundUnits,
+  ({ unitIds }, allUnits, outbound, inbound) => (
+    groupedUnits(unitIds
+      .concat(inbound)
+      .filter(remove(outbound))
+      .map(id => allUnits[id]))
+  )
+)
+

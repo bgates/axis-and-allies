@@ -1,6 +1,5 @@
 import { 
-  isFriendly, 
-  allUnits
+  isFriendly
 } from '../../lib/territory'
 import {
   combineUnits
@@ -116,16 +115,15 @@ const transportOrMovedTo = (territory) => (
   unit => unit.originIndex !== territory.index || unit.transport
 )
 
-const amphibUnitsInRange = (board, currentPower, territory) => {
+const amphibUnitsInRange = (board, currentPower, territory, inbound, destination, { transporting }, allUnits) => {
   const territories = territory.adjacentIndexes.map(index => board[index]).filter(isSea)
-  const activeTransports = territories.reduce((transports, territory) => {
-    const potentialUnits = allUnits(territory)
-    const territoryTransports = potentialUnits.filter(unit => {
-      return unit.cargo && unit.power === currentPower.name
-    })
+  return territories.reduce((transports, territory) => {
+    const territoryTransports = territory.units
+      .filter(unit => transporting[unit.id] && !inbound[unit.id])
+      .concat((destination[territory.index] || []).filter(id => transporting[id]).map(id => allUnits[id]))  
+      .filter(unit => unit.power === currentPower.name)
     return [...transports, ...territoryTransports.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index }))]
   }, [])
-  return activeTransports
 }
 
 const seaUnitsInRange = (board, currentPower, territory) => {
@@ -146,11 +144,11 @@ const unitSort = (a, b) => {
   }
 }
 
-const unitsByMedium = (board, currentPower, territory) => {
+const unitsByMedium = (board, currentPower, territory, inbound, destination, transport, allUnits) => {
   if (isLand(territory)) {
     return [
       ...landUnitsInRange(board, currentPower, territory),
-      ...amphibUnitsInRange(board, currentPower, territory),
+      ...amphibUnitsInRange(board, currentPower, territory, inbound, destination, transport, allUnits),
       ...airUnitsInRange(board, currentPower, territory)
     ]
   } else if (isFriendly(territory, currentPower)) {
@@ -163,9 +161,9 @@ const unitsByMedium = (board, currentPower, territory) => {
   }
 }
 
-export const combatUnitsInRange = (board, currentPower, territory, committed) => {
-  const uncommitted = unit => !committed.includes(unit.id)
-  return unitsByMedium(board, currentPower, territory)      
+export const combatUnitsInRange = (board, currentPower, territory, inbound, destination, transport, allUnits) => {
+  const uncommitted = unit => !inbound[unit.id] || transport.transporting[unit.id]
+  return unitsByMedium(board, currentPower, territory, inbound, destination, transport, allUnits)      
     .filter(uncommitted)
     .reduce(combineUnits, [])
     .sort(unitSort)

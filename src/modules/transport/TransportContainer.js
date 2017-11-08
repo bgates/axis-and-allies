@@ -22,23 +22,21 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const commitAmphibUnits = (transportOriginIndex, cargoOriginIndex, destinationIndex, transportId, ids) => (
+const commitAmphibUnits = (transportId, destinationIndex, amphibIds) => (
   {
     type: COMMIT_AMPHIB_UNITS,
-    transportOriginIndex,
-    cargoOriginIndex,
-    destinationIndex,
     transportId,
-    ids
+    destinationIndex,
+    amphibIds
   }
 )
 
-const unCommitAmphibUnits = (transport, destinationIndex, id) => (
+const unCommitAmphibUnits = (transportId, destinationIndex, amphibIds) => (
   {
     type: UNCOMMIT_AMPHIB_UNITS,
-    transport,
+    transportId,
     destinationIndex,
-    id
+    amphibIds
   }
 )
 
@@ -65,6 +63,7 @@ const GenericTransport = (props) => {
     return (
       <AmphibiousAssault 
         unit={unit}
+        amphibiousUnits={cargo}
         destinationIndex={destinationIndex}
         commitAmphibUnits={commitAmphibUnits}
         unCommitAmphibUnits={unCommitAmphibUnits}

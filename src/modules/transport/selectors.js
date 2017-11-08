@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect'
-import { getAllUnits, idsToUnits, getTerritoryData } from '../../selectors/getTerritory'
+import { idsToUnits, getTerritoryData } from '../../selectors/getTerritory'
+import { getAllUnits } from '../../selectors/units'
 
 const getCargoIds = (state, id) => state.transport.transporting[id] || []
 

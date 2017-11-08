@@ -2,19 +2,19 @@ import React from 'react'
 import { TransportFigure } from '../../components/UnitFigure'
 
 const AmphibiousAssault = ({ 
-  unit, 
-  id, 
+  unit: { id, originName }, 
+  amphibiousUnits, 
   destinationIndex,
   commitAmphibUnits,
   unCommitAmphibUnits 
 }) => {
-  const amphibiousUnits = unit.cargo[id]
-  const amphibCommitted = (unit.cargoDestinations || {})[id]
+  const amphibCommitted = false //TODO: fix
   const committedHere = amphibCommitted === destinationIndex
+  const amphibIds = amphibiousUnits.map(unit => unit.id)
   return (
     <tr>
       <td className="unit">
-        <strong>{unit.originName}[amphib]</strong>
+        <strong>{originName}[amphib]</strong>
         {amphibiousUnits.map((unit, index) => (        
           <TransportFigure unit={unit} key={index} />
         ))}
@@ -23,14 +23,14 @@ const AmphibiousAssault = ({
         <input readOnly size={2} value={amphibCommitted ? 0 : 1} />
         <button 
           disabled={amphibCommitted}
-          onClick={e => { commitAmphibUnits(unit, destinationIndex, id)}}
+          onClick={e => { commitAmphibUnits(id, destinationIndex, amphibIds)}}
         >&gt;&gt;</button>
       </td>
       <td className="available">
         <input readOnly size={2} value={committedHere ? 1 : 0} />
         <button 
           disabled={!amphibCommitted}
-          onClick={e => unCommitAmphibUnits(unit, destinationIndex, id)}
+          onClick={e => unCommitAmphibUnits(id, destinationIndex, amphibIds)}
         >&lt;</button>
       </td>
     </tr>
