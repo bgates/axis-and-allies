@@ -65,12 +65,13 @@ const GenericAttacker = (props) => {
       />
     )
   } else {
-    const { unit, destinationIndex, committed, commitUnits, unCommitUnits } = props
+    const { unit, destinationIndex, committed, landingSlots, commitUnits, unCommitUnits } = props
     return (
       <Attacker
         unit={unit}
         destinationIndex={destinationIndex}
         committed={committed}
+        landingSlots={landingSlots}
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}
       />

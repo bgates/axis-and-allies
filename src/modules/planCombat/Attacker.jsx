@@ -60,6 +60,7 @@ const CommitButtons = ({
   const qty = available.length
   const allDisabled = qty === 0 || (air && qty > landingSlots)
   const oneDisabled = qty === 0 || (air && !landingSlots)
+  console.log({ unit, landingSlots })
   return (
     <div>
       <input readOnly size={2} value={qty} />

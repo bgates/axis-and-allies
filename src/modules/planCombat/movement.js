@@ -162,7 +162,7 @@ const unitsByMedium = (board, currentPower, territory, inbound, destination, tra
 }
 
 export const combatUnitsInRange = (board, currentPower, territory, inbound, destination, transport, allUnits) => {
-  const uncommitted = unit => !inbound[unit.id] || transport.transporting[unit.id]
+  const uncommitted = unit => !inbound[unit.id] || inbound[unit.id] === territory.index || transport.transporting[unit.id]
   return unitsByMedium(board, currentPower, territory, inbound, destination, transport, allUnits)      
     .filter(uncommitted)
     .reduce(combineUnits, [])
