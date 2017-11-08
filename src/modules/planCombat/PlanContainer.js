@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PlanCombatContainer from './PlanCombatContainer'
-import LoadTransportContainer from '../loadTransport/LoadTransportContainer'
+import { LoadTransportContainer } from '../loadTransport'
 import { VIEW_TRANSPORT_LOAD_OPTIONS } from '../../actions'
 
 const mapStateToProps = (state) => ({

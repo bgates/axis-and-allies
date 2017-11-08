@@ -1,5 +1,5 @@
 import { omit } from 'ramda'
-import { LOAD_TRANSPORT, UNCOMMIT_UNITS } from '../actions'
+import { LOAD_TRANSPORT, UNCOMMIT_UNITS } from '../../actions'
 
 const initialState = {
   transporting: {},
