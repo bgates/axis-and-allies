@@ -28,17 +28,9 @@ export const unitsInRange = createSelector(
   combatUnitsInRange
 )
 
-  /*const amphibFor = ({ amphib }, board) => {
-  return Object.keys(amphib).reduce((array, id) => {
-    const territory = board[amphib[id]];
-    const transport = (allUnits(territory)).find(unit => unit.ids.includes(id));
-    return array.concat(transport.cargo[id]);
-  }, [])
-}*/
-
-const placeCargoOnTransports = transports => (units, unit, _, allUnits) => {
+const placeCargoOnTransports = (transports, amphib) => (units, unit, _, allUnits) => {
   const { transporting, transportedBy } = transports
-  if (transportedBy[unit.id]) {
+  if (transportedBy[unit.id] && !amphib.transport[transportedBy[unit.id]]) {
     return units
   } else if (transporting[unit.id]) {
     const cargo = transporting[unit.id].map(id => allUnits.find(u => u.id === id))
@@ -48,20 +40,24 @@ const placeCargoOnTransports = transports => (units, unit, _, allUnits) => {
   }
 }
 
-const _combatants = (currentPower, territory, committedUnits, transport) => {
+const amphibious = ({ index }, { territory }, { transporting }, allUnits) => (
+  (territory[index] || [])
+  .map(transportId => transporting[transportId])
+  .reduce((all, ids) => all.concat(ids.map(id => allUnits[id])), [])
+)
+
+const _combatants = (currentPower, territory, committedUnits, transport, allUnits, amphib) => {
   const combatUnits = territory.units.filter(nonIndustry)
   let attackers = combatUnits
     .filter(allyOf(currentPower))
     .concat(committedUnits)
-    .reduce(placeCargoOnTransports(transport), [])
+    .concat(amphibious(territory, amphib, transport, allUnits))
+    .reduce(placeCargoOnTransports(transport, amphib), [])
     .reduce(combineUnits, [])
   let defenders = combatUnits
     .filter(enemyOf(currentPower))
     .reduce(placeCargoOnTransports(transport), [])
     .reduce(combineUnits, [])
-    /*if (territory.amphib) {
-    attackers = attackers.concat(amphibFor(territory, board))
-  }*/
   //attackers = consolidateUnits(attackers)
   if (territory.dogfight) {
     defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
@@ -75,6 +71,8 @@ export const combatants = createSelector(
   getFocusTerritory,
   getCommittedUnits,
   getTransport,
+  getAllUnits,
+  state => state.amphib,
   _combatants
 )
 
