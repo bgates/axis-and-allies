@@ -4,13 +4,11 @@ import { TransportFigure } from '../../components/UnitFigure'
 const AmphibiousAssault = ({ 
   unit: { id, originName }, 
   amphibiousUnits, 
+  committedHere,
   destinationIndex,
   commitAmphibUnits,
   unCommitAmphibUnits 
 }) => {
-  const amphibCommitted = false //TODO: fix
-  const committedHere = amphibCommitted === destinationIndex
-  const amphibIds = amphibiousUnits.map(unit => unit.id)
   return (
     <tr>
       <td className="unit">
@@ -20,17 +18,17 @@ const AmphibiousAssault = ({
         ))}
       </td>
       <td className="available">
-        <input readOnly size={2} value={amphibCommitted ? 0 : 1} />
+        <input readOnly size={2} value={committedHere ? 0 : 1} />
         <button 
-          disabled={amphibCommitted}
-          onClick={e => { commitAmphibUnits(id, destinationIndex, amphibIds)}}
+          disabled={committedHere}
+          onClick={e => { commitAmphibUnits(id, destinationIndex)}}
         >&gt;&gt;</button>
       </td>
       <td className="available">
         <input readOnly size={2} value={committedHere ? 1 : 0} />
         <button 
-          disabled={!amphibCommitted}
-          onClick={e => unCommitAmphibUnits(id, destinationIndex, amphibIds)}
+          disabled={!committedHere}
+          onClick={e => unCommitAmphibUnits(id, destinationIndex)}
         >&lt;</button>
       </td>
     </tr>

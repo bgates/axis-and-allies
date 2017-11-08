@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import TransportContainer from '../transport'
+import { TransportContainer } from '../transport'
 import Attacker from './Attacker'
 import { 
   COMMIT_UNITS, 

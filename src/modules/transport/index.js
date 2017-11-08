@@ -1,3 +1,4 @@
 import TransportContainer from './TransportContainer'
+import amphib from './reducer'
 
-export default TransportContainer
+export { TransportContainer, amphib }

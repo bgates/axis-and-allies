@@ -18,3 +18,10 @@ export const getAvailability = createSelector(
   hasUnitMoved,
   (cargo, destination) => !cargo.length && !destination
 )
+
+export const isCommittedHere = createSelector(
+  state => state.phase.territoryIndex,
+  state => state.amphib,
+  (state, unitId) => unitId,
+  (territoryIndex, amphib, unitId) => amphib.transport[unitId] === territoryIndex
+)

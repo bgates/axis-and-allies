@@ -5,7 +5,8 @@ import AmphibiousAssault from './AmphibiousAssault'
 import Transport from './Transport'
 import {
   getCargo,
-  getAvailability
+  getAvailability,
+  isCommittedHere
 } from './selectors'
 import { 
   COMMIT_AMPHIB_UNITS,
@@ -18,25 +19,24 @@ const mapStateToProps = (state, ownProps) => {
   return {
     cargo: getCargo(state, id),
     available: getAvailability(state, id),
+    committedHere: isCommittedHere(state, id),
     ...ownProps
   }
 }
 
-const commitAmphibUnits = (transportId, destinationIndex, amphibIds) => (
+const commitAmphibUnits = (transportId, destinationIndex) => (
   {
     type: COMMIT_AMPHIB_UNITS,
     transportId,
-    destinationIndex,
-    amphibIds
+    destinationIndex
   }
 )
 
-const unCommitAmphibUnits = (transportId, destinationIndex, amphibIds) => (
+const unCommitAmphibUnits = (transportId, destinationIndex) => (
   {
     type: UNCOMMIT_AMPHIB_UNITS,
     transportId,
-    destinationIndex,
-    amphibIds
+    destinationIndex
   }
 )
 
@@ -59,11 +59,12 @@ const mapDispatchToProps = (dispatch) => {
 const GenericTransport = (props) => {
   const { landAttack } = props
   if (landAttack) {
-    const { unit, destinationIndex, cargo, commitAmphibUnits, unCommitAmphibUnits } = props
+    const { unit, committedHere, destinationIndex, cargo, commitAmphibUnits, unCommitAmphibUnits } = props
     return (
       <AmphibiousAssault 
         unit={unit}
         amphibiousUnits={cargo}
+        committedHere={committedHere}
         destinationIndex={destinationIndex}
         commitAmphibUnits={commitAmphibUnits}
         unCommitAmphibUnits={unCommitAmphibUnits}

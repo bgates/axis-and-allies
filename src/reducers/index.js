@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux'
+import { amphib } from '../modules/transport'
 import { board, updateBoard } from '../modules/board'
 import currentPowerIndex from './currentPower'
 import inboundUnits from './inboundUnits'
@@ -35,6 +36,7 @@ import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-fireb
 import { initialState } from '../config/configureStore'
 
 const combinedReducer = combineReducers({
+  amphib,
   currentPowerIndex,
   board,
   boardString,
