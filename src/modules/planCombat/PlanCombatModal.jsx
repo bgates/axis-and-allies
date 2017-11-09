@@ -1,29 +1,28 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { hasIndustrialComplex } from '../../lib/territory'
 import Attacker from './AttackerContainer'
 import Occupiers from './Occupiers'
 
 const PlanCombatModal = ({ 
   combatants, 
   committed, 
+  hasIndustry,
   landingSlots,
   territory, 
   unitsInRange, 
   planOtherAttack 
 }) => {
   const attacker = (unit, key) => {
-    let strategicBombing = {ids: []} //territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && u.mission === STRATEGIC_BOMB) || { ids: [] };
     return (
       <Attacker 
         key={key}
         unit={unit}
         committed={committed.filter(id => unit.ids.includes(id))}
-        hasIndustry={hasIndustrialComplex(territory)}
+        hasIndustry={hasIndustry}
         destinationIndex={territory.index}
         landAttack={!territory.sea}
         landingSlots={landingSlots}
-        strategicBombing={strategicBombing} />
+      />
     )
   }
   return (

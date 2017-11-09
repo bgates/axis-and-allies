@@ -3,16 +3,31 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { TransportContainer } from '../transport'
 import Attacker from './Attacker'
+import { strategicBombing } from './selectors'
 import { 
   COMMIT_UNITS, 
-  UNCOMMIT_UNITS 
+  UNCOMMIT_UNITS,
+  COMMIT_TO_STRATEGIC_BOMBING
 } from '../../actions'
 
-const mapStateToProps = (state, ownProps) => ownProps
+const mapStateToProps = (state, ownProps) => (
+  { strategicBombing: strategicBombing(state, ownProps.unit.ids),
+    ...ownProps
+  }
+)
 
 const commitUnits = (originIndex, destinationIndex, unitIds) => {
   return {
     type: COMMIT_UNITS,
+    originIndex,
+    destinationIndex,
+    unitIds
+  }
+}
+
+const commitToStrategicBombing = (originIndex, destinationIndex, unitIds) => {
+  return {
+    type: COMMIT_TO_STRATEGIC_BOMBING,
     originIndex,
     destinationIndex,
     unitIds
@@ -47,7 +62,8 @@ const unCommitUnits = (destinationIndex, unitIds) => {
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     commitUnits,
-    unCommitUnits
+    unCommitUnits,
+    commitToStrategicBombing
   }, dispatch)
 }
 
@@ -65,15 +81,28 @@ const GenericAttacker = (props) => {
       />
     )
   } else {
-    const { unit, destinationIndex, committed, landingSlots, commitUnits, unCommitUnits } = props
+    const { 
+      unit, 
+      destinationIndex, 
+      committed, 
+      hasIndustry, 
+      landingSlots, 
+      strategicBombing,
+      commitUnits, 
+      unCommitUnits,
+      commitToStrategicBombing
+    } = props
     return (
       <Attacker
         unit={unit}
         destinationIndex={destinationIndex}
         committed={committed}
+        hasIndustry={hasIndustry}
         landingSlots={landingSlots}
+        strategicBombing={strategicBombing}
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}
+        commitToStrategicBombing={commitToStrategicBombing}
       />
     )
   }

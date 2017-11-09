@@ -1,9 +1,15 @@
 import { omit } from 'ramda'
-import { COMMIT_UNITS, UNCOMMIT_UNITS, LOAD_TRANSPORT } from '../actions'
+import { 
+  COMMIT_UNITS, 
+  UNCOMMIT_UNITS, 
+  LOAD_TRANSPORT,
+  COMMIT_TO_STRATEGIC_BOMBING
+} from '../actions'
 
 const outboundUnits = (state = {}, action) => {
   const { originIndex, unitIds } = action
   switch (action.type) {
+  case COMMIT_TO_STRATEGIC_BOMBING:
   case COMMIT_UNITS: {
     let outbound = { ...state }
     unitIds.forEach(id => outbound[id] = originIndex)

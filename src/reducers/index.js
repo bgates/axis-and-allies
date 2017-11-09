@@ -10,6 +10,7 @@ import { placement } from '../modules/placement'
 import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
+import strategicBombing from './strategicBombing'
 import territories from './territories'
 import { transport } from '../modules/loadTransport'
 import units from './units'
@@ -23,8 +24,6 @@ import {
   RESOLVE_COMBAT,
   RETREAT,
   REMOVE_CASUALTIES,
-  COMMIT_AMPHIB_UNITS,
-  UNCOMMIT_AMPHIB_UNITS,
   WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
@@ -52,6 +51,7 @@ const combinedReducer = combineReducers({
   rolls,
   territories,
   transport,
+  strategicBombing,
   units,
   unitOrigin,
   unitDestination

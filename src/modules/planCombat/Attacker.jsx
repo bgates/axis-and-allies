@@ -1,6 +1,5 @@
 import React from 'react'
 import { UnitFigTableData } from '../../components/UnitFigure'
-import { STRATEGIC_BOMB } from '../../actions'
 import unitTypes from '../../config/unitTypes'
 
 const Attacker = ({ 
@@ -8,10 +7,12 @@ const Attacker = ({
   committed, 
   strategicBombing,
   destinationIndex, 
+  landingSlots,
+  hasIndustry,
   commitUnits, 
   unCommitUnits, 
-  landingSlots,
-  hasIndustry }) => {
+  commitToStrategicBombing
+}) => {
   const air = unitTypes[unit.type].air
   return (
     <tr>
@@ -26,19 +27,21 @@ const Attacker = ({
           action={commitUnits} />
         {air && hasIndustry && <AirOptions 
           unit={unit} 
-          hasIndustry={hasIndustry} 
-          index={destinationIndex} 
-          action={commitUnits}
+          committed={committed}
+          landingSlots={landingSlots}
+          destinationIndex={destinationIndex} 
+          action={commitToStrategicBombing}
         />}
       </td>
       <td className="available">
         <UncommitButtons
           destinationIndex={destinationIndex}
-          committed={committed}
+          committed={committed.filter(id => !strategicBombing.includes(id))}
           action={unCommitUnits} />
         {air && hasIndustry && <UncommitButtons
           unit={unit} 
-          index={destinationIndex} 
+          committed={strategicBombing}
+          destinationIndex={destinationIndex} 
           units={strategicBombing}
           action={unCommitUnits} 
         />}
@@ -60,7 +63,6 @@ const CommitButtons = ({
   const qty = available.length
   const allDisabled = qty === 0 || (air && qty > landingSlots)
   const oneDisabled = qty === 0 || (air && !landingSlots)
-  console.log({ unit, landingSlots })
   return (
     <div>
       <input readOnly size={2} value={qty} />
@@ -98,25 +100,24 @@ const UncommitButtons = ({
   )
 }
 
-const AirOptions = ({ unit, hasIndustry, index, action }) => {
-  let bombOrEscort = hasIndustry;
-  if (bombOrEscort) {
-    if (unit.name.includes('strategic')) {
-      bombOrEscort = <span>Strategic bombing</span>
-    } else {
-      bombOrEscort = <span>Bomber escort</span>
-    }
-  }
-  return (
-    <div>
-      {bombOrEscort}
-      <CommitButtons
-        unit={unit} 
-        index={index}
-        action={action}
-        mission={STRATEGIC_BOMB}/>
-    </div>
-  )
-}
+const AirOptions = ({ 
+  unit, 
+  committed,
+  destinationIndex, 
+  landingSlots,
+  action 
+}) => (
+  <div>
+    <CommitButtons
+      unit={unit} 
+      air={true}
+      committed={committed}
+      destinationIndex={destinationIndex}
+      landingSlots={landingSlots}
+      action={action}
+    />
+    <span>{unit.type.includes('strategic') ? 'Strategic bombing' : 'Bomber escort'}</span>
+  </div>
+)
 
-export default Attacker;
+export default Attacker

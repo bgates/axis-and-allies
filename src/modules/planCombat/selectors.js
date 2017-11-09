@@ -5,7 +5,8 @@ import {
   getCommittedIds,
   getCommittedUnits,
   getMovedUnitIds,
-  mergeBoardAndTerritories 
+  mergeBoardAndTerritories,
+  hasIndustrialComplex as hasIndustry
 } from '../../selectors/getTerritory'
 import { getAllUnits, getAllInbound, combineUnits } from '../../selectors/units'
   
@@ -92,4 +93,17 @@ export const landingSlots = createSelector(
       .reduce((total, unit) => total + unitCount(unit) * unit.landingSlots, 0)
     return totalLandingSlots - requiredLandingSlots
   }
+)
+
+export const hasIndustrialComplex = createSelector(
+  state => state,
+  getFocusTerritory,
+  (state, territory) => hasIndustry(state, territory.index)
+)
+
+export const strategicBombing = createSelector(
+  getFocusTerritory,
+  state => state.strategicBombing,
+  (state, unitIds) => unitIds,
+  ({ index }, bombers, unitIds) => (bombers.targetTerritories[index] || []).filter(id => unitIds.includes(id))
 )

@@ -1,12 +1,15 @@
-import { COMMIT_UNITS, UNCOMMIT_UNITS, LOAD_TRANSPORT } from '../actions'
-
-const add = (array = [], ids) => array.concat(ids)
-
-const remove = (array, ids) => array.filter(id => !ids.includes(id))
+import { 
+  COMMIT_UNITS, 
+  UNCOMMIT_UNITS, 
+  LOAD_TRANSPORT,
+  COMMIT_TO_STRATEGIC_BOMBING
+} from '../actions'
+import { add, remove } from './unitOrigin'
 
 const unitDestination = (state = {}, action) => {
   const { destinationIndex, unitIds } = action
   switch (action.type) {
+  case COMMIT_TO_STRATEGIC_BOMBING:
   case COMMIT_UNITS: {
     return { 
       ...state,
