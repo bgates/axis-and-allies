@@ -1,7 +1,6 @@
 import { 
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
-  RESOLVE_COMBAT,
   RETREAT,
   CONTINUE_COMBAT,
   TOGGLE_CASUALTY,
@@ -44,7 +43,7 @@ const boardHelper = (state, action) => {
     case VIEW_STRATEGIC_BOMBING_RESULTS: return completeMission(state, action);
     case DOGFIGHT: return dogfight(state, action);
     case CONTINUE_COMBAT: return continueCombat(state, action);
-    case RESOLVE_COMBAT: return modifyUnits(state, action);
+      //case RESOLVE_COMBAT: return modifyUnits(state, action);
     case RETREAT: return retreat(state, action);
       //case COMMIT_UNITS: return commitUnits(state, action);
       //case UNCOMMIT_UNITS: return uncommitUnits(state, action);

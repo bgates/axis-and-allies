@@ -27,7 +27,7 @@ const retreat = (battleTerritoryIndex, retreatTerritoryIndex) => (
 const returnToCombat = (territory) => {
   return dispatch => {
     dispatch(push(PATHS.RESOLVE_COMBAT))
-    dispatch(resolveCombat(territory))
+    dispatch(resolveCombat(territory.index))
   }
 }
 const mapDispatchToProps = (dispatch) => {

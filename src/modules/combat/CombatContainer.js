@@ -4,18 +4,20 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import BombardmentContainer from '../bombardment'
-import { VIEW_BOMBARDMENT_OPTIONS } from '../../actions';
+import { VIEW_BOMBARDMENT_OPTIONS } from '../../actions'
 
 import { 
   rollCount, 
   getFocusTerritory, 
   attackerCasualties, 
+  attackerCasualtyCount, 
+  defenderCasualties, 
   combatants,
+  strengths,
   allowRetreat 
 } from './selectors'
-import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { removeCasualties, roll } from '../../actions';
+import { removeCasualties, roll } from '../../actions'
 import dice from '../../lib/numericalDieRolls'
 import PATHS from '../../paths'
 

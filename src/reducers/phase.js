@@ -58,7 +58,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   }
   case DOGFIGHT: 
   case RESOLVE_COMBAT: {
-    return currentWithTerritory(state, 'combat', action.territory || state.territory)
+    return currentWithTerritory(state, 'combat', action.territoryIndex || state.territoryIndex)
   }
   case SELECT_PLANE_LANDING_TERRITORY: {
     return currentWithout(state, 'land-planes', 'territory')

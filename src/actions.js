@@ -62,8 +62,8 @@ export const RESET = 'RESET';
 
 export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
-export const resolveCombat = (territory) => (  
-  { type: RESOLVE_COMBAT, territory }
+export const resolveCombat = (territoryIndex) => (  
+  { type: RESOLVE_COMBAT, territoryIndex }
 )
 
 export const markCombatUnderway = (territory) => (

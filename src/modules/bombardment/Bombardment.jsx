@@ -32,7 +32,7 @@ const Bombardment = ({
         ))}
         </tbody>
       </table>
-      <p>When you have selected the units you want to engage in shore bombardment, press <button onClick={resolveCombat.bind(null, territory)}>continue</button></p>
+      <p>When you have selected the units you want to engage in shore bombardment, press <button onClick={resolveCombat.bind(null, territory.index)}>continue</button></p>
     </div> 
   )
 }
