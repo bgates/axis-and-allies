@@ -4,17 +4,16 @@ import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { combatants } from '../planCombat'
 import { planesInAir } from '../landPlanes'
-import { bombRaid } from '../territory'
-import { isBombed } from '../../lib/territory'
+import { bombRaid, isBombed } from '../territory'
 
 import { 
   getFocusTerritory, 
   attackerCasualties, 
   victor, 
   attackDefeated,
-  noCombat,
   isDogfight
 } from './selectors'
+import { noCombat } from '../board'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { resolveCombat, markCombatUnderway, LOSE_ATTACK, winAttack } from '../../actions';

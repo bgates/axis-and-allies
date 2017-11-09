@@ -1,6 +1,6 @@
-import BoardContainer from './BoardContainer';
-import { board, updateBoard } from './reducer';
-import { overlayPhase } from './selectors';
+import BoardContainer from './BoardContainer'
+import { board, updateBoard } from './reducer'
+import { noCombat, overlayPhase } from './selectors'
 
-export { BoardContainer, board, updateBoard, overlayPhase }
+export { BoardContainer, board, updateBoard, noCombat, overlayPhase }
 

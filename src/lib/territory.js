@@ -53,18 +53,6 @@ export const allUnits = (territory) => (
 
 const isAmphib = (territory) => territory.amphib && Object.keys(territory.amphib).length
 
-export const isCombat = (territory) => (
-  (territory.unitsFrom.length && territory.units.length) || isAmphib(territory)
-)
-
-export const isDogfightable = (territory) => (
-  territory.units.find(u => u.air) && territory.unitsFrom.find(u => u.air)
-)
-
-export const isBombed = (territory) => (
-  territory.unitsFrom.find(u => u.mission === STRATEGIC_BOMB)
-)
-
 export const bombardmentCapableUnits = (board, targetTerritory, currentPower) => {
     let territories = targetTerritory.adjacentIndexes.map(index => board[index]).filter(isSea)
     return territories.reduce((units, territory) => {
@@ -76,21 +64,6 @@ export const bombardmentCapableUnits = (board, targetTerritory, currentPower) =>
       })
       .map(unit => ({ ...unit, locationIndex: territory.index })))
     }, [])
-}
-
-export const isBombardable = (territory, currentPower, state) => {
-  if (!territory.bombardmentOver) {
-    const board = mergeBoardAndTerritories(state)
-    const units = bombardmentCapableUnits(board, territory, currentPower)
-    return !!units.length
-  }
-}
-
-export const awaitingNavalResolution = (territory, state) => {
-  if (isAmphib(territory)) {
-    const neighbors = mergeBoardAndTerritories(state).filter(t => Object.values(territory.amphib).includes(t.index))
-    return neighbors.some(n => isCombat(n))
-  }
 }
 
 export const conquered = (territory, currentPower) => {

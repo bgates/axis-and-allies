@@ -4,6 +4,7 @@ import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   getTerritory, 
   getTerritoryData, 
+  getTerritoryUnits, 
   getMovedUnitIds,
   getUnits,
   isFriendly,
@@ -11,6 +12,8 @@ import {
 } from '../../selectors/getTerritory'
 import { getAllUnits } from '../../selectors/units'
 import { nonIndustry, airComplete } from '../../lib/unit'
+import { allyOf, enemyOf } from '../../config/initialPowers'
+import unitTypes from '../../config/unitTypes'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
 
 export const getFill = createSelector(
@@ -79,7 +82,6 @@ export const getClasses = createSelector(
       //'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT && territoryPower !== currentPowerName,
       //'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
     })
-
   }
 )
 
@@ -104,3 +106,40 @@ export const isAttackable = createSelector(
   }
 )
 
+export const isCombat = createSelector(
+  getCurrentPowerName,
+  getUnits,
+  (currentPower, units) => units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
+  // check to see if combat goes on
+  //(territory.unitsFrom.length && territory.units.length) || isAmphib(territory)
+)
+
+const amphibOrigins = (amphib, inbound, index) => (amphib.territory[index] || []).map(transportId => inbound[transportId])
+
+export const awaitingNavalResolution = (state, territoryIndex) => {
+  const { amphib, inboundUnits } = state
+  return amphibOrigins(amphib, inboundUnits, territoryIndex).some(index => isCombat(state, index))
+}
+
+const getAirUnits = createSelector(
+  getUnits,
+  units => units.filter(unit => unitTypes[unit.type].air)
+)
+
+export const isDogfightable = createSelector(
+  getCurrentPowerName,
+  getAirUnits,
+  (currentPower, units) => units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
+)
+
+export const isBombed = createSelector(
+  state => state.strategicBombing.targetTerritories,
+  (territories, territoryIndex) => (territories[territoryIndex] || []).length
+)
+
+export const isBombardable = (state, territoryIndex) => {
+  const { amphib, inboundUnits } = state
+  return amphibOrigins(amphib, inboundUnits, territoryIndex)
+    .map(index => getUnits(state, index))
+    .some(units => units.some(unit => unitTypes[unit.type].canBombard))
+}

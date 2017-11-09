@@ -49,17 +49,6 @@ export const victor = createSelector(
   }
 )
 
-export const noCombat = state => (
-  state.board.territories.filter(t => {
-    const unitsFrom = t.unitsFrom || []
-    const units = t.units || []
-    const currentCombat = (unitsFrom.filter(u => u.mission !== 'complete').length &&
-      units.length) 
-    const upcomingAmphib = allUnits(t).filter(u => u.cargoDestinations).length
-    return currentCombat || upcomingAmphib
-  }).length === 0
-)
-
 export const isDogfight = createSelector(
   getFocusTerritory,
   territory => territory.dogfight

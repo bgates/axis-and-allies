@@ -1,6 +1,6 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { noCombat } from '../selectCasualties';
+import { createSelector } from 'reselect'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { isCombat } from '../territory'
 import { 
   PLAN_ATTACKS, 
   VIEW_ATTACK_OPTIONS, 
@@ -11,28 +11,28 @@ import {
   VIEW_PLANE_LANDING_OPTIONS,
   ORDER_UNITS,
   CONFIRM_FINISH
-} from '../../actions';
-import PATHS from '../../paths';
+} from '../../actions'
+import PATHS from '../../paths'
 
 const pathRequiresOverlay = (pathname) => {
   return [PATHS.RESEARCH, PATHS.RESEARCH_RESULTS, PATHS.ROCKETS, PATHS.PURCHASE, 
     PATHS.INCOME, PATHS.STRATEGIC_BOMB, PATHS.RETREAT, PATHS.COMBAT_ROLLS, PATHS.PLACE_UNITS].includes(pathname)
-};
+}
 
 const phaseRequiresOverlay = (phase) => {
   return [VIEW_ATTACK_OPTIONS, VIEW_TRANSPORT_LOAD_OPTIONS, VIEW_BOMBARDMENT_OPTIONS, VIEW_PLANE_LANDING_OPTIONS, 'combat', PATHS.SELECT_CASUALTIES, VIEW_MOVEMENT_OPTIONS, 'order-units-territory'].includes(phase)
-};
+}
 
 export const overlayPhase = createSelector(
   state => state.router.location.pathname,
   state => state.phase.current,
   (pathname, phase) => pathRequiresOverlay(pathname) || 
            phaseRequiresOverlay(phase)
-);
+)
 
 export const advanceButtonPhase = (state) => {
   return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, CONFIRM_FINISH].includes(state.phase.current)
-};
+}
 
 const canPlace = createSelector(
   getCurrentPower,
@@ -40,12 +40,19 @@ const canPlace = createSelector(
   (currentPower, purchases) => currentPower.name === 'China' || Object.keys(purchases).length
 )
 
+export const noCombat = state => {
+  const { unitDestination, amphib } = state
+  return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
+         Object.keys(amphib.territory).find(index => isCombat(state, index)))
+}
+
 //TODO: combine this w previousPhase selector?
 export const phases = createSelector(
   noCombat,
   state => state.phase.current,
   canPlace,
   (noCombat, phase, canPlaceUnits) => {
+    console.log(noCombat)
     if ([PLAN_ATTACKS, 'resolve-combat'].includes(phase)) {
       const next = noCombat ? PLAN_MOVEMENT : 'resolve-combat';
       return { next, last: 'income' }

@@ -115,6 +115,6 @@ export const getUnits = createSelector(
 export const hasIndustrialComplex = createSelector(
   getAllUnits,
   getTerritory,
-  (allUnits, territory) => territory.unitIds.some(id => allUnits[id].type === 'industrial complex')
+  (allUnits, territory) => territory.unitIds.find(id => allUnits[id].type === 'industrial complex')
 )
 

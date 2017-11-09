@@ -3,11 +3,16 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import Territory from './Territory'
 import { 
+  awaitingNavalResolution,
   getFill, 
   getTerritoryId,
   getTerritoryDimensions,
   getClasses, 
   isAttackable, 
+  isBombardable,
+  isBombed,
+  isCombat,
+  isDogfightable,
   isOrdering 
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
@@ -16,12 +21,7 @@ import { overlayPhase } from '../board'
 import { airComplete } from '../../lib/unit'
 import { 
   isFriendly,
-  isBombardable,
-  isDogfightable,
-  isCombat,
-  isBombed,
   bomberPayload,
-  awaitingNavalResolution
 } from '../../lib/territory'
 import dice from '../../lib/numericalDieRolls'
 import { 
@@ -73,15 +73,15 @@ const territoryThunk = (territoryIndex) => {
       },
       [PATHS.RESOLVE_COMBAT]: () => {
         // need logic to prevent dispatch if no combat
-        if (isCombat(territory)) {
-          if (awaitingNavalResolution(territory, state)) {
+        if (isCombat(state, territoryIndex)) {
+          if (awaitingNavalResolution(state, territoryIndex)) {
             return alert('not yet!')
           }
-          if (isDogfightable(territory)) {
+          if (isDogfightable(state, territoryIndex)) {
             dispatch(dogfight(territory))
-          } else if (isBombed(territory)) {
+          } else if (isBombed(state, territoryIndex)) {
             bombRaid(dispatch, territory)
-          } else if (isBombardable(territory, currentPower, state)) {
+          } else if (isBombardable(state, territoryIndex)) {
             dispatch(viewBombardmentOptions(territory))
           } else {
             dispatch(resolveCombat(territory))
