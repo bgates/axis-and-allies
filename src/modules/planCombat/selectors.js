@@ -29,9 +29,9 @@ export const unitsInRange = createSelector(
   combatUnitsInRange
 )
 
-const placeCargoOnTransports = (transports, amphib) => (units, unit, _, allUnits) => {
+const placeCargoOnTransports = (transports, amphib = {}, territory = {}) => (units, unit, _, allUnits) => {
   const { transporting, transportedBy } = transports
-  if (transportedBy[unit.id] && !amphib.transport[transportedBy[unit.id]]) {
+  if (transportedBy[unit.id] && (territory.sea || !amphib.transport[transportedBy[unit.id]])) {
     return units
   } else if (transporting[unit.id]) {
     const cargo = transporting[unit.id].map(id => allUnits.find(u => u.id === id))
@@ -53,7 +53,7 @@ const uncombinedCombatants = (currentPower, territory, committedUnits, transport
     .filter(allyOf(currentPower))
     .concat(committedUnits)
     .concat(amphibious(territory, amphib, transport, allUnits))
-    .reduce(placeCargoOnTransports(transport, amphib), [])
+    .reduce(placeCargoOnTransports(transport, amphib, territory), [])
   let defenders = combatUnits
     .filter(enemyOf(currentPower))
     .reduce(placeCargoOnTransports(transport), [])
