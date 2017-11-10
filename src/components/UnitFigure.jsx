@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import unitTypes from '../config/unitTypes'
 
 const path = (power, name) => {

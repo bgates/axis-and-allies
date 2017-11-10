@@ -89,9 +89,9 @@ const BritishNationalObjectives = (territoryNames) => {
 
 const alliedSurfaceShip = (unit) => {
   const surfaceShips = Object.values(unitTypes).filter(unit => unit.ship)
-    .map(unit => unit.name)
+    .map(unit => unit.type)
   const allies = ['US', 'UK', 'USSR']
-  return surfaceShips.includes(unit.name) && allies.includes(unit.power)
+  return surfaceShips.includes(unit.type) && allies.includes(unit.power)
 }
 
 const mareNostrum = (territories) => {
