@@ -4,6 +4,7 @@ import { getFocusTerritory } from '../../selectors/getTerritory'
 import { totalCount } from '../../lib/unit'
 import { 
   attack, 
+  attacks,
   defend, 
   survivors,
   withAttack, 
@@ -17,7 +18,10 @@ export const bombardingUnits = state => state.navalBombardment || []
 export const rollCount = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
-  combatants => (combatants.attackers.concat(bombardingUnits).concat(combatants.defenders)).reduce(totalCount, 0)
+  ({ attackers, defenders }, bombardingUnits) => (
+    (attackers.concat(bombardingUnits).concat(defenders))
+    .reduce((total, unit) => total + attacks(unit), 0)
+  )
 )
 
 export const attackerCasualties = createSelector(

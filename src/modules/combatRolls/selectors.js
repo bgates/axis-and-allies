@@ -1,28 +1,21 @@
-import { createSelector } from 'reselect';
+import { createSelector } from 'reselect'
 import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
-import { combatants } from '../planCombat';
-import { totalCount } from '../../lib/unit';
+import { combatants } from '../planCombat'
 import { allUnits } from '../../lib/territory'
-import PATHS from '../../paths';
+import { attack, attacks, defend } from '../../selectors/units'
+import PATHS from '../../paths'
 
 const _strengths = (combatants, bombardingUnits) => {
-  const { attackers, defenders } = combatants;
+  const { attackers, defenders } = combatants
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
-  console.log(supportedAttackers)
-  const dieMax = Math.max(...supportedAttackers.filter(u => u.attack).map(u => u.attack), 
-    ...defenders.filter(u => u.defend).map(u => u.defend));
-  return Array(dieMax).fill().map((n, i) => i + 1);
+  const dieMax = Math.max(...supportedAttackers.filter(attack).map(attack), 
+    ...defenders.filter(defend).map(defend))
+  return Array(dieMax).fill().map((n, i) => i + 1)
 }
 
+//TODO: this isn't right
 export const bombardingUnits = createSelector(
-  mergeBoardAndTerritories,
-  getFocusTerritory,
-  (board, territory) => Object.keys(territory.bombard)
-  .map(key => {
-    const ids = territory.bombard[key]
-    const units = allUnits(board[key])
-    return ids.map(id => units.find(u => u.ids.includes(id)))
-  }).reduce((total, each) => [ ...total, ...each ], [])
+  state => []
 )
 
 export const strengths = createSelector(
@@ -31,15 +24,18 @@ export const strengths = createSelector(
   (combatants, bombardingUnits) => _strengths(combatants, bombardingUnits)
 );
 
+const totalAttacks = (total, unit) => total + attacks(unit)
+const totalDefends = (total, unit) => total + 1
+
 const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
-  const { attackers, defenders } = combatants;
+  const { attackers, defenders } = combatants
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
-  let rollClone = rolls.slice(0);
+  let rollClone = rolls.slice(0)
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
-    let attackRolls = supportedAttackers.filter(unit => unit.attack === n).reduce(totalCount, 0)
+    let attackRolls = supportedAttackers.filter(unit => attack(unit) === n).reduce(totalAttacks, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
-    let defendRolls = defenders.filter(unit => unit.defend === n).reduce(totalCount, 0)
+    let defendRolls = defenders.filter(unit => defend(unit) === n).reduce(totalDefends, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
   })
   return rollsByStrength

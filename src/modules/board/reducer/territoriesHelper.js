@@ -4,7 +4,6 @@ import {
   RETREAT,
   CONTINUE_COMBAT,
   TOGGLE_CASUALTY,
-  REMOVE_CASUALTIES,
   COMMIT_BOMBARDMENT_UNITS,
   UNCOMMIT_BOMBARDMENT_UNITS,
   WIN_ATTACK,
@@ -19,7 +18,7 @@ import {
   retreat
 } from './moveUnitReducerFunctions';
 import {
-  removeCasualties,
+  //removeCasualties,
   toggleCasualties,
   defenderWins,
   attackerWins
@@ -52,7 +51,7 @@ const boardHelper = (state, action) => {
     case COMMIT_BOMBARDMENT_UNITS: return commitBombardmentUnits(state, action);
     case UNCOMMIT_BOMBARDMENT_UNITS: return uncommitBombardmentUnits(state, action);
       //case LOAD_TRANSPORT: return loadTransport(state, action);
-    case REMOVE_CASUALTIES: return removeCasualties(state, action);
+      //case REMOVE_CASUALTIES: return removeCasualties(state, action);
     case TOGGLE_CASUALTY: return toggleCasualties(state, action);
     case LOSE_ATTACK: return defenderWins(state, action);
     case WIN_ATTACK: return attackerWins(state, action);

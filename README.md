@@ -90,3 +90,5 @@ this was taking up too much space in tooltip
 
 bombardment: bb+ca w no prior combat get 1 shot during 1st round of attack
 they cannot be hit themselves
+// remove casualties:
+1st time, nothing
