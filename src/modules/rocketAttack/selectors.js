@@ -2,8 +2,9 @@ import { createSelector } from 'reselect';
 import { getCurrentPower } from '../../selectors/getCurrentPower';
 import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
 import { territoriesInRange } from '../planCombat/movement';
-import { isEnemy, hasIndustrialComplex } from '../../lib/territory';
-  
+import { isEnemy } from '../../lib/territory';
+import { hasIndustrialComplex } from '../../selectors/getTerritory'
+//TODO: not using hasIndustrialComplex right
 const industrialComplexInRocketRange = (board, currentPower, territory) => {
   const all = () => true
   const ranges = territoriesInRange(board, currentPower, territory, all, 2)

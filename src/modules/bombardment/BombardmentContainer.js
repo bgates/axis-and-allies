@@ -1,7 +1,8 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Bombardment from './Bombardment'
-import { getFocusTerritory, getBombardmentCapableUnits } from './selectors'
+import { getFocusTerritory } from '../../selectors/getTerritory'
+import { getBombardmentCapableUnits } from './selectors'
 import { 
   COMMIT_BOMBARDMENT_UNITS, 
   UNCOMMIT_BOMBARDMENT_UNITS,

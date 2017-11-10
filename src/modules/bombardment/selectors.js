@@ -1,13 +1,19 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories, getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
-import { bombardmentCapableUnits } from '../../lib/territory'
-export { getFocusTerritory }
+import { createSelector } from 'reselect'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { amphibOrigins, getFocusTerritory, getUnits } from '../../selectors/getTerritory'
+import { canBombard } from '../../selectors/units'
 
 export const getBombardmentCapableUnits = createSelector(
-  mergeBoardAndTerritories,
   getFocusTerritory,
-  getCurrentPower,
-  (board, territory, currentPower) => bombardmentCapableUnits(board, territory, currentPower)
+  getCurrentPowerName,
+  state => state.amphib,
+  state => state.inboundUnits,
+  state => state,
+  bombardmentCapableUnits
 )
 
+const bombardmentCapableUnits = ({ index }, currentPower, amphib, inboundUnits, state) => {
+  return amphibOrigins(amphib, inboundUnits, index)
+    .map(i => getUnits(state, i))
+    .reduce((total, units) => total.concat(units.filter(canBombard)), [])
+}

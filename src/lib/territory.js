@@ -39,10 +39,6 @@ export const isFriendly = (territory, currentPower) => {
   return !isNeutral(territory) && !isEnemy(territory, currentPower.name)
 }
 
-export const hasIndustrialComplex = (territory) => {
-  return territory.units.some(unit => unit.name === 'industrial complex')
-}
-
 export const bomberPayload = (territory) => (  
   territory.unitsFrom.reduce((total, unit) => total + bombCapacity(unit), 0)
 )
@@ -50,21 +46,6 @@ export const bomberPayload = (territory) => (
 export const allUnits = (territory) => (
   (territory.units || []).concat(territory.unitsFrom || [])
 )
-
-const isAmphib = (territory) => territory.amphib && Object.keys(territory.amphib).length
-
-export const bombardmentCapableUnits = (board, targetTerritory, currentPower) => {
-    let territories = targetTerritory.adjacentIndexes.map(index => board[index]).filter(isSea)
-    return territories.reduce((units, territory) => {
-      return units.concat(allUnits(territory).filter(unit => {
-        return canBombard(unit) && 
-          unit.mission !== 'complete' && 
-          unit.power === currentPower.name &&
-          (!unit.bombard || Object.keys(unit.bombard).length < unit.ids.length || Object.values(unit.bombard).includes(targetTerritory.index))
-      })
-      .map(unit => ({ ...unit, locationIndex: territory.index })))
-    }, [])
-}
 
 export const conquered = (territory, currentPower) => {
   let updatedTerritory = { ...territory, unitsFrom: [], units: territory.unitsFrom }
