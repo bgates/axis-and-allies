@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PlanCombatModal from './PlanCombatModal'
 import { 
-  combatants,
+  combinedCombatants,
   getCurrentPower, 
   getFocusTerritory, 
   getCommittedIds,
@@ -13,7 +13,7 @@ import {
 import { PLAN_ATTACKS } from '../../actions'
 
 const mapStateToProps = (state) => ({
-  combatants: combatants(state),
+  combatants: combinedCombatants(state),
   committed: getCommittedIds(state),
   currentPower: getCurrentPower(state),
   hasIndustry: hasIndustrialComplex(state),

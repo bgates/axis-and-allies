@@ -118,3 +118,7 @@ export const hasIndustrialComplex = createSelector(
   (allUnits, territory) => territory.unitIds.find(id => allUnits[id].type === 'industrial complex')
 )
 
+export const amphibOrigins = (amphib, inbound, index) => (
+  amphib.territory[index] || []).map(transportId => inbound[transportId]
+)
+

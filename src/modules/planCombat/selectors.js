@@ -47,23 +47,27 @@ const amphibious = ({ index }, { territory }, { transporting }, allUnits) => (
   .reduce((all, ids) => all.concat(ids.map(id => allUnits[id])), [])
 )
 
-const _combatants = (currentPower, territory, committedUnits, transport, allUnits, amphib) => {
+const uncombinedCombatants = (currentPower, territory, committedUnits, transport, allUnits, amphib) => {
   const combatUnits = territory.units.filter(nonIndustry)
   let attackers = combatUnits
     .filter(allyOf(currentPower))
     .concat(committedUnits)
     .concat(amphibious(territory, amphib, transport, allUnits))
     .reduce(placeCargoOnTransports(transport, amphib), [])
-    .reduce(combineUnits, [])
   let defenders = combatUnits
     .filter(enemyOf(currentPower))
     .reduce(placeCargoOnTransports(transport), [])
-    .reduce(combineUnits, [])
-  //attackers = consolidateUnits(attackers)
-  if (territory.dogfight) {
+  return { attackers, defenders }
+}
+
+export const combinedCombatants = state => {
+  let { attackers, defenders } = combatants(state)
+  attackers = attackers.reduce(combineUnits, [])
+  defenders = defenders.reduce(combineUnits, [])
+    /*if (territory && territory.dogfight) {
     defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
     attackers = attackers.filter(u => u.air)
-  }
+  }*/
   return { attackers, defenders }
 }
 
@@ -74,7 +78,7 @@ export const combatants = createSelector(
   getTransport,
   getAllUnits,
   state => state.amphib,
-  _combatants
+  uncombinedCombatants
 )
 
 export const landingSlots = createSelector(
