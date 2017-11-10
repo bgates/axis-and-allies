@@ -1,8 +1,14 @@
-import { createSelector } from 'reselect';
+import { createSelector } from 'reselect'
 import { combatants as combatantsWithoutDamage } from '../planCombat'
 import { getFocusTerritory } from '../../selectors/getTerritory'
-import { totalCount, survivors } from '../../lib/unit'
-import unitTypes from '../../config/unitTypes'
+import { totalCount } from '../../lib/unit'
+import { 
+  attack, 
+  defend, 
+  survivors,
+  withAttack, 
+  withDefend 
+} from '../../selectors/units'
 import PATHS from '../../paths'
 export { getFocusTerritory }
 
@@ -25,12 +31,13 @@ export const combatants = createSelector(
   bombardingUnits,
   (combatants, attackerCasualties, bombardingUnits) => {
     let { attackers, defenders } = combatants 
-    return { attackers: modify(survivors(attackers, attackerCasualties)), defenders, bombardingUnits }
+    return { 
+      attackers: modify(survivors(attackers, attackerCasualties)), 
+      defenders: defenders.map(withDefend), 
+      bombardingUnits: bombardingUnits.map(withAttack) 
+    }
   }
 )
-
-const attack = unit => unitTypes[unit.type].attack
-const defend = unit => unitTypes[unit.type].defend
 
 const strengthRange = (combatants, bombardingUnits) => {
   const { attackers, defenders } = combatants
@@ -65,10 +72,10 @@ const modify = (units) => {
   if (supportable > 0) {
     // supported, unsupported, noninf
     return [ ...units.filter(infantry).slice(0, supportable).map(u => ({ ...u, attack: 2 })),
-      ...units.filter(infantry).slice(supportable),
-      ...units.filter(u => u.type !== 'infantry')]
+      ...units.filter(infantry).slice(supportable).map(withAttack),
+      ...units.filter(u => u.type !== 'infantry').map(withAttack)]
   }
-  return units
+  return units.map(withAttack)
 }
 
 const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {

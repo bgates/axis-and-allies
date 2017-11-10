@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { Link } from 'react-router-dom'
-import Forces from '../../components/Forces';
+import Forces from '../../components/Forces'
 import PATHS from '../../paths'
-import '../../assets/styles/combat.css';
+import '../../assets/styles/combat.css'
 
 const CombatModal = ({ 
   combatants, 
@@ -13,7 +13,7 @@ const CombatModal = ({
   rollForCombat,
   allowRetreat
 }) => {
-  const { attackers, defenders, bombardingUnits } = combatants;
+  const { attackers, defenders, bombardingUnits } = combatants
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   return (
     <div className="battleBoard">
@@ -23,8 +23,7 @@ const CombatModal = ({
         {strengths.map(n => {
           return <Forces 
                     key={n}
-                    filterFct={id => !defenderCasualties.includes(id)}
-                    units={defenders.filter(u => u.defend === n)}/>
+                    units={defenders.filter(u => u.defend === n && !defenderCasualties.includes(u.id))}/>
         })}
       </div>
       <div className="midSpace">
