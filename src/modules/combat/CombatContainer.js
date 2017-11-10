@@ -33,9 +33,9 @@ const mapStateToProps = (state) => ({
 
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
-    const state = getState();
+    const state = getState()
     dispatch(removeCasualties(defenderCasualties(state), territoryIndex, getCurrentPower(state).name))
-    const rolls = dice(rollCount(getState()));
+    const rolls = dice(rollCount(getState()))
     dispatch(roll(PATHS.COMBAT_ROLLS, rolls))
     dispatch(push(PATHS.COMBAT_ROLLS));
   }

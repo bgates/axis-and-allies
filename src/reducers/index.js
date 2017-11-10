@@ -21,9 +21,7 @@ import { boardString, updateBoardString } from './updateBoardString'
 import { 
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
-  RESOLVE_COMBAT,
   RETREAT,
-  REMOVE_CASUALTIES,
   WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
@@ -65,10 +63,10 @@ const crossSliceReducer = (state, action) => {
       //case COMMIT_AMPHIB_UNITS:
       //case UNCOMMIT_AMPHIB_UNITS:
       //case RESOLVE_COMBAT:
+      //case REMOVE_CASUALTIES:
     case DOGFIGHT:
     case VIEW_STRATEGIC_BOMBING_RESULTS:
     case RETREAT:
-    case REMOVE_CASUALTIES:
     case WIN_ATTACK:
     case LOSE_ATTACK:
     case LAND_PLANES:
