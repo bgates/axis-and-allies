@@ -1,6 +1,6 @@
 import React from 'react'
 import { UnitFigTableData } from '../../components/UnitFigure'
-import unitTypes from '../../config/unitTypes'
+import { air as isAir } from '../../selectors/units'
 
 const Attacker = ({ 
   unit, 
@@ -13,7 +13,7 @@ const Attacker = ({
   unCommitUnits, 
   commitToStrategicBombing
 }) => {
-  const air = unitTypes[unit.type].air
+  const air = isAir(unit)
   return (
     <tr>
       <UnitFigTableData unit={unit} />

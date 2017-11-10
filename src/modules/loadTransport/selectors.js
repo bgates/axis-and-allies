@@ -8,12 +8,13 @@ import {
   isLand,
   isSea
 } from '../../selectors/getTerritory'
+import { land } from '../../selectors/units'
 import unitTypes from '../../config/unitTypes'
 export { getFocusTerritory }
 
 const _hasLoadable = (territory, currentPower) => {
   return isFriendly(territory, currentPower) && 
-    territory.units.some(u => unitTypes[u.type].land && u.power === currentPower)
+    territory.units.some(u => land(u) && u.power === currentPower)
 }
 
 const notBy = (i, territory) => !territory.adjacentIndexes.includes(i);

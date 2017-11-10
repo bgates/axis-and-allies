@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import classNames from 'classnames'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
+  amphibOrigins,
   getTerritory, 
   getTerritoryData, 
   getTerritoryUnits, 
@@ -10,10 +11,9 @@ import {
   isFriendly,
   isEnemy 
 } from '../../selectors/getTerritory'
-import { getAllUnits } from '../../selectors/units'
+import { air, canBombard, getAllUnits } from '../../selectors/units'
 import { nonIndustry, airComplete } from '../../lib/unit'
 import { allyOf, enemyOf } from '../../config/initialPowers'
-import unitTypes from '../../config/unitTypes'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
 
 export const getFill = createSelector(
@@ -114,8 +114,6 @@ export const isCombat = createSelector(
   //(territory.unitsFrom.length && territory.units.length) || isAmphib(territory)
 )
 
-const amphibOrigins = (amphib, inbound, index) => (amphib.territory[index] || []).map(transportId => inbound[transportId])
-
 export const awaitingNavalResolution = (state, territoryIndex) => {
   const { amphib, inboundUnits } = state
   return amphibOrigins(amphib, inboundUnits, territoryIndex).some(index => isCombat(state, index))
@@ -123,7 +121,7 @@ export const awaitingNavalResolution = (state, territoryIndex) => {
 
 const getAirUnits = createSelector(
   getUnits,
-  units => units.filter(unit => unitTypes[unit.type].air)
+  units => units.filter(air)
 )
 
 export const isDogfightable = createSelector(
@@ -141,5 +139,5 @@ export const isBombardable = (state, territoryIndex) => {
   const { amphib, inboundUnits } = state
   return amphibOrigins(amphib, inboundUnits, territoryIndex)
     .map(index => getUnits(state, index))
-    .some(units => units.some(unit => unitTypes[unit.type].canBombard))
+    .some(units => units.some(canBombard))
 }
