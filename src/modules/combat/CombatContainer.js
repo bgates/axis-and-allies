@@ -7,14 +7,14 @@ import BombardmentContainer from '../bombardment'
 import { VIEW_BOMBARDMENT_OPTIONS } from '../../actions'
 
 import { 
-  rollCount, 
-  getFocusTerritory, 
+  allowRetreat,
   attackerCasualties, 
   attackerCasualtyCount, 
-  defenderCasualties, 
   combatants,
+  defenderCasualties, 
+  getFocusTerritory, 
+  rollCount, 
   strengths,
-  allowRetreat 
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { removeCasualties, roll } from '../../actions'
@@ -22,13 +22,13 @@ import dice from '../../lib/numericalDieRolls'
 import PATHS from '../../paths'
 
 const mapStateToProps = (state) => ({
-  territory: getFocusTerritory(state),
-  combatants: combatants(state),
-  strengths: strengths(state),
-  defenderCasualties: defenderCasualties(state),
+  allowRetreat: allowRetreat(state),
   attackerCasualties: attackerCasualties(state),
   attackerCasualtyCount: attackerCasualtyCount(state),
-  allowRetreat: allowRetreat(state)
+  combatants: combatants(state),
+  defenderCasualties: defenderCasualties(state),
+  strengths: strengths(state),
+  territory: getFocusTerritory(state)
 })
 
 const rollForCombat = (territoryIndex) => {

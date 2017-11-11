@@ -64,7 +64,8 @@ export const allowRetreat = createSelector(
 
 const attacksAt = n => unit => attack(unit) === n
 const defendsAt = n => unit => defend(unit) === n
-const totalRolls = (total, unit) => total + attacks(unit)
+const totalAttacks = (total, unit) => total + attacks(unit)
+const totalDefends = (total, unit) => total + 1
 
 const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
   const { attackers, defenders } = combatants
@@ -72,9 +73,9 @@ const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
   let rollClone = rolls.slice(0)
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
-    let attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalRolls, 0)
+    let attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalAttacks, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
-    let defendRolls = defenders.filter(defendsAt(n)).reduce(totalRolls, 0)
+    let defendRolls = defenders.filter(defendsAt(n)).reduce(totalDefends, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
   })
   return rollsByStrength
@@ -116,8 +117,8 @@ export const rollCount = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
   ({ attackers, defenders }, bombardingUnits) => (
-    (attackers.concat(bombardingUnits).concat(defenders))
-    .reduce(totalRolls, 0)
+    attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
+    + defenders.reduce(totalDefends, 0)
   )
 )
 

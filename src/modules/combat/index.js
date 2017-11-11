@@ -1,3 +1,16 @@
 import CombatContainer from './CombatContainer'
-
-export { CombatContainer }
+import { 
+  attackerCasualties,
+  attackerCasualtyCount, 
+  combatants, 
+  defenderCasualties, 
+  strengths 
+} from './selectors'
+export { 
+  CombatContainer, 
+  attackerCasualties,
+  attackerCasualtyCount, 
+  combatants, 
+  defenderCasualties, 
+  strengths 
+}

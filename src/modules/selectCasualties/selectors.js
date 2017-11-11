@@ -1,21 +1,15 @@
 import { createSelector } from 'reselect'
-import { combatants } from '../planCombat'
-import { defenderCasualties, attackerCasualtyCount } from '../combatRolls'
+import { 
+  attackerCasualties,
+  attackerCasualtyCount,
+  combatants, 
+  defenderCasualties, 
+} from '../combat'
 import { getFocusTerritory } from '../../selectors/getTerritory'
 import { allUnits } from '../../lib/territory'
-import { unitCount, totalCount } from '../../lib/unit'
+import { unitCount } from '../../lib/unit'
 import unitTypes from '../../config/unitTypes'
-export { getFocusTerritory, combatants }
-
-export const rollCount = createSelector(
-  combatants,
-  combatants => (combatants.attackers.concat(combatants.defenders)).reduce(totalCount, 0)
-)
-
-export const attackerCasualties = createSelector(
-  getFocusTerritory,
-  territory => territory.attackerCasualties || []
-)
+export { attackerCasualties, getFocusTerritory, combatants }
 
 export const attackDefeated = createSelector(
   combatants,

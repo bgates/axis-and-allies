@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux'
 import { amphib } from '../modules/transport'
 import { board, updateBoard } from '../modules/board'
+import { casualties } from '../modules/selectCasualties'
 import currentPowerIndex from './currentPower'
 import inboundUnits from './inboundUnits'
 import { landPlanes } from '../modules/landPlanes'
@@ -34,6 +35,7 @@ import { initialState } from '../config/configureStore'
 
 const combinedReducer = combineReducers({
   amphib,
+  casualties,
   currentPowerIndex,
   board,
   boardString,

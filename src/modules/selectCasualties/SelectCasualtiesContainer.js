@@ -14,7 +14,7 @@ import {
   isDogfight
 } from './selectors'
 import { noCombat } from '../board'
-import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
+import { strengths, defenderCasualties, attackerCasualtyCount } from '../combat'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { resolveCombat, markCombatUnderway, LOSE_ATTACK, winAttack } from '../../actions'
 
