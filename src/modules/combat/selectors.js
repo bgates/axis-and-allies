@@ -1,7 +1,6 @@
 import { createSelector } from 'reselect'
 import { combatants as combatantsWithoutDamage } from '../planCombat'
 import { getFocusTerritory } from '../../selectors/getTerritory'
-import { totalCount } from '../../lib/unit'
 import { 
   attack, 
   attacks,
@@ -13,21 +12,23 @@ import {
 import PATHS from '../../paths'
 export { getFocusTerritory }
 
+export const attackerCasualties = state => state.casualties
+
 export const bombardingUnits = state => state.navalBombardment || []
 
-export const rollCount = createSelector(
-  combatantsWithoutDamage,
-  bombardingUnits,
-  ({ attackers, defenders }, bombardingUnits) => (
-    (attackers.concat(bombardingUnits).concat(defenders))
-    .reduce((total, unit) => total + attacks(unit), 0)
-  )
-)
+const artillery = unit => unit.type === 'artillery'
+const infantry = unit => unit.type === 'infantry'
 
-export const attackerCasualties = createSelector(
-  getFocusTerritory,
-  territory => territory.attackerCasualties || []
-)
+const modify = (units) => {
+  const supportable = units.filter(artillery).length
+  if (supportable) {
+    return [ ...units.filter(infantry).slice(0, supportable).map(u => ({ ...u, attack: 2 })),
+      ...units.filter(infantry).slice(supportable).map(withAttack),
+      ...units.filter(u => u.type !== 'infantry').map(withAttack)]
+  } else {
+    return units.map(withAttack)
+  }
+}
 
 export const combatants = createSelector(
   combatantsWithoutDamage,
@@ -43,8 +44,7 @@ export const combatants = createSelector(
   }
 )
 
-const strengthRange = (combatants, bombardingUnits) => {
-  const { attackers, defenders } = combatants
+const strengthRange = ({ attackers, defenders, bombardingUnits }) => {
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   const dieMax = Math.max(...supportedAttackers.filter(attack).map(attack), 
     ...defenders.filter(defend).map(defend))
@@ -52,35 +52,19 @@ const strengthRange = (combatants, bombardingUnits) => {
 }
 
 export const strengths = createSelector(
-  combatantsWithoutDamage,
-  bombardingUnits,
-  (combatants, bombardingUnits) => strengthRange(combatants, bombardingUnits)
-);
-
-const noAmphibiousUnits = (territory, attackers) => {
-  const ids = Object.keys(territory.amphib)
-  return !ids.some(id => attackers.find(attacker => attacker.ids.includes(id)))
-}
-
+  combatants,
+  strengthRange
+)
+//TODO: ensure territory has continued conflict and no amphib presence
 export const allowRetreat = createSelector(
   getFocusTerritory,
   combatants,
-  (territory, { attackers }) => territory.continueCombat && (!territory.amphib || noAmphibiousUnits(territory, attackers))
+  (territory, { attackers }) => territory.continueCombat && (!territory.amphib)
 )
 
-const artillery = unit => unit.type === 'artillery'
-const infantry = unit => unit.type === 'infantry'
-
-const modify = (units) => {
-  const supportable = units.filter(artillery).length - units.filter(infantry).length
-  if (supportable > 0) {
-    // supported, unsupported, noninf
-    return [ ...units.filter(infantry).slice(0, supportable).map(u => ({ ...u, attack: 2 })),
-      ...units.filter(infantry).slice(supportable).map(withAttack),
-      ...units.filter(u => u.type !== 'infantry').map(withAttack)]
-  }
-  return units.map(withAttack)
-}
+const attacksAt = n => unit => attack(unit) === n
+const defendsAt = n => unit => defend(unit) === n
+const totalRolls = (total, unit) => total + attacks(unit)
 
 const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
   const { attackers, defenders } = combatants
@@ -88,9 +72,9 @@ const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
   let rollClone = rolls.slice(0)
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
-    let attackRolls = supportedAttackers.filter(unit => unit.attack === n).reduce(totalCount, 0)
+    let attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalRolls, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
-    let defendRolls = defenders.filter(unit => unit.defend === n).reduce(totalCount, 0)
+    let defendRolls = defenders.filter(defendsAt(n)).reduce(totalRolls, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
   })
   return rollsByStrength
@@ -110,12 +94,17 @@ const hits = (rolls, side) => {
   }, 0)
 }
 
-const _casualties = (combatants, rolls) => {
-  return combatants.defenders
-    .sort((a, b) => a.defend - b.defend).reduce((total, defender) => {
-    return total.concat(defender.ids)
-  }, []).slice(0, hits(rolls, 'attackers'))
-}
+export const attackerCasualtyCount = createSelector(
+  combatRolls,
+  (rolls) => hits(rolls, 'defenders')
+)
+
+const byDefense = (a, b) => defend(a) - defend(b)
+
+const _casualties = (combatants, rolls) => (
+  combatants.defenders.sort(byDefense)
+  .map(unit => unit.id).slice(0, hits(rolls, 'attackers'))
+)
 
 export const defenderCasualties = createSelector(
   combatantsWithoutDamage,
@@ -123,7 +112,12 @@ export const defenderCasualties = createSelector(
   (combatants, rolls) => _casualties(combatants, rolls)
 )
 
-export const attackerCasualtyCount = createSelector(
-  combatRolls,
-  (rolls) => hits(rolls, 'defenders')
+export const rollCount = createSelector(
+  combatantsWithoutDamage,
+  bombardingUnits,
+  ({ attackers, defenders }, bombardingUnits) => (
+    (attackers.concat(bombardingUnits).concat(defenders))
+    .reduce(totalRolls, 0)
+  )
 )
+

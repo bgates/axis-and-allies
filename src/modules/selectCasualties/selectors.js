@@ -1,11 +1,11 @@
-import { createSelector } from 'reselect';
-import { combatants } from '../planCombat';
+import { createSelector } from 'reselect'
+import { combatants } from '../planCombat'
 import { defenderCasualties, attackerCasualtyCount } from '../combatRolls'
-import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
-import { allUnits } from '../../lib/territory';
-import { unitCount, totalCount } from '../../lib/unit';
-import unitTypes from '../../config/unitTypes';
-export { getFocusTerritory }
+import { getFocusTerritory } from '../../selectors/getTerritory'
+import { allUnits } from '../../lib/territory'
+import { unitCount, totalCount } from '../../lib/unit'
+import unitTypes from '../../config/unitTypes'
+export { getFocusTerritory, combatants }
 
 export const rollCount = createSelector(
   combatants,
@@ -24,11 +24,11 @@ export const attackDefeated = createSelector(
 )
 
 const multiplier = (unit, side) => (
-  unitTypes[unit.name].canTakeDamage ? 2 : unit[side] ? 1 : 0
+  unitTypes[unit.type].canTakeDamage ? 2 : unitTypes[unit.type][side] ? 1 : 0
 )
 
 const noneLeft = (side, strength, casualtyCount) => (
-  side.reduce((total, unit) => total + unitCount(unit) * multiplier(unit, strength), 0) <= casualtyCount
+  side.reduce((total, unit) => total + multiplier(unit, strength), 0) <= casualtyCount
 )
 
 const defendersDefeated = createSelector(

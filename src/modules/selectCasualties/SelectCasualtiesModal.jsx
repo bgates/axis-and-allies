@@ -48,7 +48,7 @@ const SelectCasualtiesModal = ({
                 !attackDefeated && 
                 (attackerCasualties.includes(id) || 
                  attackerCasualties.length < attackerCasualtyCount) &&
-                toggleCasualtyStatus(id, territory.index)
+                toggleCasualtyStatus(id)
               )}
             />
           )

@@ -2,21 +2,21 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
-import { combatants } from '../planCombat'
 import { planesInAir } from '../landPlanes'
 import { bombRaid, isBombed } from '../territory'
 
 import { 
   getFocusTerritory, 
   attackerCasualties, 
+  combatants,
   victor, 
   attackDefeated,
   isDogfight
 } from './selectors'
 import { noCombat } from '../board'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combatRolls'
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { resolveCombat, markCombatUnderway, LOSE_ATTACK, winAttack } from '../../actions';
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { resolveCombat, markCombatUnderway, LOSE_ATTACK, winAttack } from '../../actions'
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -30,12 +30,11 @@ const mapStateToProps = (state) => ({
   victor: victor(state)
 })
 
-const toggleCasualtyStatus = (id, territoryIndex) => {
+const toggleCasualtyStatus = (id) => {
   return (dispatch) => {
     dispatch({
       type: 'TOGGLE_CASUALTY',
-      id,
-      territoryIndex
+      id
     })
   }
 }
