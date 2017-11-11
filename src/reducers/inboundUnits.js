@@ -3,12 +3,13 @@ import {
   COMMIT_UNITS, 
   UNCOMMIT_UNITS, 
   LOAD_TRANSPORT,
-  COMMIT_TO_STRATEGIC_BOMBING
+  COMMIT_TO_STRATEGIC_BOMBING,
+  REMOVE_CASUALTIES
 } from '../actions'
 
 const inboundUnits = (state = {}, action) => {
-  const { destinationIndex, unitIds } = action
-  switch (action.type) {
+  const { destinationIndex, unitIds, type } = action
+  switch (type) {
   case COMMIT_TO_STRATEGIC_BOMBING:
   case COMMIT_UNITS: {
     let inbound = { ...state }
@@ -23,6 +24,9 @@ const inboundUnits = (state = {}, action) => {
     let inbound = { ...state }
     unitIds.concat(transport.id).forEach(id => inbound[id] = destinationIndex)
     return inbound
+  }
+  case REMOVE_CASUALTIES: {
+    return omit(action.attackerCasualties.map(String), state)
   }
   default:
     return state
