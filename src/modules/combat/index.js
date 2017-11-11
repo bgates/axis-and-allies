@@ -3,7 +3,9 @@ import {
   attackerCasualties,
   attackerCasualtyCount, 
   combatants, 
+  combatRolls, 
   defenderCasualties, 
+  preCasualtyCombatants,
   strengths 
 } from './selectors'
 export { 
@@ -11,6 +13,8 @@ export {
   attackerCasualties,
   attackerCasualtyCount, 
   combatants, 
+  combatRolls, 
   defenderCasualties, 
+  preCasualtyCombatants,
   strengths 
 }

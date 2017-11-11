@@ -30,18 +30,28 @@ const modify = (units) => {
   }
 }
 
-export const combatants = createSelector(
+export const preCasualtyCombatants = createSelector(
   combatantsWithoutDamage,
-  attackerCasualties,
   bombardingUnits,
-  (combatants, attackerCasualties, bombardingUnits) => {
-    let { attackers, defenders } = combatants 
-    return { 
-      attackers: modify(survivors(attackers, attackerCasualties)), 
+  ({ attackers, defenders }, bombardingUnits) => (
+    { 
+      attackers: modify(attackers), 
       defenders: defenders.map(withDefend), 
       bombardingUnits: bombardingUnits.map(withAttack) 
     }
-  }
+  )
+)
+
+export const combatants = createSelector(
+  preCasualtyCombatants,
+  attackerCasualties,
+  ({ attackers, defenders, bombardingUnits }, casualties) => (
+    { 
+      attackers: survivors(attackers, casualties), 
+      defenders, 
+      bombardingUnits 
+    }
+  )
 )
 
 const strengthRange = ({ attackers, defenders, bombardingUnits }) => {
@@ -62,8 +72,8 @@ export const allowRetreat = createSelector(
   (territory, { attackers }) => territory.continueCombat && (!territory.amphib)
 )
 
-const attacksAt = n => unit => attack(unit) === n
-const defendsAt = n => unit => defend(unit) === n
+const attacksAt = n => unit => unit.attack === n
+const defendsAt = n => unit => unit.defend === n
 const totalAttacks = (total, unit) => total + attacks(unit)
 const totalDefends = (total, unit) => total + 1
 
@@ -82,7 +92,7 @@ const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
 }
 
 export const combatRolls = createSelector(
-  combatantsWithoutDamage,
+  combatants,
   bombardingUnits,
   strengths,
   state => state.rolls[PATHS.COMBAT_ROLLS],
