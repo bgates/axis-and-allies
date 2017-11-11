@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import BombardmentContainer from '../bombardment'
-import { VIEW_BOMBARDMENT_OPTIONS } from '../../actions'
+import { VIEW_BOMBARDMENT_OPTIONS, COMBAT_UNDERWAY } from '../../actions'
 
 import { 
   allowRetreat,
@@ -16,7 +16,7 @@ import {
   rollCount, 
   strengths,
 } from './selectors'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { removeCasualties, roll } from '../../actions'
 import dice from '../../lib/numericalDieRolls'
 import PATHS from '../../paths'
@@ -30,14 +30,30 @@ const mapStateToProps = (state) => ({
   strengths: strengths(state),
   territory: getFocusTerritory(state)
 })
+/*
+transport.transportedBy[those transportIds] can get moved into the territory itself.
+*/
+
+const markCombatUnderway = (territoryIndex, transportIds, unitIds) => (
+  {
+    type: COMBAT_UNDERWAY,
+    territoryIndex,
+    transportIds,
+    unitIds
+  }
+)
 
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
-    dispatch(removeCasualties(defenderCasualties(state), territoryIndex, getCurrentPower(state).name))
+    const { amphib, transport, unitDestination } = state
+    const transportIds = amphib.territory[territoryIndex] || []
+    const transportedBy = transportIds.reduce((all, id) => (transport.transportedBy[id] || []).concat(all), [])
+    dispatch(markCombatUnderway(territoryIndex, transportIds, transportedBy))
+    dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
     const rolls = dice(rollCount(getState()))
     dispatch(roll(PATHS.COMBAT_ROLLS, rolls))
-    dispatch(push(PATHS.COMBAT_ROLLS));
+    dispatch(push(PATHS.COMBAT_ROLLS))
   }
 }
 

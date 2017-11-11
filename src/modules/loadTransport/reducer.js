@@ -1,5 +1,5 @@
 import { omit } from 'ramda'
-import { LOAD_TRANSPORT, UNCOMMIT_UNITS } from '../../actions'
+import { LOAD_TRANSPORT, UNCOMMIT_UNITS, COMBAT_UNDERWAY } from '../../actions'
 
 const initialState = {
   transporting: {},
@@ -28,6 +28,13 @@ const transport = (state = initialState, action) => {
     } else {
       return state
     }
+  }
+  case COMBAT_UNDERWAY: {
+    const { transportIds, unitIds } = action
+    const newlyLoaded = state.newlyLoaded.filter(id => !transportIds.includes(id))
+    const transporting = omit(transportIds.map(String), state.transporting)
+    const transportedBy = omit(unitIds.map(String), state.transportedBy)
+    return { transporting, transportedBy, newlyLoaded }
   }
   default:
     return state

@@ -1,6 +1,6 @@
 import { omit } from 'ramda'
 import {
-  COMMIT_AMPHIB_UNITS, UNCOMMIT_AMPHIB_UNITS
+  COMMIT_AMPHIB_UNITS, UNCOMMIT_AMPHIB_UNITS, COMBAT_UNDERWAY
 } from '../../actions'
 
 const amphib = (state = { transport: {}, territory: {} }, action) => {
@@ -17,6 +17,12 @@ const amphib = (state = { transport: {}, territory: {} }, action) => {
       return {
         transport: omit(String(transportId), transport),
         territory: { ...territory, [destinationIndex]: territory[destinationIndex].filter(id => id !== transportId) }
+      }
+    }
+    case COMBAT_UNDERWAY: {
+      return {
+        transport,
+        territory: omit(String(action.territoryIndex), territory)
       }
     }
     default:
