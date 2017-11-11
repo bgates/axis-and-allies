@@ -9,7 +9,7 @@ const BattleStatus = ({
   nextStep,
   territoryIndex
 }) => {
-  let disabled, span = '', btn = 'Continue';
+  let disabled, span = '', btn = 'Continue'
   if (!casualtyCount && !defenderCasualtiesCount) {
     span = 'Everybody missed!'
   } else {
@@ -20,7 +20,7 @@ const BattleStatus = ({
     } 
     if (victor !== 'defender') {
       const count = casualtyCount - casualties.length;
-      const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties';
+      const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties'
       if (count) {
         span += `Mark ${count} ${casualtyWord}.`
       } else {
