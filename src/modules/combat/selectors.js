@@ -73,13 +73,13 @@ export const allowRetreat = createSelector(
 )
 
 const attacksAt = n => unit => unit.attack === n
-const defendsAt = n => unit => unit.defend === n
+const defendsAt = n => unit => defend(unit) === n
 const totalAttacks = (total, unit) => total + attacks(unit)
 const totalDefends = (total, unit) => total + 1
 
 const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
   const { attackers, defenders } = combatants
-  const supportedAttackers = [ ...attackers, ...bombardingUnits ]
+  const supportedAttackers = [ ...modify(attackers), ...bombardingUnits ]
   let rollClone = rolls.slice(0)
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
@@ -92,7 +92,7 @@ const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
 }
 
 export const combatRolls = createSelector(
-  combatants,
+  combatantsWithoutDamage,
   bombardingUnits,
   strengths,
   state => state.rolls[PATHS.COMBAT_ROLLS],
