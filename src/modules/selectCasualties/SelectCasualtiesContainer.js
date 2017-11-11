@@ -78,7 +78,7 @@ const continueCombat = () => {
     const territory = getFocusTerritory(getState())
     dispatch(markCombatUnderway(territory))
     dispatch(push('resolve-combat'))
-    dispatch(resolveCombat(territory))
+    dispatch(resolveCombat(territory.index))
   }
 }
 

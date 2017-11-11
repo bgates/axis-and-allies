@@ -29,8 +29,9 @@ export const STRATEGIC_BOMBING_ROLLS = 'STRATEGIC_BOMBING_ROLLS';
 export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS';
 
 export const RESOLVE_COMBAT = '/resolve-combat';
+export const COMBAT_UNDERWAY = 'COMBAT_UNDERWAY'
 export const CONTINUE_COMBAT = 'CONTINUE_COMBAT';
-export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY';
+export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY'
 export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES';
 export const WIN_ATTACK = 'WIN_ATTACK';
 export const LOSE_ATTACK = 'LOSE_ATTACK';
@@ -83,10 +84,11 @@ export const viewStrategicBombingResults = (damage, power, territoryIndex) => (
   }
 )
 
-export const removeCasualties = (defenderCasualties, territoryIndex, currentPower) => ( 
+export const removeCasualties = (defenderCasualties, attackerCasualties, territoryIndex, currentPower) => ( 
   {
     type: REMOVE_CASUALTIES,
     defenderCasualties,
+    attackerCasualties,
     territoryIndex,
     currentPower
   }
