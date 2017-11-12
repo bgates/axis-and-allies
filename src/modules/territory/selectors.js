@@ -74,12 +74,13 @@ export const getClasses = createSelector(
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
+    const hasAttackers = (movedUnitIds[territoryIndex] || []).length
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       [territoryPower.toLowerCase()]: isOcean || isControlled,
-      active: (movedUnitIds[territoryIndex] || []).length && phase !== RESOLVE_COMBAT,
+      active: hasAttackers && phase !== RESOLVE_COMBAT,
       //active: (hasAirComplete(units) && phase === LAND_PLANES) || (units.length && phase !== RESOLVE_COMBAT),
-      //'active-combat': unitsFrom.length && phase === RESOLVE_COMBAT && territoryPower !== currentPowerName,
+      'active-combat': hasAttackers && phase === RESOLVE_COMBAT && territoryPower !== currentPower,
       //'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
     })
   }
