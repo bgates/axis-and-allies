@@ -69,18 +69,20 @@ export const getClasses = createSelector(
   getTerritoryData,
   getMovedUnitIds,
   state => state.phase.current,
+  state => state.amphib.territory,
   (state, index) => index,
-  (currentPower, territory, { sea }, movedUnitIds, phase, territoryIndex) => {
+  (currentPower, territory, { sea }, movedUnitIds, phase, amphib, territoryIndex) => {
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
-    const hasAttackers = (movedUnitIds[territoryIndex] || []).length
+    const hasAttackers = (movedUnitIds[territoryIndex] || []).length || (amphib[territoryIndex] || []).length
+    const hasCombat = hasAttackers && territory.unitIds.length
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       [territoryPower.toLowerCase()]: isOcean || isControlled,
-      active: hasAttackers && phase !== RESOLVE_COMBAT,
+      active: phase !== RESOLVE_COMBAT && hasAttackers,
       //active: (hasAirComplete(units) && phase === LAND_PLANES) || (units.length && phase !== RESOLVE_COMBAT),
-      'active-combat': hasAttackers && phase === RESOLVE_COMBAT && territoryPower !== currentPower,
+      'active-combat': phase === RESOLVE_COMBAT && hasCombat && territoryPower !== currentPower,
       //'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
     })
   }
@@ -107,12 +109,13 @@ export const isAttackable = createSelector(
   }
 )
 
+const isAmphib = (state, territoryIndex) => (state.amphib.territory[territoryIndex] || []).length
+
 export const isCombat = createSelector(
   getCurrentPowerName,
   getUnits,
-  (currentPower, units) => units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
-  // check to see if combat goes on
-  //(territory.unitsFrom.length && territory.units.length) || isAmphib(territory)
+  isAmphib,
+  (currentPower, units, amphib) => (units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
 )
 
 export const awaitingNavalResolution = (state, territoryIndex) => {
