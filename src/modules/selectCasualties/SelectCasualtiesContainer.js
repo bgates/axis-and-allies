@@ -11,12 +11,19 @@ import {
   combatants,
   victor, 
   attackDefeated,
+  isConquered,
   isDogfight
 } from './selectors'
 import { noCombat } from '../board'
 import { strengths, defenderCasualties, attackerCasualtyCount } from '../combat'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { resolveCombat, markCombatUnderway, LOSE_ATTACK, winAttack } from '../../actions'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { 
+  resolveCombat, 
+  markCombatUnderway, 
+  TOGGLE_CASUALTY,
+  LOSE_ATTACK, 
+  winAttack 
+} from '../../actions'
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -27,17 +34,11 @@ const mapStateToProps = (state) => ({
   attackerCasualties: attackerCasualties(state),
   attackerCasualtyCount: attackerCasualtyCount(state),
   attackDefeated: attackDefeated(state),
-  victor: victor(state)
+  victor: victor(state),
+  conquered: isConquered(state)
 })
 
-const toggleCasualtyStatus = (id) => {
-  return (dispatch) => {
-    dispatch({
-      type: 'TOGGLE_CASUALTY',
-      id
-    })
-  }
-}
+const toggleCasualtyStatus = id => dispatch => dispatch({ type: TOGGLE_CASUALTY, id })
 
 const nextStep = (victor, territoryIndex, dogfight) => {
   if (dogfight) {
@@ -53,22 +54,25 @@ const nextStep = (victor, territoryIndex, dogfight) => {
 
 const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
-    let state = getState();
-    dispatch(winAttack(territoryIndex, getCurrentPower(state).name))
-    state = getState();
+    let state = getState()
+    const { defenders } = combatants(state)
+    const casualties = attackerCasualties(state)
+    const conqueringPower = isConquered(state) ? getCurrentPowerName(state) : null
+    dispatch(winAttack(territoryIndex, defenders.map(u => u.id), casualties, conqueringPower))
+    state = getState()
     continueOrAdvancePhase(dispatch, state)
   }
 }
 
 const defenderWins = (territoryIndex) => {
   return (dispatch, getState) => {
-    let state = getState();
+    let state = getState()
     dispatch({
       type: LOSE_ATTACK,
       territoryIndex,
       defenderCasualties: defenderCasualties(state)
     })
-    state = getState();
+    state = getState()
     continueOrAdvancePhase(dispatch, state)
   }
 }

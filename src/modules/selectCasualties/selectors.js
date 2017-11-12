@@ -6,8 +6,7 @@ import {
   defenderCasualties, 
 } from '../combat'
 import { getFocusTerritory } from '../../selectors/getTerritory'
-import { allUnits } from '../../lib/territory'
-import { unitCount } from '../../lib/unit'
+import { land } from '../../selectors/units'
 import unitTypes from '../../config/unitTypes'
 export { attackerCasualties, getFocusTerritory, combatants }
 
@@ -46,4 +45,17 @@ export const victor = createSelector(
 export const isDogfight = createSelector(
   getFocusTerritory,
   territory => territory.dogfight
+)
+
+const idNotIn = array => obj => !array.includes(obj.id)
+
+export const isConquered = createSelector(
+  victor,
+  combatants,
+  attackerCasualties,
+  (victor, { attackers }, attackerCasualties) => (
+    victor === 'attacker' && 
+    attackers.filter(idNotIn(attackerCasualties))
+      .filter(land).length
+  )
 )
