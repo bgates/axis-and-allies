@@ -3,7 +3,6 @@ import {
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RETREAT,
   CONTINUE_COMBAT,
-  TOGGLE_CASUALTY,
   COMMIT_BOMBARDMENT_UNITS,
   UNCOMMIT_BOMBARDMENT_UNITS,
   WIN_ATTACK,
@@ -30,15 +29,12 @@ import {
   commitBombardmentUnits,
   uncommitBombardmentUnits,
   continueCombat, 
-  clearUnits 
 } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';
 import { finalizeUnitMovements } from './finalizeUnitMovementReducerFunction';
 
 const boardHelper = (state, action) => {
   switch (action.type) {
-    case '@@router/LOCATION_CHANGE':
-      return action.payload.location.pathname === PLAN_MOVEMENT ? clearUnits(state) : state.territories
     case VIEW_STRATEGIC_BOMBING_RESULTS: return completeMission(state, action);
     case DOGFIGHT: return dogfight(state, action);
     case CONTINUE_COMBAT: return continueCombat(state, action);
@@ -52,9 +48,9 @@ const boardHelper = (state, action) => {
     case UNCOMMIT_BOMBARDMENT_UNITS: return uncommitBombardmentUnits(state, action);
       //case LOAD_TRANSPORT: return loadTransport(state, action);
       //case REMOVE_CASUALTIES: return removeCasualties(state, action);
-    case TOGGLE_CASUALTY: return toggleCasualties(state, action);
+      //case TOGGLE_CASUALTY: return toggleCasualties(state, action);
     case LOSE_ATTACK: return defenderWins(state, action);
-    case WIN_ATTACK: return attackerWins(state, action);
+      //case WIN_ATTACK: return attackerWins(state, action);
     case LAND_PLANES: return landPlanes(state, action);
     case PLACE_UNITS: return placeUnits(state, action);
     case NEXT_TURN: return finalizeUnitMovements(state);

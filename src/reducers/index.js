@@ -23,13 +23,12 @@ import {
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RETREAT,
-  WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
   PLAN_MOVEMENT,
   PLACE_UNITS,
   RESET
-} from '../actions';
+} from '../actions'
 import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
 import { initialState } from '../config/configureStore'
 
@@ -66,10 +65,10 @@ const crossSliceReducer = (state, action) => {
       //case UNCOMMIT_AMPHIB_UNITS:
       //case RESOLVE_COMBAT:
       //case REMOVE_CASUALTIES:
+      //case WIN_ATTACK:
     case DOGFIGHT:
     case VIEW_STRATEGIC_BOMBING_RESULTS:
     case RETREAT:
-    case WIN_ATTACK:
     case LOSE_ATTACK:
     case LAND_PLANES:
     case PLAN_MOVEMENT:

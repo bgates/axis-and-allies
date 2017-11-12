@@ -92,8 +92,3 @@ export const continueCombat = (state, action) => {
   return changeTerritory(state.territories, action.territory.index, callback)
 }
 
-export const clearUnits = (state, action) => (  
-  state.territories.map(territory => (
-    territory.units ? { ...territory, units: territory.units.filter(unitCount) } : territory
-  ))
-)
