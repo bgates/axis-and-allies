@@ -8,7 +8,6 @@ const CombatModal = ({
   combatants, 
   strengths, 
   territory,
-  attackerCasualties,
   defenderCasualties,
   rollForCombat,
   allowRetreat

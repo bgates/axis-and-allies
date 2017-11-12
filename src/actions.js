@@ -130,8 +130,8 @@ export const viewAttackOptions = (territoryIndex) => (
   { type: VIEW_ATTACK_OPTIONS, territoryIndex }
 )
 
-export const viewBombardmentOptions = (territory) => (
-  { type: VIEW_BOMBARDMENT_OPTIONS, territory }
+export const viewBombardmentOptions = (territoryIndex) => (
+  { type: VIEW_BOMBARDMENT_OPTIONS, territoryIndex }
 )
 
 export const viewPlaneLandingOptions = (territory) => ( 

@@ -70,6 +70,7 @@ const defenderWins = (territoryIndex) => {
     dispatch({
       type: LOSE_ATTACK,
       territoryIndex,
+      attackerCasualties: attackerCasualties(state),
       defenderCasualties: defenderCasualties(state)
     })
     state = getState()

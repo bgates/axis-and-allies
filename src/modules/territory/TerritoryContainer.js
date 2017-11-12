@@ -82,7 +82,7 @@ const territoryThunk = (territoryIndex) => {
           } else if (isBombed(state, territoryIndex)) {
             bombRaid(dispatch, territory)
           } else if (isBombardable(state, territoryIndex)) {
-            dispatch(viewBombardmentOptions(territory))
+            dispatch(viewBombardmentOptions(territoryIndex))
           } else {
             dispatch(resolveCombat(territoryIndex))
           }

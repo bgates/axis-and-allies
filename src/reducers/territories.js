@@ -1,7 +1,8 @@
 import { 
   COMBAT_UNDERWAY,
   REMOVE_CASUALTIES, 
-  WIN_ATTACK
+  WIN_ATTACK,
+  LOSE_ATTACK
 } from '../actions'
 
 const mapping = (territoryIndex, callback) => (territory, index) => (
@@ -17,6 +18,7 @@ const territories = (state = [], action) => {
   case COMBAT_UNDERWAY: {
     return state.map(mapping(territoryIndex, t => ({ ...t, unitIds: t.unitIds.concat(action.unitIds) })))
   }
+  case LOSE_ATTACK:
   case REMOVE_CASUALTIES: {
     const { attackerCasualties, defenderCasualties } = action
     const casualties = attackerCasualties.concat(defenderCasualties)

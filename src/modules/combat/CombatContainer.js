@@ -9,7 +9,6 @@ import { VIEW_BOMBARDMENT_OPTIONS, COMBAT_UNDERWAY } from '../../actions'
 import { 
   allowRetreat,
   attackerCasualties, 
-  attackerCasualtyCount, 
   combatants,
   defenderCasualties, 
   getFocusTerritory, 
@@ -23,16 +22,11 @@ import PATHS from '../../paths'
 
 const mapStateToProps = (state) => ({
   allowRetreat: allowRetreat(state),
-  attackerCasualties: attackerCasualties(state),
-  attackerCasualtyCount: attackerCasualtyCount(state),
   combatants: combatants(state),
   defenderCasualties: defenderCasualties(state),
   strengths: strengths(state),
   territory: getFocusTerritory(state)
 })
-/*
-transport.transportedBy[those transportIds] can get moved into the territory itself.
-*/
 
 const markCombatUnderway = (territoryIndex, transportIds, unitIds) => (
   {
