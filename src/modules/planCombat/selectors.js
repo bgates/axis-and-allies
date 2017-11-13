@@ -17,6 +17,7 @@ import { allUnits, isLand } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
 const getTransport = state => state.transport
+const getAmphib = state => state.amphib
 
 export const unitsInRange = createSelector(
   mergeBoardAndTerritories,
@@ -25,6 +26,7 @@ export const unitsInRange = createSelector(
   getAllInbound,
   getMovedUnitIds,
   getTransport,
+  getAmphib,
   getAllUnits,
   combatUnitsInRange
 )
