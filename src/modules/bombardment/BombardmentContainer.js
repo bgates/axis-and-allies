@@ -14,33 +14,31 @@ const mapStateToProps = (state) => ({
   bombardmentCapableUnits: getBombardmentCapableUnits(state)
 })
 
-const commitBombardmentUnits = (unit, locationIndex, targetIndex, ids) => {
-  return {
+const commitBombardmentUnits = (unitId, locationIndex, targetIndex) => (
+  {
     type: COMMIT_BOMBARDMENT_UNITS,
-    unit,
+    unitId,
     locationIndex,
-    targetIndex,
-    ids
+    targetIndex
   }
-}
+)
 
-const uncommitBombardmentUnits = (unit, locationIndex, targetIndex, ids) => {
-  return {
+const uncommitBombardmentUnits = (unitId, locationIndex, targetIndex) => (
+  {
     type: UNCOMMIT_BOMBARDMENT_UNITS,
-    unit,
+    unitId,
     locationIndex,
-    targetIndex,
-    ids
+    targetIndex
   }
-}
+)
 
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ 
+const mapDispatchToProps = (dispatch) => (
+  bindActionCreators({ 
     commitBombardmentUnits,
     uncommitBombardmentUnits,
     resolveCombat
   }, dispatch)
-}
+)
 
 const BombardmentContainer = connect(mapStateToProps, mapDispatchToProps)(Bombardment)
 

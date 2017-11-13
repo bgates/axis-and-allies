@@ -5,11 +5,9 @@ import {
   amphibOrigins,
   getTerritory, 
   getTerritoryData, 
-  getTerritoryUnits, 
   getMovedUnitIds,
   getUnits,
-  isFriendly,
-  isEnemy 
+  isFriendly
 } from '../../selectors/getTerritory'
 import { air, canBombard, getAllUnits } from '../../selectors/units'
 import { nonIndustry, airComplete } from '../../lib/unit'

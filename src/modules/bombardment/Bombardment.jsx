@@ -1,6 +1,6 @@
-import React from 'react';
-import ReactTooltip from 'react-tooltip';
-import { UnitFigTableData } from '../../components/UnitFigure';
+import React from 'react'
+import ReactTooltip from 'react-tooltip'
+import { UnitFigTableData } from '../../components/UnitFigure'
 
 const Bombardment = ({ 
   territory, 
@@ -45,8 +45,8 @@ const Bombarder = ({
   commitUnits, 
   unCommitUnits, 
 }) => {
-  const available = unit.bombard ? unit.ids.filter(id => !unit.bombard[id]) : unit.ids
-  const committed = unit.bombard ? unit.ids.filter(id => unit.bombard[id] === territory.index) : []
+  const available = true
+  const committed = []
   return (
     <tr>
       <UnitFigTableData unit={unit} />

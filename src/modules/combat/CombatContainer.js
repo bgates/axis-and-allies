@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
-import BombardmentContainer from '../bombardment'
+import { BombardmentContainer } from '../bombardment'
 import { VIEW_BOMBARDMENT_OPTIONS, COMBAT_UNDERWAY } from '../../actions'
 
 import { 
@@ -40,7 +40,7 @@ const markCombatUnderway = (territoryIndex, transportIds, unitIds) => (
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
-    const { amphib, transport, unitDestination } = state
+    const { amphib, transport } = state
     const transportIds = amphib.territory[territoryIndex] || []
     const transportedBy = transportIds.reduce((all, id) => (transport.transportedBy[id] || []).concat(all), [])
     dispatch(markCombatUnderway(territoryIndex, transportIds, transportedBy))

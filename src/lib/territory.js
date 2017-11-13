@@ -1,7 +1,5 @@
 import { sameSide } from '../config/initialPowers'
-import { isNotSubmerged, bombCapacity, canBombard } from './unit'
-import { mergeBoardAndTerritories } from '../selectors/mergeBoardAndTerritories'
-import { STRATEGIC_BOMB } from '../actions'
+import { isNotSubmerged, bombCapacity } from './unit'
 
 export const isLand = (territory) => !territory.sea;
 export const isSea = (territory) => territory.sea;
