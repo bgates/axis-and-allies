@@ -1,6 +1,9 @@
 import { createSelector } from 'reselect'
 import { combatants as combatantsWithoutDamage } from '../planCombat'
-import { getFocusTerritory } from '../../selectors/getTerritory'
+import { 
+  getFocusTerritory, 
+  idsToUnits, 
+} from '../../selectors/getTerritory'
 import { 
   attack, 
   attacks,
@@ -14,7 +17,9 @@ export { getFocusTerritory }
 
 export const attackerCasualties = state => state.casualties
 
-export const bombardingUnits = state => state.navalBombardment || []
+export const bombardingUnits = ({ bombardment, phase, units })=> (
+  idsToUnits(bombardment.targetTerritories[phase.territoryIndex] || [], units)
+)
 
 const artillery = unit => unit.type === 'artillery'
 const infantry = unit => unit.type === 'infantry'
