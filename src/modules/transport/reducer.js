@@ -4,19 +4,19 @@ import {
 } from '../../actions'
 
 const amphib = (state = { transport: {}, territory: {} }, action) => {
-  const { transportId, destinationIndex, type } = action
+  const { transportId, targetIndex, type } = action
   const { transport, territory } = state
   switch (type) {
     case COMMIT_AMPHIB_UNITS: {
       return { 
-        transport: { ...transport, [transportId]: destinationIndex }, 
-        territory: { ...territory, [destinationIndex]: (territory[destinationIndex] || []).concat(transportId) }
+        transport: { ...transport, [transportId]: targetIndex }, 
+        territory: { ...territory, [targetIndex]: (territory[targetIndex] || []).concat(transportId) }
       }
     }
     case UNCOMMIT_AMPHIB_UNITS: {
       return {
         transport: omit(String(transportId), transport),
-        territory: { ...territory, [destinationIndex]: territory[destinationIndex].filter(id => id !== transportId) }
+        territory: { ...territory, [targetIndex]: territory[targetIndex].filter(id => id !== transportId) }
       }
     }
     case COMBAT_UNDERWAY: {

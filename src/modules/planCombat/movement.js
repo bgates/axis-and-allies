@@ -2,7 +2,8 @@ import {
   isFriendly
 } from '../../lib/territory'
 import {
-  combineUnits
+  combineUnits,
+  unitWithOrigin
 } from '../../selectors/units'
 import {
   isLand, 
@@ -54,15 +55,6 @@ const availableUnit = (range, currentPower, medium, returnFlight) => unit => {
     unit.power === currentPower && 
     effectiveRange >= range
 }
-
-const unitWithOrigin = ({ name, index }, range) => unit => (
-  { 
-    ...unit, 
-    originName: name, 
-    originIndex: index, 
-    distance: parseInt(range, 10) 
-  } 
-)
 
 const unitsWithOrigin = (range, currentPower, medium, returnFlight) => (units, territory) => {
   const territoryUnits = territory.units.filter(availableUnit(range, currentPower, medium, returnFlight))

@@ -5,20 +5,20 @@ import { add, remove } from './unitOrigin'
 const strategicBombing = (state = { bombingUnits: {}, targetTerritories: {} }, action) => {
   switch (action.type) {
   case COMMIT_TO_STRATEGIC_BOMBING: {
-    const { unitIds, destinationIndex } = action
+    const { unitIds, targetIndex } = action
     let { bombingUnits, targetTerritories } = { ...state }
-    unitIds.forEach(id => bombingUnits[id] = destinationIndex)
-    targetTerritories[destinationIndex] = add(targetTerritories[destinationIndex], unitIds)
+    unitIds.forEach(id => bombingUnits[id] = targetIndex)
+    targetTerritories[targetIndex] = add(targetTerritories[targetIndex], unitIds)
     return { bombingUnits, targetTerritories }
   }
   case UNCOMMIT_UNITS: {
-    const { unitIds, destinationIndex } = action
+    const { unitIds, targetIndex } = action
     const { bombingUnits, targetTerritories } = { ...state }
     return { 
       bombingUnits: omit(unitIds.map(String), bombingUnits),
       targetTerritories: { 
         ...targetTerritories, 
-        [destinationIndex]: remove(targetTerritories[destinationIndex], unitIds)
+        [targetIndex]: remove(targetTerritories[targetIndex], unitIds)
       }
     }
   }

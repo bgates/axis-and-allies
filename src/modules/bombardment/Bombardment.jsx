@@ -1,14 +1,17 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { UnitFigTableData } from '../../components/UnitFigure'
+import Attacker from '../../components/Attacker'
 
 const Bombardment = ({ 
   territory, 
   bombardmentCapableUnits, 
+  committed,
   commitBombardmentUnits, 
   uncommitBombardmentUnits, 
   resolveCombat
 }) => {
+  console.log({ committed, commitBombardmentUnits })
   return (
     <div>
       <a data-tip className="help">?</a>
@@ -23,11 +26,12 @@ const Bombardment = ({
         cellPadding={1}>
         <tbody>
         {bombardmentCapableUnits.map((unit, index) => ( 
-          <Bombarder
+          <Attacker
             key={index}
             commitUnits={commitBombardmentUnits}
             unCommitUnits={uncommitBombardmentUnits}
-            territory={territory}
+            committed={committed.filter(id => unit.ids.includes(id))}
+            targetIndex={territory.index}
             unit={unit} />
         ))}
         </tbody>

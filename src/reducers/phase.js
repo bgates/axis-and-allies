@@ -51,7 +51,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return currentWithTerritory(state, VIEW_BOMBARDMENT_OPTIONS, action.territoryIndex)
   } 
   case VIEW_TRANSPORT_LOAD_OPTIONS: {
-    return { ...state, current: VIEW_TRANSPORT_LOAD_OPTIONS, territoryIndex: action.destinationIndex, transport: action.transport }
+    return { ...state, current: VIEW_TRANSPORT_LOAD_OPTIONS, territoryIndex: action.targetIndex, transport: action.transport }
   }
   case LOAD_TRANSPORT: {
     return currentWithout(state, VIEW_ATTACK_OPTIONS, 'transport')

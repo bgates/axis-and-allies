@@ -3,8 +3,6 @@ import {
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RETREAT,
   CONTINUE_COMBAT,
-  COMMIT_BOMBARDMENT_UNITS,
-  UNCOMMIT_BOMBARDMENT_UNITS,
   WIN_ATTACK,
   LOSE_ATTACK,
   LAND_PLANES,
@@ -44,8 +42,8 @@ const boardHelper = (state, action) => {
       //case UNCOMMIT_UNITS: return uncommitUnits(state, action);
       //case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);
       //case UNCOMMIT_AMPHIB_UNITS: return uncommitAmphibUnits(state, action);
-    case COMMIT_BOMBARDMENT_UNITS: return commitBombardmentUnits(state, action);
-    case UNCOMMIT_BOMBARDMENT_UNITS: return uncommitBombardmentUnits(state, action);
+      //case COMMIT_BOMBARDMENT_UNITS: return commitBombardmentUnits(state, action);
+      //case UNCOMMIT_BOMBARDMENT_UNITS: return uncommitBombardmentUnits(state, action);
       //case LOAD_TRANSPORT: return loadTransport(state, action);
       //case REMOVE_CASUALTIES: return removeCasualties(state, action);
       //case TOGGLE_CASUALTY: return toggleCasualties(state, action);

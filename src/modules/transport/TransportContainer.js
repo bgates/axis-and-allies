@@ -24,27 +24,27 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const commitAmphibUnits = (transportId, destinationIndex) => (
+const commitAmphibUnits = (transportId, targetIndex) => (
   {
     type: COMMIT_AMPHIB_UNITS,
     transportId,
-    destinationIndex
+    targetIndex
   }
 )
 
-const unCommitAmphibUnits = (transportId, destinationIndex) => (
+const unCommitAmphibUnits = (transportId, targetIndex) => (
   {
     type: UNCOMMIT_AMPHIB_UNITS,
     transportId,
-    destinationIndex
+    targetIndex
   }
 )
 
-const viewTransportLoadOptions = (transport, destinationIndex) => (
+const viewTransportLoadOptions = (transport, targetIndex) => (
   {
     type: VIEW_TRANSPORT_LOAD_OPTIONS,
     transport,
-    destinationIndex
+    targetIndex
   }
 )
 
@@ -59,13 +59,13 @@ const mapDispatchToProps = (dispatch) => {
 const GenericTransport = (props) => {
   const { landAttack } = props
   if (landAttack) {
-    const { unit, committedHere, destinationIndex, cargo, commitAmphibUnits, unCommitAmphibUnits } = props
+    const { unit, committedHere, targetIndex, cargo, commitAmphibUnits, unCommitAmphibUnits } = props
     return (
       <AmphibiousAssault 
         unit={unit}
         amphibiousUnits={cargo}
         committedHere={committedHere}
-        destinationIndex={destinationIndex}
+        targetIndex={targetIndex}
         commitAmphibUnits={commitAmphibUnits}
         unCommitAmphibUnits={unCommitAmphibUnits}
       />
@@ -75,7 +75,7 @@ const GenericTransport = (props) => {
       unit, 
       available,
       cargo,
-      destinationIndex, 
+      targetIndex, 
       commitUnits, 
       unCommitUnits, 
       viewTransportLoadOptions
@@ -86,7 +86,7 @@ const GenericTransport = (props) => {
         available={available}
         cargo={cargo}
         unitIds={[unit.id].concat(cargo.map(u => u.id))}
-        destinationIndex={destinationIndex}
+        targetIndex={targetIndex}
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}
         viewTransportLoadOptions={viewTransportLoadOptions}

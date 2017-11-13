@@ -1,12 +1,12 @@
 import React from 'react'
-import { UnitFigTableData } from '../../components/UnitFigure'
-import { air as isAir } from '../../selectors/units'
+import { UnitFigTableData } from './UnitFigure'
+import { air as isAir } from '../selectors/units'
 
 const Attacker = ({ 
   unit, 
   committed, 
   strategicBombing,
-  destinationIndex, 
+  targetIndex, 
   landingSlots,
   hasIndustry,
   commitUnits, 
@@ -14,6 +14,7 @@ const Attacker = ({
   commitToStrategicBombing
 }) => {
   const air = isAir(unit)
+  strategicBombing = strategicBombing || []
   return (
     <tr>
       <UnitFigTableData unit={unit} />
@@ -21,7 +22,7 @@ const Attacker = ({
         <CommitButtons
           unit={unit} 
           committed={committed}
-          destinationIndex={destinationIndex}
+          targetIndex={targetIndex}
           air={air}
           landingSlots={landingSlots}
           action={commitUnits} />
@@ -29,19 +30,19 @@ const Attacker = ({
           unit={unit} 
           committed={committed}
           landingSlots={landingSlots}
-          destinationIndex={destinationIndex} 
+          targetIndex={targetIndex} 
           action={commitToStrategicBombing}
         />}
       </td>
       <td className="available">
         <UncommitButtons
-          destinationIndex={destinationIndex}
+          targetIndex={targetIndex}
           committed={committed.filter(id => !strategicBombing.includes(id))}
           action={unCommitUnits} />
         {air && hasIndustry && <UncommitButtons
           unit={unit} 
           committed={strategicBombing}
-          destinationIndex={destinationIndex} 
+          targetIndex={targetIndex} 
           units={strategicBombing}
           action={unCommitUnits} 
         />}
@@ -53,7 +54,7 @@ const Attacker = ({
 const CommitButtons = ({ 
   unit, 
   committed,
-  destinationIndex, 
+  targetIndex, 
   action, 
   air, 
   landingSlots 
@@ -67,11 +68,11 @@ const CommitButtons = ({
     <div>
       <input readOnly size={2} value={qty} />
       <button 
-        onClick={e => { action(originIndex, destinationIndex, available)}}
+        onClick={e => { action(originIndex, targetIndex, available)}}
         disabled={allDisabled}
       >&gt;&gt;</button>
       <button 
-        onClick={e => { action(originIndex, destinationIndex, [available[0]])}}
+        onClick={e => { action(originIndex, targetIndex, [available[0]])}}
         disabled={oneDisabled}
       >&gt;</button>
     </div>
@@ -81,7 +82,7 @@ const CommitButtons = ({
 const UncommitButtons = ({ 
   unit, 
   committed,
-  destinationIndex, 
+  targetIndex, 
   action 
 }) => {
   const commitQty = committed.length
@@ -89,11 +90,11 @@ const UncommitButtons = ({
     <div>
       <input readOnly size={2} value={commitQty} />
       <button 
-        onClick={e => action(destinationIndex, committed)}
+        onClick={e => action(targetIndex, committed)}
         disabled={commitQty === 0}
       >&lt;&lt;</button>
       <button 
-        onClick={e => action(destinationIndex, [committed[0]])}
+        onClick={e => action(targetIndex, [committed[0]])}
         disabled={commitQty === 0}
       >&lt;</button>
     </div>
@@ -103,7 +104,7 @@ const UncommitButtons = ({
 const AirOptions = ({ 
   unit, 
   committed,
-  destinationIndex, 
+  targetIndex, 
   landingSlots,
   action 
 }) => (
@@ -112,7 +113,7 @@ const AirOptions = ({
       unit={unit} 
       air={true}
       committed={committed}
-      destinationIndex={destinationIndex}
+      targetIndex={targetIndex}
       landingSlots={landingSlots}
       action={action}
     />
@@ -121,3 +122,4 @@ const AirOptions = ({
 )
 
 export default Attacker
+

@@ -12,11 +12,11 @@ const mapStateToProps = (state) => ({
   transport: state.phase.transport
 })
 
-const loadUnits = (transport, destinationIndex, unitIds, originIndex) => {
+const loadUnits = (transport, targetIndex, unitIds, originIndex) => {
   return {
     type: LOAD_TRANSPORT,
     transport,
-    destinationIndex,
+    targetIndex,
     unitIds,
     originIndex
   }

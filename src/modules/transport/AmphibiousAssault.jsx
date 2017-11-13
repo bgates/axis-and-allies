@@ -5,7 +5,7 @@ const AmphibiousAssault = ({
   unit: { id, originName }, 
   amphibiousUnits, 
   committedHere,
-  destinationIndex,
+  targetIndex,
   commitAmphibUnits,
   unCommitAmphibUnits 
 }) => {
@@ -21,14 +21,14 @@ const AmphibiousAssault = ({
         <input readOnly size={2} value={committedHere ? 0 : 1} />
         <button 
           disabled={committedHere}
-          onClick={e => { commitAmphibUnits(id, destinationIndex)}}
+          onClick={e => { commitAmphibUnits(id, targetIndex)}}
         >&gt;&gt;</button>
       </td>
       <td className="available">
         <input readOnly size={2} value={committedHere ? 1 : 0} />
         <button 
           disabled={!committedHere}
-          onClick={e => unCommitAmphibUnits(id, destinationIndex)}
+          onClick={e => unCommitAmphibUnits(id, targetIndex)}
         >&lt;</button>
       </td>
     </tr>

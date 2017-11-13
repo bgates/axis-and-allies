@@ -19,7 +19,7 @@ const PlanCombatModal = ({
         unit={unit}
         committed={committed.filter(id => unit.ids.includes(id))}
         hasIndustry={hasIndustry}
-        destinationIndex={territory.index}
+        targetIndex={territory.index}
         landAttack={!territory.sea}
         landingSlots={landingSlots}
       />

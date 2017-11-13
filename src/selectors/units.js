@@ -32,9 +32,18 @@ const damaged = (units, casualties) => {
   return damagedUnits.map(unit => ({ ...unit, type: `damaged ${unit.type}` }))
 }
 
-export const survivors = (units, casualties = [], missionComplete) => {
+export const survivors = (units, casualties = []) => {
   const undamagedUnits = units.filter(({ id }) => !casualties.includes(id))
   const damagedUnits = damaged(units, casualties)
   return undamagedUnits.concat(damagedUnits)
 }
+
+export const unitWithOrigin = ({ name, index }, range) => unit => (
+  { 
+    ...unit, 
+    originName: name, 
+    originIndex: index, 
+    distance: parseInt(range, 10) 
+  } 
+)
 

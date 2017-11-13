@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { TransportContainer } from '../transport'
-import Attacker from './Attacker'
+import Attacker from '../../components/Attacker'
 import { strategicBombing } from './selectors'
 import { 
   COMMIT_UNITS, 
@@ -16,45 +16,45 @@ const mapStateToProps = (state, ownProps) => (
   }
 )
 
-const commitUnits = (originIndex, destinationIndex, unitIds) => {
+const commitUnits = (originIndex, targetIndex, unitIds) => {
   return {
     type: COMMIT_UNITS,
     originIndex,
-    destinationIndex,
+    targetIndex,
     unitIds
   }
 }
 
-const commitToStrategicBombing = (originIndex, destinationIndex, unitIds) => {
+const commitToStrategicBombing = (originIndex, targetIndex, unitIds) => {
   return {
     type: COMMIT_TO_STRATEGIC_BOMBING,
     originIndex,
-    destinationIndex,
+    targetIndex,
     unitIds
   }
 }
 
-const uncommitCreator = (originIndex, destinationIndex, unitIds) => ({
+const uncommitCreator = (originIndex, targetIndex, unitIds) => ({
   type: UNCOMMIT_UNITS,
   originIndex,
-  destinationIndex,
+  targetIndex,
   unitIds
 })
 
-const unCommitUnits = (destinationIndex, unitIds) => {
+const unCommitUnits = (targetIndex, unitIds) => {
   return (dispatch, getState) => {
     const { outboundUnits, transport } = getState()
     const transportId = unitIds.find(id => transport.newlyLoaded.includes(id))
     if (transportId) {
         // just loaded; uncommit separately
       let originIndex = outboundUnits[transportId]
-      dispatch(uncommitCreator(originIndex, destinationIndex, [transportId]))
+      dispatch(uncommitCreator(originIndex, targetIndex, [transportId]))
       originIndex = outboundUnits[unitIds.find(id => !transport.newlyLoaded.includes(id))]
       const ids = unitIds.filter(id => !transport.newlyLoaded.includes(id))
-      dispatch(uncommitCreator(originIndex, destinationIndex, ids))
+      dispatch(uncommitCreator(originIndex, targetIndex, ids))
     } else {
       const originIndex = outboundUnits[unitIds[0]]
-      dispatch(uncommitCreator(originIndex, destinationIndex, unitIds))
+      dispatch(uncommitCreator(originIndex, targetIndex, unitIds))
     }
   }
 }
@@ -70,11 +70,11 @@ const mapDispatchToProps = (dispatch) => {
 const GenericAttacker = (props) => {
   const { unit: { type }} = props
   if (type === 'transport') {
-    const { unit, destinationIndex, landAttack, commitUnits, unCommitUnits } = props
+    const { unit, targetIndex, landAttack, commitUnits, unCommitUnits } = props
     return (
       <TransportContainer
         unit={unit}
-        destinationIndex={destinationIndex}
+        targetIndex={targetIndex}
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}
         landAttack={landAttack}
@@ -83,7 +83,7 @@ const GenericAttacker = (props) => {
   } else {
     const { 
       unit, 
-      destinationIndex, 
+      targetIndex, 
       committed, 
       hasIndustry, 
       landingSlots, 
@@ -95,7 +95,7 @@ const GenericAttacker = (props) => {
     return (
       <Attacker
         unit={unit}
-        destinationIndex={destinationIndex}
+        targetIndex={targetIndex}
         committed={committed}
         hasIndustry={hasIndustry}
         landingSlots={landingSlots}

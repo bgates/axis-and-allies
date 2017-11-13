@@ -2,7 +2,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Bombardment from './Bombardment'
 import { getFocusTerritory } from '../../selectors/getTerritory'
-import { getBombardmentCapableUnits } from './selectors'
+import { getBombardmentCapableUnits, getBombardingIds } from './selectors'
 import { 
   COMMIT_BOMBARDMENT_UNITS, 
   UNCOMMIT_BOMBARDMENT_UNITS,
@@ -10,25 +10,25 @@ import {
 } from '../../actions'
 
 const mapStateToProps = (state) => ({
+  committed: getBombardingIds(state),
   territory: getFocusTerritory(state),
   bombardmentCapableUnits: getBombardmentCapableUnits(state)
 })
 
-const commitBombardmentUnits = (unitId, locationIndex, targetIndex) => (
+const commitBombardmentUnits = (locationIndex, targetIndex, unitIds) => (
   {
     type: COMMIT_BOMBARDMENT_UNITS,
-    unitId,
     locationIndex,
-    targetIndex
+    targetIndex,
+    unitIds
   }
 )
 
-const uncommitBombardmentUnits = (unitId, locationIndex, targetIndex) => (
+const uncommitBombardmentUnits = (targetIndex, unitIds) => (
   {
     type: UNCOMMIT_BOMBARDMENT_UNITS,
-    unitId,
-    locationIndex,
-    targetIndex
+    targetIndex,
+    unitIds
   }
 )
 

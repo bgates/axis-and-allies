@@ -8,21 +8,21 @@ import {
 } from '../actions'
 
 const inboundUnits = (state = {}, action) => {
-  const { destinationIndex, unitIds, type } = action
+  const { targetIndex, unitIds, type } = action
   switch (type) {
   case COMMIT_TO_STRATEGIC_BOMBING:
   case COMMIT_UNITS: {
     let inbound = { ...state }
-    unitIds.forEach(id => { inbound[id] = destinationIndex })
+    unitIds.forEach(id => { inbound[id] = targetIndex })
     return inbound 
   }
   case UNCOMMIT_UNITS: {
     return omit(unitIds.map(String), state)
   }
   case LOAD_TRANSPORT: {
-    const { transport, destinationIndex, unitIds } = action
+    const { transport, targetIndex, unitIds } = action
     let inbound = { ...state }
-    unitIds.concat(transport.id).forEach(id => inbound[id] = destinationIndex)
+    unitIds.concat(transport.id).forEach(id => inbound[id] = targetIndex)
     return inbound
   }
   case REMOVE_CASUALTIES: {

@@ -8,26 +8,26 @@ import {
 import { add, remove } from './unitOrigin'
 
 const unitDestination = (state = {}, action) => {
-  const { destinationIndex, unitIds } = action
+  const { targetIndex, unitIds } = action
   switch (action.type) {
   case COMMIT_TO_STRATEGIC_BOMBING:
   case COMMIT_UNITS: {
     return { 
       ...state,
-      [destinationIndex]: add(state[destinationIndex], unitIds)
+      [targetIndex]: add(state[targetIndex], unitIds)
     }
   }
   case UNCOMMIT_UNITS: {
     return { 
       ...state,
-      [destinationIndex]: remove(state[destinationIndex], unitIds)
+      [targetIndex]: remove(state[targetIndex], unitIds)
     }
   }
   case LOAD_TRANSPORT: {
-    const { transport, unitIds, destinationIndex } = action
+    const { transport, unitIds, targetIndex } = action
     return {
       ...state,
-      [destinationIndex]: add(state[destinationIndex], unitIds.concat(transport.id))
+      [targetIndex]: add(state[targetIndex], unitIds.concat(transport.id))
     }
   }
   case REMOVE_CASUALTIES: {
