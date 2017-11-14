@@ -17,8 +17,8 @@ export { getFocusTerritory }
 
 export const attackerCasualties = state => state.casualties
 
-export const bombardingUnits = ({ bombardment, phase, units })=> (
-  idsToUnits(bombardment.targetTerritories[phase.territoryIndex] || [], units)
+export const bombardingUnits = ({ bombardment, phase, units }) => (
+  idsToUnits(bombardment.targetTerritories[phase.territoryIndex] || [], units).map(withAttack)
 )
 
 const artillery = unit => unit.type === 'artillery'
@@ -42,7 +42,7 @@ export const preCasualtyCombatants = createSelector(
     { 
       attackers: modify(attackers), 
       defenders: defenders.map(withDefend), 
-      bombardingUnits: bombardingUnits.map(withAttack) 
+      bombardingUnits: bombardingUnits
     }
   )
 )
@@ -101,7 +101,7 @@ export const combatRolls = createSelector(
   bombardingUnits,
   strengths,
   state => state.rolls[PATHS.COMBAT_ROLLS],
-  (combatants, bombardingUnits, strengths, rolls) => arrangeRolls(combatants, bombardingUnits, strengths, rolls)
+  arrangeRolls
 )
 
 const hits = (rolls, side) => {

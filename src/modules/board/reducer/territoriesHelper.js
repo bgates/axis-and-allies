@@ -47,7 +47,7 @@ const boardHelper = (state, action) => {
       //case LOAD_TRANSPORT: return loadTransport(state, action);
       //case REMOVE_CASUALTIES: return removeCasualties(state, action);
       //case TOGGLE_CASUALTY: return toggleCasualties(state, action);
-    case LOSE_ATTACK: return defenderWins(state, action);
+      //case LOSE_ATTACK: return defenderWins(state, action);
       //case WIN_ATTACK: return attackerWins(state, action);
     case LAND_PLANES: return landPlanes(state, action);
     case PLACE_UNITS: return placeUnits(state, action);

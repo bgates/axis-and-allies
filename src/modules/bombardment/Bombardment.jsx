@@ -11,7 +11,6 @@ const Bombardment = ({
   uncommitBombardmentUnits, 
   resolveCombat
 }) => {
-  console.log({ committed, commitBombardmentUnits })
   return (
     <div>
       <a data-tip className="help">?</a>

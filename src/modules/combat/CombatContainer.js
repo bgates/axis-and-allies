@@ -42,7 +42,7 @@ const rollForCombat = (territoryIndex) => {
     const state = getState()
     const { amphib, transport } = state
     const transportIds = amphib.territory[territoryIndex] || []
-    const transportedBy = transportIds.reduce((all, id) => (transport.transportedBy[id] || []).concat(all), [])
+    const transportedBy = transportIds.reduce((all, id) => (transport.transporting[id] || []).concat(all), [])
     dispatch(markCombatUnderway(territoryIndex, transportIds, transportedBy))
     dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
     const rolls = dice(rollCount(getState()))

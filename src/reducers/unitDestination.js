@@ -3,7 +3,8 @@ import {
   UNCOMMIT_UNITS, 
   LOAD_TRANSPORT,
   COMMIT_TO_STRATEGIC_BOMBING,
-  REMOVE_CASUALTIES
+  REMOVE_CASUALTIES,
+  LOSE_ATTACK
 } from '../actions'
 import { add, remove } from './unitOrigin'
 
@@ -30,6 +31,7 @@ const unitDestination = (state = {}, action) => {
       [targetIndex]: add(state[targetIndex], unitIds.concat(transport.id))
     }
   }
+  case LOSE_ATTACK:
   case REMOVE_CASUALTIES: {
     const { territoryIndex, attackerCasualties } = action
     return {

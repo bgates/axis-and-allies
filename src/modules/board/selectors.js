@@ -52,7 +52,6 @@ export const phases = createSelector(
   state => state.phase.current,
   canPlace,
   (noCombat, phase, canPlaceUnits) => {
-    console.log(noCombat)
     if ([PLAN_ATTACKS, 'resolve-combat'].includes(phase)) {
       const next = noCombat ? PLAN_MOVEMENT : 'resolve-combat';
       return { next, last: 'income' }
