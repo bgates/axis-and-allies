@@ -30,7 +30,6 @@ export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS';
 
 export const RESOLVE_COMBAT = '/resolve-combat';
 export const COMBAT_UNDERWAY = 'COMBAT_UNDERWAY'
-export const CONTINUE_COMBAT = 'CONTINUE_COMBAT';
 export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY'
 export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES';
 export const WIN_ATTACK = 'WIN_ATTACK';
@@ -65,10 +64,6 @@ export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
 export const resolveCombat = (territoryIndex) => (  
   { type: RESOLVE_COMBAT, territoryIndex }
-)
-
-export const markCombatUnderway = (territory) => (
-  { type: CONTINUE_COMBAT, territory }
 )
 
 export const strategicBombingRolls = (territory) => (  
