@@ -17,8 +17,10 @@ export { getFocusTerritory }
 
 export const attackerCasualties = state => state.casualties
 
-export const bombardingUnits = ({ bombardment, phase, units }) => (
-  idsToUnits(bombardment.targetTerritories[phase.territoryIndex] || [], units).map(withAttack)
+export const bombardingUnits = ({ bombardment, missionComplete, phase, units }) => (
+  idsToUnits(bombardment.targetTerritories[phase.territoryIndex] || [], units)
+  .map(withAttack)
+  .filter(({ id }) => !missionComplete[id])
 )
 
 const artillery = unit => unit.type === 'artillery'

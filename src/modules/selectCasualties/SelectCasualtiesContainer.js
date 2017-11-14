@@ -19,7 +19,6 @@ import { strengths, defenderCasualties, attackerCasualtyCount } from '../combat'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   resolveCombat, 
-  markCombatUnderway, 
   TOGGLE_CASUALTY,
   LOSE_ATTACK, 
   winAttack 
@@ -80,8 +79,8 @@ const defenderWins = (territoryIndex) => {
 
 const continueCombat = () => {
   return (dispatch, getState) => {
-    const territory = getFocusTerritory(getState())
-    dispatch(markCombatUnderway(territory))
+    const state = getState()
+    const territory = getFocusTerritory(state)
     dispatch(push('resolve-combat'))
     dispatch(resolveCombat(territory.index))
   }

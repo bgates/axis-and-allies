@@ -92,3 +92,6 @@ bombardment: bb+ca w no prior combat get 1 shot during 1st round of attack
 they cannot be hit themselves
 // remove casualties:
 1st time, nothing
+
+want to mark units used so they can't be re-used
+when? at end of strat bombing; after bombardment; 

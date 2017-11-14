@@ -6,6 +6,7 @@ import { casualties } from '../modules/selectCasualties'
 import currentPowerIndex from './currentPower'
 import inboundUnits from './inboundUnits'
 import { landPlanes } from '../modules/landPlanes'
+import missionComplete from './mission'
 import outboundUnits from './outboundUnits'
 import phase from './phase'
 import { placement } from '../modules/placement'
@@ -42,6 +43,7 @@ const combinedReducer = combineReducers({
   firebase,
   inboundUnits,
   landPlanes,
+  missionComplete,
   outboundUnits,
   phase,
   placement,
