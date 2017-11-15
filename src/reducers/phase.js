@@ -39,7 +39,7 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
     return currentWithTerritory(state, 'strategic-bomb', action.territory)
   }
   case VIEW_PLANE_LANDING_OPTIONS: {
-    return currentWithTerritory(state, VIEW_PLANE_LANDING_OPTIONS, action.territory)
+    return currentWithTerritory(state, VIEW_PLANE_LANDING_OPTIONS, action.territoryIndex)
   }
   case PLAN_ATTACKS: {
     return currentWithout(state, PLAN_ATTACKS, 'territory')
