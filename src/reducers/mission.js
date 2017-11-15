@@ -1,14 +1,14 @@
-import { COMBAT_UNDERWAY } from '../actions'
+import { COMBAT_UNDERWAY, NEXT_TURN } from '../actions'
 
 const missionComplete = (state = {}, action) => {
   const { type, unitIds, bombardmentIds } = action
   switch (type) {
   case COMBAT_UNDERWAY: {
-    const newState = { ...state }
-    bombardmentIds.forEach(id => newState[id] = true)
+    let newState = { ...state };
+    (bombardmentIds || []).forEach(id => newState[id] = true)
     return newState
   }
-  case 'end': {
+  case NEXT_TURN: {
     return {}
   }
   default:
