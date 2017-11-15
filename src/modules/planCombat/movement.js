@@ -11,7 +11,7 @@ import {
 } from '../../selectors/getTerritory'
 import unitTypes from '../../config/unitTypes'
 
-const nonNeutral = ({ currentPower }) => currentPower !== "Neutrals"
+const nonNeutral = ({ currentPower }) => currentPower !== 'Neutrals'
    
 const passableByLandUnit = (territory, currentPower) => {
   return isLand(territory) && isFriendly(territory, currentPower)
@@ -30,15 +30,15 @@ const passableBySeaUnit = (territory, currentPower, board, lastTerritory) => {
 
 export const territoriesInRange = (board, currentPower, territory, accessible, maxRange) => {
   let territories = { 0: [territory] }
-  let territoryList = [territory]
+  let territoryList = [territory.name]
   for (let range = 1; range <= maxRange; range ++) {
     territories[range] = territories[range - 1].reduce((all, last) => {
       const newAdjacents = last.adjacentIndexes.reduce((adjacents, i) => {
         const current = board[i]
-        if (territoryList.includes(current) || !accessible(current, currentPower, board, last)) {
+        if (territoryList.includes(current.name) || !accessible(current, currentPower, board, last)) {
           return adjacents
         } else {
-          territoryList.push(current)
+          territoryList.push(current.name)
           return adjacents.concat(current)
         }
       }, [])
