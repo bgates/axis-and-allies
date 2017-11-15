@@ -15,12 +15,16 @@ import {
   isDogfight
 } from './selectors'
 import { noCombat } from '../board'
-import { strengths, defenderCasualties, attackerCasualtyCount } from '../combat'
+import { 
+  strengths, 
+  defenderCasualties, 
+  attackerCasualtyCount 
+} from '../combat'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   resolveCombat, 
   TOGGLE_CASUALTY,
-  LOSE_ATTACK, 
+  loseAttack, 
   winAttack 
 } from '../../actions'
 
@@ -51,13 +55,15 @@ const nextStep = (victor, territoryIndex, dogfight) => {
   }
 }
 
+const id = unit => unit.id
 const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
     let state = getState()
-    const { defenders } = combatants(state)
+    const { attackers, defenders } = combatants(state)
     const casualties = attackerCasualties(state)
+    const survivors = attackers.map(id).filter(id => !casualties.includes(id))
     const conqueringPower = isConquered(state) ? getCurrentPowerName(state) : null
-    dispatch(winAttack(territoryIndex, defenders.map(u => u.id), casualties, conqueringPower))
+    dispatch(winAttack(territoryIndex, defenders.map(id), survivors, casualties, conqueringPower))
     state = getState()
     continueOrAdvancePhase(dispatch, state)
   }
@@ -66,12 +72,7 @@ const attackerWins = (territoryIndex) => {
 const defenderWins = (territoryIndex) => {
   return (dispatch, getState) => {
     let state = getState()
-    dispatch({
-      type: LOSE_ATTACK,
-      territoryIndex,
-      attackerCasualties: combatants(state).attackers.map(u => u.id),
-      defenderCasualties: defenderCasualties(state)
-    })
+    dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
     state = getState()
     continueOrAdvancePhase(dispatch, state)
   }
