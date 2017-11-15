@@ -4,6 +4,7 @@ import { board, updateBoard } from '../modules/board'
 import { bombardment } from '../modules/bombardment'
 import { casualties } from '../modules/selectCasualties'
 import currentPowerIndex from './currentPower'
+import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { landPlanes } from '../modules/landPlanes'
 import missionComplete from './mission'
@@ -41,6 +42,7 @@ const combinedReducer = combineReducers({
   board,
   boardString,
   firebase,
+  flightDistance,
   inboundUnits,
   landPlanes,
   missionComplete,
@@ -88,7 +90,7 @@ const crossSliceReducer = (state, action) => {
       }
     }
     default : 
-      return state;
+      return state
   }
 }
 
@@ -96,7 +98,7 @@ const rootReducer = (state = initialState, action) => {
   if (action.type === RESET) {
     state = initialState
   }
-  const intermediateState = combinedReducer(state, action);
-  return crossSliceReducer(intermediateState, action);
+  const intermediateState = combinedReducer(state, action)
+  return crossSliceReducer(intermediateState, action)
 }
-export default rootReducer;
+export default rootReducer

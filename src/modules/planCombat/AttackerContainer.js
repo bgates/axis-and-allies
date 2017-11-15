@@ -16,23 +16,25 @@ const mapStateToProps = (state, ownProps) => (
   }
 )
 
-const commitUnits = (originIndex, targetIndex, unitIds) => {
-  return {
+const commitUnits = (originIndex, targetIndex, unitIds, distance) => (
+  {
     type: COMMIT_UNITS,
     originIndex,
     targetIndex,
-    unitIds
+    unitIds,
+    distance
   }
-}
+)
 
-const commitToStrategicBombing = (originIndex, targetIndex, unitIds) => {
-  return {
+const commitToStrategicBombing = (originIndex, targetIndex, unitIds, distance) => (
+  {
     type: COMMIT_TO_STRATEGIC_BOMBING,
     originIndex,
     targetIndex,
-    unitIds
+    unitIds,
+    distance
   }
-}
+)
 
 const uncommitCreator = (originIndex, targetIndex, unitIds) => ({
   type: UNCOMMIT_UNITS,
