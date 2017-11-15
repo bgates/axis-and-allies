@@ -24,7 +24,7 @@ there's not a clear line between units already there, and units being moved in -
  -[x] normal sea
    -[x] transport
    -[x] amphib assault
-   -[] commit to shore bombardment
+   -[x] commit to shore bombardment
    -[] sub movement
    -[x] convoy attack
    -[x] straits

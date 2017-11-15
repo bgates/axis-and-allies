@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories.json'
-import { getAllUnits } from './units'
+import { getAllUnits, idsToUnits } from './units'
 
 export const isLand = (territory) => !territory.sea
 export const isSea = (territory) => territory.sea
@@ -21,8 +21,6 @@ export const getInboundUnits = (state, territoryIndex) => (
   state.unitDestination[territoryIndex] || []
 )
 
-export const idsToUnits = (ids, units) => ids.map(id => units[id])
-
 export const getTerritoryUnits = createSelector(
   getTerritory,
   getAllUnits,
@@ -32,6 +30,7 @@ export const getTerritoryUnits = createSelector(
 export const getMovedUnitIds = state => state.unitDestination
 
 const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
+export const nonNeutral = (territory) => !isNeutral(territory)
 
 export const isFriendly = (territory, currentPower, units) => (  
   !isNeutral(territory) && !isEnemy(territory, currentPower, units)

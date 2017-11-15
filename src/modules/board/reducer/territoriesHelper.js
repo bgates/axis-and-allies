@@ -2,10 +2,8 @@ import {
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RETREAT,
-  WIN_ATTACK,
-  LOSE_ATTACK,
   LAND_PLANES,
-  PLAN_MOVEMENT,
+  //PLAN_MOVEMENT,
   PLACE_UNITS,
   NEXT_TURN
 } from '../../../actions';
@@ -15,13 +13,13 @@ import {
 } from './moveUnitReducerFunctions';
 import {
   //removeCasualties,
-  toggleCasualties,
-  defenderWins,
-  attackerWins
+  //toggleCasualties,
+  //defenderWins,
+  //attackerWins
 } from './casualtyReducerFunctions';
 import { completeMission } from './completeMissionReducerFunction';
 import { 
-  modifyUnits, 
+  //modifyUnits, 
   dogfight, 
 } from './modifyUnitsReducerFunction';
 import { placeUnits } from './placeUnitReducerFunction';

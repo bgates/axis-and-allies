@@ -12,7 +12,6 @@ export const isEnemy = (territory, currentPowerName) => {
   return territory.units.some(unit => !sameSide(unit.power, currentPowerName))
 }
 
-export const nonNeutral = (territory) => !isNeutral(territory);
 
 const isOccupied = (territory, currentPower, checkLandUnits = true,checkSeaUnits = true, checkAirUnits = true, checkStrategicBombUnits) => {
   if (checkStrategicBombUnits && territory.units.some(unit => unit.strategicBombingRaid)) {

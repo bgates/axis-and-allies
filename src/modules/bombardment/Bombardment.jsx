@@ -1,6 +1,5 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { UnitFigTableData } from '../../components/UnitFigure'
 import Attacker from '../../components/Attacker'
 
 const Bombardment = ({ 
@@ -42,65 +41,3 @@ const Bombardment = ({
 
 export default Bombardment
 
-const Bombarder = ({ 
-  unit, 
-  territory, 
-  commitUnits, 
-  unCommitUnits, 
-}) => {
-  const available = true
-  const committed = []
-  return (
-    <tr>
-      <UnitFigTableData unit={unit} />
-      <td className="available">
-        <CommitButtons
-          unit={unit} 
-          targetIndex={territory.index}
-          available={available}
-          action={commitUnits} />
-      </td>
-      <td className="available">
-        <UncommitButtons
-          unit={unit} 
-          targetIndex={territory.index}
-          committed={committed}
-          action={unCommitUnits} />
-      </td>
-    </tr>
-  )
-}
-
-const CommitButtons = ({ unit, targetIndex, available, action }) => {
-  const disabled = available.length === 0
-  return (
-    <div>
-      <input readOnly size={2} value={available.length} />
-      <button 
-        onClick={e => { action(unit, unit.locationIndex, targetIndex, available)}}
-        disabled={disabled}
-      >&gt;&gt;</button>
-      <button 
-        onClick={e => { action(unit, unit.locationIndex, targetIndex, [available[0]])}}
-        disabled={disabled}
-      >&gt;</button>
-    </div>
-  )
-}
-
-const UncommitButtons = ({ unit, targetIndex, committed, action }) => {
-  const commitQty = committed.length
-  return (
-    <div>
-      <input readOnly size={2} value={commitQty} />
-      <button 
-        onClick={e => action(unit, unit.locationIndex, targetIndex, committed)}
-        disabled={commitQty === 0}
-      >&lt;&lt;</button>
-      <button 
-        onClick={e => action(unit, unit.locationIndex, targetIndex, [committed[0]])}
-        disabled={commitQty === 0}
-      >&lt;</button>
-    </div>
-  )
-}

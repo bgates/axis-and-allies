@@ -31,9 +31,9 @@ export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS';
 export const RESOLVE_COMBAT = '/resolve-combat';
 export const COMBAT_UNDERWAY = 'COMBAT_UNDERWAY'
 export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY'
-export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES';
-export const WIN_ATTACK = 'WIN_ATTACK';
-export const LOSE_ATTACK = 'LOSE_ATTACK';
+export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES'
+export const WIN_ATTACK = 'WIN_ATTACK'
+export const LOSE_ATTACK = 'LOSE_ATTACK'
 export const RETREAT = 'RETREAT';
 
 export const LAND_PLANES = '/land-planes';
@@ -62,13 +62,9 @@ export const RESET = 'RESET';
 
 export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
-export const resolveCombat = (territoryIndex) => (  
-  { type: RESOLVE_COMBAT, territoryIndex }
-)
+export const resolveCombat = (territoryIndex) => ({ type: RESOLVE_COMBAT, territoryIndex })
 
-export const strategicBombingRolls = (territory) => (  
-  { type: STRATEGIC_BOMBING_ROLLS, territory }
-)
+export const strategicBombingRolls = (territory) => ({ type: STRATEGIC_BOMBING_ROLLS, territory })
 
 export const viewStrategicBombingResults = (damage, power, territoryIndex) => (  
   { 
@@ -121,27 +117,33 @@ export const nextTurn = () => (
   }
 )
 
-export const viewAttackOptions = (territoryIndex) => (
-  { type: VIEW_ATTACK_OPTIONS, territoryIndex }
+export const viewAttackOptions = (territoryIndex) => ({ type: VIEW_ATTACK_OPTIONS, territoryIndex })
+
+export const viewBombardmentOptions = (territoryIndex) => ({ type: VIEW_BOMBARDMENT_OPTIONS, territoryIndex })
+
+export const viewPlaneLandingOptions = (territoryIndex) => ( 
+  { type: VIEW_PLANE_LANDING_OPTIONS, territoryIndex }
 )
 
-export const viewBombardmentOptions = (territoryIndex) => (
-  { type: VIEW_BOMBARDMENT_OPTIONS, territoryIndex }
-)
-
-export const viewPlaneLandingOptions = (territory) => ( 
-  { type: VIEW_PLANE_LANDING_OPTIONS, territory }
-)
-
-export const winAttack = (territoryIndex, defenderIds, casualties, conqueringPower) => ( 
+export const winAttack = (territoryIndex, defenderIds, attackerIds, casualties, conqueringPower) => ( 
   { 
     type: WIN_ATTACK, 
     territoryIndex,
     defenderIds,
+    attackerIds,
     casualties,
     conqueringPower
   }
- )
+)
+
+export const loseAttack = (territoryIndex, attackerCasualties, defenderCasualties) => (
+  {
+    type: LOSE_ATTACK,
+    territoryIndex,
+    attackerCasualties,
+    defenderCasualties
+  }
+)
 
 export const viewMovementOptions = (territory) => (
   { type: VIEW_MOVEMENT_OPTIONS, territory }

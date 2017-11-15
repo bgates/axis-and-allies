@@ -2,12 +2,12 @@ import { createSelector } from 'reselect'
 import { combatants as combatantsWithoutDamage } from '../planCombat'
 import { 
   getFocusTerritory, 
-  idsToUnits, 
 } from '../../selectors/getTerritory'
 import { 
   attack, 
   attacks,
   defend, 
+  idsToUnits, 
   survivors,
   withAttack, 
   withDefend 

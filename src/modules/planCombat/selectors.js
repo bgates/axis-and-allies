@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
+  isLand,
   getFocusTerritory, 
   getCommittedIds,
   getCommittedUnits,
@@ -13,7 +14,7 @@ import { getAllUnits, getAllInbound, combineUnits } from '../../selectors/units'
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { nonIndustry, unitCount, totalCount } from '../../lib/unit'
-import { allUnits, isLand } from '../../lib/territory'
+import { allUnits } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
 const getTransport = state => state.transport

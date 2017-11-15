@@ -1,8 +1,3 @@
-import { unitCount } from '../../../lib/unit'
-
-const count = (units, name) => (  
-  units.reduce((total, unit) => total + (unit.name === name ? unitCount(unit) : 0), 0)
-)
 
 const changeTerritory = (territories, territoryIndex, callback) => (
   territories.map((territory, index) => (

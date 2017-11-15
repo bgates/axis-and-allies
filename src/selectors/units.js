@@ -47,3 +47,5 @@ export const unitWithOrigin = ({ name, index }, range) => unit => (
   } 
 )
 
+export const idsToUnits = (ids, units) => ids.map(id => units[id])
+
