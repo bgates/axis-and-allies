@@ -1,11 +1,9 @@
-import { 
-  isFriendly
-} from '../../lib/territory'
 import {
   combineUnits,
   unitWithOrigin
 } from '../../selectors/units'
 import {
+  isFriendly,
   isLand, 
   isSea
 } from '../../selectors/getTerritory'
@@ -14,7 +12,7 @@ import unitTypes from '../../config/unitTypes'
 const nonNeutral = ({ currentPower }) => currentPower !== 'Neutrals'
    
 const passableByLandUnit = (territory, currentPower) => {
-  return isLand(territory) && isFriendly(territory, currentPower)
+  return isLand(territory) && isFriendly(territory, currentPower.name)
 }
 
 const canalOpenIfPresent = ({ canalToIndex, canalControlIndex }, currentPower, board, { index }) => {
@@ -72,7 +70,7 @@ const unitsInRange = (territories, currentPower, medium, returnFlight) => (
     .reduce(unitsAtRange(territories, currentPower, medium, returnFlight), [])
 )
 
-const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower)
+const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower.name)
 
 const hasLandingSlots = ({ units }, currentPower) => (
   units.reduce((total, unit) => (

@@ -36,11 +36,11 @@ export const isFriendly = (territory, currentPower, units) => (
   !isNeutral(territory) && !isEnemy(territory, currentPower, units)
 )
 
-export const isEnemy = ({ currentPower, unitIds }, activePower, units) => {
+export const isEnemy = ({ currentPower, unitIds }, activePower, units = []) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
     return !sameSide(currentPower, activePower)
   }
-  return idsToUnits(unitIds, units).some(unit => !sameSide(unit.power, activePower))
+  return idsToUnits(unitIds, units).some(unit => !sameSide(unit.power, activePower.name))
 }
 
 const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (
