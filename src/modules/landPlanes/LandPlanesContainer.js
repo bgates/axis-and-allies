@@ -12,22 +12,21 @@ import {
   SELECT_PLANE_LANDING_OPTION,
   SELECT_PLANE_LANDING_TERRITORY,
   CONFIRM_LAND_PLANES
-} from '../../actions';
+} from '../../actions'
 
 const mapStateToProps = (state) => ({
-  landingOptions: landingOptions(state),
   airUnits: airUnits(state),
-  selectedOptions: selectedOptions(state),
-  territory: getFocusTerritory(state)
+  landingOptions: landingOptions(state),
+  territory: getFocusTerritory(state),
+  selectedOptions: selectedOptions(state)
 })
 
-const selectLandingOption = (unit, originIndex, destinationIndex) => {
+const selectLandingOption = (unitId, territoryIndex) => {
   return (dispatch) => {
     dispatch({
       type: SELECT_PLANE_LANDING_OPTION,
-      unit,
-      destinationIndex,
-      originIndex
+      unitId,
+      territoryIndex
     })
   }
 }

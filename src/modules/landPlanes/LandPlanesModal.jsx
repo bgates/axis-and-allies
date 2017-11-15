@@ -1,8 +1,9 @@
-import React from 'react';
-import ReactTooltip from 'react-tooltip';
-import { UnitFigTableData } from '../../components/UnitFigure';
+import React from 'react'
+import ReactTooltip from 'react-tooltip'
+import { UnitFigTableData } from '../../components/UnitFigure'
 
 const disable = (selected, airUnits) => (
+  console.log({ selected, airUnits }) ||
   Object.keys(selected).length !== airUnits.length || 
   Object.values(selected).filter(s => s).length !== airUnits.length
 )
@@ -25,18 +26,18 @@ const LandPlanesModal = ({
         <p>Aircraft do not have to endure antiaircraft fire during this phase.</p>
         <hr/>
       </ReactTooltip>
-      <p>Select where each type of aircraft involved in combat in {territory.name} should land. Aircraft are grouped by type and origin territory.</p>
+      <p>Select where each type of aircraft involved in combat in {territory.name} should land.</p>
       <p>When you have made all of your selections, press the button at the bottom of this modal.</p>
       <table>
         <tbody>
           {airUnits.map(unit => (
             <LandingOptions 
-              key={unit.options}
+              key={unit.id}
               unit={unit} 
-              selected={selectedOptions[`${unit.name}-${unit.originName}`]}
+              selected={selectedOptions[unit.id]}
               territoryIndex={territory.index}
               handleChange={selectLandingOption}
-              options={landingOptions[unit.options]} />
+              options={landingOptions[unit.id]} />
           ))}
         </tbody>
       </table>
@@ -61,11 +62,11 @@ const LandingOptions = ({
     <tr>
       <UnitFigTableData unit={unit}/>
       <td>
-        <select defaultValue={selected} onChange={e => handleChange(unit, territoryIndex, e.target.value)}>
-          <option value="">select landing option</option>
+        <select defaultValue={selected} onChange={e => handleChange(unit.id, e.target.value)}>
+          <option key={unit.id * 100} value="">select landing option</option>
           {options.map(territory => (
             <option 
-              key={territory.index}
+              key={`${territory.index}-${unit.id}`}
               value={territory.index}>
               {territory.name}
             </option>
