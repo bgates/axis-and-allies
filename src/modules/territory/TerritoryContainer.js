@@ -55,7 +55,7 @@ const territoryThunk = (territoryIndex) => {
       return
     }
     const territory = state.territories[territoryIndex]
-    const { router, phase } = state 
+    const { router, phase, flightDistance, landPlanes } = state 
     const currentPower = getCurrentPower(state)
     const routes = {
       '/': () => {
@@ -89,8 +89,8 @@ const territoryThunk = (territoryIndex) => {
         }
       },
       [PATHS.LAND_PLANES]: () => {
-        if (territory.units && territory.units.filter(airComplete).length) {
-          dispatch(viewPlaneLandingOptions(territory))
+        if (Object.keys(flightDistance).length > Object.keys(landPlanes).length) {
+          dispatch(viewPlaneLandingOptions(territoryIndex))
         }
       },
       [PATHS.PLAN_MOVEMENT]: () => {
