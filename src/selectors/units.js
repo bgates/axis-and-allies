@@ -20,6 +20,8 @@ export const combineUnits = (total, unit) => {
 export const attack = unit => unitTypes[unit.type].attack
 export const defend = unit => unitTypes[unit.type].defend
 export const land =   unit => unitTypes[unit.type].land
+export const landingSlots = unit => unitTypes[unit.type].landingSlots
+export const movement = unit => unitTypes[unit.type].movement
 export const canBombard = unit => unitTypes[unit.type].canBombard
 export const air = unit => unitTypes[unit.type].air
 export const attacks = unit => unitTypes[unit.type].numAttack || 1
@@ -49,3 +51,6 @@ export const unitWithOrigin = ({ name, index }, range) => unit => (
 
 export const idsToUnits = (ids, units) => ids.map(id => units[id])
 
+export const nonIndustry = unit => unit.type !== 'industrial complex'
+export const industry = unit => unit.type === 'industrial complex'
+export const antiaircraft = unit => unit.type === 'anti-aircraft gun'
