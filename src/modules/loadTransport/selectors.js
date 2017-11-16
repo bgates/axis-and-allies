@@ -17,7 +17,7 @@ const _hasLoadable = (territory, currentPower) => {
     territory.units.some(u => land(u) && u.power === currentPower)
 }
 
-const notBy = (i, territory) => !territory.adjacentIndexes.includes(i);
+const notBy = (i, territory) => !territory.adjacentIndexes.includes(i)
 
 const loadableSources = (currentPower, destination, origin, territories) => {
   const onMap = (i) => territories[i]
