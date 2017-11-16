@@ -40,7 +40,7 @@ export const isEnemy = ({ currentPower, unitIds }, activePower, units = []) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
     return !sameSide(currentPower, activePower)
   }
-  return idsToUnits(unitIds, units).some(unit => !sameSide(unit.power, activePower.name))
+  return idsToUnits(unitIds, units).some(unit => !sameSide(unit.power, activePower))
 }
 
 const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (

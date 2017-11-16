@@ -89,7 +89,7 @@ const territoryThunk = (territoryIndex) => {
         }
       },
       [PATHS.LAND_PLANES]: () => {
-        if (Object.keys(flightDistance).length > Object.keys(landPlanes).length) {
+        if (Object.keys(flightDistance).length >= Object.keys(landPlanes).length) {
           dispatch(viewPlaneLandingOptions(territoryIndex))
         }
       },
