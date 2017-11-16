@@ -1,7 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const RocketAttackModal = ({ rocketsAndTargets, previous }) => {
+const RocketAttackModal = ({ 
+  rocketsAndTargets, 
+  previous,
+  selected,
+  setTarget,
+  launchRockets
+}) => {
   const rockets = Object.keys(rocketsAndTargets)
   if (rockets.length) {
     return (
@@ -12,13 +18,17 @@ const RocketAttackModal = ({ rocketsAndTargets, previous }) => {
         <ul>
         {rockets.map(rocketLocation => (
           <Rocket 
+            key={rocketLocation}
             location={rocketLocation} 
-            targets={rocketsAndTargets[rocketLocation]} />
+            selected={selected[rocketLocation]}
+            targets={rocketsAndTargets[rocketLocation]} 
+            handleClick={setTarget} />
         ))}
         </ul>
         <nav>
           <Link to={previous} className="btn">Back</Link>
           <Link to="/purchase" className="btn">Purchase</Link>
+          <button onClick={launchRockets}>Launch Rockets</button>
         </nav>
       </div>
     )
@@ -31,15 +41,18 @@ const RocketAttackModal = ({ rocketsAndTargets, previous }) => {
   }
 }
 
-const Rocket = ({ location, targets }) => (
+const Rocket = ({ location, selected, targets, handleClick }) => (
   <li>
     <strong>{location}</strong>
     {targets.map(target => (
-      <button>{target.name}, {target.currentPower}</button>
+      <button 
+        key={target.name}
+        onClick={handleClick.bind(null, location, target.index)}>
+        {target.index === selected ? 'X ' : ''}{target.name}, {target.currentPower}
+      </button>
     ))}
   </li>
 )
 // the rocket attack page needs links, forward and back
 // fwd to purchase; back to either research results or research
-// also needs list of rocket installations + targets for each
 export default RocketAttackModal

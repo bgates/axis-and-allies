@@ -38,3 +38,5 @@ export const rocketTargets = createSelector(
   getCurrentPowerName,
   (board, currentPower) => rocketsAndTargets(board, currentPower)
 )
+
+export const getSelectedRocketTargets = state => state.rocketTargets

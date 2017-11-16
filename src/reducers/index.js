@@ -14,6 +14,7 @@ import { placement } from '../modules/placement'
 import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
+import { rocketTargets } from '../modules/rocketAttack'
 import strategicBombing from './strategicBombing'
 import territories from './territories'
 import { transport } from '../modules/loadTransport'
@@ -53,6 +54,7 @@ const combinedReducer = combineReducers({
   purchases,
   research,
   rolls,
+  rocketTargets,
   territories,
   transport,
   strategicBombing,

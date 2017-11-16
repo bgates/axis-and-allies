@@ -1,5 +1,5 @@
-import { ROLLS, WIN_ATTACK, LOSE_ATTACK } from '../actions';
-import PATHS from '../paths';
+import { ROLLS, WIN_ATTACK, LOSE_ATTACK } from '../actions'
+import PATHS from '../paths'
 
 const rolls = (state = {}, action) => {
   switch (action.type) {
