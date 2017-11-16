@@ -22,12 +22,19 @@ const territoriesWithRockets = (board, currentPower) => (
        .filter(belongsTo(currentPower))
 )
 
-const _rocketTargets = (board, currentPower) => (
-  territoriesWithRockets(board, currentPower).map(territory => industrialComplexInRocketRange(board, currentPower, territory))
-)
+const rocketsAndTargets = (board, currentPower) => {
+  let obj = {}
+  territoriesWithRockets(board, currentPower).forEach(territory => {
+    let targets = industrialComplexInRocketRange(board, currentPower, territory)
+    if (targets.length) {
+      obj[territory.name] = targets
+    }
+  })
+  return obj
+}
 
 export const rocketTargets = createSelector(
   mergeBoardAndTerritories,
   getCurrentPowerName,
-  (board, currentPower) => _rocketTargets(board, currentPower)
+  (board, currentPower) => rocketsAndTargets(board, currentPower)
 )

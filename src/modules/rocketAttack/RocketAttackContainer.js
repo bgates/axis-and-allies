@@ -1,10 +1,10 @@
-import { connect } from 'react-redux';
-import RocketAttackModal from './RocketAttackModal';
-import { rocketTargets } from './selectors';
-import { previousPhase } from '../../selectors/previousPhase';
+import { connect } from 'react-redux'
+import RocketAttackModal from './RocketAttackModal'
+import { rocketTargets } from './selectors'
+import { previousPhase } from '../../selectors/previousPhase'
 
 const mapStateToProps = (state) => ({
-  targets: rocketTargets(state),
+  rocketsAndTargets: rocketTargets(state),
   previous: previousPhase(state)
 });
 
