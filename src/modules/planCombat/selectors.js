@@ -3,18 +3,25 @@ import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrent
 import { 
   isLand,
   getFocusTerritory, 
+  getInboundUnits,
   getCommittedIds,
   getCommittedUnits,
   getMovedUnitIds,
   mergeBoardAndTerritories,
   hasIndustrialComplex as hasIndustry
 } from '../../selectors/getTerritory'
-import { getAllUnits, getAllInbound, combineUnits } from '../../selectors/units'
+import { 
+  air,
+  getAllUnits, 
+  getAllInbound, 
+  landingSlots,
+  movement,
+  combineUnits,
+  nonIndustry
+} from '../../selectors/units'
   
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
-import { nonIndustry, unitCount, totalCount } from '../../lib/unit'
-import { allUnits } from '../../lib/territory'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
 const getTransport = state => state.transport
@@ -84,20 +91,31 @@ export const combatants = createSelector(
   uncombinedCombatants
 )
 
-export const landingSlots = createSelector(
+export const territoryLandingSlots = createSelector(
   getCurrentPower,
   getFocusTerritory,
-  (currentPower, territory) => {
+  getInboundUnits,
+  getAllUnits,
+  state => state.flightDistance,
+  (currentPower, territory, inbound, units, flights) => {
     if (isLand(territory)) {
       return 1000
     }
-    const requiredLandingSlots = territory.units.filter(unit => unit.air && unit.distance === unit.movement)
-      .reduce(totalCount, 0)
+    //TODO: this isn't right.
+    const requiredLandingSlots = territory.unitIds.concat(inbound)
+      .map(id => units[id])
+      .filter(air)
+      .filter(unit => unit.power === currentPower.name)
+      .filter(unit => flights[unit.id] && flights[unit.id] < movement(unit)).length
+    // find all units present+(inbound and w flightdistance===max range)
+    //const requiredLandingSlots = territory.units.filter(unit => unit.air && unit.distance === unit.movement)
     if (!requiredLandingSlots) {
       return 1000
     }
-    const totalLandingSlots = allUnits(territory).filter(unit => unit.power === currentPower.name && unit.landingSlots)
-      .reduce((total, unit) => total + unitCount(unit) * unit.landingSlots, 0)
+    const totalLandingSlots = territory.unitIds.concat(inbound)
+      .map(id => units[id])
+      .filter(unit => landingSlots(unit) && unit.power === currentPower.name)
+      .reduce((total, unit) => total + landingSlots(unit), 0)
     return totalLandingSlots - requiredLandingSlots
   }
 )
