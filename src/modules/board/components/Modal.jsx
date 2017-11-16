@@ -5,7 +5,7 @@ import RepairModal from '../../repair/RepairModal'
 import { ResearchContainer } from '../../research'
 import ResearchResultsContainer from '../../researchResults/ResearchResultsContainer'
 import { RocketAttackContainer } from '../../rocketAttack'
-import RocketResultsModal from '../../rocketResults/RocketResultsModal'
+import { RocketResultsContainer } from '../../rocketResults/'
 import { PurchaseContainer } from '../../purchases'
 import { IncomeContainer } from '../../income'
 import LendLeaseModal from '../../lendLease/LendLeaseModal'
@@ -31,7 +31,7 @@ const Modal = ({ ctrlPressed, phase }) => {
       <Route path={PATHS.RESEARCH} component={ResearchContainer}/>
       <Route path={PATHS.RESEARCH_RESULTS} component={ResearchResultsContainer}/>
       <Route exact path={PATHS.ROCKETS} component={RocketAttackContainer}/>
-      <Route path={PATHS.ROCKET_RESULTS} component={RocketResultsModal}/>
+      <Route path={PATHS.ROCKET_RESULTS} component={RocketResultsContainer}/>
       <Route path={PATHS.PURCHASE} component={PurchaseContainer}/>
       <Route path={PATHS.INCOME} component={IncomeContainer}/>
       <Route path={PATHS.LEND_LEASE} component={LendLeaseModal}/>

@@ -61,7 +61,7 @@ export const NEXT_TURN = 'NEXT_TURN';
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
 export const COMBAT = 'COMBAT';
 
-export const RESET = 'RESET';
+export const RESET = 'RESET'
 
 export const dogfight = (territory) => ({ type: DOGFIGHT, territory })
 
