@@ -2,7 +2,8 @@ import {
   COMBAT_UNDERWAY,
   REMOVE_CASUALTIES, 
   WIN_ATTACK,
-  LOSE_ATTACK
+  LOSE_ATTACK,
+  NEXT_TURN
 } from '../actions'
 
 const mapping = (territoryIndex, callback) => (territory, index) => (
@@ -32,6 +33,18 @@ const territories = (state = [], action) => {
       return { ...territory, currentPower, unitIds }
     }
     return state.map(mapping(territoryIndex, callback))
+  }
+  //TODO: this doesn't take plane landing into account
+  case NEXT_TURN: {
+    const { unitOrigin, unitDestination } = action
+    return state.map((territory, index) => {
+      const outboundUnits = unitOrigin[index] || []
+      const inboundUnits = unitDestination[index] || []
+      const unitIds = territory.unitIds
+                        .filter(id => !outboundUnits.includes(id))
+                        .concat(inboundUnits)
+      return { ...territory, unitIds }
+    })
   }
   default:
     return state

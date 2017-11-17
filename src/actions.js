@@ -111,7 +111,8 @@ export const roll = (phase, rolls) => (
 
 export const nextTurn = () => (
   (dispatch, getState, getFirebase) => {
-    dispatch({ type: NEXT_TURN })
+    const { unitOrigin, unitDestination } = getState()
+    dispatch({ type: NEXT_TURN, unitOrigin, unitDestination })
     const state = getState()
     const boardString = state.boardString
     const index = state.currentPowerIndex
