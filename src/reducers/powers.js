@@ -4,7 +4,8 @@ import {
   DEVELOP_TECH,
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
-  VIEW_STRATEGIC_BOMBING_RESULTS 
+  VIEW_STRATEGIC_BOMBING_RESULTS,
+  ASSESS_ROCKET_DAMAGE
 } from '../actions'
 
 const updateCurrentPower = (powers, cPI, updateCallback, callbackArg) => (
@@ -34,6 +35,15 @@ const powers = (state = initialPowers, action) => {
       return state.map(power => {
         if (power.name === action.power) {
           return spendIPCs(power, action.damage)
+        } else {
+          return power
+        }
+      })
+    }
+    case ASSESS_ROCKET_DAMAGE: {
+      return state.map(power => {
+        if (action.damages[power.name]) {
+          return spendIPCs(power, action.damages[power.name])
         } else {
           return power
         }

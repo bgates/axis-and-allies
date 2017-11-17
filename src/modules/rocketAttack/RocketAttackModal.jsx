@@ -47,8 +47,10 @@ const Rocket = ({ location, selected, targets, handleClick }) => (
     {targets.map(target => (
       <button 
         key={target.name}
+        className={target.index === selected ? 'rockets' : null}
         onClick={handleClick.bind(null, location, target.index)}>
-        {target.index === selected ? 'X ' : ''}{target.name}, {target.currentPower}
+        <i></i>
+        {target.name}, {target.currentPower}
       </button>
     ))}
   </li>
