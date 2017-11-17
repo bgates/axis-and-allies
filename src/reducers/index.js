@@ -3,6 +3,7 @@ import { amphib } from '../modules/transport'
 import { board, updateBoard } from '../modules/board'
 import { bombardment } from '../modules/bombardment'
 import { casualties } from '../modules/selectCasualties'
+import conquered from './conquered'
 import currentPowerIndex from './currentPower'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
@@ -27,9 +28,7 @@ import {
   DOGFIGHT,
   VIEW_STRATEGIC_BOMBING_RESULTS,
   RETREAT,
-  LAND_PLANES,
   PLAN_MOVEMENT,
-  PLACE_UNITS,
   RESET
 } from '../actions'
 import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
@@ -39,6 +38,7 @@ const combinedReducer = combineReducers({
   amphib,
   bombardment,
   casualties,
+  conquered,
   currentPowerIndex,
   board,
   boardString,
@@ -73,13 +73,14 @@ const crossSliceReducer = (state, action) => {
       //case RESOLVE_COMBAT:
       //case REMOVE_CASUALTIES:
       //case WIN_ATTACK:
+      //case LOSE_ATTACK:
+      //case PLACE_UNITS: 
+      //case LAND_PLANES:
     case DOGFIGHT:
     case VIEW_STRATEGIC_BOMBING_RESULTS:
     case RETREAT:
-      //case LOSE_ATTACK:
-    case LAND_PLANES:
     case PLAN_MOVEMENT:
-    case PLACE_UNITS: {
+      {
         return {
           ...state,
           boardString: updateBoardString(state.board.territories)

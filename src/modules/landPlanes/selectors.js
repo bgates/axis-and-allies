@@ -15,6 +15,8 @@ export { getFocusTerritory }
 
 const getFlights = state => state.flightDistance
 
+const getRecentlyConquered = state => state.conquered
+
 const unitsWithRange = (moved, flights, units, { territoryIndex }) => (
   moved[territoryIndex].filter(id => flights[id]).map(id => (
    { ...units[id], distance: unitTypes[units[id].type].movement - flights[id] }
@@ -31,17 +33,17 @@ export const airUnits = createSelector(
 
 export const selectedOptions = state => state.landPlanes
 
-const availableForLanding = currentPower => territory => (
+const availableForLanding = (currentPower, conquered) => territory => (
   isLand(territory) && 
-  !territory.newlyConquered && 
+  !conquered.includes(territory.index) && 
   sameSide(territory.currentPower, currentPower.name)
 )
 
-const landingOptionsByUnit = (board, currentPower, territory, airUnits) => {
+const landingOptionsByUnit = (board, currentPower, territory, airUnits, conquered) => {
   let landingOptions = {}
   airUnits.forEach(unit => {
     const territories = Object.values(territoriesInRange(board, currentPower, territory, nonNeutral, unit.distance)).reduce((all, elm) => all.concat(elm), [])
-    landingOptions[unit.id] = territories.filter(availableForLanding(currentPower))
+    landingOptions[unit.id] = territories.filter(availableForLanding(currentPower, conquered))
   })
   return landingOptions
 }
@@ -51,6 +53,7 @@ export const landingOptions = createSelector(
   getCurrentPower,
   getFocusTerritory,
   airUnits,
+  getRecentlyConquered,
   landingOptionsByUnit
 )
 
