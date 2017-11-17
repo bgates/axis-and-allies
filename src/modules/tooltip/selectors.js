@@ -1,10 +1,13 @@
 import { createSelector } from 'reselect'
 import { 
-  getUnits,
+  getUnits as getUnconsolidatedUnits,
   getTerritoryData 
 } from '../../selectors/getTerritory'
 
-export { getUnits } 
+export const getUnits = createSelector(
+  getUnconsolidatedUnits,
+  units => (units.filter(u => u.type !== 'industrial complex'))
+)
 
 export const getIndustry = createSelector(
   getUnits,
@@ -15,3 +18,4 @@ export const getTerritoryName = createSelector(
   getTerritoryData,
   territory => territory.name
 )
+

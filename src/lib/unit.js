@@ -1,7 +1,5 @@
 import unitTypes from '../config/unitTypes'
 
-let n = 0
-export const nextId = () => n += 1
 
 export const isNotSubmerged = (unit) => {
   return !unit.submerged
@@ -35,21 +33,6 @@ const matchedUnit = (unit1, unit2) => (
     originIndexes: (unit1.originIndexes || [unit1.originIndex]).concat(unit2.originIndex) 
   }
 )
-
-export const consolidateUnits = (units, ...extraAttributes) => {
-  const attributes = [ 'power', 'attack', 'defend', 'mission', ...extraAttributes ]
-  return units.reduce((all, unit) => {
-    if (unit.name === 'transport') {
-      return all.concat(unit);
-    }
-    let match = all.find(u => unitMatch(u, unit, ...attributes)) 
-    if (match) {
-      return all.map(u => u === match ? matchedUnit(u, unit) : u)
-    } else {
-      return all.concat(duplicateUnit(unit, ...extraAttributes));
-    }
-  }, [])
-}
 
 export const flightRange = unit => unit.movement - unit.distance
 

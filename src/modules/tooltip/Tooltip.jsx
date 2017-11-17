@@ -7,10 +7,9 @@ import industryImg from '../../assets/images/industrial_complex.png'
 import PATHS from '../../paths'
 
 const Units = ({ units }) => {
-  const combatUnits = units.filter(u => u.type !== 'industrial complex')
   return (
     <div>
-      {combatUnits.map((unit, index) => (
+      {units.map((unit, index) => (
         <ImgAndQty key={index} unit={unit} />
        ))}
     </div>
