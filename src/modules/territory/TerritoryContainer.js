@@ -16,13 +16,9 @@ import {
   isOrdering 
 } from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { bomberPayload, isFriendly } from '../../selectors/getTerritory'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
-import { airComplete } from '../../lib/unit'
-import { 
-  isFriendly,
-  bomberPayload,
-} from '../../lib/territory'
 import dice from '../../lib/numericalDieRolls'
 import { 
   viewAttackOptions, 

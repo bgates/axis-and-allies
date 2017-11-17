@@ -1,5 +1,5 @@
 import { sameSide } from '../config/initialPowers'
-import { isNotSubmerged, bombCapacity } from './unit'
+import { isNotSubmerged } from './unit'
 
 export const isLand = (territory) => !territory.sea;
 export const isSea = (territory) => territory.sea;
@@ -31,14 +31,6 @@ export const isEnemyOccupied = (territory, currentPower, checkLandUnits, checkSe
 }
 
 export const isNeutral = (territory) => territory.currentPower === 'Neutrals'
-
-export const isFriendly = (territory, currentPower) => {
-  return !isNeutral(territory) && !isEnemy(territory, currentPower.name)
-}
-
-export const bomberPayload = (territory) => (  
-  territory.unitsFrom.reduce((total, unit) => total + bombCapacity(unit), 0)
-)
 
 export const allUnits = (territory) => (
   (territory.units || []).concat(territory.unitsFrom || [])

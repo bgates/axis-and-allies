@@ -51,13 +51,6 @@ export const consolidateUnits = (units, ...extraAttributes) => {
   }, [])
 }
 
-export const bombCapacity = (unit) => {
-  if (unit.name.includes('strategic')) {
-    return unit.name.includes('heavy') ? 3 : 1
-  } 
-  return 0
-}
-
 export const airComplete = (unit) => unit.air && unit.mission === 'complete'
 
 export const flightRange = unit => unit.movement - unit.distance

@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories.json'
-import { getAllUnits, idsToUnits } from './units'
+import { getAllUnits, idsToUnits, bombCapacity } from './units'
 
 export const isLand = (territory) => !territory.sea
 export const isSea = (territory) => territory.sea
@@ -119,5 +119,10 @@ export const hasIndustrialComplex = createSelector(
 
 export const amphibOrigins = (amphib, inbound, index) => (
   amphib.territory[index] || []).map(transportId => inbound[transportId]
+)
+
+export const bomberPayload = createSelector(
+  getCommittedUnits,
+  units => units.reduce((total, unit) => total + bombCapacity(unit), 0)
 )
 

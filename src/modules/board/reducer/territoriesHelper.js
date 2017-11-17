@@ -7,16 +7,6 @@ import {
   PLACE_UNITS,
   NEXT_TURN
 } from '../../../actions';
-import {
-  landPlanes,
-  retreat
-} from './moveUnitReducerFunctions';
-import {
-  //removeCasualties,
-  //toggleCasualties,
-  //defenderWins,
-  //attackerWins
-} from './casualtyReducerFunctions';
 import { completeMission } from './completeMissionReducerFunction';
 import { 
   //modifyUnits, 
@@ -30,7 +20,7 @@ const boardHelper = (state, action) => {
     case VIEW_STRATEGIC_BOMBING_RESULTS: return completeMission(state, action);
     case DOGFIGHT: return dogfight(state, action);
       //case RESOLVE_COMBAT: return modifyUnits(state, action);
-    case RETREAT: return retreat(state, action);
+      //case RETREAT: return retreat(state, action);
       //case COMMIT_UNITS: return commitUnits(state, action);
       //case UNCOMMIT_UNITS: return uncommitUnits(state, action);
       //case COMMIT_AMPHIB_UNITS: return commitAmphibUnits(state, action);
@@ -40,7 +30,7 @@ const boardHelper = (state, action) => {
       //case TOGGLE_CASUALTY: return toggleCasualties(state, action);
       //case LOSE_ATTACK: return defenderWins(state, action);
       //case WIN_ATTACK: return attackerWins(state, action);
-    case LAND_PLANES: return landPlanes(state, action);
+      //case LAND_PLANES: return landPlanes(state, action);
     case PLACE_UNITS: return placeUnits(state, action);
     case NEXT_TURN: return finalizeUnitMovements(state);
     default:
