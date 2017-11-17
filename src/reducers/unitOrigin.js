@@ -2,7 +2,8 @@ import {
   COMMIT_UNITS, 
   UNCOMMIT_UNITS, 
   LOAD_TRANSPORT,
-  COMMIT_TO_STRATEGIC_BOMBING
+  COMMIT_TO_STRATEGIC_BOMBING,
+  NEXT_TURN
 } from '../actions'
 
 export const add = (array = [], ids) => array.concat(ids)
@@ -32,6 +33,9 @@ const unitOrigin = (state = {}, action) => {
       [originIndex]: add(state[originIndex], unitIds),
       [transport.originIndex]: add(state[transport.originIndex], transport.id)
     }
+  }
+  case NEXT_TURN: {
+    return {}
   }
   default:
     return state

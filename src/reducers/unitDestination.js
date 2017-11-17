@@ -4,7 +4,8 @@ import {
   LOAD_TRANSPORT,
   COMMIT_TO_STRATEGIC_BOMBING,
   REMOVE_CASUALTIES,
-  LOSE_ATTACK
+  LOSE_ATTACK,
+  NEXT_TURN
 } from '../actions'
 import { add, remove } from './unitOrigin'
 
@@ -38,6 +39,9 @@ const unitDestination = (state = {}, action) => {
       ...state,
       [territoryIndex]: remove(state[territoryIndex], attackerCasualties)
     }
+  }
+  case NEXT_TURN: {
+    return {}
   }
   default:
     return state
