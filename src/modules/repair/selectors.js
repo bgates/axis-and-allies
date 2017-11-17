@@ -1,13 +1,13 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
+import { createSelector } from 'reselect'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { mergeBoardAndTerritories } from '../../selectors/getTerritory'
 
 const hasDamagedShips = (territory) => {
-  return territory.units.some(u => u.name.includes('damaged'))
+  return territory.units.some(u => u.type.includes('damaged'))
 }
 
 const getFriendlyHarbor = (board, power) => {
-  return board.filter(territory => territory.seaPort && territory.currentPower === power.name)
+  return board.filter(territory => territory.seaPort && territory.currentPower === power)
 }
 
 const damagedShipsInHarbor = (board, power) => {
@@ -15,7 +15,7 @@ const damagedShipsInHarbor = (board, power) => {
 }
 
 export const hasDamagedShipsInHarbor = createSelector(
-  getCurrentPower,
   mergeBoardAndTerritories,
-  (power, board) => damagedShipsInHarbor(board, power).length > 0
+  getCurrentPowerName,
+  (board, power) => damagedShipsInHarbor(board, power).length > 0
 )
