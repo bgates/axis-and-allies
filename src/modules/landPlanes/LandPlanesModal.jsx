@@ -3,7 +3,6 @@ import ReactTooltip from 'react-tooltip'
 import { UnitFigTableData } from '../../components/UnitFigure'
 
 const disable = (selected, airUnits) => (
-  console.log({ selected, airUnits }) ||
   Object.keys(selected).length !== airUnits.length || 
   Object.values(selected).filter(s => s).length !== airUnits.length
 )

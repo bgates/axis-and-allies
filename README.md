@@ -11,7 +11,7 @@ there's not a clear line between units already there, and units being moved in -
   -[]save to firebase
   -[x]prevent back button from going too far
   -[x]if r&d spend, go back only to research results
-[] rockets
+[x] rockets
 [x] purchase
   -[] special units (naval air, marines)
 [x] income
@@ -95,3 +95,11 @@ they cannot be hit themselves
 
 want to mark units used so they can't be re-used
 when? at end of strat bombing; after bombardment; 
+
+can't I re-use commit-units? that puts them in the [id]:territoryIndex obj
+that's what I'm using to read units out of availability.
+that's no longer exactly what I want, is it.
+I want to know the units in territory atm. that's going to include just units there (territory.unitIds)
+plus anybody who's been moved in during noncom. If I can see the territory in 1st place only if it hasn't been battleground,
+then anybody moved in will be in unitDestination.
+units in range will be units filtered by those w no destination, or those w _this_ destination.
