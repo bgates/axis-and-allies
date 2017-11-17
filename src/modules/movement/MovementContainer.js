@@ -1,20 +1,24 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { 
+  getCommittedIds,
   getCurrentPower, 
   getFocusTerritory, 
+  territoryLandingSlots,
   unitsInRange,
-  occupants 
+  combinedCombatants
 } from './selectors'
 import MovementModal from './MovementModal'
 import { PLAN_MOVEMENT } from '../../actions'
 
 const mapStateToProps = (state) => (  
   {
+    committed: getCommittedIds(state),
     currentPower: getCurrentPower(state),
+    landingSlots: territoryLandingSlots(state),
     territory: getFocusTerritory(state),
     unitsInRange: unitsInRange(state),
-    occupants: occupants(state)
+    occupants: combinedCombatants(state, state.phase.territoryIndex)
   } 
 )
 

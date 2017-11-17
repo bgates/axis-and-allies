@@ -1,22 +1,22 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories';
-import { unitsInRange as tooBroadUnits } from '../planCombat';
-import { consolidateUnits, nonIndustry, duplicateUnit } from '../../lib/unit';
-import { allUnits } from '../../lib/territory';
-export { getCurrentPower, getFocusTerritory }
+import { createSelector } from 'reselect'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getFocusTerritory } from '../../selectors/getTerritory'
+import { unitsInRange as tooBroadUnits, combinedCombatants, getCommittedIds } from '../planCombat'
+import { getAllInbound } from '../../selectors/units'
+import { getTerritoryUnits } from '../../selectors/getTerritory'
+export { getCurrentPower, getFocusTerritory, combinedCombatants, getCommittedIds }
 
-const _occupants = (territory) => {
-  const units = allUnits(territory).filter(nonIndustry).map(duplicateUnit)
-  return { attackers: consolidateUnits(units), defenders: [] }
-}
-
-export const occupants = createSelector(
-  getFocusTerritory,
-  territory => _occupants(territory)
-)
+const getBombardingUnits = state => state.bombardment.bombardingUnits
 
 export const unitsInRange = createSelector(
+  getFocusTerritory,
   tooBroadUnits,
-  units => units.filter(unit => unit.mission !== 'complete' && unit.distance)
+  getAllInbound,
+  getBombardingUnits,
+  (territory, units, inbound, bombarding) => units.filter(
+    ({ id }) => (!inbound[id] || inbound[id] === territory.index) && 
+                !territory.unitIds.includes(id) && 
+                !bombarding[id])
 )
+
+export const territoryLandingSlots = state => []

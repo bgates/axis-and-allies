@@ -34,8 +34,8 @@ import {
   viewBombardmentOptions,
   orderUnits,
   roll
-} from '../../actions';
-import PATHS from '../../paths';
+} from '../../actions'
+import PATHS from '../../paths'
 
 const mapStateToProps = (state, ownProps) => {
   const { territoryIndex } = ownProps
@@ -95,11 +95,11 @@ const territoryThunk = (territoryIndex) => {
       },
       [PATHS.PLAN_MOVEMENT]: () => {
         if (isFriendly(territory, currentPower)) {
-          dispatch(viewMovementOptions(territory))
+          dispatch(viewMovementOptions(territoryIndex))
         }
       },
       [PATHS.ORDER_UNITS]: () => {
-        const { units } = territory;
+        const { units } = territory
         if (isOrdering(phase.current, currentPower.name, territory.currentPower, units)) {
           dispatch(orderUnits(territory)) 
         }

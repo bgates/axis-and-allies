@@ -1,19 +1,21 @@
-import React from 'react';
-import ReactTooltip from 'react-tooltip';
-import { unitMatch } from '../../lib/unit';
-import Attacker from '../planCombat/AttackerContainer';
-import Occupiers from '../planCombat/Occupiers';
+import React from 'react'
+import ReactTooltip from 'react-tooltip'
+import { unitMatch } from '../../lib/unit'
+import Attacker from '../planCombat/AttackerContainer'
+import Occupiers from '../planCombat/Occupiers'
 
-const MovementModal = ({ territory, unitsInRange, planOtherMovement, occupants }) => {
+const MovementModal = ({ territory, committed, unitsInRange, landingSlots, occupants, planOtherMovement }) => {
   const attacker = (unit, key) => {
-    let committed = territory.unitsFrom.find(u => unitMatch(u, unit, 'originIndex') && !u.mission) || { ids: [] };
     return (
       <Attacker 
         key={key}
         unit={unit}
-        destinationIndex={territory.index}
+        committed={committed.filter(id => unit.ids.includes(id))}
+        hasIndustry={false}
+        targetIndex={territory.index}
         landAttack={!territory.sea}
-        committed={committed} />
+        landingSlots={landingSlots}
+       />
     )
   }
   return (
