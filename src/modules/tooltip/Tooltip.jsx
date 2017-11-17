@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
 import { ImgAndQty } from '../../components/UnitFigure'
-import { powerData } from '../../config/initialPowers'
 import '../../assets/styles/tooltip.css'
 import industryImg from '../../assets/images/industrial_complex.png'
 import PATHS from '../../paths'
@@ -16,11 +15,11 @@ const Units = ({ units }) => {
   )
 }
 
-const StartTooltip = ({ playing, currentPower }) => {
+const StartTooltip = ({ playing, currentPower, side }) => {
   if (playing) {
     return (
       <div>
-        <p>This is the start of your turn. You are playing <strong>{currentPower}</strong> for the <strong>{powerData[currentPower].side}</strong>.</p>
+        <p>This is the start of your turn. You are playing <strong>{currentPower}</strong> for the <strong>{side}</strong>.</p>
         <p>Click anywhere on the map to start.</p>
       </div>
     )
@@ -101,10 +100,22 @@ const ConfirmFinishTooltip = () => {
   )
 }
 
-const Tooltip = ({ currentPower, playing, units, industry, territoryName }) => {
+const Tooltip = ({ 
+  currentPower, 
+  playing, 
+  units, 
+  industry, 
+  territoryName,
+  territoryValue,
+  side 
+}) => {
   return (
     <div>
-      <h1>{territoryName}{industry ? <img src={industryImg} alt="industrial complex" style={{height: 20}}/> : null}</h1>
+      <h1>
+        {territoryName}
+        {industry ? <img src={industryImg} alt="industrial complex" style={{height: 20}}/> : null}
+        {territoryValue ? ` [${territoryValue}IPC]` : null}
+      </h1>
       <Units units={units} />
       <Route exact path="/" 
         render={() => <StartTooltip playing={playing} currentPower={currentPower} />} />
