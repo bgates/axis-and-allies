@@ -57,7 +57,7 @@ export const PLACE_UNITS = 'PLACE_UNITS';
 
 export const ORDER_UNITS = '/order-units';
 export const CONFIRM_FINISH = '/confirm-finish';
-export const NEXT_TURN = 'NEXT_TURN';
+export const NEXT_TURN = 'NEXT_TURN'
 
 export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
 export const COMBAT = 'COMBAT';
@@ -114,7 +114,7 @@ export const nextTurn = () => (
     dispatch({ type: NEXT_TURN })
     const state = getState()
     const boardString = state.boardString
-    const index = state.board.currentPowerIndex
+    const index = state.currentPowerIndex
     sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', index)
     sendToFirebase(state, getFirebase, 'push', 'boardStrings', boardString)
     sendToFirebase(state, getFirebase, 'remove', 'patches')
