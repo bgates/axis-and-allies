@@ -1,10 +1,16 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { unitMatch } from '../../lib/unit'
 import Attacker from '../planCombat/AttackerContainer'
 import Occupiers from '../planCombat/Occupiers'
 
-const MovementModal = ({ territory, committed, unitsInRange, landingSlots, occupants, planOtherMovement }) => {
+const MovementModal = ({ 
+  territory, 
+  committed, 
+  unitsInRange, 
+  landingSlots, 
+  occupants, 
+  planOtherMovement 
+}) => {
   const attacker = (unit, key) => {
     return (
       <Attacker 

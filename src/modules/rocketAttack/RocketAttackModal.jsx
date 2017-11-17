@@ -33,11 +33,13 @@ const RocketAttackModal = ({
       </div>
     )
   } else {
-    <div>
-      <h1>Rocket Attack</h1>
-      <p><strong>You cannot attack with rockets.</strong></p>
-      <p>There are no enemy industrial complexes 3 adjacent spaces or less from any of your antiaircraft guns.</p>
-    </div>
+    return (
+      <div>
+        <h1>Rocket Attack</h1>
+        <p><strong>You cannot attack with rockets.</strong></p>
+        <p>There are no enemy industrial complexes 3 adjacent spaces or less from any of your antiaircraft guns.</p>
+      </div>
+    )
   }
 }
 

@@ -51,8 +51,6 @@ export const consolidateUnits = (units, ...extraAttributes) => {
   }, [])
 }
 
-export const airComplete = (unit) => unit.air && unit.mission === 'complete'
-
 export const flightRange = unit => unit.movement - unit.distance
 
 const damaged = (units, casualties) => {

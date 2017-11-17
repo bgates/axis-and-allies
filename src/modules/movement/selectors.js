@@ -19,4 +19,5 @@ export const unitsInRange = createSelector(
                 !bombarding[id])
 )
 
-export const territoryLandingSlots = state => []
+//TODO
+export const territoryLandingSlots = state => getTerritoryUnits ? [] : null
