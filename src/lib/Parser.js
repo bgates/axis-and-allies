@@ -1,5 +1,4 @@
 import { unitCount } from './unit'
-import { allUnits } from './territory'
 import powers from '../config/initialPowers'
 import unitTypes from '../config/unitTypes'
 
@@ -37,9 +36,9 @@ const territoryStringCreator = (units) => (
   units.reduce((string, unit) => string + unitStringCreator(unit), '')
 )
 
-export const dehydrate = (board) => (  
+  /*export const dehydrate = (board) => (  
   board.map(allUnits).map(territoryStringCreator).join('|')
-)
+) */
 
 const Parser = {
   hydrate (boardString) {

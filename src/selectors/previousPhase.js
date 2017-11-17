@@ -1,17 +1,15 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../selectors/getCurrentPower';
-import { mergeBoardAndTerritories } from '../selectors/mergeBoardAndTerritories';
-import { hasDamagedShipsInHarbor } from '../modules/repair';
-import { currentPowerHasRockets } from '../modules/research';
-import PATHS from '../paths';
+import { createSelector } from 'reselect'
+import { getCurrentPower } from '../selectors/getCurrentPower'
+import { hasDamagedShipsInHarbor } from '../modules/repair'
+import { currentPowerHasRockets } from '../modules/research'
+import PATHS from '../paths'
 
 export const previousPhase = createSelector(
   getCurrentPower,
-  mergeBoardAndTerritories,
   currentPowerHasRockets,
   hasDamagedShipsInHarbor,
   state => state.phase,
-  (currentPower, board, hasRockets, hasDamagedShips, phase) => {
+  (currentPower, hasRockets, hasDamagedShips, phase) => {
     const phases = {
       [PATHS.REPAIR]: () => 'start',
       [PATHS.RESEARCH]: () => hasDamagedShips ? PATHS.REPAIR : 'start',

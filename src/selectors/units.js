@@ -3,6 +3,9 @@ export const getAllUnits = state => state.units
 export const getAllOutbound = state => state.outboundUnits
 export const getAllInbound = state => state.inboundUnits
 
+let n = 0
+export const nextId = () => n += 1
+
 const match = unit1 => unit2 => (
   ['type', 'power', 'originName']
     .every(attr => unit1[attr] === unit2[attr])

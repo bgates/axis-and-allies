@@ -8,7 +8,7 @@ import thunk from 'redux-thunk'
 import reducer from '../reducers'
 import firebaseConfig from './firebase'
 import { newParse } from '../lib/Parser'
-import { nextId } from '../lib/unit'
+import { nextId } from '../selectors/units'
 import Board from './startingBoard'
 import territoryData from './territories.json'
 
