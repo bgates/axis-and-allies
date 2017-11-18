@@ -24,7 +24,7 @@ import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
-const getTransport = state => state.transport
+export const getTransport = state => state.transport
 const getAmphib = state => state.amphib
 
 export const unitsInRange = createSelector(
