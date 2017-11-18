@@ -1,11 +1,11 @@
 import { COMBAT_UNDERWAY, NEXT_TURN } from '../actions'
 
-const combatUnderway = (state = [], action) => {
+const combatUnderway = (state = {}, action) => {
   const { type, territoryIndex } = action
   if (type === COMBAT_UNDERWAY) {
-    return state.concat(territoryIndex)
+    return { ...state, [territoryIndex]: true }
   } else if (type === NEXT_TURN) {
-    return []
+    return {}
   } else {
     return state
   }

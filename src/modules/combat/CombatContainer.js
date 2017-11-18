@@ -12,6 +12,7 @@ import {
   combatants,
   defenderCasualties, 
   getFocusTerritory, 
+  isUnderway,
   rollCount, 
   strengths,
 } from './selectors'
@@ -24,6 +25,7 @@ const mapStateToProps = (state) => ({
   allowRetreat: allowRetreat(state),
   combatants: combatants(state),
   defenderCasualties: defenderCasualties(state),
+  isUnderway: isUnderway(state),
   strengths: strengths(state),
   territory: getFocusTerritory(state)
 })
@@ -37,6 +39,8 @@ const markCombatUnderway = (territoryIndex, transportIds, bombardmentIds, unitId
     unitIds
   }
 )
+
+const selectBattle = () => dispatch => dispatch(push(PATHS.RESOLVE_COMBAT))
 
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
@@ -55,6 +59,7 @@ const rollForCombat = (territoryIndex) => {
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
+    selectBattle,
     rollForCombat 
   }, dispatch)
 }

@@ -6,10 +6,12 @@ import '../../assets/styles/combat.css'
 
 const CombatModal = ({ 
   combatants, 
+  isUnderway,
   strengths, 
   territory,
   defenderCasualties,
   rollForCombat,
+  selectBattle,
   allowRetreat
 }) => {
   const { attackers, defenders, bombardingUnits } = combatants
@@ -42,7 +44,7 @@ const CombatModal = ({
       </div>
       <h2>Attacker</h2>
       <nav>
-        <button>Back</button>
+        <button onClick={isUnderway ? null : selectBattle}>Back</button>
         {allowRetreat && <Link className="btn" to={PATHS.RETREAT}>View Retreat Options</Link>}
         <button 
           onClick={rollForCombat.bind(null, territory.index)}

@@ -17,6 +17,12 @@ export { getFocusTerritory }
 
 export const attackerCasualties = state => state.casualties
 
+export const isUnderway = createSelector(
+  getFocusTerritory,
+  state => state.combatUnderway,
+  (territory, underway) => underway[territory.index]
+)
+
 export const bombardingUnits = ({ bombardment, missionComplete, phase, units }) => (
   idsToUnits(bombardment.targetTerritories[phase.territoryIndex] || [], units)
   .map(withAttack)
@@ -78,9 +84,9 @@ export const allowRetreat = createSelector(
   combatants,
   attackerCasualties,
   state => state.combatUnderway,
-  (territory, { attackers }, combatUnderway) => (
+  (territory, { attackers }, casualties, combatUnderway) => (
     combatUnderway[territory.index] && //amphib
-    attackers.some(({ id }) => !attackerCasualties.includes(id))
+    attackers.some(({ id }) => !casualties.includes(id))
   )
 )
 
