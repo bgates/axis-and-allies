@@ -4,7 +4,7 @@ const missionComplete = (state = {}, action) => {
   const { type, unitIds, bombardmentIds } = action
   switch (type) {
   case COMBAT_UNDERWAY: {
-    let newState = { ...state }
+    let newState = { ...state };//keep semicolon!
     (bombardmentIds || []).forEach(id => newState[id] = true)
     return newState
   }
