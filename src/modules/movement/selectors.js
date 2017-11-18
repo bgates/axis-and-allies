@@ -1,7 +1,12 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { getFocusTerritory } from '../../selectors/getTerritory'
-import { unitsInRange as tooBroadUnits, combinedCombatants, getCommittedIds } from '../planCombat'
+import { 
+  unitsInRange as tooBroadUnits, 
+  combinedCombatants, 
+  getCommittedIds, 
+  getTransport 
+} from '../planCombat'
 import { getAllInbound } from '../../selectors/units'
 import { getTerritoryUnits } from '../../selectors/getTerritory'
 export { getCurrentPower, getFocusTerritory, combinedCombatants, getCommittedIds }
@@ -13,11 +18,12 @@ export const unitsInRange = createSelector(
   tooBroadUnits,
   getAllInbound,
   getBombardingUnits,
-  (territory, units, inbound, bombarding) => units.filter(
-    ({ id }) => (!inbound[id] || inbound[id] === territory.index) && 
+  getTransport,
+  (territory, units, inbound, bombarding, transports) => units.filter(
+    ({ id }) => (!inbound[id] || inbound[id] === territory.index || transports.newlyLoaded.includes(id)) && 
                 !territory.unitIds.includes(id) && 
                 !bombarding[id])
 )
 
-//TODO
+//TODO...
 export const territoryLandingSlots = state => getTerritoryUnits ? [] : null
