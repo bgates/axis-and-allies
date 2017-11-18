@@ -11,29 +11,25 @@ import unitTypes from '../../config/unitTypes'
 
 const nonNeutral = ({ currentPower }) => currentPower !== 'Neutrals'
    
-const passableByLandUnit = (territory, currentPower) => {
-  return isLand(territory) && isFriendly(territory, currentPower.name)
-}
-
 const canalOpenIfPresent = ({ canalToIndex, canalControlIndex }, currentPower, board, { index }) => {
   return !canalToIndex || 
     canalToIndex !== index ||
     isFriendly(board[canalControlIndex], currentPower)
 }
 
-const passableBySeaUnit = (territory, currentPower, board, lastTerritory) => {
-  return territory.sea && isFriendly(territory, currentPower) && 
+const passableBySeaUnit = (territory, currentPower, board, lastTerritory, allUnits) => {
+  return territory.sea && isFriendly(territory, currentPower, allUnits) && 
     canalOpenIfPresent(territory, currentPower, board, lastTerritory)
 }
 
-export const territoriesInRange = (board, currentPower, territory, accessible, maxRange) => {
+export const territoriesInRange = (board, currentPower, territory, accessible, maxRange, allUnits) => {
   let territories = { 0: [territory] }
   let territoryList = [territory.name]
   for (let range = 1; range <= maxRange; range ++) {
     territories[range] = territories[range - 1].reduce((all, last) => {
       const newAdjacents = last.adjacentIndexes.reduce((adjacents, i) => {
         const current = board[i]
-        if (territoryList.includes(current.name) || !accessible(current, currentPower, board, last)) {
+        if (territoryList.includes(current.name) || !accessible(current, currentPower, board, last, allUnits)) {
           return adjacents
         } else {
           territoryList.push(current.name)
@@ -70,11 +66,11 @@ const unitsInRange = (territories, currentPower, medium, returnFlight) => (
     .reduce(unitsAtRange(territories, currentPower, medium, returnFlight), [])
 )
 
-const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower.name)
+const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendly(territory, currentPower)
 
 const hasLandingSlots = ({ units }, currentPower) => (
   units.reduce((total, unit) => (
-    total + (unit.power === currentPower.name && unitTypes[unit.type].landingSlots) ? 1 : 0
+    total + (unit.power === currentPower && unitTypes[unit.type].landingSlots) ? 1 : 0
   ), 0)
 )
 
@@ -90,15 +86,15 @@ const airUnitsInRange = (board, currentPower, territory) => {
     const returnFlight = Object.keys(territories).reduce((min, range) => (
       territories[range].some(landable(currentPower)) ? Math.min(min, range) : min
     ), 8)
-    return unitsInRange(territories, currentPower.name, 'air', returnFlight)
+    return unitsInRange(territories, currentPower, 'air', returnFlight)
   } else {
     return []
   }
 }
 
 const landUnitsInRange = (board, currentPower, territory) => {
-  let territories = territoriesInRange(board, currentPower, territory, passableByLandUnit, 2)
-  return unitsInRange(territories, currentPower.name, 'land');
+  let territories = territoriesInRange(board, currentPower, territory, friendlyLand, 2)
+  return unitsInRange(territories, currentPower, 'land');
 }
 
 const transportOrMovedTo = (territory) => ( 
@@ -115,16 +111,16 @@ const amphibUnitsInRange = (board, currentPower, _territory, inbound, destinatio
         .filter(id => transporting[id])
         .map(id => allUnits[id]))  
       .filter(({ power, id }) => (
-        power === currentPower.name && 
+        power === currentPower && 
         (!transport[id] || transport[id] === _territory.index)
       ))
     return [...transports, ...territoryTransports.map(unit => ({ ...unit, originName: territory.name, originIndex: territory.index }))]
   }, [])
 }
 
-const seaUnitsInRange = (board, currentPower, territory) => {
-  let territories = territoriesInRange(board, currentPower, territory, passableBySeaUnit, 2)
-  let units = unitsInRange(territories, currentPower.name, 'ship')
+const seaUnitsInRange = (board, currentPower, territory, allUnits) => {
+  let territories = territoriesInRange(board, currentPower, territory, passableBySeaUnit, 2, allUnits)
+  let units = unitsInRange(territories, currentPower, 'ship')
   return units.filter(transportOrMovedTo(territory))
 }
 
@@ -147,11 +143,11 @@ const unitsByMedium = (board, currentPower, territory, inbound, destination, tra
       ...amphibUnitsInRange(board, currentPower, territory, inbound, destination, transport, amphib, allUnits),
       ...airUnitsInRange(board, currentPower, territory)
     ]
-  } else if (isFriendly(territory, currentPower)) {
-    return seaUnitsInRange(board, currentPower, territory)
+  } else if (isFriendly(territory, currentPower, allUnits)) {
+    return seaUnitsInRange(board, currentPower, territory, allUnits)
   } else {
     return [
-      ...seaUnitsInRange(board, currentPower, territory),
+      ...seaUnitsInRange(board, currentPower, territory, allUnits),
       ...airUnitsInRange(board, currentPower, territory)
     ]
   }
@@ -161,7 +157,7 @@ export const combatUnitsInRange = (board, currentPower, territory, inbound, dest
   const uncommitted = unit => !inbound[unit.id] || 
     inbound[unit.id] === territory.index || 
     transport.transporting[unit.id]
-  return unitsByMedium(board, currentPower, territory, inbound, destination, transport, amphib, allUnits)      
+  return unitsByMedium(board, currentPower.name, territory, inbound, destination, transport, amphib, allUnits)      
     .filter(uncommitted)
     .reduce(combineUnits, [])
     .sort(unitSort)

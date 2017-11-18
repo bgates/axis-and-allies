@@ -36,7 +36,7 @@ export const isFriendly = (territory, currentPower, units) => (
   !isNeutral(territory) && !isEnemy(territory, currentPower, units)
 )
 
-export const isEnemy = ({ currentPower, unitIds }, activePower, units = []) => {
+export const isEnemy = ({ currentPower, unitIds = []}, activePower, units = []) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
     return !sameSide(currentPower, activePower)
   }
@@ -75,9 +75,9 @@ export const mergeBoardAndTerritories = createSelector(
   getAllUnits,
   getAllTerritories,
   (allUnits, territories) => territories.map(({ currentPower, unitIds }, index) => {
-    const { name, original_power, sea, adjacentIndexes } = territoryData[index]
+    const { name, original_power, sea, adjacentIndexes, seaPort } = territoryData[index]
     const units = idsToUnits(unitIds, allUnits)
-    return { currentPower, units, name, original_power, sea, adjacentIndexes, index}
+    return { currentPower, units, name, original_power, sea, seaPort, adjacentIndexes, index}
   })
 )
    
