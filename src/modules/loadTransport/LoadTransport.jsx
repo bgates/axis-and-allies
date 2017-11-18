@@ -35,7 +35,7 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAtt
         ))}
         </tbody>
       </table>
-      <p>To go back to the previous screen without loading and moving press <button onClick={viewAttackOptions.bind(null, territory)}>Cancel</button></p>
+      <p>To go back to the previous screen without loading and moving press <button onClick={viewAttackOptions.bind(null, territory.index)}>Cancel</button></p>
     </div> 
   )
 }
