@@ -4,6 +4,7 @@ import {
   LOAD_TRANSPORT,
   COMMIT_TO_STRATEGIC_BOMBING,
   REMOVE_CASUALTIES,
+  RETREAT,
   LOSE_ATTACK,
   NEXT_TURN
 } from '../actions'
@@ -38,6 +39,14 @@ const unitDestination = (state = {}, action) => {
     return {
       ...state,
       [territoryIndex]: remove(state[territoryIndex], attackerCasualties)
+    }
+  }
+  case RETREAT: {
+    const { battleTerritoryIndex, retreatTerritoryIndex } = action
+    return {
+      ...state,
+      [battleTerritoryIndex]: [],
+      [retreatTerritoryIndex]: (state[retreatTerritoryIndex] || []).concat(state[battleTerritoryIndex])
     }
   }
   case NEXT_TURN: {

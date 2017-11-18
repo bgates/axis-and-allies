@@ -3,12 +3,11 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import PATHS from '../../paths'
 import RetreatModal from './RetreatModal'
-import { defenderCasualties } from '../combatRolls'
+import { attackerCasualties, defenderCasualties } from '../combat'
 import { continueOrAdvancePhase } from '../selectCasualties'
-import { getFocusTerritory } from '../../selectors/mergeBoardAndTerritories'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { removeCasualties, resolveCombat, RETREAT } from '../../actions'
-import { retreatOptions } from './selectors'
+import { getFocusTerritory, retreatOptions } from './selectors'
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -18,7 +17,9 @@ const mapStateToProps = (state) => ({
 const retreat = (battleTerritoryIndex, retreatTerritoryIndex) => (
   (dispatch, getState) => {
     const state = getState()
-    dispatch(removeCasualties(defenderCasualties(state), battleTerritoryIndex, getCurrentPower(state).name))
+    const dC = defenderCasualties(state)
+    const aC = attackerCasualties(state)
+    dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), battleTerritoryIndex, getCurrentPowerName(state)))
     dispatch({ type: RETREAT, battleTerritoryIndex, retreatTerritoryIndex })
     continueOrAdvancePhase(dispatch, state)
   }

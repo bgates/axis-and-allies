@@ -105,8 +105,8 @@ export const getUnits = createSelector(
   getInboundUnits,
   ({ unitIds }, allUnits, outbound, inbound) => (
     groupedUnits(unitIds
-      .concat(inbound)
       .filter(remove(outbound))
+      .concat(inbound)
       .map(id => allUnits[id]))
   )
 )
