@@ -5,6 +5,7 @@ import {
   LOAD_TRANSPORT,
   COMMIT_TO_STRATEGIC_BOMBING,
   REMOVE_CASUALTIES,
+  RETREAT,
   NEXT_TURN
 } from '../actions'
 
@@ -28,6 +29,9 @@ const inboundUnits = (state = {}, action) => {
   }
   case REMOVE_CASUALTIES: {
     return omit(action.attackerCasualties.map(String), state)
+  }
+  case RETREAT: {
+    return omit(action.survivors.map(String), state)
   }
   case NEXT_TURN: {
     return {}

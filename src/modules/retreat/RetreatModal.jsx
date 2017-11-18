@@ -12,7 +12,7 @@ const RetreatModal = ({ territory, retreatOptions, retreat, returnToCombat }) =>
       </ul>
       
       <nav>
-        <button onClick={returnToCombat.bind(null, territory)}>Back</button>
+        <button onClick={returnToCombat.bind(null, territory.index)}>Back</button>
       </nav>
     </div>
   )

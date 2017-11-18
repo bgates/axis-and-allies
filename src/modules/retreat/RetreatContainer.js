@@ -5,6 +5,7 @@ import PATHS from '../../paths'
 import RetreatModal from './RetreatModal'
 import { attackerCasualties, defenderCasualties } from '../combat'
 import { continueOrAdvancePhase } from '../selectCasualties'
+import { getInboundUnits } from '../../selectors/getTerritory'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { removeCasualties, resolveCombat, RETREAT } from '../../actions'
 import { getFocusTerritory, retreatOptions } from './selectors'
@@ -16,19 +17,20 @@ const mapStateToProps = (state) => ({
 
 const retreat = (battleTerritoryIndex, retreatTerritoryIndex) => (
   (dispatch, getState) => {
-    const state = getState()
-    const dC = defenderCasualties(state)
-    const aC = attackerCasualties(state)
+    let state = getState()
     dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), battleTerritoryIndex, getCurrentPowerName(state)))
-    dispatch({ type: RETREAT, battleTerritoryIndex, retreatTerritoryIndex })
+    state = getState()
+    const survivors = getInboundUnits(state, battleTerritoryIndex)
+    dispatch({ type: RETREAT, battleTerritoryIndex, retreatTerritoryIndex, survivors })
+    state = getState()
     continueOrAdvancePhase(dispatch, state)
   }
 )
 
-const returnToCombat = (territory) => {
+const returnToCombat = (territoryIndex) => {
   return dispatch => {
     dispatch(push(PATHS.RESOLVE_COMBAT))
-    dispatch(resolveCombat(territory.index))
+    dispatch(resolveCombat(territoryIndex))
   }
 }
 const mapDispatchToProps = (dispatch) => {
