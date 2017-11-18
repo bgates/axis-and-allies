@@ -1,5 +1,5 @@
 import PlanContainer from './PlanContainer'
-import { combatants, unitsInRange, combinedCombatants, getCommittedIds } from './selectors'
+import { combatants, unitsInRange, combinedCombatants, getCommittedIds, getFlights } from './selectors'
 import { territoriesInRange, canLandInTerritory } from './movement'
 
-export { PlanContainer, combatants, unitsInRange, combinedCombatants, getCommittedIds, territoriesInRange, canLandInTerritory }
+export { PlanContainer, combatants, unitsInRange, combinedCombatants, getCommittedIds, getFlights, territoriesInRange, canLandInTerritory }

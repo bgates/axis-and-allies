@@ -8,12 +8,10 @@ import {
   nonNeutral
 } from '../../selectors/getTerritory'
 import { getAllUnits } from '../../selectors/units'
-import { territoriesInRange } from '../planCombat'
+import { territoriesInRange, getFlights } from '../planCombat'
 import unitTypes from '../../config/unitTypes'
 import { sameSide } from '../../config/initialPowers'
 export { getFocusTerritory }
-
-const getFlights = state => state.flightDistance
 
 const getRecentlyConquered = state => state.conquered
 
@@ -57,7 +55,10 @@ export const landingOptions = createSelector(
   landingOptionsByUnit
 )
 
-export const planesInAir = state => Object.keys(state.flightDistance).length
+export const planesInAir = createSelector(
+  getFlights,
+  flightDistance => Object.keys(flightDistance).length
+)
 
 export const allLandingsPlanned = state => (
   planesInAir(state) === Object.keys(state.landPlanes).length

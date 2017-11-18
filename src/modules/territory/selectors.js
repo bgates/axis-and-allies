@@ -9,8 +9,8 @@ import {
   getUnits,
   isFriendly
 } from '../../selectors/getTerritory'
-import { air, canBombard, getAllUnits } from '../../selectors/units'
-import { nonIndustry } from '../../lib/unit'
+import { air, canBombard, getAllUnits, nonIndustry } from '../../selectors/units'
+import { getFlights } from '../planCombat'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
 
@@ -64,7 +64,7 @@ export const getClasses = createSelector(
   state => state.phase.current,
   state => state.amphib.territory,
   state => state.unitDestination,
-  state => state.flightDistance,
+  getFlights,
   (state, index) => index,
   (currentPower, territory, { sea }, movedUnitIds, phase, amphib, unitDestination, flightDistance, territoryIndex) => {
     const territoryPower = territory.currentPower || ''

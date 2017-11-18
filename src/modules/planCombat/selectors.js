@@ -91,12 +91,14 @@ export const combatants = createSelector(
   uncombinedCombatants
 )
 
+export const getFlights = state => state.flightDistance
+
 export const territoryLandingSlots = createSelector(
   getCurrentPower,
   getFocusTerritory,
   getInboundUnits,
   getAllUnits,
-  state => state.flightDistance,
+  getFlights,
   (currentPower, territory, inbound, units, flights) => {
     if (isLand(territory)) {
       return 1000

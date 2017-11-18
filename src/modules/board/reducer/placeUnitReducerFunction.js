@@ -1,4 +1,4 @@
-import { nextId } from '../../../lib/unit'
+import { nextId } from '../../../selectors/units'
 import unitTypes from '../../../config/unitTypes'
 
 export const placeUnits = (state, action) => {
