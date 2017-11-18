@@ -15,7 +15,7 @@ import {
   isDogfightable,
   isOrdering 
 } from './selectors'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { bomberPayload, isFriendly } from '../../selectors/getTerritory'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
@@ -51,11 +51,11 @@ const territoryThunk = (territoryIndex) => {
       return
     }
     const territory = state.territories[territoryIndex]
-    const { router, phase, flightDistance, landPlanes } = state 
-    const currentPower = getCurrentPower(state)
+    const { router, phase, flightDistance, landPlanes, units } = state 
+    const currentPower = getCurrentPowerName(state)
     const routes = {
       '/': () => {
-        if (currentPower.name === 'China') {
+        if (currentPower === 'China') {
           dispatch(push(PATHS.PLAN_ATTACKS))
         } else {
           const nextUrl = hasDamagedShipsInHarbor(state) ? PATHS.REPAIR : PATHS.RESEARCH
@@ -74,7 +74,7 @@ const territoryThunk = (territoryIndex) => {
             return alert('not yet!')
           }
           if (isDogfightable(state, territoryIndex)) {
-            dispatch(dogfight(territory))
+            dispatch(dogfight(territoryIndex))
           } else if (isBombed(state, territoryIndex)) {
             bombRaid(dispatch, territory)
           } else if (isBombardable(state, territoryIndex)) {
@@ -90,13 +90,13 @@ const territoryThunk = (territoryIndex) => {
         }
       },
       [PATHS.PLAN_MOVEMENT]: () => {
-        if (isFriendly(territory, currentPower)) {
+        if (isFriendly(territory, currentPower, units)) {
           dispatch(viewMovementOptions(territoryIndex))
         }
       },
       [PATHS.ORDER_UNITS]: () => {
         const { units } = territory
-        if (isOrdering(phase.current, currentPower.name, territory.currentPower, units)) {
+        if (isOrdering(phase.current, currentPower, territory.currentPower, units)) {
           dispatch(orderUnits(territory)) 
         }
       },
