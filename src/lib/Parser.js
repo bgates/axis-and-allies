@@ -1,4 +1,3 @@
-import { unitCount } from './unit'
 import powers from '../config/initialPowers'
 import unitTypes from '../config/unitTypes'
 
@@ -26,11 +25,10 @@ const territoryStringParser = (string) => (
 
 const powerNames = powersWithNeutral.map(p => p.name)
 
-const unitStringCreator = (unit) => {
-  const single = powerNames.indexOf(unit.power) + 
-    String.fromCharCode(60 + unitNameArray.indexOf(unit.name))
-  return single.repeat(unitCount(unit))
-}
+const unitStringCreator = unit => (  
+  powerNames.indexOf(unit.power) + 
+  String.fromCharCode(60 + unitNameArray.indexOf(unit.name))
+)
 
 const territoryStringCreator = (units) => (  
   units.reduce((string, unit) => string + unitStringCreator(unit), '')
