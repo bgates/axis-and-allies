@@ -76,7 +76,12 @@ export const strengths = createSelector(
 export const allowRetreat = createSelector(
   getFocusTerritory,
   combatants,
-  (territory, { attackers }) => territory.continueCombat && (!territory.amphib)
+  attackerCasualties,
+  state => state.combatUnderway,
+  (territory, { attackers }, combatUnderway) => (
+    combatUnderway[territory.index] && //amphib
+    attackers.some(({ id }) => !attackerCasualties.includes(id))
+  )
 )
 
 const attacksAt = n => unit => unit.attack === n

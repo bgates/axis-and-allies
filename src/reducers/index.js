@@ -3,6 +3,7 @@ import { amphib } from '../modules/transport'
 import { updateBoard } from '../modules/board'
 import { bombardment } from '../modules/bombardment'
 import { casualties } from '../modules/selectCasualties'
+import combatUnderway from './combatUnderway'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
 import flightDistance from './flightDistance'
@@ -37,6 +38,7 @@ const combinedReducer = combineReducers({
   amphib,
   bombardment,
   casualties,
+  combatUnderway,
   conquered,
   currentPowerIndex,
   boardString,

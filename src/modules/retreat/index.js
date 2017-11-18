@@ -1,3 +1,3 @@
-import RetreatContainer from './RetreatContainer';
+import RetreatContainer from './RetreatContainer'
 
 export { RetreatContainer }
