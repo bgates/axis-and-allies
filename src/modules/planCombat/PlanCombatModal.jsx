@@ -8,6 +8,7 @@ const PlanCombatModal = ({
   committed, 
   hasIndustry,
   landingSlots,
+  strategicBombing,
   territory, 
   unitsInRange, 
   planOtherAttack 
@@ -59,6 +60,7 @@ const PlanCombatModal = ({
           <h3>Committed Units</h3>
           <Occupiers 
             combatants={combatants}
+            strategicBombing={strategicBombing}
             sea={territory.sea} 
           />
         </div>

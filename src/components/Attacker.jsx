@@ -41,7 +41,7 @@ const Attacker = ({
           action={unCommitUnits} />
         {air && hasIndustry && <UncommitButtons
           unit={unit} 
-          committed={strategicBombing}
+          committed={strategicBombing.filter(id => unit.ids.includes(id))}
           targetIndex={targetIndex} 
           units={strategicBombing}
           action={unCommitUnits} 

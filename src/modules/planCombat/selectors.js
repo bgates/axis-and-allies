@@ -70,16 +70,11 @@ const uncombinedCombatants = (currentPower, territory, committedUnits, transport
   return { attackers, defenders }
 }
 
-export const combinedCombatants = state => {
-  let { attackers, defenders } = combatants(state)
-  attackers = attackers.reduce(combineUnits, [])
-  defenders = defenders.reduce(combineUnits, [])
-    /*if (territory && territory.dogfight) {
-    defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
-    attackers = attackers.filter(u => u.air)
-  }*/
-  return { attackers, defenders }
-}
+export const strategicBombing = createSelector(
+  getFocusTerritory,
+  state => state.strategicBombing,
+  ({ index }, bombers) => (bombers.targetTerritories[index] || [])//.filter(id => unitIds.includes(id))
+)
 
 export const combatants = createSelector(
   getCurrentPowerName,
@@ -89,6 +84,21 @@ export const combatants = createSelector(
   getAllUnits,
   state => state.amphib,
   uncombinedCombatants
+)
+
+export const combinedCombatants = createSelector(
+  state => state.strategicBombing,
+  combatants,
+  ({ bombingUnits }, { attackers, defenders }) => {
+    const strategicBombers = attackers.filter(({ id }) => bombingUnits[id]).reduce(combineUnits, [])
+    attackers = attackers.filter(({ id }) => !bombingUnits[id]).reduce(combineUnits, []).concat(strategicBombers)
+    defenders = defenders.reduce(combineUnits, [])
+      /*if (territory && territory.dogfight) {
+      defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
+      attackers = attackers.filter(u => u.air)
+    }*/
+    return { attackers, defenders }
+  }
 )
 
 export const getFlights = state => state.flightDistance
@@ -128,9 +138,3 @@ export const hasIndustrialComplex = createSelector(
   (state, territory) => hasIndustry(state, territory.index)
 )
 
-export const strategicBombing = createSelector(
-  getFocusTerritory,
-  state => state.strategicBombing,
-  (state, unitIds) => unitIds,
-  ({ index }, bombers, unitIds) => (bombers.targetTerritories[index] || []).filter(id => unitIds.includes(id))
-)

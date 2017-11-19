@@ -11,7 +11,7 @@ import {
 } from '../../actions'
 
 const mapStateToProps = (state, ownProps) => (
-  { strategicBombing: strategicBombing(state, ownProps.unit.ids),
+  { strategicBombing: strategicBombing(state),
     ...ownProps
   }
 )

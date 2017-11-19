@@ -7,6 +7,7 @@ import {
   getFocusTerritory, 
   getCommittedIds,
   hasIndustrialComplex,
+  strategicBombing,
   territoryLandingSlots,
   unitsInRange, 
 } from './selectors'
@@ -18,6 +19,7 @@ const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
   hasIndustry: hasIndustrialComplex(state),
   landingSlots: territoryLandingSlots(state),
+  strategicBombing: strategicBombing(state),
   territory: getFocusTerritory(state),
   unitsInRange: unitsInRange(state)
 })

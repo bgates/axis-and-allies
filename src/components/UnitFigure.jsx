@@ -17,10 +17,11 @@ export const UnitImg = ({ power, name, handleClick, className }) => (
     onClick={handleClick} />
 )
 
-export const ImgAndQty = ({ unit }) => {
+export const ImgAndQty = ({ unit, mission }) => {
   const { power, type, qty } = unit
   return (
     <span>
+      {mission && <span title={mission}>*</span>}
       <UnitImg power={power} name={type} />
       {qty > 1 ? <span className={power.toLowerCase()}>{qty}</span> : null}
     </span>
