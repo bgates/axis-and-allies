@@ -15,6 +15,8 @@ import {
   isDogfightable,
   isOrdering 
 } from './selectors'
+import { attackerCasualties } from '../selectCasualties'
+import { defenderCasualties } from '../combat'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { bomberPayload, isFriendly } from '../../selectors/getTerritory'
 import { hasDamagedShipsInHarbor } from '../repair'
@@ -23,6 +25,7 @@ import dice from '../../lib/numericalDieRolls'
 import { 
   viewAttackOptions, 
   dogfight,
+  removeCasualties,
   resolveCombat, 
   viewPlaneLandingOptions,
   viewMovementOptions,
@@ -106,6 +109,7 @@ const territoryThunk = (territoryIndex) => {
 }
 
 export const bombRaid = (dispatch, state, territoryIndex) => {
+  dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
   const rolls = dice(bomberPayload(state, territoryIndex))
   dispatch(roll(PATHS.STRATEGIC_BOMB, rolls))
   dispatch(push(PATHS.STRATEGIC_BOMB))
