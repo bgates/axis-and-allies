@@ -1,6 +1,7 @@
 import { omit } from 'ramda'
 import { 
   COMMIT_UNITS, 
+  COMMIT_TO_STRATEGIC_BOMBING,
   UNCOMMIT_UNITS, 
   REMOVE_CASUALTIES,
   WIN_ATTACK,
@@ -10,6 +11,7 @@ import {
 const flightDistance = (state = {}, action) => {
   const { type, casualties, unitIds, attackerCasualties, distance } = action
   switch (type) {
+  case COMMIT_TO_STRATEGIC_BOMBING:
   case COMMIT_UNITS: {
     let newState = { ...state }
     if (distance) {
