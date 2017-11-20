@@ -1,7 +1,6 @@
-import { createSelector } from 'reselect';
-import { hasIndustrialComplex } from '../../selectors/getTerritory';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import { mergeBoardAndTerritories } from '../../selectors/mergeBoardAndTerritories';
+import { createSelector } from 'reselect'
+import { hasIndustrialComplex, mergeBoardAndTerritories } from '../../selectors/getTerritory'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
 //TODO: not using hasIndustrialComplex right
 const canBuild = currentPower => territory => (     
   territory.units &&
