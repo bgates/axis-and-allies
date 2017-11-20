@@ -29,10 +29,13 @@ export const canBombard = unit => unitTypes[unit.type].canBombard
 export const air = unit => unitTypes[unit.type].air
 export const attacks = unit => unitTypes[unit.type].numAttack || 1
 export const bombCapacity = unit => unitTypes[unit.type].bomber ? attacks(unit) : 0
-export const willDogfight = unit => air(unit) && !unit.type.includes('strategic')
+const isStrategic = unit => unit.type.includes('strategic')
+export const willDogfight = unit => air(unit) && !isStrategic(unit)
+const dogfight = unit => isStrategic(unit) ? 1 : 3
     
 export const withAttack = unit => ({ ...unit, attack: attack(unit) })
 export const withDefend = unit => ({ ...unit, defend: defend(unit) })
+export const withDogfight = unit => ({ ...unit, attack: dogfight(unit) })
 
 const damaged = (units, casualties) => {
   const damagedUnits = units.filter(unit => casualties.includes(unit.id) && unitTypes[unit.type].canTakeDamage)

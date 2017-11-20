@@ -13,7 +13,8 @@ import {
   survivors,
   willDogfight,
   withAttack, 
-  withDefend 
+  withDefend,
+  withDogfight
 } from '../../selectors/units'
 import PATHS from '../../paths'
 export { getFocusTerritory }
@@ -59,13 +60,13 @@ const dogfightIds = createSelector(
 const dogfightCombatants = (attackers, defenders, dogfighters) => (
   dogfighters === 'all' ?
   {
-    attackers: attackers.map(withAttack).filter(air),
-    defenders: defenders.map(withDefend).filter(willDogfight),
+    attackers: attackers.filter(air).map(withDogfight),
+    defenders: defenders.filter(willDogfight).map(withDefend),
     bombardingUnits: []
   } :
   {
-    attackers: attackers.map(withAttack).filter(unit => dogfighters.includes(unit.id)),
-    defenders: defenders.map(withDefend).filter(willDogfight),
+    attackers: attackers.filter(unit => dogfighters.includes(unit.id)).map(withDogfight),
+    defenders: defenders.filter(willDogfight).map(withDefend),
     bombardingUnits: []
   }
 )
