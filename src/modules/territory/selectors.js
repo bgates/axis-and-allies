@@ -131,6 +131,7 @@ export const isDogfightable = createSelector(
 
 export const isBombed = createSelector(
   state => state.strategicBombing.targetTerritories,
+  (state, territoryIndex) => territoryIndex,
   (territories, territoryIndex) => (territories[territoryIndex] || []).length
 )
 

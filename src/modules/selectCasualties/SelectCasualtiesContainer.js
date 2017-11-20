@@ -89,10 +89,12 @@ const continueCombat = () => {
 
 const postDogfight = (territoryIndex) => {
   return (dispatch, getState) => {
-    const territory = getFocusTerritory(getState())
-    if (isBombed(territory)) {
-      return bombRaid(dispatch, territory)
+    const state = getState()
+    const territory = getFocusTerritory(state)
+    if (isBombed(state, territory.index)) {
+      return bombRaid(dispatch, state, territory.index)
     } else if (territory) {
+      console.log('nope')
       // if combat, have it out
     }
     

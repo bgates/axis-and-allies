@@ -4,6 +4,7 @@ import {
   attackerCasualtyCount,
   preCasualtyCombatants as combatants, 
   defenderCasualties, 
+  getDogfights
 } from '../combat'
 import { getFocusTerritory } from '../../selectors/getTerritory'
 import { land } from '../../selectors/units'
@@ -44,7 +45,8 @@ export const victor = createSelector(
 
 export const isDogfight = createSelector(
   getFocusTerritory,
-  territory => territory.dogfight
+  getDogfights,
+  ({ index }, dogfight) => dogfight[index]
 )
 
 const idNotIn = array => obj => !array.includes(obj.id)

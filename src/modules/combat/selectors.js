@@ -18,6 +18,7 @@ import PATHS from '../../paths'
 export { getFocusTerritory }
 
 export const attackerCasualties = state => state.casualties
+export const getDogfights = state => state.dogfight
 
 export const isUnderway = createSelector(
   getFocusTerritory,
@@ -47,7 +48,7 @@ const modify = (units) => {
 
 const dogfightIds = createSelector(
   state => state.phase.territoryIndex,
-  state => state.dogfight,
+  getDogfights,
   state => state.strategicBombing.targetTerritories,
   (territoryIndex, dogfight, strategicBombing) => (
     dogfight[territoryIndex] && (strategicBombing[territoryIndex] || 'all')

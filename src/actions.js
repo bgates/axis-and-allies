@@ -29,7 +29,6 @@ export const UNCOMMIT_BOMBARDMENT_UNITS = 'UNCOMMIT_BOMBARDMENT_UNITS'
 export const COMMIT_TO_STRATEGIC_BOMBING = 'COMMIT_TO_STRATEGIC_BOMBING'
 
 export const DOGFIGHT = 'DOGFIGHT'
-export const STRATEGIC_BOMBING_ROLLS = 'STRATEGIC_BOMBING_ROLLS';
 export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS';
 
 export const RESOLVE_COMBAT = '/resolve-combat';
@@ -67,8 +66,6 @@ export const RESET = 'RESET'
 export const dogfight = (territoryIndex) => ({ type: DOGFIGHT, territoryIndex })
 
 export const resolveCombat = (territoryIndex) => ({ type: RESOLVE_COMBAT, territoryIndex })
-
-export const strategicBombingRolls = (territory) => ({ type: STRATEGIC_BOMBING_ROLLS, territory })
 
 export const viewStrategicBombingResults = (damage, power, territoryIndex) => (  
   { 

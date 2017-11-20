@@ -23,7 +23,6 @@ import dice from '../../lib/numericalDieRolls'
 import { 
   viewAttackOptions, 
   dogfight,
-  strategicBombingRolls,
   resolveCombat, 
   viewPlaneLandingOptions,
   viewMovementOptions,
@@ -76,7 +75,7 @@ const territoryThunk = (territoryIndex) => {
           if (isDogfightable(state, territoryIndex)) {
             dispatch(dogfight(territoryIndex))
           } else if (isBombed(state, territoryIndex)) {
-            bombRaid(dispatch, territory)
+            bombRaid(dispatch, state, territoryIndex)
           } else if (isBombardable(state, territoryIndex)) {
             dispatch(viewBombardmentOptions(territoryIndex))
           } else {
@@ -106,10 +105,9 @@ const territoryThunk = (territoryIndex) => {
   }
 }
 
-export const bombRaid = (dispatch, territory) => {
-  const rolls = dice(bomberPayload(territory))
+export const bombRaid = (dispatch, state, territoryIndex) => {
+  const rolls = dice(bomberPayload(state, territoryIndex))
   dispatch(roll(PATHS.STRATEGIC_BOMB, rolls))
-  dispatch(strategicBombingRolls(territory))
   dispatch(push(PATHS.STRATEGIC_BOMB))
 }
 

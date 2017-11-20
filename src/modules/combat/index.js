@@ -5,6 +5,7 @@ import {
   combatants, 
   combatRolls, 
   defenderCasualties, 
+  getDogfights,
   preCasualtyCombatants,
   strengths 
 } from './selectors'
@@ -15,6 +16,7 @@ export {
   combatants, 
   combatRolls, 
   defenderCasualties, 
+  getDogfights,
   preCasualtyCombatants,
   strengths 
 }
