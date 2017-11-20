@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { 
+  getCurrentTerritoryIndex,
   getFocusTerritory,
   getMovedUnitIds,
   isLand,
@@ -15,7 +16,7 @@ export { getFocusTerritory }
 
 const getRecentlyConquered = state => state.conquered
 
-const unitsWithRange = (moved, flights, units, { territoryIndex }) => (
+const unitsWithRange = (moved, flights, units, territoryIndex) => (
   moved[territoryIndex].filter(id => flights[id]).map(id => (
    { ...units[id], distance: unitTypes[units[id].type].movement - flights[id] }
   ))
@@ -25,7 +26,7 @@ export const airUnits = createSelector(
   getMovedUnitIds,
   getFlights,
   getAllUnits,
-  state => state.phase,
+  getCurrentTerritoryIndex,
   unitsWithRange
 )
 

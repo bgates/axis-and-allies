@@ -10,9 +10,11 @@ import {
   isFriendly
 } from '../../selectors/getTerritory'
 import { air, canBombard, getAllUnits, nonIndustry } from '../../selectors/units'
-import { getFlights } from '../planCombat'
+import { getFlights, getBombedTerritories } from '../planCombat'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
+
+export const getCurrentPhase = state => state.phase.current
 
 export const getFill = createSelector(
   getTerritory,
@@ -61,7 +63,7 @@ export const getClasses = createSelector(
   getTerritory,
   getTerritoryData,
   getMovedUnitIds,
-  state => state.phase.current,
+  getCurrentPhase,
   state => state.amphib.territory,
   state => state.unitDestination,
   getFlights,
@@ -133,7 +135,7 @@ export const isDogfightable = createSelector(
 )
 
 export const isBombed = createSelector(
-  state => state.strategicBombing.targetTerritories,
+  getBombedTerritories,
   (state, territoryIndex) => territoryIndex,
   (territories, territoryIndex) => (territories[territoryIndex] || []).length
 )

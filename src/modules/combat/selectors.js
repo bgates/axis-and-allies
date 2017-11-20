@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
-import { combatants as combatantsWithoutDamage } from '../planCombat'
+import { getBombedTerritories, combatants as combatantsWithoutDamage } from '../planCombat'
 import { 
+  getCurrentTerritoryIndex,
   getFocusTerritory, 
 } from '../../selectors/getTerritory'
 import { 
@@ -47,9 +48,9 @@ const modify = (units) => {
 }
 
 const dogfightIds = createSelector(
-  state => state.phase.territoryIndex,
+  getCurrentTerritoryIndex,
   getDogfights,
-  state => state.strategicBombing.targetTerritories,
+  getBombedTerritories,
   (territoryIndex, dogfight, strategicBombing) => (
     dogfight[territoryIndex] && (strategicBombing[territoryIndex] || 'all')
   )

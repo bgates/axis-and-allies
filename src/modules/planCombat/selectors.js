@@ -2,10 +2,11 @@ import { createSelector } from 'reselect'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   isLand,
-  getFocusTerritory, 
-  getInboundUnits,
+  getBombingUnits,
   getCommittedIds,
   getCommittedUnits,
+  getFocusTerritory, 
+  getInboundUnits,
   getMovedUnitIds,
   mergeBoardAndTerritories,
   hasIndustrialComplex as hasIndustry
@@ -25,7 +26,7 @@ import { allyOf, enemyOf } from '../../config/initialPowers'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
 export const getTransport = state => state.transport
-const getAmphib = state => state.amphib
+export const getAmphib = state => state.amphib
 
 export const unitsInRange = createSelector(
   mergeBoardAndTerritories,
@@ -70,10 +71,12 @@ const uncombinedCombatants = (currentPower, territory, committedUnits, transport
   return { attackers, defenders }
 }
 
+export const getBombedTerritories = state => state.strategicBombing.targetTerritories
+
 export const strategicBombing = createSelector(
   getFocusTerritory,
-  state => state.strategicBombing,
-  ({ index }, bombers) => (bombers.targetTerritories[index] || [])//.filter(id => unitIds.includes(id))
+  getBombedTerritories,
+  ({ index }, territories) => (territories[index] || [])
 )
 
 export const combatants = createSelector(
@@ -82,14 +85,14 @@ export const combatants = createSelector(
   getCommittedUnits,
   getTransport,
   getAllUnits,
-  state => state.amphib,
+  getAmphib,
   uncombinedCombatants
 )
 
 export const combinedCombatants = createSelector(
-  state => state.strategicBombing,
+  getBombingUnits,
   combatants,
-  ({ bombingUnits }, { attackers, defenders }) => {
+  (bombingUnits, { attackers, defenders }) => {
     const strategicBombers = attackers.filter(({ id }) => bombingUnits[id]).reduce(combineUnits, [])
     attackers = attackers.filter(({ id }) => !bombingUnits[id]).reduce(combineUnits, []).concat(strategicBombers)
     defenders = defenders.reduce(combineUnits, [])

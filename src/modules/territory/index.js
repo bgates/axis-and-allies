@@ -1,4 +1,4 @@
 import { bombRaid } from './TerritoryContainer'
-import { isBombed, isCombat } from './selectors'
+import { getCurrentPhase, isBombed, isCombat } from './selectors'
 
-export { bombRaid, isBombed, isCombat }
+export { bombRaid, getCurrentPhase, isBombed, isCombat }

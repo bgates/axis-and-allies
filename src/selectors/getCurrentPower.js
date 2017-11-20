@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
 import { isEmpty } from 'react-redux-firebase'
 
-export const getPowers = (state) => state.powers
+export const getPowers = state => state.powers
 
-const currentPowerIndex = (state) => state.currentPowerIndex 
+const currentPowerIndex = state => state.currentPowerIndex 
 
 export const getCurrentPower = createSelector(
   getPowers,

@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { isCombat } from '../territory'
+import { isCombat, getCurrentPhase } from '../territory'
 import { 
   PLAN_ATTACKS, 
   VIEW_ATTACK_OPTIONS, 
@@ -25,7 +25,7 @@ const phaseRequiresOverlay = (phase) => {
 
 export const overlayPhase = createSelector(
   state => state.router.location.pathname,
-  state => state.phase.current,
+  getCurrentPhase,
   (pathname, phase) => pathRequiresOverlay(pathname) || 
            phaseRequiresOverlay(phase)
 )
@@ -49,7 +49,7 @@ export const noCombat = state => {
 //TODO: combine this w previousPhase selector?
 export const phases = createSelector(
   noCombat,
-  state => state.phase.current,
+  getCurrentPhase,
   canPlace,
   (noCombat, phase, canPlaceUnits) => {
     if ([PLAN_ATTACKS, 'resolve-combat'].includes(phase)) {

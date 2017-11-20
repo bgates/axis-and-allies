@@ -52,11 +52,13 @@ const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (
   }
 )
 
+export const getCurrentTerritoryIndex = state => state.phase.territoryIndex
+
 export const getFocusTerritory = createSelector(
   state => getTerritoryUnits(state, state.phase.territoryIndex),
   state => state,
-  state => state.phase,
-  (units, state, { territoryIndex }) => getStaticAndDynamicTerritory(state, territoryIndex, units)
+  getCurrentTerritoryIndex,
+  (units, state, territoryIndex) => getStaticAndDynamicTerritory(state, territoryIndex, units)
 )
 
 export const getCommittedIds = createSelector(
@@ -120,10 +122,11 @@ export const hasIndustrialComplex = createSelector(
 export const amphibOrigins = (amphib, inbound, index) => (
   amphib.territory[index] || []).map(transportId => inbound[transportId]
 )
+export const getBombingUnits = state => state.strategicBombing.bombingUnits
 
 export const bomberPayload = createSelector(
   getCommittedUnits,
-  state => state.strategicBombing.bombingUnits,
+  getBombingUnits,
   (state, territoryIndex) => territoryIndex,
   (units, bombers, index) => (
     units.filter(({ id }) => bombers[id]).reduce((total, unit) => total + bombCapacity(unit), 0)
