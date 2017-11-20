@@ -123,6 +123,10 @@ export const amphibOrigins = (amphib, inbound, index) => (
 
 export const bomberPayload = createSelector(
   getCommittedUnits,
-  units => units.reduce((total, unit) => total + bombCapacity(unit), 0)
+  state => state.strategicBombing.bombingUnits,
+  (state, territoryIndex) => territoryIndex,
+  (units, bombers, index) => (
+    units.filter(({ id }) => bombers[id]).reduce((total, unit) => total + bombCapacity(unit), 0)
+  )
 )
 
