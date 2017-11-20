@@ -93,10 +93,6 @@ export const combinedCombatants = createSelector(
     const strategicBombers = attackers.filter(({ id }) => bombingUnits[id]).reduce(combineUnits, [])
     attackers = attackers.filter(({ id }) => !bombingUnits[id]).reduce(combineUnits, []).concat(strategicBombers)
     defenders = defenders.reduce(combineUnits, [])
-      /*if (territory && territory.dogfight) {
-      defenders = defenders.filter(u => u.air && !u.name.includes('strategic'))
-      attackers = attackers.filter(u => u.air)
-    }*/
     return { attackers, defenders }
   }
 )

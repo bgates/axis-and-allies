@@ -6,6 +6,7 @@ import { casualties } from '../modules/selectCasualties'
 import combatUnderway from './combatUnderway'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
+import dogfight from './dogfight'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { landPlanes } from '../modules/landPlanes'
@@ -17,7 +18,7 @@ import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import { rocketTargets } from '../modules/rocketAttack'
-import strategicBombing from './strategicBombing'
+import { strategicBombing } from '../modules/strategicBomb'
 import territories from './territories'
 import { transport } from '../modules/loadTransport'
 import units from './units'
@@ -41,6 +42,7 @@ const combinedReducer = combineReducers({
   combatUnderway,
   conquered,
   currentPowerIndex,
+  dogfight,
   boardString,
   firebase,
   flightDistance,

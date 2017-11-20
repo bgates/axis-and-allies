@@ -4,11 +4,13 @@ import {
   getFocusTerritory, 
 } from '../../selectors/getTerritory'
 import { 
+  air,
   attack, 
   attacks,
   defend, 
   idsToUnits, 
   survivors,
+  willDogfight,
   withAttack, 
   withDefend 
 } from '../../selectors/units'
@@ -43,10 +45,35 @@ const modify = (units) => {
   }
 }
 
+const dogfightIds = createSelector(
+  state => state.phase.territoryIndex,
+  state => state.dogfight,
+  state => state.strategicBombing.targetTerritories,
+  (territoryIndex, dogfight, strategicBombing) => (
+    dogfight[territoryIndex] && (strategicBombing[territoryIndex] || 'all')
+  )
+)
+
+const dogfightCombatants = (attackers, defenders, dogfighters) => (
+  dogfighters === 'all' ?
+  {
+    attackers: attackers.map(withAttack).filter(air),
+    defenders: defenders.map(withDefend).filter(willDogfight),
+    bombardingUnits: []
+  } :
+  {
+    attackers: attackers.map(withAttack).filter(unit => dogfighters.includes(unit.id)),
+    defenders: defenders.map(withDefend).filter(willDogfight),
+    bombardingUnits: []
+  }
+)
+
 export const preCasualtyCombatants = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
-  ({ attackers, defenders }, bombardingUnits) => (
+  dogfightIds,
+  ({ attackers, defenders }, bombardingUnits, dogfighters) => (
+    dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
     { 
       attackers: modify(attackers), 
       defenders: defenders.map(withDefend), 
