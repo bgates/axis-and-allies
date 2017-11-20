@@ -77,7 +77,7 @@ export const preCasualtyCombatants = createSelector(
     { 
       attackers: modify(attackers), 
       defenders: defenders.map(withDefend), 
-      bombardingUnits: bombardingUnits
+      bombardingUnits
     }
   )
 )
@@ -122,9 +122,9 @@ const defendsAt = n => unit => defend(unit) === n
 const totalAttacks = (total, unit) => total + attacks(unit)
 const totalDefends = (total, unit) => total + 1
 
-const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
-  const { attackers, defenders } = combatants
-  const supportedAttackers = [ ...modify(attackers), ...bombardingUnits ]
+const arrangeRolls = (combatants, strengths, rolls = []) => {
+  const { attackers, defenders, bombardingUnits } = combatants
+  const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   let rollClone = rolls.slice(0)
   const rollsByStrength = { attackers: [], defenders: [] }
   strengths.forEach(n => {
@@ -137,8 +137,7 @@ const arrangeRolls = (combatants, bombardingUnits, strengths, rolls = []) => {
 }
 
 export const combatRolls = createSelector(
-  combatantsWithoutDamage,
-  bombardingUnits,
+  preCasualtyCombatants,
   strengths,
   state => state.rolls[PATHS.COMBAT_ROLLS],
   arrangeRolls
