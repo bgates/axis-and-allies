@@ -2,9 +2,9 @@ import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { UnitFigTableData } from '../../components/UnitFigure'
 
+// selected is all of them.and the keys are objId. 
 const disable = (selected, airUnits) => (
-  Object.keys(selected).length !== airUnits.length || 
-  Object.values(selected).filter(s => s).length !== airUnits.length
+  airUnits.some(({ id })  => !selected[id])
 )
 
 const LandPlanesModal = ({ 
