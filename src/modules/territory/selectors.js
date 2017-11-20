@@ -110,7 +110,10 @@ export const isCombat = createSelector(
   getCurrentPowerName,
   getUnits,
   isAmphib,
-  (currentPower, units, amphib) => (units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
+  state => state.missionComplete,
+  (currentPower, units, amphib, missionComplete) => (
+    (units.filter(({ id }) => !missionComplete[id]).some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
+  )
 )
 
 export const awaitingNavalResolution = (state, territoryIndex) => {

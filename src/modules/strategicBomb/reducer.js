@@ -1,5 +1,9 @@
 import { omit } from 'ramda'
-import { COMMIT_TO_STRATEGIC_BOMBING, UNCOMMIT_UNITS } from '../../actions'
+import { 
+  COMMIT_TO_STRATEGIC_BOMBING, 
+  UNCOMMIT_UNITS,
+  VIEW_STRATEGIC_BOMBING_RESULTS
+} from '../../actions'
 import { add, remove } from '../../reducers/unitOrigin'
 
 const strategicBombing = (state = { bombingUnits: {}, targetTerritories: {} }, action) => {
@@ -19,6 +23,14 @@ const strategicBombing = (state = { bombingUnits: {}, targetTerritories: {} }, a
         ...targetTerritories, 
         [targetIndex]: remove(targetTerritories[targetIndex], unitIds)
       }
+    }
+  }
+  case VIEW_STRATEGIC_BOMBING_RESULTS: {
+    const { bombingUnits, targetTerritories } = { ...state }
+    const { targetIndex } = action
+    return {
+      bombingUnits: omit(targetTerritories[targetIndex].map(String), bombingUnits),
+      targetTerritories: omit(String(targetIndex), targetTerritories)
     }
   }
   default:
