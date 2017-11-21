@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { planesInAir } from '../landPlanes'
-import { bombRaid, isBombed } from '../territory'
+import { bombRaid, isBombed, isCombat } from '../territory'
 
 import { 
   getFocusTerritory, 
@@ -45,7 +45,7 @@ const toggleCasualtyStatus = id => dispatch => dispatch({ type: TOGGLE_CASUALTY,
 
 const nextStep = (victor, territoryIndex, dogfight) => {
   if (dogfight) {
-    return postDogfight(territoryIndex)
+    return postDogfight(territoryIndex, victor)
   } else if (victor === 'attacker') {
     return attackerWins(territoryIndex)
   } else if (victor === 'defender') {
@@ -87,19 +87,25 @@ const continueCombat = () => {
   }
 }
 
-const postDogfight = (territoryIndex) => {
+const postDogfight = (territoryIndex, victor) => {
   return (dispatch, getState) => {
-    const state = getState()
-    const territory = getFocusTerritory(state)
-    if (isBombed(state, territory.index)) {
-      return bombRaid(dispatch, state, territory.index)
-    } else if (territory) {
-      console.log('nope')
-      // if combat, have it out
+    let state = getState()
+    if (victor === 'defender') {
+      dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
+    } else if (victor === 'attacker') {
+      console.log('skip, see if it matters')
     }
-    
+    state = getState()
+    if (isBombed(state, territoryIndex)) {
+      return bombRaid(dispatch, state, territoryIndex)
+    } else if (isCombat(state, territoryIndex)) {
+      console.log('combat continues')
+    } else {
+      continueOrAdvancePhase(dispatch, state)
+    }
   }
 }
+    
 export const continueOrAdvancePhase = (dispatch, state) => {
   if (noCombat(state)) {
     if (planesInAir(state)) {

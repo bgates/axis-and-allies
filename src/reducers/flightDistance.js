@@ -5,6 +5,7 @@ import {
   UNCOMMIT_UNITS, 
   REMOVE_CASUALTIES,
   WIN_ATTACK,
+  LOSE_ATTACK,
   NEXT_TURN 
 } from '../actions'
 
@@ -22,6 +23,7 @@ const flightDistance = (state = {}, action) => {
   case UNCOMMIT_UNITS: {
     return omit(unitIds.map(String), state)
   }
+  case LOSE_ATTACK: 
   case REMOVE_CASUALTIES: {
     return omit(attackerCasualties.map(String), state)
   }
