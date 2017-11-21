@@ -13,7 +13,6 @@ const Occupiers = ({ combatants, sea, strategicBombing, showStrength }) => {
     return <p>There are no units {sea ? 'occupying this sea zone' : 'defending this territory' }.</p>
   } else {
     let allUnits = defenders.concat(attackers)
-    console.log({ allUnits, strategicBombing })
     return (
       <ul>
       {allUnits.map((unit, index) => (

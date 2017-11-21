@@ -19,7 +19,7 @@ const BattleStatus = ({
       span = 'Defenders lose! '
     } 
     if (victor !== 'defender') {
-      const count = casualtyCount - casualties.length;
+      const count = casualtyCount - casualties.length
       const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties'
       if (count) {
         span += `Mark ${count} ${casualtyWord}.`
