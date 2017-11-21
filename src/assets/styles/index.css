@@ -13,6 +13,9 @@ button, .btn {
   text-decoration: none;
   text-transform: uppercase;
 }
+button[disabled] {
+  opacity: 0.5;
+}
 
 nav .btn, .changePhase .btn {
   color: #455a64;

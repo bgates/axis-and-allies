@@ -2,7 +2,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import PlacementModal from './PlacementModal'
-import { industrialComplexes, shipyards, purchases, availables } from './selectors'
+import { 
+  availables,
+  industrialComplexes, 
+  purchases, 
+  shipyards, 
+} from './selectors'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import {
   COMMIT_PLACEMENT,
@@ -14,12 +19,12 @@ import {
 
 const mapStateToProps = (state) => {
   return {
+    availables: availables(state),
     currentPower: getCurrentPower(state),
     industrialComplexes: industrialComplexes(state),
-    shipyards: shipyards(state),
-    purchases: purchases(state),
     placements: state.placement,
-    availables: availables(state)
+    purchases: purchases(state),
+    shipyards: shipyards(state),
   }
 }
 

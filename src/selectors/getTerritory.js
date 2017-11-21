@@ -87,7 +87,7 @@ export const getTerritoriesWithIpcValues = createSelector(
   getAllTerritories,
   territories => territories.map(({ currentPower }, index) => {
     const { ipc_value } = territoryData[index]
-    return { currentPower, ipc_value }
+    return { currentPower, ipc_value, index }
   })
 )
 

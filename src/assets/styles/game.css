@@ -57,6 +57,10 @@ table.scroll strong {
 .placement {
   border: 1px solid black;
   border-collapse: collapse;
+  width: 100%;
+}
+.placement td {
+  text-align: center;
 }
 td.unit img {
   max-width: 250px;

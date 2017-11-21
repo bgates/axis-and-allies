@@ -2,30 +2,44 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { UnitImg } from '../../components/UnitFigure'
+import unitTypes from '../../config/unitTypes'
 
 const PlacementModal = ({ 
-  industrialComplexes, 
-  shipyards, 
-  purchases,
-  placements,
   availables,
   currentPower,
+  industrialComplexes, 
+  placements,
+  purchases,
+  shipyards, 
   place,
   commitUnitPlacement,
   commitAllUnitPlacement,
   unCommitUnitPlacement,
   unCommitAllUnitPlacement
 }) => {
+  console.log({ industrialComplexes, unitTypes })
   return (
     <div>
       <a data-tip className="help">?</a>
       <h1>Place Units</h1>
       <ReactTooltip place="bottom">
         <p><strong>Place the new units you purchased at the beginning of your turn.</strong> New land units must be placed in territories with an industrial complex that you held before combat this turn. New sea units must be placed in a friendly sea zone immediately adjacent to an industrial complex that you held before combat this turn.</p>
-        <p>You may place new sea units in a sea zone you captured this turn.</p>
+        <p>Each industrial complex has a production capacity equal to seven times its IPC value per turn. For instance, West Germany (4 IPC) can produce units with an aggregate cost of 28 IPCs, while Moscow (6 IPC) can produce units with an aggregate cost of 42 IPCs.</p>
+        <p>You may place new sea units in a sea zone you cleared of enemy units this turn.</p>
       </ReactTooltip>
       <table cellPadding={0} cellSpacing={0} className="placement">
         <tbody>
+          <tr>
+            <th colSpan={2}>Territory</th>
+            <th colSpan={2}>Used Capacity</th>
+            <th colSpan={2}>Remaining Capacity</th></tr>
+          {industrialComplexes.map(complex => (
+            <tr>
+              <td colSpan={2}>{complex.name}</td>
+              <td colSpan={2}>{complex.usedCapacity}</td>
+              <td colSpan={2}>{complex.remainingCapacity}</td>
+            </tr>
+          ))}
           <tr>
             <th>Unit</th>
             <th>Available</th>
@@ -60,21 +74,19 @@ const PlacementModal = ({
 
 export default PlacementModal
 
-const PlacementRows = (props) => {
-  return (
-    <tbody className="placement">
-      {props.complexes.map((territory, index) => (
-        <PlacementRow 
-          key={index}
-          i={index}
-          territory={territory} 
-          complexCount={props.complexes.length}
-          {...props}
-        />
-      ))}
-    </tbody>
-  )
-}
+const PlacementRows = (props) => (
+  <tbody className="placement">
+    {props.complexes.map((territory, index) => (
+      <PlacementRow 
+        key={index}
+        i={index}
+        territory={territory} 
+        complexCount={props.complexes.length}
+        {...props}
+      />
+    ))}
+  </tbody>
+)
 
 const PlacementRow = ({ 
   unit, 
@@ -89,7 +101,11 @@ const PlacementRow = ({
   commitAll,
   uncommitAll
 }) => {
-  const { index, name } = territory;
+  const { index, name, remainingCapacity } = territory
+  const cost = unitTypes[unit].cost
+  const oneDisabled = available === 0 || remainingCapacity < cost
+  const allDisabled = available === 0 || remainingCapacity < cost * available
+  const backDisabled = !placements[index]
   return (
     <tr>
       {i === 0 ? <td rowSpan={complexCount}><UnitImg name={unit} power={power.name} /></td> : null}
@@ -97,16 +113,16 @@ const PlacementRow = ({
       <td>{name}</td>
       <td>
         <button 
-          disabled={available === 0}
+          disabled={oneDisabled}
           onClick={()=> commit(unit, index)}>&gt;</button>
         <button 
-          disabled={available === 0}
+          disabled={allDisabled}
           onClick={()=> commitAll(unit, index, available)}>&gt;&gt;</button>
       </td>
       <td><input readOnly size={2} value={placements[index] || 0}/></td>
       <td>
-        <button onClick={()=> uncommitAll(unit, index)}>&lt;&lt;</button>
-        <button onClick={()=> uncommit(unit, index)}>&lt;</button>
+        <button disabled={backDisabled} onClick={()=> uncommitAll(unit, index)}>&lt;&lt;</button>
+        <button disabled={backDisabled} onClick={()=> uncommit(unit, index)}>&lt;</button>
       </td>
     </tr>
   )
