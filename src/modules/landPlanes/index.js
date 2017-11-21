@@ -1,6 +1,6 @@
-import LandPlanesContainer from './LandPlanesContainer';
-import landPlanes from './reducer';
-import { planesInAir } from './selectors';
+import LandPlanesContainer from './LandPlanesContainer'
+import landPlanes from './reducer'
+import { getRecentlyConquered, planesInAir } from './selectors'
 
-export { landPlanes, planesInAir, LandPlanesContainer }
+export { landPlanes, getRecentlyConquered, planesInAir, LandPlanesContainer }
 

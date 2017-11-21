@@ -1,16 +1,16 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import PlacementModal from './PlacementModal';
-import { industrialComplexes, shipyards, purchases, availables } from './selectors';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
+import PlacementModal from './PlacementModal'
+import { industrialComplexes, shipyards, purchases, availables } from './selectors'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
 import {
   COMMIT_PLACEMENT,
   UNCOMMIT_PLACEMENT,
   COMMIT_PLACE_ALL,
   UNCOMMIT_PLACE_ALL,
   PLACE_UNITS
-} from '../../actions';
+} from '../../actions'
 
 const mapStateToProps = (state) => {
   return {

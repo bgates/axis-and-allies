@@ -14,7 +14,7 @@ import unitTypes from '../../config/unitTypes'
 import { sameSide } from '../../config/initialPowers'
 export { getFocusTerritory }
 
-const getRecentlyConquered = state => state.conquered
+export const getRecentlyConquered = state => state.conquered
 
 const unitsWithRange = (moved, flights, units, territoryIndex) => (
   moved[territoryIndex].filter(id => flights[id]).map(id => (

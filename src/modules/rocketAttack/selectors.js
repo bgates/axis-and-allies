@@ -4,7 +4,7 @@ import { territoriesInRange } from '../planCombat/movement'
 import { mergeBoardAndTerritories, isEnemy } from '../../selectors/getTerritory'
 import { industry, antiaircraft } from '../../selectors/units'
 
-const hasIndustry = territory => territory.units.find(industry)
+export const hasIndustry = territory => territory.units.find(industry)
 const hasRocket = territory => territory.units.find(antiaircraft)
 
 const industrialComplexInRocketRange = (board, currentPower, territory) => {

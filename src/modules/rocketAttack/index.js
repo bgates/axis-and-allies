@@ -1,5 +1,5 @@
 import RocketAttackContainer from './RocketAttackContainer'
 import rocketTargets from './reducer'
-import { getSelectedRocketTargets } from './selectors'
+import { getSelectedRocketTargets, hasIndustry } from './selectors'
 
-export { RocketAttackContainer, getSelectedRocketTargets, rocketTargets }
+export { RocketAttackContainer, getSelectedRocketTargets, hasIndustry, rocketTargets }

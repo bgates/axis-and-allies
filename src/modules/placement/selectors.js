@@ -1,30 +1,25 @@
 import { createSelector } from 'reselect'
+import { hasIndustry } from '../rocketAttack'
+import { getRecentlyConquered } from '../landPlanes'
 import { hasIndustrialComplex, mergeBoardAndTerritories } from '../../selectors/getTerritory'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-//TODO: not using hasIndustrialComplex right
-const canBuild = currentPower => territory => (     
-  territory.units &&
-  hasIndustrialComplex(territory) && 
-  !territory.newlyConquered && 
-  territory.currentPower === currentPower.name
-)
 
-const canBuildShips = currentPower => territory => (
-  canBuild(currentPower) &&
-  territory.harbor
+const canBuild = (currentPower, conquered) => territory => (     
+  territory.currentPower === currentPower.name &&
+  hasIndustry(territory) &&
+  !conquered.includes(territory.index)
 )
 
 export const industrialComplexes = createSelector(
   mergeBoardAndTerritories,
   getCurrentPower,
-  (territories, currentPower) => territories.filter(canBuild(currentPower))
+  getRecentlyConquered,
+  (territories, currentPower, conquered) => territories.filter(canBuild(currentPower, conquered))
 )
 
 export const shipyards = createSelector(
-  mergeBoardAndTerritories,
-  getCurrentPower,
-  (territories, currentPower) => territories.filter(canBuildShips(currentPower))
-
+  industrialComplexes,
+  territories => territories.filter(territory => territory.harbor)
 )
 
 export const purchases = state => state.purchases
