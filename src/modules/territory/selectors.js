@@ -85,9 +85,11 @@ export const getClasses = createSelector(
   }
 )
 
-const isChina = ({ name }, original_power) => (
+const lostChineseTerritories = ['Hong Kong', 'Shantung', 'Shansi', 'Peking', 'Chahar', 'Northern Manchuria', 'Manchuria', 'Korea', 'Burma']
+
+const isChina = (name, original_power) => (
   original_power === 'China' || 
-  ['Hong Kong', 'Shantung', 'Shansi', 'Peking', 'Chahar', 'Northern Manchuria', 'Manchuria', 'Korea', 'Burma'].includes(name)
+  lostChineseTerritories.includes(name)
 )
 
 export const isAttackable = createSelector(
@@ -95,11 +97,10 @@ export const isAttackable = createSelector(
   getTerritoryData,
   getTerritory,
   getAllUnits,
-  (currentPower, { original_power, sea }, territory, units) => {
+  (currentPower, { original_power, sea, name }, territory, units) => {
     const unfriendly = !isFriendly(territory, currentPower, units) 
-                       || territory.newlyConquered
     if (currentPower === 'China') {
-      return isChina(territory, original_power) && unfriendly
+      return isChina(name, original_power) && unfriendly
     } else {
       return sea || unfriendly
     }
