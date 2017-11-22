@@ -28,27 +28,7 @@ const PlacementModal = ({
         <p>You may place new sea units in a sea zone you cleared of enemy units this turn.</p>
       </ReactTooltip>
       <table cellPadding={0} cellSpacing={0} className="placement">
-        <tbody>
-          <tr>
-            <th colSpan={2}>Territory</th>
-            <th colSpan={2}>Used Capacity</th>
-            <th colSpan={2}>Remaining Capacity</th></tr>
-          {industrialComplexes.map(complex => (
-            <tr>
-              <td colSpan={2}>{complex.name}</td>
-              <td colSpan={2}>{complex.usedCapacity}</td>
-              <td colSpan={2}>{complex.remainingCapacity}</td>
-            </tr>
-          ))}
-          <tr>
-            <th>Unit</th>
-            <th>Available</th>
-            <th>Territory</th>
-            <th>Commit</th>
-            <th>Committed</th>
-            <th>Uncommit</th>
-          </tr>
-        </tbody>
+        {currentPower === 'China' ? <ChineseHeader /> : <ProductionHeader complexes={industrialComplexes} />}
         {Object.keys(purchases).map(unit => ( 
           <PlacementRows 
             key={unit}
@@ -74,6 +54,42 @@ const PlacementModal = ({
 
 export default PlacementModal
 
+const ChineseHeader = () => (
+  <tbody>
+    <tr>
+      <th>Unit</th>
+      <th>Available</th>
+      <th>Territory</th>
+      <th>Commit</th>
+      <th>Committed</th>
+      <th>Uncommit</th>
+    </tr>
+  </tbody>
+)
+
+const ProductionHeader = ({ complexes }) => (
+  <tbody>
+    <tr>
+      <th colSpan={2}>Territory</th>
+      <th colSpan={2}>Used Capacity</th>
+      <th colSpan={2}>Remaining Capacity</th></tr>
+    {complexes.map(complex => (
+      <tr>
+        <td colSpan={2}>{complex.name}</td>
+        <td colSpan={2}>{complex.usedCapacity}</td>
+        <td colSpan={2}>{complex.remainingCapacity}</td>
+      </tr>
+    ))}
+    <tr>
+      <th>Unit</th>
+      <th>Available</th>
+      <th>Territory</th>
+      <th>Commit</th>
+      <th>Committed</th>
+      <th>Uncommit</th>
+    </tr>
+  </tbody>
+)
 const PlacementRows = (props) => (
   <tbody className="placement">
     {props.complexes.map((territory, index) => (
@@ -102,13 +118,13 @@ const PlacementRow = ({
   uncommitAll
 }) => {
   const { index, name, remainingCapacity } = territory
-  const cost = unitTypes[unit].cost
+  const cost = power === 'China' ? 1 : unitTypes[unit].cost
   const oneDisabled = available === 0 || remainingCapacity < cost
   const allDisabled = available === 0 || remainingCapacity < cost * available
   const backDisabled = !placements[index]
   return (
     <tr>
-      {i === 0 ? <td rowSpan={complexCount}><UnitImg name={unit} power={power.name} /></td> : null}
+      {i === 0 ? <td rowSpan={complexCount}><UnitImg name={unit} power={power} /></td> : null}
       {i === 0 ? <td rowSpan={complexCount}><input readOnly size={2} value={available}/></td> : null}
       <td>{name}</td>
       <td>

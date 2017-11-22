@@ -3,18 +3,34 @@ import { hasIndustry } from '../rocketAttack'
 import { getRecentlyConquered } from '../landPlanes'
 import { 
   getTerritoriesWithIpcValues,
+  getPlacement,
   hasIndustrialComplex, 
   mergeBoardAndTerritories 
 } from '../../selectors/getTerritory'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import unitTypes from '../../config/unitTypes'
 
-export const purchases = state => state.purchases
+const CHINA_PRODUCTION_DIVISOR = 2
+const INDUSTRY_PRODUCTION_MULTIPLIER = 7
 
-const getPlacement = state => state.placement
+const chinese = territory => territory.currentPower === 'China'
+const chineseInfantry = territories => Math.round(territories.filter(chinese).length / CHINA_PRODUCTION_DIVISOR)
+
+const chineseUnits = territories => (
+  { 'infantry': chineseInfantry(territories) }
+)
+
+export const getPurchases = createSelector(
+  state => state.purchases,
+  getCurrentPowerName,
+  mergeBoardAndTerritories,
+  (purchases, currentPower, territories) => (
+    currentPower === 'China' ? chineseUnits(territories) : purchases
+  )
+)
 
 const canBuild = (currentPower, conquered) => territory => (     
-  territory.currentPower === currentPower.name &&
+  territory.currentPower === currentPower &&
   hasIndustry(territory) &&
   !conquered.includes(territory.index)
 )
@@ -24,7 +40,7 @@ const indexMatch = a => b => a.index === b.index
 const ipcAndCapacity = (complex, territories, capacities) => {
   const ipc = territories.find(indexMatch(complex)).ipc_value
   const usedCapacity = capacities[complex.index] || 0
-  return { ipc, usedCapacity, remainingCapacity: 7 * ipc - usedCapacity }
+  return { ipc, usedCapacity, remainingCapacity: INDUSTRY_PRODUCTION_MULTIPLIER * ipc - usedCapacity }
 }
 
 const capacityUsedBy = placement => {
@@ -47,13 +63,31 @@ const complexesWithCapacity = (territories, currentPower, conquered, placement, 
   )
 }
 
+const chineseCapacity = (territory, placement, territories) => {
+  const usedCapacity = (placement.infantry || {})[territory.index] || 0
+  const fullCapacity = 2 * territories.find(indexMatch(territory)).ipc_value + 1
+  return { usedCapacity, remainingCapacity: fullCapacity - usedCapacity }
+}
+
+const chineseProductionCapacity = (territories, placement, ipcTerritories) => {
+  return territories.filter(chinese).map(territory => (
+    { ...territory, ...chineseCapacity(territory, placement, ipcTerritories) }
+  ))
+}
+
+const territoriesWithCapacity = (territories, currentPower, conquered, placement, ipcTerritories) => (
+  currentPower === 'China' ? 
+    chineseProductionCapacity(territories, placement, ipcTerritories) : 
+    complexesWithCapacity(territories, currentPower, conquered, placement, ipcTerritories)
+)
+
 export const industrialComplexes = createSelector(
   mergeBoardAndTerritories,
-  getCurrentPower,
+  getCurrentPowerName,
   getRecentlyConquered,
   getPlacement,
   getTerritoriesWithIpcValues,
-  complexesWithCapacity
+  territoriesWithCapacity
 )
 
 export const shipyards = createSelector(
@@ -63,7 +97,7 @@ export const shipyards = createSelector(
 
 export const availables = createSelector(
   getPlacement,
-  purchases,
+  getPurchases,
   (placement, purchases) => {
     const available = { ...purchases }
     Object.keys(placement).forEach(unit => {
