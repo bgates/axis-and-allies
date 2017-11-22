@@ -7,7 +7,7 @@ const boardFromString = boardString => {
     {
       units: parsedBoard[i],
       unitsFrom: [],
-      currentPower: territory.original_power //TODO: how to update currentPower?
+      currentPower: territory.original_power 
     }
   ))
 }

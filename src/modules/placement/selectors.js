@@ -107,4 +107,3 @@ export const availables = createSelector(
     return available
   }
 )
-//TODO: capacity - each IC can produce units w total cost = 7 * territory IPC value
