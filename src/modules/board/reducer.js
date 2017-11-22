@@ -1,5 +1,5 @@
-import Parser from '../../../lib/Parser'
-import territoryData from '../../../config/territories.json'
+import Parser from '../../lib/Parser'
+import territoryData from '../../config/territories.json'
 
 const boardFromString = boardString => {
   const parsedBoard = Parser.hydrate(boardString)
