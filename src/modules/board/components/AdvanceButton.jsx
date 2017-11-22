@@ -35,17 +35,21 @@ const idsAndUnits = (placement, power) => {
   return { newUnits, idsByTerritoryIndex }
 }
 
+const endCurrentTurn = (dispatch, getState) => {
+  const state = getState()
+  const { currentPowerIndex, income, placement, unitOrigin, unitDestination } = state
+  const currentPower = getCurrentPowerName(state)
+  const { newUnits, idsByTerritoryIndex }= idsAndUnits(placement, currentPower)
+  dispatch({ type: NEXT_TURN, currentPowerIndex, income, unitOrigin, unitDestination, newUnits, idsByTerritoryIndex })
+}
+
 export const nextTurn = () => (
   (dispatch, getState, getFirebase) => {
-    let state = getState()
-    const { unitOrigin, unitDestination, placement } = state
-    const currentPower = getCurrentPowerName(state)
-    const { newUnits, idsByTerritoryIndex }= idsAndUnits(placement, currentPower)
-    dispatch({ type: NEXT_TURN, unitOrigin, unitDestination, newUnits, idsByTerritoryIndex })
-    const { boardString, currentPowerIndex } = getState()
-    sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', currentPowerIndex)
-    sendToFirebase(state, getFirebase, 'push', 'boardStrings', boardString)
-    sendToFirebase(state, getFirebase, 'remove', 'patches')
+    endCurrentTurn(dispatch, getState)
+    const { boardString, currentPowerIndex, firebase } = getState()
+    sendToFirebase(firebase, getFirebase, 'set', 'currentPowerIndex', currentPowerIndex)
+    sendToFirebase(firebase, getFirebase, 'push', 'boardStrings', boardString)
+    sendToFirebase(firebase, getFirebase, 'remove', 'patches')
   }
 )
 

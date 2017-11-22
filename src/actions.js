@@ -87,8 +87,8 @@ export const removeCasualties = (defenderCasualties, attackerCasualties, territo
   }
 )
 
-export const sendToFirebase = (state, getFirebase, action, node, data) => {
-  const { currentGameId } = state.firebase.profile
+export const sendToFirebase = ({ profile }, getFirebase, action, node, data) => {
+  const { currentGameId } = profile
   if (currentGameId) {
     const firebase = getFirebase()
     firebase[action](`/games/${currentGameId}/${node}`, data)
@@ -102,8 +102,8 @@ export const roll = (phase, rolls) => (
       phase,
       rolls
     })
-    const state = getState()
-    sendToFirebase(state, getFirebase, 'push', 'rolls', { phase, rolls })
+    const { firebase } = getState()
+    sendToFirebase(firebase, getFirebase, 'push', 'rolls', { phase, rolls })
   }
 )
 

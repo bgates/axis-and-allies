@@ -5,7 +5,9 @@ import PATHS from '../../paths'
 class IncomeModal extends Component {
   
   componentDidMount () {
-    this.props.setIncome()
+    if (!this.props.income) {
+      this.props.setIncome()
+    }
   }
 
   render () {

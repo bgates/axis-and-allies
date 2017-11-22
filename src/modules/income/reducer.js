@@ -1,16 +1,12 @@
-import { SET_INCOME } from '../../actions'
+import { SET_INCOME, NEXT_TURN } from '../../actions'
 
 const income = (state = 0, action) => {
   switch (action.type) {
-    case '@@router/LOCATION_CHANGE': 
-      const { pathname } = action.payload.location
-      if (pathname === '/confirm-finish') {
-        return 0
-      } else {
-        return state
-      }
     case SET_INCOME: {
       return action.amount
+    }
+    case NEXT_TURN: {
+      return 0
     }
     default: 
       return state

@@ -9,7 +9,8 @@ const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state),
   objectives: nationalObjectives(state),
   npl: currentPowerNPL(state),
-  nextNpl: nextNPL(state)
+  nextNpl: nextNPL(state),
+  income: state.income
 })
 
 const setIncome = () => {

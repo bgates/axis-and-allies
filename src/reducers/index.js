@@ -9,6 +9,7 @@ import currentPowerIndex from './currentPower'
 import dogfight from './dogfight'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
+import { income } from '../modules/income'
 import { landPlanes } from '../modules/landPlanes'
 import missionComplete from './mission'
 import outboundUnits from './outboundUnits'
@@ -47,6 +48,7 @@ const combinedReducer = combineReducers({
   firebase,
   flightDistance,
   inboundUnits,
+  income,
   landPlanes,
   missionComplete,
   outboundUnits,

@@ -5,7 +5,8 @@ import {
   INCREMENT_PURCHASE,
   DECREMENT_PURCHASE,
   VIEW_STRATEGIC_BOMBING_RESULTS,
-  ASSESS_ROCKET_DAMAGE
+  ASSESS_ROCKET_DAMAGE,
+  NEXT_TURN
 } from '../actions'
 
 const updateCurrentPower = (powers, cPI, updateCallback, callbackArg) => (
@@ -23,14 +24,6 @@ const gainIPCs = (power, amount) => (
 const powers = (state = initialPowers, action) => {
   const { currentPowerIndex } = action //state
   switch (action.type) {
-    case '@@router/LOCATION_CHANGE': 
-      const { pathname } = action.payload.location
-      if (pathname === '/confirm-finish') {
-        //TODO: how to get CPI in here?
-        return updateCurrentPower(state, currentPowerIndex, gainIPCs, state.currentPowerIncome)
-      } else {
-        return state
-      }
     case VIEW_STRATEGIC_BOMBING_RESULTS: {
       return state.map(power => {
         if (power.name === action.power) {
@@ -60,6 +53,8 @@ const powers = (state = initialPowers, action) => {
       return updateCurrentPower(state, currentPowerIndex, spendIPCs, action.unit.cost)
     case DECREMENT_PURCHASE:
       return updateCurrentPower(state, currentPowerIndex, gainIPCs, action.unit.cost)
+    case NEXT_TURN:
+      return updateCurrentPower(state, currentPowerIndex, gainIPCs, action.income)
     default:
       return state
   }
