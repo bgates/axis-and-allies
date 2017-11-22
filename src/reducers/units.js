@@ -1,9 +1,8 @@
+import { NEXT_TURN } from '../actions'
 const units = (state = {}, action) => {
-  switch (action.type) {
-  case '@@router/LOCATION_CHANGE': {
-    return state
-  }
-  default:
+  if (action.type === NEXT_TURN) {
+    return { ...state, ...action.newUnits }
+  } else {
     return state
   }
 }

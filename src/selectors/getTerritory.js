@@ -3,6 +3,7 @@ import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories.json'
 import { getAllUnits, idsToUnits, bombCapacity } from './units'
+import { getCurrentPowerName } from './getCurrentPower'
 
 export const isLand = (territory) => !territory.sea
 export const isSea = (territory) => territory.sea
@@ -100,16 +101,28 @@ const groupedUnits = (units) => (
 
 const remove = (array) => id => !array.includes(id)
 
+const newUnits = (placement, power, index) => (
+  Object.keys(placement).reduce((units, type) => (
+    placement[type][index] ? units.concat(new Array(placement[type][index]).fill({ type, power, id: 0 })) : units
+  ), [])
+)
+export const getPlacement = state => state.placement
+
 export const getUnits = createSelector(
   getTerritory,
   getAllUnits,
   getOutboundUnits,
   getInboundUnits,
-  ({ unitIds }, allUnits, outbound, inbound) => (
+  getCurrentPowerName,
+  getPlacement,
+  (state, territoryIndex) => territoryIndex,
+  ({ unitIds }, allUnits, outbound, inbound, currentPower, placement, territoryIndex) => (
     groupedUnits(unitIds
       .filter(remove(outbound))
       .concat(inbound)
-      .map(id => allUnits[id]))
+      .map(id => allUnits[id])
+      .concat(newUnits(placement, currentPower, territoryIndex))
+    )
   )
 )
 

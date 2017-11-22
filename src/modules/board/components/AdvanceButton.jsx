@@ -1,20 +1,53 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { push } from 'connected-react-router';
-import { phases } from '../selectors';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
+import { phases } from '../selectors'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { nextId } from '../../../selectors/units'
 import {
   SELECT_PLANE_LANDING_TERRITORY,
   LAND_PLANES,
-  nextTurn,
+  NEXT_TURN,
+  sendToFirebase,
   CONFIRM_FINISH
-} from '../../../actions';
-import PATHS from '../../../paths';
+} from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => ({
   phases: phases(state)
 })
+
+const idsAndUnits = (placement, power) => {
+  const idsByTerritoryIndex = {}
+  let newUnits = {}
+  Object.keys(placement).forEach(type => {
+    Object.keys(placement[type]).forEach(index => {
+      idsByTerritoryIndex[index] = idsByTerritoryIndex[index] || []
+      for (let i = 0; i < placement[type][index]; i++) {
+        const id = nextId()
+        newUnits[id] = { id, type, power }
+        idsByTerritoryIndex[index].push(id)
+      }
+    })
+  })
+  return { newUnits, idsByTerritoryIndex }
+}
+
+export const nextTurn = () => (
+  (dispatch, getState, getFirebase) => {
+    let state = getState()
+    const { unitOrigin, unitDestination, placement } = state
+    const currentPower = getCurrentPowerName(state)
+    const { newUnits, idsByTerritoryIndex }= idsAndUnits(placement, currentPower)
+    dispatch({ type: NEXT_TURN, unitOrigin, unitDestination, newUnits, idsByTerritoryIndex })
+    const { boardString, currentPowerIndex } = getState()
+    sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', currentPowerIndex)
+    sendToFirebase(state, getFirebase, 'push', 'boardStrings', boardString)
+    sendToFirebase(state, getFirebase, 'remove', 'patches')
+  }
+)
 
 const changePhaseThunk = (dir = 'fwd') => {
   return (dispatch, getState) => {

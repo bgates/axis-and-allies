@@ -48,11 +48,11 @@ export const CONFIRM_LAND_PLANES = 'CONFIRM_LAND_PLANES';
 export const PLAN_MOVEMENT = '/plan-movement';
 export const VIEW_MOVEMENT_OPTIONS = 'VIEW_MOVEMENT_OPTIONS'
 
-export const COMMIT_PLACEMENT = 'COMMIT_PLACEMENT';
-export const UNCOMMIT_PLACEMENT = 'UNCOMMIT_PLACEMENT';
-export const COMMIT_PLACE_ALL = 'COMMIT_PLACE_ALL';
-export const UNCOMMIT_PLACE_ALL = 'UNCOMMIT_PLACE_ALL';
-export const PLACE_UNITS = 'PLACE_UNITS';
+export const COMMIT_PLACEMENT = 'COMMIT_PLACEMENT'
+export const UNCOMMIT_PLACEMENT = 'UNCOMMIT_PLACEMENT'
+export const COMMIT_PLACE_ALL = 'COMMIT_PLACE_ALL'
+export const UNCOMMIT_PLACE_ALL = 'UNCOMMIT_PLACE_ALL'
+export const PLACE_UNITS = 'PLACE_UNITS'
 
 export const ORDER_UNITS = '/order-units';
 export const CONFIRM_FINISH = '/confirm-finish';
@@ -87,7 +87,7 @@ export const removeCasualties = (defenderCasualties, attackerCasualties, territo
   }
 )
 
-const sendToFirebase = (state, getFirebase, action, node, data) => {
+export const sendToFirebase = (state, getFirebase, action, node, data) => {
   const { currentGameId } = state.firebase.profile
   if (currentGameId) {
     const firebase = getFirebase()
@@ -104,19 +104,6 @@ export const roll = (phase, rolls) => (
     })
     const state = getState()
     sendToFirebase(state, getFirebase, 'push', 'rolls', { phase, rolls })
-  }
-)
-
-export const nextTurn = () => (
-  (dispatch, getState, getFirebase) => {
-    const { unitOrigin, unitDestination } = getState()
-    dispatch({ type: NEXT_TURN, unitOrigin, unitDestination })
-    const state = getState()
-    const boardString = state.boardString
-    const index = state.currentPowerIndex
-    sendToFirebase(state, getFirebase, 'set', 'currentPowerIndex', index)
-    sendToFirebase(state, getFirebase, 'push', 'boardStrings', boardString)
-    sendToFirebase(state, getFirebase, 'remove', 'patches')
   }
 )
 

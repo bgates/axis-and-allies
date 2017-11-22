@@ -36,13 +36,15 @@ const territories = (state = [], action) => {
   }
   //TODO: this doesn't take plane landing into account
   case NEXT_TURN: {
-    const { unitOrigin, unitDestination } = action
+    const { unitOrigin, unitDestination, idsByTerritoryIndex } = action
     return state.map((territory, index) => {
       const outboundUnits = unitOrigin[index] || []
       const inboundUnits = unitDestination[index] || []
+      const newUnits = idsByTerritoryIndex[index] || []
       const unitIds = territory.unitIds
                         .filter(id => !outboundUnits.includes(id))
                         .concat(inboundUnits)
+                        .concat(newUnits)
       return { ...territory, unitIds }
     })
   }
@@ -52,4 +54,3 @@ const territories = (state = [], action) => {
 }
 
 export default territories
-
