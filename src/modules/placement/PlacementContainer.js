@@ -5,10 +5,10 @@ import PlacementModal from './PlacementModal'
 import { 
   availables,
   industrialComplexes, 
-  purchases, 
+  getPurchases, 
   shipyards, 
 } from './selectors'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import {
   COMMIT_PLACEMENT,
   UNCOMMIT_PLACEMENT,
@@ -20,10 +20,10 @@ import {
 const mapStateToProps = (state) => {
   return {
     availables: availables(state),
-    currentPower: getCurrentPower(state),
+    currentPower: getCurrentPowerName(state),
     industrialComplexes: industrialComplexes(state),
     placements: state.placement,
-    purchases: purchases(state),
+    purchases: getPurchases(state),
     shipyards: shipyards(state),
   }
 }
@@ -63,9 +63,9 @@ const unCommitAllUnitPlacement = (unit, territoryIndex) => {
 
 const place = () => {
   return (dispatch, getState) => {
-    const state = getState();
-    const placements = state.placement;
-    const currentPower = getCurrentPower(state).name;
+    const state = getState()
+    const placements = state.placement
+    const currentPower = getCurrentPowerName(state)
     dispatch({ 
       type: PLACE_UNITS, 
       placements,

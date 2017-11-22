@@ -1,20 +1,20 @@
 import { createSelector } from 'reselect'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
-  getUnits as getUnconsolidatedUnits,
-  getTerritoryData 
+  getUnits as getUnfilteredUnits,
+  getTerritoryData
 } from '../../selectors/getTerritory'
 import { industry, nonIndustry } from '../../selectors/units'
 import { powerData } from '../../config/initialPowers'
 export { getCurrentPowerName }
 
 export const getUnits = createSelector(
-  getUnconsolidatedUnits,
-  units => (units.filter(nonIndustry))
+  getUnfilteredUnits,
+  units => units.filter(nonIndustry)
 )
 
 export const getIndustry = createSelector(
-  getUnconsolidatedUnits,
+  getUnfilteredUnits,
   units => units.find(industry)
 )
 

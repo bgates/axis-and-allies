@@ -4,10 +4,10 @@ import {
   COMMIT_PLACE_ALL,
   UNCOMMIT_PLACE_ALL,
   NEXT_TURN
-} from '../../actions';
+} from '../../actions'
 
 const placeUnit = (state, unitName, index, count = 1) => {
-  const newState = JSON.parse(JSON.stringify(state));
+  const newState = JSON.parse(JSON.stringify(state))
   if (newState[unitName]) {
     if (newState[unitName][index]) {
       return { 
@@ -41,9 +41,9 @@ const placement = (state = origin, action) => {
       return placeUnit(state, action.unit, action.territoryIndex, action.count)
     }
     case UNCOMMIT_PLACEMENT: {
-      const newState = JSON.parse(JSON.stringify(state));
-      const unitName = action.unit;
-      const territoryIndex = action.territoryIndex;
+      const newState = JSON.parse(JSON.stringify(state))
+      const unitName = action.unit
+      const territoryIndex = action.territoryIndex
       return { 
         ...newState, 
         [unitName]: {
@@ -53,9 +53,9 @@ const placement = (state = origin, action) => {
       }
     }
     case UNCOMMIT_PLACE_ALL: {
-      const newState = JSON.parse(JSON.stringify(state));
-      const unitName = action.unit;
-      const territoryIndex = action.territoryIndex;
+      const newState = JSON.parse(JSON.stringify(state))
+      const unitName = action.unit
+      const territoryIndex = action.territoryIndex
       return { 
         ...newState, 
         [unitName]: {
