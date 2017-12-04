@@ -1,3 +1,4 @@
 import TooltipContainer from './TooltipContainer'
 
-export { TooltipContainer }
+import { getUnits } from './selectors'
+export { TooltipContainer, getUnits }

@@ -3,8 +3,8 @@ import {
   combatants, 
   unitsInRange, 
   combinedCombatants, 
-  getCommittedIds, 
-  strategicBombing 
+  strategicBombing,
+  territoryLandingSlots
 } from './selectors'
 import { territoriesInRange, canLandInTerritory } from './movement'
 
@@ -13,8 +13,8 @@ export {
   combatants, 
   unitsInRange, 
   combinedCombatants, 
-  getCommittedIds, 
   strategicBombing,
   territoriesInRange, 
+  territoryLandingSlots,
   canLandInTerritory 
 }

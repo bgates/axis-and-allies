@@ -6,9 +6,9 @@ import {
   getCommittedIds,
   getCurrentPower, 
   getFocusTerritory, 
+  getOccupants,
   territoryLandingSlots,
-  unitsInRange,
-  combinedCombatants
+  unitsInRange
 } from './selectors'
 import MovementModal from './MovementModal'
 import { PLAN_MOVEMENT, VIEW_TRANSPORT_LOAD_OPTIONS } from '../../actions'
@@ -20,7 +20,7 @@ const mapStateToProps = (state) => (
     landingSlots: territoryLandingSlots(state),
     territory: getFocusTerritory(state),
     unitsInRange: unitsInRange(state),
-    occupants: combinedCombatants(state, state.phase.territoryIndex)
+    occupants: getOccupants(state, state.phase.territoryIndex)
   } 
 )
 

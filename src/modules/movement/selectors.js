@@ -1,15 +1,18 @@
 import { createSelector } from 'reselect'
 import { getAllInbound, getBombardment, getTransport } from '../../selectors/stateSlices'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { getFocusTerritory } from '../../selectors/getTerritory'
+import { getTerritoryUnits, getCommittedIds, getFocusTerritory } from '../../selectors/getTerritory'
 import { 
   unitsInRange as tooBroadUnits, 
-  combinedCombatants, 
-  getCommittedIds, 
+  territoryLandingSlots
 } from '../planCombat'
-import { getTerritoryUnits } from '../../selectors/getTerritory'
-export { getCurrentPower, getFocusTerritory, combinedCombatants, getCommittedIds }
+import { getUnits } from '../tooltip'
+export { getCurrentPower, getFocusTerritory, getCommittedIds, territoryLandingSlots }
 
+export const getOccupants = createSelector(
+  getUnits,
+  units => ({ defenders: units, attackers: [] })
+)
 export const unitsInRange = createSelector(
   getFocusTerritory,
   tooBroadUnits,
@@ -22,5 +25,3 @@ export const unitsInRange = createSelector(
                 !bombardingUnits[id])
 )
 
-//TODO...
-export const territoryLandingSlots = state => getTerritoryUnits ? [] : null
