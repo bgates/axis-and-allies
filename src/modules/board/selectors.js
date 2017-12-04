@@ -1,6 +1,5 @@
 import { createSelector } from 'reselect'
-import { getCurrentPhase, getPurchases, getPathname } from '../../selectors/stateSlices'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPhase, getPathname } from '../../selectors/stateSlices'
 import { nextPhase, previousPhase } from '../../selectors/previousPhase'
 import { isCombat } from '../territory'
 import { 
@@ -36,12 +35,6 @@ export const overlayPhase = createSelector(
 export const advanceButtonPhase = (state) => {
   return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, CONFIRM_FINISH].includes(state.phase.current)
 }
-
-const canPlace = createSelector(
-  getCurrentPower,
-  getPurchases,
-  (currentPower, purchases) => currentPower.name === 'China' || Object.keys(purchases).length
-)
 
 export const noCombat = state => {
   const { unitDestination, amphib } = state

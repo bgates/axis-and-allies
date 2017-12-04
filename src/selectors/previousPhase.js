@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getPhase, getResearch } from './stateSlices'
+import { getPhase, getPurchases, getResearch } from './stateSlices'
 import { getCurrentPower } from './getCurrentPower'
 import { isCombat } from '../modules/territory'
 import { hasDamagedShipsInHarbor } from '../modules/repair'
@@ -20,6 +20,12 @@ const beforePurchase = ({ minimum }, hasRockets) => {
 
 const beforePlanAttacks = ({ name }) => (
   name === 'US' ? PATHS.LEND_LEASE : name === 'China' ? 'start' : PATHS.INCOME
+)
+
+const canPlace = createSelector(
+  getCurrentPower,
+  getPurchases,
+  (currentPower, purchases) => currentPower.name === 'China' || Object.keys(purchases).length
 )
 
 export const previousPhase = createSelector(
