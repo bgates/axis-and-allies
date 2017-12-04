@@ -14,7 +14,7 @@ const missionComplete = (state = {}, action) => {
   }
   case VIEW_STRATEGIC_BOMBING_RESULTS: {
     let newState = { ...state }
-    action.unitIds.forEach(id => newState[id] = true)
+    unitIds.forEach(id => newState[id] = true)
     return newState
   }
   case NEXT_TURN: {
