@@ -1,7 +1,6 @@
 import unitTypes from '../config/unitTypes'
-export const getAllUnits = state => state.units
-export const getAllOutbound = state => state.outboundUnits
-export const getAllInbound = state => state.inboundUnits
+import { getAllUnits } from './stateSlices'
+export { getAllUnits }
 
 let n = 0
 export const nextId = () => n += 1

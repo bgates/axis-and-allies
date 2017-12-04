@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { getAmphib } from '../planCombat'
-import { getCurrentTerritoryIndex, getTerritoryData } from '../../selectors/getTerritory'
+import { getAmphib, getAllOutbound, getCurrentTerritoryIndex } from '../../selectors/stateSlices'
+import { getTerritoryData } from '../../selectors/getTerritory'
 import { idsToUnits, getAllUnits } from '../../selectors/units'
 
 const getCargoIds = (state, id) => state.transport.transporting[id] || []
@@ -8,7 +8,7 @@ const getCargoIds = (state, id) => state.transport.transporting[id] || []
 export const getCargo = createSelector(
   getCargoIds,
   getAllUnits,
-  state => state.outboundUnits,
+  getAllOutbound,
   (ids, units, outbound) => idsToUnits(ids, units).map(unit => ({ ...unit, originName: getTerritoryData(null, outbound[unit.id]).name }))
 )
 

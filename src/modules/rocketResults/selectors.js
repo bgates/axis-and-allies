@@ -1,4 +1,5 @@
 import { createSelector } from 'reselect'
+import { getRolls } from '../../selectors/stateSlices'
 import { getTerritoriesWithIpcValues } from '../../selectors/getTerritory'
 import { getSelectedRocketTargets } from '../rocketAttack'
 import PATHS from '../../paths'
@@ -6,11 +7,11 @@ import PATHS from '../../paths'
 export const targetValues = createSelector(
   getTerritoriesWithIpcValues,
   getSelectedRocketTargets,
-  state => state.rolls[PATHS.ROCKET_RESULTS],
+  getRolls,
   (territories, targets, rolls) => {
     let obj = {}
     Object.keys(targets).forEach((launchSite, index)=> {
-      obj[launchSite] = { ...territories[targets[launchSite]], territoryIndex: targets[launchSite], roll: rolls[index] }
+      obj[launchSite] = { ...territories[targets[launchSite]], territoryIndex: targets[launchSite], roll: rolls[PATHS.ROCKET_RESULTS][index] }
     })
     return obj
   }

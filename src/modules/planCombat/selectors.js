@@ -1,4 +1,13 @@
 import { createSelector } from 'reselect'
+import { 
+  getAllInbound,
+  getAmphib, 
+  getBombedTerritories,
+  getDestinations,
+  getFlights,
+  getTransport, 
+  getRecentlyConquered 
+} from '../../selectors/stateSlices'
 import { getCurrentPower, getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   isLand,
@@ -7,33 +16,28 @@ import {
   getCommittedUnits,
   getFocusTerritory, 
   getInboundUnits,
-  getMovedUnitIds,
   mergeBoardAndTerritories,
-  hasIndustrialComplex as hasIndustry
 } from '../../selectors/getTerritory'
 import { 
   air,
   getAllUnits, 
-  getAllInbound, 
   landingSlots,
   movement,
   combineUnits,
-  nonIndustry
+  nonIndustry,
+  industry
 } from '../../selectors/units'
   
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
-export const getTransport = state => state.transport
-export const getAmphib = state => state.amphib
-
 export const unitsInRange = createSelector(
   mergeBoardAndTerritories,
   getCurrentPower,
   getFocusTerritory,
   getAllInbound,
-  getMovedUnitIds,
+  getDestinations,
   getTransport,
   getAmphib,
   getAllUnits,
@@ -70,8 +74,6 @@ const uncombinedCombatants = (currentPower, territory, committedUnits, transport
     .reduce(placeCargoOnTransports(transport), [])
   return { attackers, defenders }
 }
-
-export const getBombedTerritories = state => state.strategicBombing.targetTerritories
 
 export const strategicBombing = createSelector(
   getFocusTerritory,

@@ -1,15 +1,14 @@
 import { createSelector } from 'reselect'
+import { getAttackerCasualties, getDogfights } from '../../selectors/stateSlices'
 import { 
-  attackerCasualties,
   attackerCasualtyCount,
   preCasualtyCombatants as combatants, 
   defenderCasualties, 
-  getDogfights
 } from '../combat'
 import { getFocusTerritory } from '../../selectors/getTerritory'
 import { land } from '../../selectors/units'
 import unitTypes from '../../config/unitTypes'
-export { attackerCasualties, getFocusTerritory, combatants }
+export { getAttackerCasualties, getFocusTerritory, combatants }
 
 const multiplier = (unit, side) => (
   unitTypes[unit.type].canTakeDamage ? 2 : unitTypes[unit.type][side] ? 1 : 0
@@ -54,7 +53,7 @@ const idNotIn = array => obj => !array.includes(obj.id)
 export const isConquered = createSelector(
   victor,
   combatants,
-  attackerCasualties,
+  getAttackerCasualties,
   (victor, { attackers }, attackerCasualties) => (
     victor === 'attacker' && 
     attackers.filter(idNotIn(attackerCasualties))

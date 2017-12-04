@@ -1,10 +1,11 @@
-import { createSelector } from 'reselect';
-import { getCurrentPower } from '../../selectors/getCurrentPower';
-import unitTypes from '../../config/unitTypes';
+import { createSelector } from 'reselect'
+import { getPurchases } from '../../selectors/stateSlices'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import unitTypes from '../../config/unitTypes'
 export { getCurrentPower }
 
 export const purchaseCost = createSelector(
-  state => state.purchases,
+  getPurchases,
   purchases => {
     return Object.keys(purchases).reduce((total, unitName) => {
       return total + purchases[unitName] * unitTypes[unitName].cost

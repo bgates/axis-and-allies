@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
+import { getCurrentTransport, getDestinations } from '../../selectors/stateSlices'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   mergeBoardAndTerritories, 
   getFocusTerritory,
-  getMovedUnitIds,
   isFriendly,
   isLand,
   isSea
@@ -75,8 +75,8 @@ const loadableUnits = (currentPower, destination, movedUnitIds, origin, board) =
 export const getLoadableUnits = createSelector(
   getCurrentPowerName,
   getFocusTerritory,
-  getMovedUnitIds,
-  state => state.phase.transport,
+  getDestinations,
+  getCurrentTransport,
   mergeBoardAndTerritories,
   (currentPower, territory, movedUnitIds, transport, board) => (
     loadableUnits(currentPower, territory, movedUnitIds, board[transport.originIndex], board)

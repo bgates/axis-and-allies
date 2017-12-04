@@ -1,7 +1,15 @@
 import { createSelector } from 'reselect'
-import { getBombedTerritories, combatants as combatantsWithoutDamage } from '../planCombat'
+import { combatants as combatantsWithoutDamage } from '../planCombat'
 import { 
+  getAmphib, 
+  getAttackerCasualties, 
+  getBombedTerritories, 
+  getCombatUnderway, 
   getCurrentTerritoryIndex,
+  getDogfights, 
+  getRolls 
+} from '../../selectors/stateSlices'
+import { 
   getFocusTerritory, 
 } from '../../selectors/getTerritory'
 import { 
@@ -17,14 +25,11 @@ import {
   withDogfight
 } from '../../selectors/units'
 import PATHS from '../../paths'
-export { getFocusTerritory }
-
-export const attackerCasualties = state => state.casualties
-export const getDogfights = state => state.dogfight
+export { getFocusTerritory, getAttackerCasualties }
 
 export const isUnderway = createSelector(
   getFocusTerritory,
-  state => state.combatUnderway,
+  getCombatUnderway,
   (territory, underway) => underway[territory.index]
 )
 
@@ -87,7 +92,7 @@ export const preCasualtyCombatants = createSelector(
 
 export const combatants = createSelector(
   preCasualtyCombatants,
-  attackerCasualties,
+  getAttackerCasualties,
   ({ attackers, defenders, bombardingUnits }, casualties) => (
     { 
       attackers: survivors(attackers, casualties), 
@@ -108,14 +113,16 @@ export const strengths = createSelector(
   combatants,
   strengthRange
 )
-//TODO: ensure territory has continued conflict and no amphib presence
+
 export const allowRetreat = createSelector(
   getFocusTerritory,
   combatants,
-  attackerCasualties,
-  state => state.combatUnderway,
-  (territory, { attackers }, casualties, combatUnderway) => (
-    combatUnderway[territory.index] && //amphib
+  getAttackerCasualties,
+  getAmphib,
+  getCombatUnderway,
+  ({ index }, { attackers }, casualties, amphib, combatUnderway) => (
+    !amphib.territory[index] &&
+    combatUnderway[index] && 
     attackers.some(({ id }) => !casualties.includes(id))
   )
 )
@@ -125,7 +132,8 @@ const defendsAt = n => unit => defend(unit) === n
 const totalAttacks = (total, unit) => total + attacks(unit)
 const totalDefends = (total, unit) => total + 1
 
-const arrangeRolls = (combatants, strengths, rolls = []) => {
+const arrangeRolls = (combatants, strengths, allRolls = {}) => {
+  const rolls = allRolls[PATHS.COMBAT_ROLLS] || []
   const { attackers, defenders, bombardingUnits } = combatants
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   let rollClone = rolls.slice(0)
@@ -142,7 +150,7 @@ const arrangeRolls = (combatants, strengths, rolls = []) => {
 export const combatRolls = createSelector(
   preCasualtyCombatants,
   strengths,
-  state => state.rolls[PATHS.COMBAT_ROLLS],
+  getRolls,
   arrangeRolls
 )
 

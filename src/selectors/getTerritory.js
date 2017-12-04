@@ -2,6 +2,7 @@ import { createSelector } from 'reselect'
 import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories.json'
+import { getCurrentTerritoryIndex, getDestinations, getPlacement } from './stateSlices'
 import { getAllUnits, idsToUnits, bombCapacity } from './units'
 import { getCurrentPowerName } from './getCurrentPower'
 
@@ -28,8 +29,6 @@ export const getTerritoryUnits = createSelector(
   ({ unitIds }, units) => idsToUnits(unitIds, units)
 )
 
-export const getMovedUnitIds = state => state.unitDestination
-
 const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
 export const nonNeutral = (territory) => !isNeutral(territory)
 
@@ -53,8 +52,6 @@ const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (
   }
 )
 
-export const getCurrentTerritoryIndex = state => state.phase.territoryIndex
-
 export const getFocusTerritory = createSelector(
   state => getTerritoryUnits(state, state.phase.territoryIndex),
   state => state,
@@ -64,7 +61,7 @@ export const getFocusTerritory = createSelector(
 
 export const getCommittedIds = createSelector(
   getFocusTerritory,
-  getMovedUnitIds,
+  getDestinations,
   ({ index }, movedUnitIds) => movedUnitIds[index] || []
 )
 
@@ -106,8 +103,6 @@ const newUnits = (placement, power, index) => (
     placement[type][index] ? units.concat(new Array(placement[type][index]).fill({ type, power, id: 0 })) : units
   ), [])
 )
-export const getPlacement = state => state.placement
-
 export const getUnits = createSelector(
   getTerritory,
   getAllUnits,
@@ -115,7 +110,7 @@ export const getUnits = createSelector(
   getInboundUnits,
   getCurrentPowerName,
   getPlacement,
-  (state, territoryIndex) => territoryIndex,
+  (_, territoryIndex) => territoryIndex,
   ({ unitIds }, allUnits, outbound, inbound, currentPower, placement, territoryIndex) => (
     groupedUnits(unitIds
       .filter(remove(outbound))

@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import PATHS from '../../paths'
 import RetreatModal from './RetreatModal'
-import { attackerCasualties, defenderCasualties } from '../combat'
+import { defenderCasualties } from '../combat'
 import { continueOrAdvancePhase } from '../selectCasualties'
 import { getInboundUnits } from '../../selectors/getTerritory'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { removeCasualties, resolveCombat, RETREAT } from '../../actions'
-import { getFocusTerritory, retreatOptions } from './selectors'
+import { getAttackerCasualties, getFocusTerritory, retreatOptions } from './selectors'
 
 const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state),
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
 const retreat = (battleTerritoryIndex, retreatTerritoryIndex) => (
   (dispatch, getState) => {
     let state = getState()
-    dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), battleTerritoryIndex, getCurrentPowerName(state)))
+    dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), battleTerritoryIndex, getCurrentPowerName(state)))
     state = getState()
     const survivors = getInboundUnits(state, battleTerritoryIndex)
     dispatch({ type: RETREAT, battleTerritoryIndex, retreatTerritoryIndex, survivors })

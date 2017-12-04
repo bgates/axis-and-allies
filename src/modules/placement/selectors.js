@@ -1,10 +1,12 @@
 import { createSelector } from 'reselect'
 import { hasIndustry } from '../rocketAttack'
-import { getRecentlyConquered } from '../landPlanes'
+import { 
+  getPlacement,
+  getPurchases as getAllPurchases, 
+  getRecentlyConquered 
+} from '../../selectors/stateSlices'
 import { 
   getTerritoriesWithIpcValues,
-  getPlacement,
-  hasIndustrialComplex, 
   mergeBoardAndTerritories 
 } from '../../selectors/getTerritory'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
@@ -21,7 +23,7 @@ const chineseUnits = territories => (
 )
 
 export const getPurchases = createSelector(
-  state => state.purchases,
+  getAllPurchases,
   getCurrentPowerName,
   mergeBoardAndTerritories,
   (purchases, currentPower, territories) => (

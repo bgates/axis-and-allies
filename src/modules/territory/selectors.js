@@ -1,20 +1,24 @@
 import { createSelector } from 'reselect'
 import classNames from 'classnames'
+import { 
+  getAmphib, 
+  getBombedTerritories,
+  getCompletedMissions, 
+  getCurrentPhase, 
+  getDestinations,
+  getFlights, 
+} from '../../selectors/stateSlices'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   amphibOrigins,
   getTerritory, 
   getTerritoryData, 
-  getMovedUnitIds,
   getUnits,
   isFriendly
 } from '../../selectors/getTerritory'
 import { air, canBombard, getAllUnits, nonIndustry } from '../../selectors/units'
-import { getFlights, getBombedTerritories } from '../planCombat'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
-
-export const getCurrentPhase = state => state.phase.current
 
 export const getFill = createSelector(
   getTerritory,
@@ -62,17 +66,17 @@ export const getClasses = createSelector(
   getCurrentPowerName,
   getTerritory,
   getTerritoryData,
-  getMovedUnitIds,
   getCurrentPhase,
-  state => state.amphib.territory,
-  state => state.unitDestination,
+  getAmphib,
+  getDestinations,
   getFlights,
   (state, index) => index,
-  (currentPower, territory, { sea }, movedUnitIds, phase, amphib, unitDestination, flightDistance, territoryIndex) => {
+  (currentPower, territory, { sea }, phase, amphib, unitDestination, flightDistance, territoryIndex) => {
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
-    const hasAttackers = (movedUnitIds[territoryIndex] || []).length || (amphib[territoryIndex] || []).length
+    const hasAttackers = (unitDestination[territoryIndex] || []).length || 
+      (amphib.territory[territoryIndex] || []).length
     const hasCombat = hasAttackers && territory.unitIds.length
     const hasPlanes = (unitDestination[territoryIndex] || []).some(({ id }) => flightDistance[id])
     return classNames({
@@ -113,7 +117,7 @@ export const isCombat = createSelector(
   getCurrentPowerName,
   getUnits,
   isAmphib,
-  state => state.missionComplete,
+  getCompletedMissions,
   (currentPower, units, amphib, missionComplete) => (
     (units.filter(({ id }) => !missionComplete[id]).some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
   )

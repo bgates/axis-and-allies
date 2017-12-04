@@ -4,7 +4,7 @@ import LandPlanesModal from './LandPlanesModal'
 import { 
   landingOptions, 
   airUnits, 
-  selectedOptions,
+  getSelectedOptions,
   getFocusTerritory,
   allLandingsPlanned
 } from './selectors'
@@ -18,7 +18,7 @@ const mapStateToProps = (state) => ({
   airUnits: airUnits(state),
   landingOptions: landingOptions(state),
   territory: getFocusTerritory(state),
-  selectedOptions: selectedOptions(state)
+  selectedOptions: getSelectedOptions(state)
 })
 
 const selectLandingOption = (unitId, territoryIndex) => {

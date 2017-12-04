@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
+import { getCurrentPhase, getPurchases, getPathname } from '../../selectors/stateSlices'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { isCombat, getCurrentPhase } from '../territory'
+import { isCombat } from '../territory'
 import { 
   PLAN_ATTACKS, 
   VIEW_ATTACK_OPTIONS, 
@@ -24,7 +25,7 @@ const phaseRequiresOverlay = (phase) => {
 }
 
 export const overlayPhase = createSelector(
-  state => state.router.location.pathname,
+  getPathname,
   getCurrentPhase,
   (pathname, phase) => pathRequiresOverlay(pathname) || 
            phaseRequiresOverlay(phase)
@@ -36,7 +37,7 @@ export const advanceButtonPhase = (state) => {
 
 const canPlace = createSelector(
   getCurrentPower,
-  state => state.purchases,
+  getPurchases,
   (currentPower, purchases) => currentPower.name === 'China' || Object.keys(purchases).length
 )
 

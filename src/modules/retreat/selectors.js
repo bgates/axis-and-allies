@@ -1,10 +1,10 @@
 import { createSelector } from 'reselect'
+import { getAllOutbound, getAttackerCasualties, getFlights } from '../../selectors/stateSlices'
 import { mergeBoardAndTerritories, getCommittedUnits, getFocusTerritory } from '../../selectors/getTerritory'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { territoriesInRange, getFlights, canLandInTerritory } from '../planCombat'
-import { attackerCasualties } from '../combat'
-import { air, movement, getAllOutbound, getAllUnits } from '../../selectors/units'
-export { getFocusTerritory }
+import { territoriesInRange, canLandInTerritory } from '../planCombat'
+import { air, movement, getAllUnits } from '../../selectors/units'
+export { getAttackerCasualties, getFocusTerritory }
 
 const individualRange = flights => unit => movement(unit) - flights[unit.id]
 
@@ -26,7 +26,7 @@ export const retreatOptions = createSelector(
   mergeBoardAndTerritories,
   getFocusTerritory,
   getCommittedUnits,
-  attackerCasualties,
+  getAttackerCasualties,
   getFlights,
   getAllUnits,
   getAllOutbound,

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getAmphib } from '../planCombat'
+import { getAmphib, getBombardment, getInboundUnits } from '../../selectors/stateSlices'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   amphibOrigins, 
@@ -13,11 +13,9 @@ import {
   unitWithOrigin
 } from '../../selectors/units'
 
-export const getBombardment = state => state.bombardment 
-
-const bombardmentCapableUnits = ({ index }, currentPower, amphib, inboundUnits, { bombardingUnits }, state) => {
+const bombardmentCapableUnits = ({ index }, currentPower, amphib, inboundUnits, { bombardingUnits }) => {
   return amphibOrigins(amphib, inboundUnits, index)
-    .map(i => getUnits(state, i).map(unitWithOrigin(getTerritoryData(state, i))))
+    .map(i => getUnits(null, i).map(unitWithOrigin(getTerritoryData(null, i))))
     .reduce((total, units) => total.concat(units.filter(canBombard)), [])
     .filter(unit => !bombardingUnits[unit.id] || bombardingUnits[unit.id] === index)
     .reduce(combineUnits, [])
@@ -27,9 +25,8 @@ export const getBombardmentCapableUnits = createSelector(
   getFocusTerritory,
   getCurrentPowerName,
   getAmphib,
-  state => state.inboundUnits,
+  getInboundUnits,
   getBombardment,
-  state => state,
   bombardmentCapableUnits
 )
 

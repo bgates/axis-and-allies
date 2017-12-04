@@ -1,20 +1,23 @@
 import { createSelector } from 'reselect'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { 
   getCurrentTerritoryIndex,
+  getDestinations,          
+  getFlights,
+  getRecentlyConquered, 
+  getSelectedOptions 
+} from '../../selectors/stateSlices'
+import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { 
   getFocusTerritory,
-  getMovedUnitIds,
   isLand,
   mergeBoardAndTerritories, 
   nonNeutral
 } from '../../selectors/getTerritory'
 import { getAllUnits } from '../../selectors/units'
-import { territoriesInRange, getFlights } from '../planCombat'
+import { territoriesInRange } from '../planCombat'
 import unitTypes from '../../config/unitTypes'
 import { sameSide } from '../../config/initialPowers'
-export { getFocusTerritory }
-
-export const getRecentlyConquered = state => state.conquered
+export { getFocusTerritory, getSelectedOptions }
 
 const unitsWithRange = (moved, flights, units, territoryIndex) => (
   moved[territoryIndex].filter(id => flights[id]).map(id => (
@@ -23,14 +26,12 @@ const unitsWithRange = (moved, flights, units, territoryIndex) => (
 )
 
 export const airUnits = createSelector(
-  getMovedUnitIds,
+  getDestinations,
   getFlights,
   getAllUnits,
   getCurrentTerritoryIndex,
   unitsWithRange
 )
-
-export const selectedOptions = state => state.landPlanes
 
 const availableForLanding = (currentPower, conquered) => territory => (
   isLand(territory) && 

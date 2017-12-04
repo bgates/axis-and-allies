@@ -8,7 +8,7 @@ import { VIEW_BOMBARDMENT_OPTIONS, COMBAT_UNDERWAY } from '../../actions'
 
 import { 
   allowRetreat,
-  attackerCasualties, 
+  getAttackerCasualties, 
   combatants,
   defenderCasualties, 
   getFocusTerritory, 
@@ -50,7 +50,7 @@ const rollForCombat = (territoryIndex) => {
     const transportedBy = transportIds.reduce((all, id) => (transport.transporting[id] || []).concat(all), [])
     const bombardmentIds = bombardment.targetTerritories[territoryIndex]
     dispatch(markCombatUnderway(territoryIndex, transportIds, bombardmentIds, transportedBy))
-    dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
+    dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
     const rolls = dice(rollCount(getState()))
     dispatch(roll(PATHS.COMBAT_ROLLS, rolls))
     dispatch(push(PATHS.COMBAT_ROLLS))
