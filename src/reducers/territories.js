@@ -13,9 +13,6 @@ const mapping = (territoryIndex, callback) => (territory, index) => (
 const territories = (state = [], action) => {
   const { type, territoryIndex } = action
   switch (type) {
-  case '@@router/LOCATION_CHANGE': {
-    return state
-  }
   case COMBAT_UNDERWAY: {
     return state.map(mapping(territoryIndex, t => ({ ...t, unitIds: t.unitIds.concat(action.unitIds) })))
   }
