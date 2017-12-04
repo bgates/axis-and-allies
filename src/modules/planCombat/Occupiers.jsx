@@ -7,7 +7,7 @@ const mission = (unit, strategicBombing) => {
   }
 }
 
-const Occupiers = ({ combatants, sea, strategicBombing, showStrength }) => {
+const Occupiers = ({ combatants, sea, strategicBombing = [], showStrength }) => {
   const { attackers, defenders } = combatants
   if (defenders.length === 0 && attackers.length === 0) {
     return <p>There are no units {sea ? 'occupying this sea zone' : 'defending this territory' }.</p>
