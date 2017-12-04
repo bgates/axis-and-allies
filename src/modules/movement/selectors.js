@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { getAllInbound, getBombardment, getTransport } from '../../selectors/stateSlices'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { getTerritoryUnits, getCommittedIds, getFocusTerritory } from '../../selectors/getTerritory'
+import { getCommittedIds, getFocusTerritory } from '../../selectors/getTerritory'
 import { 
   unitsInRange as tooBroadUnits, 
   territoryLandingSlots
