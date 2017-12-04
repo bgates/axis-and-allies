@@ -72,7 +72,7 @@ export const nextPhase = createSelector(
   getResearch,
   noCombat,
   getPhase,
-  (currentPower, hasRockets, hasDamagedShips, research, combat, phase) => {
+  (currentPower, hasRockets, hasDamagedShips, research, noCombat, phase) => {
     const phases = {
       start: () => afterStart(currentPower, hasDamagedShips),
       [PATHS.REPAIR]: () => PATHS.RESEARCH,
@@ -83,7 +83,7 @@ export const nextPhase = createSelector(
       [PATHS.PURCHASE]: () => PATHS.INCOME,
       [PATHS.INCOME]: () => currentPower.name === 'US' ? PATHS.LEND_LEASE : PATHS.PLAN_ATTACKS,
       [PATHS.LEND_LEASE]: () => PATHS.PLAN_ATTACKS,
-      [PATHS.PLAN_ATTACKS]: () => combat ? PATHS.RESOLVE_COMBAT : PATHS.PLAN_MOVEMENT,
+      [PATHS.PLAN_ATTACKS]: () => noCombat ? PATHS.PLAN_MOVEMENT : PATHS.RESOLVE_COMBAT,
       'russian-winter': () => PATHS.LAND_PLANES,
       [PATHS.LAND_PLANES]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLAN_MOVEMENT,
       [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.LAND_PLANES,
