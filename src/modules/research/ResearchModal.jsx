@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { partial } from 'ramda'
 import '../../assets/styles/research.css'
 
-const ResearchModal = ({ currentPower, research, setTech, incrementResearch, decrementResearch, hasRockets, attemptResearch }) => {
+const ResearchModal = ({ canMakeJets, currentPower, research, setTech, incrementResearch, decrementResearch, hasRockets, attemptResearch }) => {
   let { cost, attempts, selectedTech, availableTech } = research
   return (
     <div>
