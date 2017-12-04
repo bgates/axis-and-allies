@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import { getCurrentPhase, getPurchases, getPathname } from '../../selectors/stateSlices'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { nextPhase, previousPhase } from '../../selectors/previousPhase'
 import { isCombat } from '../territory'
 import { 
   PLAN_ATTACKS, 
@@ -14,6 +15,7 @@ import {
   CONFIRM_FINISH
 } from '../../actions'
 import PATHS from '../../paths'
+export { nextPhase, previousPhase }
 
 const pathRequiresOverlay = (pathname) => {
   return [PATHS.RESEARCH, PATHS.RESEARCH_RESULTS, PATHS.ROCKETS, PATHS.ROCKET_RESULTS, PATHS.PURCHASE, 
@@ -47,23 +49,13 @@ export const noCombat = state => {
          Object.keys(amphib.territory).find(index => isCombat(state, index)))
 }
 
-//TODO: combine this w previousPhase selector?
-export const phases = createSelector(
-  noCombat,
+export const showNavLinks = createSelector(
   getCurrentPhase,
-  canPlace,
-  (noCombat, phase, canPlaceUnits) => {
-    if ([PLAN_ATTACKS, 'resolve-combat'].includes(phase)) {
-      const next = noCombat ? PLAN_MOVEMENT : 'resolve-combat';
-      return { next, last: 'income' }
-    } else if (phase === PLAN_MOVEMENT) {
-      const next = canPlaceUnits ? 'place-units' : ORDER_UNITS
-      return { next, last: 'land-planes' }
-    } else if (phase === ORDER_UNITS) {
-      return { next: 'confirm-finish', last: 'place-units', text: 'Order by Cost' }
-    } else {
-      return {}
-    }
-  } 
+  phase => [PLAN_ATTACKS, PLAN_MOVEMENT, 'resolve-combat', ORDER_UNITS].includes(phase)
+)
+
+export const navLinkText = createSelector(
+  getCurrentPhase,
+  phase => phase === ORDER_UNITS ? 'Order by Cost' : 'Done'
 )
 

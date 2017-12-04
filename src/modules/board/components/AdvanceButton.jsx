@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { phases } from '../selectors'
+import { nextPhase, previousPhase, showNavLinks, navLinkText } from '../selectors'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { nextId } from '../../../selectors/units'
 import {
@@ -16,7 +16,10 @@ import {
 import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => ({
-  phases: phases(state)
+  nextPhase: nextPhase(state),
+  previousPhase: previousPhase(state),
+  showNavLinks: showNavLinks(state),
+  navLinkText: navLinkText(state)
 })
 
 const idsAndUnits = (placement, power) => {
@@ -87,15 +90,22 @@ const mapDispatchToProps = (dispatch) => {
 const NavLinks = ({ fwd, back, text }) => {
   return (
     <div className="changePhase">
-      <Link to={fwd} className="btn">{text || 'Done'}</Link>
+      <Link to={fwd} className="btn">{text}</Link>
       <Link to={back} className="btn">Back</Link>
     </div>
   )
 }
 
-const AdvanceButtonComponent = ({ phases, advancePhase, regressPhase }) => {
-  if (typeof phases.next === 'string') {
-    return <NavLinks fwd={phases.next} back={phases.last} text={phases.text} />
+const AdvanceButtonComponent = ({ 
+  nextPhase, 
+  previousPhase, 
+  advancePhase, 
+  regressPhase, 
+  showNavLinks,
+  navLinkText
+}) => {
+  if (showNavLinks) {
+    return <NavLinks fwd={nextPhase} back={previousPhase} text={navLinkText} />
   } else {
     return (
       <div className="changePhase">

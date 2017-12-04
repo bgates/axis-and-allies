@@ -65,7 +65,7 @@ export const noCombat = state => {
          Object.keys(amphib.territory).find(index => isCombat(state, index)))
 }
 
-const nextPhase = createSelector(
+export const nextPhase = createSelector(
   getCurrentPower,
   currentPowerHasRockets,
   hasDamagedShipsInHarbor,
