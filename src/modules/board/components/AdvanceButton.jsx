@@ -93,14 +93,14 @@ const NavLinks = ({ fwd, back, text }) => {
   )
 }
 
-const AdvanceButtonComponent = ({ phases, advancePhase, previousPhase }) => {
+const AdvanceButtonComponent = ({ phases, advancePhase, regressPhase }) => {
   if (typeof phases.next === 'string') {
     return <NavLinks fwd={phases.next} back={phases.last} text={phases.text} />
   } else {
     return (
       <div className="changePhase">
         <button className="btn" onClick={advancePhase}>Done</button>
-        <button className="btn" onClick={previousPhase}>Back</button>
+        <button className="btn" onClick={regressPhase}>Back</button>
       </div>
     )
   }
