@@ -18,7 +18,7 @@ import {
 } from '../../selectors/getTerritory'
 import { air, canBombard, getAllUnits, nonIndustry } from '../../selectors/units'
 import { allyOf, enemyOf } from '../../config/initialPowers'
-import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES } from '../../actions'
+import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES, PLAN_MOVEMENT } from '../../actions'
 
 export const getFill = createSelector(
   getTerritory,
@@ -61,7 +61,17 @@ export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
   ))
 )
 
-//TODO: active class shouldn't apply to land-planes spaces until that phase
+// (phase !== RESOLVE_COMBAT && hasAttackers) || (phase === LAND_PLANES && hasPlanes)
+const isActive = (phase, hasAttackers, unitDestination, territoryIndex, flightDistance) => {
+  const hasPlanes = (unitDestination[territoryIndex] || []).some(({ id }) => flightDistance[id])
+  switch (phase) {
+    case (RESOLVE_COMBAT): return false
+    case (LAND_PLANES): return hasPlanes
+    case (PLAN_MOVEMENT): return (unitDestination[territoryIndex] || []).length
+    default: return hasAttackers
+  }
+}
+
 export const getClasses = createSelector(
   getCurrentPowerName,
   getTerritory,
@@ -78,11 +88,10 @@ export const getClasses = createSelector(
     const hasAttackers = (unitDestination[territoryIndex] || []).length || 
       (amphib.territory[territoryIndex] || []).length
     const hasCombat = hasAttackers && territory.unitIds.length
-    const hasPlanes = (unitDestination[territoryIndex] || []).some(({ id }) => flightDistance[id])
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       [territoryPower.toLowerCase()]: isOcean || isControlled,
-      active: (phase !== RESOLVE_COMBAT && hasAttackers) || (phase === LAND_PLANES && hasPlanes),
+      active: isActive(phase, hasAttackers, unitDestination, territoryIndex, flightDistance),
       'active-combat': phase === RESOLVE_COMBAT && hasCombat && territoryPower !== currentPower,
       //'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
     })
