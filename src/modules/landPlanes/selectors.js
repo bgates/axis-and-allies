@@ -62,6 +62,8 @@ export const planesInAir = createSelector(
   flightDistance => Object.keys(flightDistance).length
 )
 
-export const allLandingsPlanned = state => (
-  planesInAir(state) === Object.keys(state.landPlanes).length
+export const allLandingsPlanned = createSelector(
+  planesInAir,
+  getSelectedOptions,
+  (numberPlanes, landings) => numberPlanes === Object.keys(landings).length
 )
