@@ -1,5 +1,4 @@
 import { 
-  CONQUER_UNDEFENDED,
   COMBAT_UNDERWAY,
   REMOVE_CASUALTIES, 
   WIN_ATTACK,
@@ -14,16 +13,6 @@ const mapping = (territoryIndex, callback) => (territory, index) => (
 const territories = (state = [], action) => {
   const { type, territoryIndex } = action
   switch (type) {
-  case CONQUER_UNDEFENDED: {
-    const { unitDestination, currentPower } = action
-    return state.map((territory, index) => {
-      if ((unitDestination[index] || []).length && !territory.unitIds.length) {
-        return { ...territory, unitIds: unitDestination[index], currentPower }
-      } else {
-        return territory
-      }
-    })
-  }
   case COMBAT_UNDERWAY: {
     return state.map(mapping(territoryIndex, t => ({ ...t, unitIds: t.unitIds.concat(action.unitIds) })))
   }

@@ -6,8 +6,10 @@ import CombatModal from './CombatModal'
 import { BombardmentContainer } from '../bombardment'
 import { 
   VIEW_BOMBARDMENT_OPTIONS, 
-  CONQUER_UNDEFENDED,
-  COMBAT_UNDERWAY 
+  COMBAT_UNDERWAY,
+  removeCasualties,
+  roll,
+  winAttack
 } from '../../actions'
 import { 
   allowRetreat,
@@ -20,7 +22,6 @@ import {
   strengths,
 } from './selectors'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { removeCasualties, roll } from '../../actions'
 import dice from '../../lib/numericalDieRolls'
 import PATHS from '../../paths'
 
@@ -43,25 +44,21 @@ const markCombatUnderway = (territoryIndex, transportIds, bombardmentIds, unitId
   }
 )
 
-const conquerUndefended = (unitDestination, currentPower) => (
-  {
-    type: CONQUER_UNDEFENDED,
-    unitDestination,
-    currentPower
-  }
-)
-
 const selectBattle = () => dispatch => dispatch(push(PATHS.RESOLVE_COMBAT))
 
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
-    const { amphib, transport, bombardment, conquered, unitDestination } = state
+    const { amphib, transport, bombardment, conquered, unitDestination, territories } = state
     const transportIds = amphib.territory[territoryIndex] || []
     const transportedBy = transportIds.reduce((all, id) => (transport.transporting[id] || []).concat(all), [])
     const bombardmentIds = bombardment.targetTerritories[territoryIndex]
     if (Object.keys(conquered).length === 0) {
-      dispatch(conquerUndefended(unitDestination, getCurrentPowerName(state)))
+      Object.keys(unitDestination).forEach(index => {
+        if (territories[index].unitIds.length === 0) {
+          dispatch(winAttack(Number(index), [], unitDestination[index], [], [], getCurrentPowerName(state)))
+        }
+      })
     }
     dispatch(markCombatUnderway(territoryIndex, transportIds, bombardmentIds, transportedBy))
     dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
