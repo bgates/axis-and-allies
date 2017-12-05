@@ -5,6 +5,7 @@ import {
   COMMIT_TO_STRATEGIC_BOMBING,
   REMOVE_CASUALTIES,
   RETREAT,
+  WIN_ATTACK,
   LOSE_ATTACK,
   NEXT_TURN
 } from '../actions'
@@ -39,6 +40,13 @@ const unitDestination = (state = {}, action) => {
     return {
       ...state,
       [territoryIndex]: remove(state[territoryIndex], attackerCasualties)
+    }
+  }
+  case WIN_ATTACK: {
+    const { territoryIndex, attackerIds, casualties } = action
+    return { 
+      ...state,
+      [territoryIndex]: remove(state[territoryIndex], attackerIds.concat(casualties))
     }
   }
   case RETREAT: {
