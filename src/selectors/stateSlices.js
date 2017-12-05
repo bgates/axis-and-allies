@@ -44,7 +44,7 @@ export const getResearch = state => state.research
 
 export const getRolls = state => state.rolls
 
-export const getSelectedOptions = state => state.landPlanes
+export const getLandingPlanes = state => state.landPlanes
 
 export const getSelectedRocketTargets = state => state.rocketTargets
 

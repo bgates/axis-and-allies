@@ -4,7 +4,7 @@ import {
   getDestinations,          
   getFlights,
   getRecentlyConquered, 
-  getSelectedOptions 
+  getLandingPlanes
 } from '../../selectors/stateSlices'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { 
@@ -17,7 +17,7 @@ import { getAllUnits } from '../../selectors/units'
 import { territoriesInRange } from '../planCombat'
 import unitTypes from '../../config/unitTypes'
 import { sameSide } from '../../config/initialPowers'
-export { getFocusTerritory, getSelectedOptions }
+export { getFocusTerritory, getLandingPlanes }
 
 const unitsWithRange = (moved, flights, units, territoryIndex) => (
   moved[territoryIndex].filter(id => flights[id]).map(id => (
@@ -64,6 +64,6 @@ export const planesInAir = createSelector(
 
 export const allLandingsPlanned = createSelector(
   planesInAir,
-  getSelectedOptions,
+  getLandingPlanes,
   (numberPlanes, landings) => numberPlanes === Object.keys(landings).length
 )

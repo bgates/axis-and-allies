@@ -26,7 +26,6 @@ const territories = (state = [], action) => {
     const { conqueringPower, attackerIds, airUnits, casualties } = action
     const callback = territory => {
       const currentPower = conqueringPower || territory.currentPower
-      //TODO: should not include air
       const unitIds = attackerIds.filter(id => !casualties.includes(id) && !airUnits[id])
       return { ...territory, currentPower, unitIds }
     }

@@ -61,7 +61,6 @@ export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
   ))
 )
 
-// (phase !== RESOLVE_COMBAT && hasAttackers) || (phase === LAND_PLANES && hasPlanes)
 const isActive = (phase, hasAttackers, unitDestination, territoryIndex, flightDistance) => {
   const hasPlanes = (unitDestination[territoryIndex] || []).some(id => flightDistance[id])
   switch (phase) {

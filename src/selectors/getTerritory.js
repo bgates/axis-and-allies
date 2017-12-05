@@ -6,7 +6,7 @@ import {
   getCurrentTerritoryIndex, 
   getDestinations, 
   getPlacement,
-  getSelectedOptions
+  getLandingPlanes
 } from './stateSlices'
 import { getAllUnits, idsToUnits, bombCapacity } from './units'
 import { getCurrentPowerName } from './getCurrentPower'
@@ -115,7 +115,7 @@ export const getUnits = createSelector(
   getInboundUnits,
   getCurrentPowerName,
   getPlacement,
-  getSelectedOptions,
+  getLandingPlanes,
   (_, territoryIndex) => territoryIndex,
   ({ unitIds }, allUnits, outbound, inbound, currentPower, placement, landPlanes, territoryIndex) => (
     groupedUnits(unitIds
