@@ -10,7 +10,9 @@ import {
   mergeBoardAndTerritories 
 } from '../../selectors/getTerritory'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { previousPhase } from '../../selectors/previousPhase'
 import unitTypes from '../../config/unitTypes'
+export { previousPhase }
 
 const CHINA_PRODUCTION_DIVISOR = 2
 const INDUSTRY_PRODUCTION_MULTIPLIER = 7

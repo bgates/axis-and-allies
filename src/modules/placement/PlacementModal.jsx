@@ -9,6 +9,7 @@ const PlacementModal = ({
   currentPower,
   industrialComplexes, 
   placements,
+  previousPhase,
   purchases,
   shipyards, 
   place,
@@ -45,7 +46,7 @@ const PlacementModal = ({
         ))}
       </table>
       <nav>
-        <Link to="/" className="btn">Back</Link>
+        <Link to={previousPhase} className="btn">Back</Link>
         <button onClick={place} className="btn">Place</button>
       </nav>
     </div>

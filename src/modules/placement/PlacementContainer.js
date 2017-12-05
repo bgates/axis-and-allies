@@ -6,6 +6,7 @@ import {
   availables,
   industrialComplexes, 
   getPurchases, 
+  previousPhase,
   shipyards, 
 } from './selectors'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
@@ -25,6 +26,7 @@ const mapStateToProps = (state) => {
     placements: state.placement,
     purchases: getPurchases(state),
     shipyards: shipyards(state),
+    previousPhase: previousPhase(state)
   }
 }
 
