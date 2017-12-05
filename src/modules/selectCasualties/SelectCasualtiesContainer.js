@@ -8,6 +8,7 @@ import { bombRaid, isBombed, isCombat } from '../territory'
 import { 
   getFocusTerritory, 
   getAttackerCasualties, 
+  getFlights,
   combatants,
   victor, 
   attackDefeated,
@@ -63,7 +64,8 @@ const attackerWins = (territoryIndex) => {
     const casualties = getAttackerCasualties(state)
     const survivors = attackers.map(id).filter(id => !casualties.includes(id))
     const conqueringPower = isConquered(state) ? getCurrentPowerName(state) : null
-    dispatch(winAttack(territoryIndex, defenders.map(id), survivors, casualties, conqueringPower))
+    const airUnits = getFlights(state)
+    dispatch(winAttack(territoryIndex, defenders.map(id), survivors, airUnits, casualties, conqueringPower))
     state = getState()
     continueOrAdvancePhase(dispatch, state)
   }

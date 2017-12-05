@@ -115,12 +115,13 @@ export const viewPlaneLandingOptions = (territoryIndex) => (
   { type: VIEW_PLANE_LANDING_OPTIONS, territoryIndex }
 )
 
-export const winAttack = (territoryIndex, defenderIds, attackerIds, casualties, conqueringPower) => ( 
+export const winAttack = (territoryIndex, defenderIds, attackerIds, airUnits, casualties, conqueringPower) => ( 
   { 
     type: WIN_ATTACK, 
     territoryIndex,
     defenderIds,
     attackerIds,
+    airUnits,
     casualties,
     conqueringPower
   }

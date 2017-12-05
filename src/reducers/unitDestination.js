@@ -43,10 +43,11 @@ const unitDestination = (state = {}, action) => {
     }
   }
   case WIN_ATTACK: {
-    const { territoryIndex, attackerIds, casualties } = action
+    const { territoryIndex, attackerIds, airUnits, casualties } = action
+    const accountedForIds = attackerIds.concat(casualties).filter(id => !airUnits[id])
     return { 
       ...state,
-      [territoryIndex]: remove(state[territoryIndex], attackerIds.concat(casualties))
+      [territoryIndex]: remove(state[territoryIndex], accountedForIds)
     }
   }
   case RETREAT: {

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { getAttackerCasualties, getDogfights } from '../../selectors/stateSlices'
+import { getAttackerCasualties, getDogfights, getFlights } from '../../selectors/stateSlices'
 import { 
   attackerCasualtyCount,
   preCasualtyCombatants as combatants, 
@@ -8,7 +8,7 @@ import {
 import { getFocusTerritory } from '../../selectors/getTerritory'
 import { land } from '../../selectors/units'
 import unitTypes from '../../config/unitTypes'
-export { getAttackerCasualties, getFocusTerritory, combatants }
+export { getAttackerCasualties, getFlights, getFocusTerritory, combatants }
 
 const multiplier = (unit, side) => (
   unitTypes[unit.type].canTakeDamage ? 2 : unitTypes[unit.type][side] ? 1 : 0
