@@ -90,9 +90,9 @@ export const nextPhase = createSelector(
       [PATHS.INCOME]: () => currentPower.name === 'US' ? PATHS.LEND_LEASE : PATHS.PLAN_ATTACKS,
       [PATHS.LEND_LEASE]: () => PATHS.PLAN_ATTACKS,
       [PATHS.PLAN_ATTACKS]: () => noCombat ? PATHS.PLAN_MOVEMENT : PATHS.RESOLVE_COMBAT,
-      'russian-winter': () => PATHS.LAND_PLANES,
       [PATHS.LAND_PLANES]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLAN_MOVEMENT,
-      [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.LAND_PLANES,
+      'russian-winter': () => PATHS.PLAN_MOVEMENT,
+      [PATHS.PLAN_MOVEMENT]: () => PATHS.PLACE_UNITS,
       [PATHS.PLACE_UNITS]: () => PATHS.PLAN_MOVEMENT,
       'carrier-loading': () => PATHS.PLACE_UNITS, //assuming units placed, otherwise movement
       [PATHS.ORDER_UNITS]: () => 'carrier-loading', //if naval planes purchased & carriers available, otherwise placement or movement
