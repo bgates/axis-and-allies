@@ -2,7 +2,12 @@ import { createSelector } from 'reselect'
 import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories.json'
-import { getCurrentTerritoryIndex, getDestinations, getPlacement } from './stateSlices'
+import { 
+  getCurrentTerritoryIndex, 
+  getDestinations, 
+  getPlacement,
+  getSelectedOptions
+} from './stateSlices'
 import { getAllUnits, idsToUnits, bombCapacity } from './units'
 import { getCurrentPowerName } from './getCurrentPower'
 
@@ -110,11 +115,14 @@ export const getUnits = createSelector(
   getInboundUnits,
   getCurrentPowerName,
   getPlacement,
+  getSelectedOptions,
   (_, territoryIndex) => territoryIndex,
-  ({ unitIds }, allUnits, outbound, inbound, currentPower, placement, territoryIndex) => (
+  ({ unitIds }, allUnits, outbound, inbound, currentPower, placement, landPlanes, territoryIndex) => (
     groupedUnits(unitIds
       .filter(remove(outbound))
       .concat(inbound)
+      .filter(id => !landPlanes[id])
+      .concat(Object.keys(landPlanes).filter(id => landPlanes[id] === territoryIndex))
       .map(id => allUnits[id])
       .concat(newUnits(placement, currentPower, territoryIndex))
     )

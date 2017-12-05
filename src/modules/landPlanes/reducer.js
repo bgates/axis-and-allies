@@ -5,7 +5,7 @@ const landPlanes = (state = origin, action) => {
   switch (action.type) {
     case SELECT_PLANE_LANDING_OPTION: {
       const { territoryIndex, unitId } = action
-      return { ...state, [unitId]: territoryIndex }
+      return { ...state, [unitId]: Number(territoryIndex) }
     }
     case NEXT_TURN:
       return origin
