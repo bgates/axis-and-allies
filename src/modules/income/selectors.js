@@ -146,7 +146,9 @@ export const nationalObjectives = createSelector(
 );
  
 export const calculateNPL = (territories) => {
-  return territories.reduce((sum, territory) => sum + (territory.ipc_value || 0), 0)
+  return territories.filter(({ sea, currentPower, original_power }) => (
+    !(sea && currentPower !== original_power)
+  )).reduce((sum, territory) => sum + (territory.ipc_value || 0), 0)
 }
 
 export const currentPowerNPL = createSelector(

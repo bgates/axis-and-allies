@@ -89,8 +89,8 @@ export const mergeBoardAndTerritories = createSelector(
 export const getTerritoriesWithIpcValues = createSelector(
   getAllTerritories,
   territories => territories.map(({ currentPower }, index) => {
-    const { ipc_value } = territoryData[index]
-    return { currentPower, ipc_value, index }
+    const { ipc_value, sea, original_power } = territoryData[index]
+    return { currentPower, ipc_value, sea, original_power, index }
   })
 )
 
