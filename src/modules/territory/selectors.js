@@ -7,6 +7,7 @@ import {
   getCurrentPhase, 
   getDestinations,
   getFlights, 
+  getLandingPlanes
 } from '../../selectors/stateSlices'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
@@ -61,12 +62,13 @@ export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
   ))
 )
 
-const isActive = (phase, hasAttackers, unitDestination, territoryIndex, flightDistance) => {
-  const hasPlanes = (unitDestination[territoryIndex] || []).some(id => flightDistance[id])
+const isActive = (phase, hasAttackers, movedIds, flightDistance, landings) => {
+  const hasPlanes = movedIds.some(id => flightDistance[id])
+  const hasMovedUnits = movedIds.some(id => !landings[id])
   switch (phase) {
     case (RESOLVE_COMBAT): return false
     case (LAND_PLANES): return hasPlanes
-    case (PLAN_MOVEMENT): return (unitDestination[territoryIndex] || []).length
+    case (PLAN_MOVEMENT): return hasMovedUnits
     default: return hasAttackers
   }
 }
@@ -79,18 +81,20 @@ export const getClasses = createSelector(
   getAmphib,
   getDestinations,
   getFlights,
+  getLandingPlanes,
   (state, index) => index,
-  (currentPower, territory, { sea }, phase, amphib, unitDestination, flightDistance, territoryIndex) => {
+  (currentPower, territory, { sea }, phase, amphib, unitDestination, flightDistance, landings, territoryIndex) => {
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
-    const hasAttackers = (unitDestination[territoryIndex] || []).length || 
+    const movedIds = unitDestination[territoryIndex] || []
+    const hasAttackers = movedIds.length || 
       (amphib.territory[territoryIndex] || []).length
     const hasCombat = hasAttackers && territory.unitIds.length
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       [territoryPower.toLowerCase()]: isOcean || isControlled,
-      active: isActive(phase, hasAttackers, unitDestination, territoryIndex, flightDistance),
+      active: isActive(phase, hasAttackers, movedIds, flightDistance, landings),
       'active-combat': phase === RESOLVE_COMBAT && hasCombat && territoryPower !== currentPower,
       //'active-order-units': isOrdering(phase, currentPower, territoryPower, units)
     })

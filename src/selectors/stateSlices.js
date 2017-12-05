@@ -32,6 +32,8 @@ export const getPathname = state => state.router.location.pathname
 
 export const getCurrentTransport = state => state.phase.transport
 
+export const getLandingPlanes = state => state.landPlanes
+
 export const getPhase = state => state.phase
 
 export const getPlacement = state => state.placement
@@ -43,8 +45,6 @@ export const getRecentlyConquered = state => state.conquered
 export const getResearch = state => state.research
 
 export const getRolls = state => state.rolls
-
-export const getLandingPlanes = state => state.landPlanes
 
 export const getSelectedRocketTargets = state => state.rocketTargets
 
