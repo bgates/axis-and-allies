@@ -105,7 +105,10 @@ const AdvanceButtonComponent = ({
   navLinkText
 }) => {
   if (showNavLinks) {
-    return <NavLinks fwd={nextPhase} back={previousPhase} text={navLinkText} />
+    return <NavLinks 
+      fwd={nextPhase} 
+      back={previousPhase} 
+      text={navLinkText} />
   } else {
     return (
       <div className="changePhase">
