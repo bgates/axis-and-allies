@@ -86,7 +86,7 @@ export const preCasualtyCombatants = createSelector(
   bombardingUnits,
   dogfightIds,
   ({ attackers, defenders }, bombardingUnits, dogfighters) => (
-    console.log({ defenders }) || dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
+    dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
     { 
       attackers: modify(attackers), 
       defenders: defenders.map(withDefend), 
@@ -173,14 +173,16 @@ export const attackerCasualtyCount = createSelector(
 const byDefense = (a, b) => defend(a) - defend(b)
 
 const _casualties = (combatants, rolls) => (
-  combatants.defenders.sort(byDefense)
-  .map(unit => unit.id).slice(0, hits(rolls, 'attackers'))
+  combatants.defenders
+    .filter(noAA) //ASK: does this make sense?
+    .sort(byDefense)
+    .map(unit => unit.id).slice(0, hits(rolls, 'attackers'))
 )
 
 export const defenderCasualties = createSelector(
   combatantsWithoutDamage,
   combatRolls,
-  (combatants, rolls) => _casualties(combatants, rolls)
+  _casualties
 )
 
 export const rollCount = createSelector(
