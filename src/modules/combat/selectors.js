@@ -18,6 +18,7 @@ import {
   attacks,
   defend, 
   idsToUnits, 
+  noAA,
   survivors,
   willDogfight,
   withAttack, 
@@ -76,12 +77,16 @@ const dogfightCombatants = (attackers, defenders, dogfighters) => (
   }
 )
 
+const withFlakVsAir = (defenders, attackers) => (
+  attackers.some(air) ? defenders : defenders.filter(noAA)
+)
+
 export const preCasualtyCombatants = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
   dogfightIds,
   ({ attackers, defenders }, bombardingUnits, dogfighters) => (
-    dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
+    console.log({ defenders }) || dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
     { 
       attackers: modify(attackers), 
       defenders: defenders.map(withDefend), 

@@ -20,7 +20,7 @@ export const combineUnits = (total, unit) => {
 }
 
 export const attack = unit => unitTypes[unit.type].attack
-export const defend = unit => unitTypes[unit.type].defend
+export const defend = unit => unitTypes[unit.type].defend || unitTypes[unit.type].flak
 export const land =   unit => unitTypes[unit.type].land
 export const landingSlots = unit => unitTypes[unit.type].landingSlots
 export const movement = unit => unitTypes[unit.type].movement
@@ -31,6 +31,7 @@ export const bombCapacity = unit => unitTypes[unit.type].bomber ? attacks(unit) 
 const isStrategic = unit => unit.type.includes('strategic')
 export const willDogfight = unit => air(unit) && !isStrategic(unit)
 const dogfight = unit => isStrategic(unit) ? 1 : 3
+export const noAA = unit => !unit.type === 'anti-aircraft gun'
     
 export const withAttack = unit => ({ ...unit, attack: attack(unit) })
 export const withDefend = unit => ({ ...unit, defend: defend(unit) })
