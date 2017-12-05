@@ -1,9 +1,9 @@
 import { actionTypes } from 'react-redux-firebase'
-import { dehydrate } from '../lib/Parser'
+//import { dehydrate } from '../lib/Parser'
 import Board from '../config/startingBoard'
 
 export const updateBoardString = (currentBoard) => {
-  return dehydrate(currentBoard)
+  //return dehydrate(currentBoard)
 }
 
 export const boardString = (state = Board, action) => {
