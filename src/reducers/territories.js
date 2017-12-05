@@ -23,7 +23,7 @@ const territories = (state = [], action) => {
     return state.map(mapping(territoryIndex, t => ({ ...t, unitIds: t.unitIds.filter(id => !casualties.includes(id)) }))) 
   }
   case WIN_ATTACK: {
-    const { conqueringPower, attackerIds, defenderIds, airUnits, casualties } = action
+    const { conqueringPower, attackerIds, airUnits, casualties } = action
     const callback = territory => {
       const currentPower = conqueringPower || territory.currentPower
       //TODO: should not include air
