@@ -28,7 +28,7 @@ export const getFill = createSelector(
       if (original_power === currentPower){
         return `url(#${original_power.toLowerCase()}_convoy)`
       } else {
-        return 'none' //TODO: Needs to be convoy in distress image
+        return `url(#${original_power.toLowerCase()}_distress_convoy)`
       }
     } else {
       return 'none'

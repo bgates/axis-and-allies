@@ -4,8 +4,11 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import CombatModal from './CombatModal'
 import { BombardmentContainer } from '../bombardment'
-import { VIEW_BOMBARDMENT_OPTIONS, COMBAT_UNDERWAY } from '../../actions'
-
+import { 
+  VIEW_BOMBARDMENT_OPTIONS, 
+  CONQUER_UNDEFENDED,
+  COMBAT_UNDERWAY 
+} from '../../actions'
 import { 
   allowRetreat,
   getAttackerCasualties, 
@@ -40,15 +43,26 @@ const markCombatUnderway = (territoryIndex, transportIds, bombardmentIds, unitId
   }
 )
 
+const conquerUndefended = (unitDestination, currentPower) => (
+  {
+    type: CONQUER_UNDEFENDED,
+    unitDestination,
+    currentPower
+  }
+)
+
 const selectBattle = () => dispatch => dispatch(push(PATHS.RESOLVE_COMBAT))
 
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
-    const { amphib, transport, bombardment } = state
+    const { amphib, transport, bombardment, conquered, unitDestination } = state
     const transportIds = amphib.territory[territoryIndex] || []
     const transportedBy = transportIds.reduce((all, id) => (transport.transporting[id] || []).concat(all), [])
     const bombardmentIds = bombardment.targetTerritories[territoryIndex]
+    if (Object.keys(conquered).length === 0) {
+      dispatch(conquerUndefended(unitDestination, getCurrentPowerName(state)))
+    }
     dispatch(markCombatUnderway(territoryIndex, transportIds, bombardmentIds, transportedBy))
     dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
     const rolls = dice(rollCount(getState()))
