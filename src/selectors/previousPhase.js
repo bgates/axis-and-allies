@@ -1,10 +1,21 @@
 import { createSelector } from 'reselect'
-import { getPhase, getPurchases, getResearch } from './stateSlices'
+import { 
+  getFlights,
+  getPhase, 
+  getPurchases, 
+  getResearch 
+} from './stateSlices'
 import { getCurrentPower } from './getCurrentPower'
 import { isCombat } from '../modules/territory'
 import { hasDamagedShipsInHarbor } from '../modules/repair'
 import { currentPowerHasRockets } from '../modules/research'
 import PATHS from '../paths'
+
+export const noCombat = state => {
+  const { unitDestination, amphib } = state
+  return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
+         Object.keys(amphib.territory).find(index => isCombat(state, index)))
+}
 
 const beforePurchase = ({ minimum }, hasRockets) => {
   if (minimum.includes(PATHS.ROCKET_RESULTS)) {
@@ -22,6 +33,16 @@ const beforePlanAttacks = ({ name }) => (
   name === 'US' ? PATHS.LEND_LEASE : name === 'China' ? 'start' : PATHS.INCOME
 )
 
+const beforePlanMovement = ({ name }, flights, noCombat) => {
+  if (Object.keys(flights).length) {
+    return name === 'USSR' ? 'russian-winter' : PATHS.LAND_PLANES
+  } else if (noCombat) {
+    return PATHS.PLAN_ATTACKS
+  } else {
+    return PATHS.RESOLVE_COMBAT
+  }
+}
+
 const canPlace = createSelector(
   getCurrentPower,
   getPurchases,
@@ -32,8 +53,10 @@ export const previousPhase = createSelector(
   getCurrentPower,
   currentPowerHasRockets,
   hasDamagedShipsInHarbor,
+  getFlights,
+  noCombat,
   getPhase,
-  (currentPower, hasRockets, hasDamagedShips, phase) => {
+  (currentPower, hasRockets, hasDamagedShips, flights, noCombat, phase) => {
     const phases = {
       [PATHS.REPAIR]: () => 'start',
       [PATHS.RESEARCH]: () => hasDamagedShips ? PATHS.REPAIR : 'start',
@@ -47,7 +70,7 @@ export const previousPhase = createSelector(
       [PATHS.RESOLVE_COMBAT]: () => PATHS.PLAN_ATTACKS,
       [PATHS.LAND_PLANES]: () => PATHS.RESOLVE_COMBAT,
       'russian-winter': () => PATHS.LAND_PLANES,
-      [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.LAND_PLANES,
+      [PATHS.PLAN_MOVEMENT]: () => beforePlanMovement(currentPower, flights, noCombat),
       [PATHS.PLACE_UNITS]: () => PATHS.PLAN_MOVEMENT,
       'carrier-loading': () => PATHS.PLACE_UNITS, //assuming units placed, otherwise movement
       [PATHS.ORDER_UNITS]: () => 'carrier-loading', //if naval planes purchased & carriers available, otherwise placement or movement
@@ -68,12 +91,6 @@ const afterResearch = (hasRockets, { attempts } = {}) => (
 const afterOrder = () => (
   PATHS.CONFIRM_FINISH //'carrier-loading', //if naval planes purchased & carriers available, otherwise placement
 )
-
-export const noCombat = state => {
-  const { unitDestination, amphib } = state
-  return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
-         Object.keys(amphib.territory).find(index => isCombat(state, index)))
-}
 
 export const nextPhase = createSelector(
   getCurrentPower,
