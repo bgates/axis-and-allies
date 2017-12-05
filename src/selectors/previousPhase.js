@@ -65,6 +65,10 @@ const afterResearch = (hasRockets, { attempts } = {}) => (
   attempts ? PATHS.RESEARCH_RESULTS : hasRockets ? PATHS.ROCKETS : PATHS.PURCHASE
 )
 
+const afterOrder = () => (
+  PATHS.CONFIRM_FINISH //'carrier-loading', //if naval planes purchased & carriers available, otherwise placement
+)
+
 export const noCombat = state => {
   const { unitDestination, amphib } = state
   return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
@@ -94,9 +98,9 @@ export const nextPhase = createSelector(
       'russian-winter': () => PATHS.PLAN_MOVEMENT,
       [PATHS.PLAN_MOVEMENT]: () => PATHS.PLACE_UNITS,
       [PATHS.PLACE_UNITS]: () => PATHS.PLAN_MOVEMENT,
-      'carrier-loading': () => PATHS.PLACE_UNITS, //assuming units placed, otherwise movement
-      [PATHS.ORDER_UNITS]: () => 'carrier-loading', //if naval planes purchased & carriers available, otherwise placement or movement
-      [PATHS.CONFIRM_FINISH]: () => PATHS.ORDER_UNITS
+      [PATHS.ORDER_UNITS]: () => afterOrder(),
+      'carrier-loading': () => PATHS.CONFIRM_FINISH, //assuming units placed, otherwise movement
+      [PATHS.CONFIRM_FINISH]: () => 'start'
     }
     return (phases[phase.current] && phases[phase.current]()) || 'start'
   }
