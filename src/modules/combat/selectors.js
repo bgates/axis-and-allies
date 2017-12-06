@@ -136,25 +136,35 @@ const defendsAt = n => unit => defend(unit) === n
 const totalAttacks = (total, unit) => total + attacks(unit)
 const totalDefends = (total, unit) => total + 1
 
+const getFlak = (rolls, defenders, n) => (
+  rolls.reduce((total, roll, i) => (
+    total + (AA(defenders[i]) && roll <= n) ? 1 : 0
+  ), 0)
+)
+
+const rollsAtN = (collection, n, attackers, defenders, rolls) => {
+  const attackRolls = attackers
+    .filter(attacksAt(n))
+    .reduce(totalAttacks, 0)
+  collection.attackers[n] = rolls.splice(0, attackRolls)
+  const defendsAtN = defenders.filter(defendsAt(n)) 
+  const defendRolls = defendsAtN.reduce(totalDefends, 0)
+  collection.defenders[n] = rolls.splice(0, defendRolls)
+  if (defendsAtN.filter(AA).length) {
+    const flak = getFlak(collection.defenders[n], defendsAtN, n)
+    collection.flak = Math.min(attackers.filter(air).length, flak)
+  }
+  return collection
+}
+
 const arrangeRolls = (combatants, strengths, allRolls = {}) => {
   const rolls = allRolls[PATHS.COMBAT_ROLLS] || []
   const { attackers, defenders, bombardingUnits } = combatants
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   let rollClone = rolls.slice(0)
-  return strengths.reduce((rollsByStrength, n) => {
-    const attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalAttacks, 0)
-    rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
-    const defendsAtN = defenders.filter(defendsAt(n)) 
-    let defendRolls = defendsAtN.reduce(totalDefends, 0)
-    rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
-    if (defendsAtN.filter(AA).length) {
-      const flak = rollsByStrength
-        .defenders[n]
-        .reduce((total, roll, i) => total + (AA(defendsAtN[i]) && roll <= n) ? 1 : 0, 0)
-      rollsByStrength.flak = Math.min(attackers.filter(air).length, flak)
-    }
-    return rollsByStrength
-  }, { attackers: [], defenders: [] })
+  return strengths.reduce((rollsByStrength, n) => (
+    rollsAtN(rollsByStrength, n, supportedAttackers, defenders, rollClone)
+  ), { attackers: [], defenders: [] })
 }
 
 export const combatRolls = createSelector(
@@ -172,7 +182,12 @@ const hits = (rolls, side) => {
 
 export const attackerCasualtyCount = createSelector(
   combatRolls,
-  (rolls) => hits(rolls, 'defenders')
+  rolls => hits(rolls, 'defenders')
+)
+
+export const airCasualtyCount = createSelector(
+  combatRolls,
+  rolls => rolls.flak || 0
 )
 
 const byDefense = (a, b) => defend(a) - defend(b)
