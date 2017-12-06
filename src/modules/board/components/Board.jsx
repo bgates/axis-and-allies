@@ -1,14 +1,14 @@
-import React from 'react';
+import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { PowersContainer } from '../../powers';
-import Territories from './Territories';
-import PATHS from '../../../paths';
+import { PowersContainer } from '../../powers'
+import Territories from './Territories'
+import PATHS from '../../../paths'
 
-const paths = Object.values(PATHS);
+const paths = Object.values(PATHS)
 
 const BoardWithRedirect = (props) => {
-  const currentPath = props.router.location.pathname.replace('/', '') || 'start'
-  const minPath = props.phase.minimum.replace('/', '')
+  const currentPath = props.router.location.pathname || '/start'
+  const minPath = props.phase.minimum
   const FirstViewableComponent = (routeProps) => {
     if (paths.indexOf(minPath) <= paths.indexOf(currentPath)) {
       return <Board {...props} {...routeProps} /> 
