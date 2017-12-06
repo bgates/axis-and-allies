@@ -9,9 +9,7 @@ import {
   getDogfights, 
   getRolls 
 } from '../../selectors/stateSlices'
-import { 
-  getFocusTerritory, 
-} from '../../selectors/getTerritory'
+import { getFocusTerritory } from '../../selectors/getTerritory'
 import { 
   air,
   attack, 
@@ -89,7 +87,7 @@ export const preCasualtyCombatants = createSelector(
     dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
     { 
       attackers: modify(attackers), 
-      defenders: defenders.map(withDefend), 
+      defenders: withFlakVsAir(defenders, attackers).map(withDefend), 
       bombardingUnits
     }
   )
@@ -142,14 +140,13 @@ const arrangeRolls = (combatants, strengths, allRolls = {}) => {
   const { attackers, defenders, bombardingUnits } = combatants
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   let rollClone = rolls.slice(0)
-  const rollsByStrength = { attackers: [], defenders: [] }
-  strengths.forEach(n => {
+  return strengths.reduce((rollsByStrength, n) => {
     let attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalAttacks, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
     let defendRolls = defenders.filter(defendsAt(n)).reduce(totalDefends, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
-  })
-  return rollsByStrength
+    return rollsByStrength
+  }, { attackers: [], defenders: [] })
 }
 
 export const combatRolls = createSelector(
