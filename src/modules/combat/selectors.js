@@ -11,6 +11,7 @@ import {
 } from '../../selectors/stateSlices'
 import { getFocusTerritory } from '../../selectors/getTerritory'
 import { 
+  AA,
   air,
   attack, 
   attacks,
@@ -141,10 +142,17 @@ const arrangeRolls = (combatants, strengths, allRolls = {}) => {
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]
   let rollClone = rolls.slice(0)
   return strengths.reduce((rollsByStrength, n) => {
-    let attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalAttacks, 0)
+    const attackRolls = supportedAttackers.filter(attacksAt(n)).reduce(totalAttacks, 0)
     rollsByStrength.attackers[n] = rollClone.splice(0, attackRolls)
-    let defendRolls = defenders.filter(defendsAt(n)).reduce(totalDefends, 0)
+    const defendsAtN = defenders.filter(defendsAt(n)) 
+    let defendRolls = defendsAtN.reduce(totalDefends, 0)
     rollsByStrength.defenders[n] = rollClone.splice(0, defendRolls)
+    if (defendsAtN.filter(AA).length) {
+      const flak = rollsByStrength
+        .defenders[n]
+        .reduce((total, roll, i) => total + (AA(defendsAtN[i]) && roll <= n) ? 1 : 0, 0)
+      rollsByStrength.flak = Math.min(attackers.filter(air).length, flak)
+    }
     return rollsByStrength
   }, { attackers: [], defenders: [] })
 }
