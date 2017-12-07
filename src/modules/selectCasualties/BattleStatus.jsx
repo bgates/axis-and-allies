@@ -5,12 +5,14 @@ const BattleStatus = ({
   dogfight,
   casualtyCount, 
   defenderCasualtiesCount,
+  airCasualties,
   casualties, 
   nextStep,
   territoryIndex
 }) => {
   let disabled, span = '', btn = 'Continue'
-  if (!casualtyCount && !defenderCasualtiesCount) {
+  const { all, air } = casualtyCount
+  if (!all && !defenderCasualtiesCount) {
     span = 'Everybody missed!'
   } else {
     if (victor === 'defender') {
@@ -19,14 +21,17 @@ const BattleStatus = ({
       span = 'Defenders lose! '
     } 
     if (victor !== 'defender') {
-      const count = casualtyCount - casualties.length
-      const casualtyWord = casualtyCount === 1 ? 'casualty' : 'casualties'
+      const count = all - casualties.length
+      const casualtyWord = count === 1 ? 'casualty' : 'casualties'
       if (count) {
         span += `Mark ${count} ${casualtyWord}.`
+        if (air) {
+          span += ` At least ${air} must be air units due to anti-aircraft hits.`
+        }
       } else {
         span += 'Click `Remove Casualties`.'
       }
-      disabled = casualties.length < casualtyCount
+      disabled = casualties.length < all || airCasualties < air
       btn = 'Remove Casualties'
     }
   }

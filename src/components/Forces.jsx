@@ -9,7 +9,7 @@ const Forces = ({ units, classNameFct, handleClick }) => {
           key={id} 
           power={power} 
           className={classNameFct(id)}
-          handleClick={handleClick(id)}
+          handleClick={handleClick(id, type)}
           name={type} />
         ))
       }

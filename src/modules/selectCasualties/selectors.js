@@ -1,14 +1,42 @@
 import { createSelector } from 'reselect'
-import { getAttackerCasualties, getDogfights, getFlights } from '../../selectors/stateSlices'
 import { 
+  getAllUnits,
+  getAttackerCasualties, 
+  getDogfights, 
+  getFlights 
+} from '../../selectors/stateSlices'
+import { getFocusTerritory } from '../../selectors/getTerritory'
+import { air, land, idsToUnits } from '../../selectors/units'
+import { 
+  airCasualtyCount,
   attackerCasualtyCount,
   preCasualtyCombatants as combatants, 
   defenderCasualties, 
+  strengths,
 } from '../combat'
-import { getFocusTerritory } from '../../selectors/getTerritory'
-import { land } from '../../selectors/units'
+import { noCombat } from '../board'
+import { planesInAir } from '../landPlanes'
+import { bombRaid, isBombed, isCombat } from '../territory'
 import unitTypes from '../../config/unitTypes'
-export { getAttackerCasualties, getFlights, getFocusTerritory, combatants }
+export { 
+  defenderCasualties,
+  getAttackerCasualties, 
+  getFlights, 
+  getFocusTerritory, 
+  combatants,
+  strengths,
+  planesInAir,
+  bombRaid,
+  isBombed,
+  isCombat,
+  noCombat,
+}
+
+export const casualtyCount = createSelector(
+  airCasualtyCount,
+  attackerCasualtyCount,
+  (air, all) => ({ air, all })
+)
 
 const multiplier = (unit, side) => (
   unitTypes[unit.type].canTakeDamage ? 2 : unitTypes[unit.type][side] ? 1 : 0
@@ -59,4 +87,10 @@ export const isConquered = createSelector(
     attackers.filter(idNotIn(attackerCasualties))
       .filter(land).length
   )
+)
+
+export const airCasualties = createSelector(
+  getAttackerCasualties, 
+  getAllUnits,
+  (ids, units) => idsToUnits(ids, units).filter(air).length
 )

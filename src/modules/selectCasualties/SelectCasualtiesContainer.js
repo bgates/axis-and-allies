@@ -2,10 +2,10 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
-import { planesInAir } from '../landPlanes'
-import { bombRaid, isBombed, isCombat } from '../territory'
-
 import { 
+  airCasualties,
+  casualtyCount,
+  defenderCasualties,
   getFocusTerritory, 
   getAttackerCasualties, 
   getFlights,
@@ -13,14 +13,14 @@ import {
   victor, 
   attackDefeated,
   isConquered,
-  isDogfight
+  isDogfight,
+  planesInAir,
+  bombRaid,
+  isBombed,
+  isCombat,
+  noCombat,
+  strengths,
 } from './selectors'
-import { noCombat } from '../board'
-import { 
-  strengths, 
-  defenderCasualties, 
-  attackerCasualtyCount 
-} from '../combat'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
   resolveCombat, 
@@ -36,7 +36,8 @@ const mapStateToProps = (state) => ({
   strengths: strengths(state),
   defenderCasualties: defenderCasualties(state),
   attackerCasualties: getAttackerCasualties(state),
-  attackerCasualtyCount: attackerCasualtyCount(state),
+  airCasualties: airCasualties(state),
+  casualtyCount: casualtyCount(state),
   attackDefeated: attackDefeated(state),
   victor: victor(state),
   conquered: isConquered(state)
