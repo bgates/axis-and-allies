@@ -1,5 +1,6 @@
 import CombatContainer from './CombatContainer'
 import { 
+  airCasualtyCount,
   attackerCasualtyCount, 
   combatants, 
   combatRolls, 
@@ -9,6 +10,7 @@ import {
 } from './selectors'
 export { 
   CombatContainer, 
+  airCasualtyCount,
   attackerCasualtyCount, 
   combatants, 
   combatRolls, 

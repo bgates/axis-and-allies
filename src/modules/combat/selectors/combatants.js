@@ -11,9 +11,6 @@ import {
 import { getFocusTerritory } from '../../../selectors/getTerritory'
 import { 
   air,
-  attack, 
-  attacks,
-  defend, 
   idsToUnits, 
   noAA,
   survivors,
