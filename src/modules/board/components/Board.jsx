@@ -4,16 +4,20 @@ import { PowersContainer } from '../../powers'
 import Territories from './Territories'
 import PATHS from '../../../paths'
 
-const paths = Object.values(PATHS)
+const mayAdvance = (minimum, current = '/start') => {
+  const paths = Object.values(PATHS)
+  return paths.indexOf(minimum) <= paths.indexOf(current) || 
+    (minimum === PATHS.COMBAT_ROLLS && [PATHS.RESOLVE_COMBAT].includes(current))
+}
 
 const BoardWithRedirect = (props) => {
-  const currentPath = props.router.location.pathname || '/start'
-  const minPath = props.phase.minimum
+  const { pathname } = props.router.location
+  const { minimum } = props.phase
   const FirstViewableComponent = (routeProps) => {
-    if (paths.indexOf(minPath) <= paths.indexOf(currentPath)) {
+    if (mayAdvance(minimum, pathname)) {
       return <Board {...props} {...routeProps} /> 
     } else {
-      return <Redirect to={minPath} />
+      return <Redirect to={minimum} />
     } 
   }
   
