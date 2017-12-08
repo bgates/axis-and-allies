@@ -14,25 +14,23 @@ export const canMakeJets = createSelector(
   ({ name }) => ['Germany', 'US', 'USSR'].includes(name)
 )
 
-const allowedFor = name => tech => {
+const allowedFor = name => ({ abbr })=> {
   if (['Germany', 'UK', 'US'].includes(name)) {
     return true
   } else if (name === 'USSR') {
-    return ['jets', 'heavyBomber', 'radar', 'longRange'].includes(tech)
+    return ['jets', 'heavyBomber', 'radar', 'longRange'].includes(abbr)
   } else if (name === 'Japan') {
-    return tech !== 'rockets'
+    return abbr !== 'rockets'
   }
 }
 
 export const allowedTech = createSelector(
   getCurrentPower,
   ({ name }) => (
-    Object.keys(researchOptions)
-      .filter(allowedFor(name))
-      .reduce((allowed, tech) => {
-        allowed[tech] = researchOptions[tech]
-        return allowed
-      }, {})
+    { 
+      cost: researchOptions.cost,
+      availableTech: researchOptions.availableTech.filter(allowedFor(name))
+    }
   )
 )
 
