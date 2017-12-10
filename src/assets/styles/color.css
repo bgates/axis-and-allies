@@ -10,11 +10,17 @@ span.germany {
 .germany:hover {
   fill: #678a74;
 }
+path.germany.winter {
+  fill: #c7d1cb;
+}
 
 .ussr {
   fill: #bc0000;
   background: #bc0000;
   color: #fff;
+}
+path.ussr.winter {
+  fill: #ffe5e5;
 }
 
 .ussr:hover {
@@ -24,6 +30,9 @@ span.germany {
 .japan {
   fill: #ffd700;
   background: #ffd700;
+}
+path.japan.winter {
+  fill: #fff4b3;
 }
 
 .japan:hover {
@@ -45,6 +54,9 @@ span.germany {
   fill: #152039;
   background: #152039;
   color: #fff;
+}
+path.italy.winter {
+  fill: #dae1f1;
 }
 
 .italy:hover {
