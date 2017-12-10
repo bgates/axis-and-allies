@@ -16,6 +16,7 @@ const PATHS = {
   SELECT_CASUALTIES: '/select-casualties',
   LAND_PLANES: '/land-planes',
   PLAN_MOVEMENT: '/plan-movement',
+  RUSSIAN_WINTER: '/russian-winter',
   PLACE_UNITS: '/place-units',
   ORDER_UNITS: '/order-units',
   CONFIRM_FINISH: '/confirm-finish'

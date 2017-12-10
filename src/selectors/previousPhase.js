@@ -69,8 +69,8 @@ export const previousPhase = createSelector(
       [PATHS.PLAN_ATTACKS]: () => beforePlanAttacks(currentPower),
       [PATHS.RESOLVE_COMBAT]: () => PATHS.PLAN_ATTACKS,
       [PATHS.LAND_PLANES]: () => PATHS.RESOLVE_COMBAT,
-      'russian-winter': () => PATHS.LAND_PLANES,
       [PATHS.PLAN_MOVEMENT]: () => beforePlanMovement(currentPower, flights, noCombat),
+      'russian-winter': () => PATHS.PLAN_MOVEMENT,
       [PATHS.PLACE_UNITS]: () => PATHS.PLAN_MOVEMENT,
       'carrier-loading': () => PATHS.PLACE_UNITS, //assuming units placed, otherwise movement
       [PATHS.ORDER_UNITS]: () => 'carrier-loading', //if naval planes purchased & carriers available, otherwise placement or movement
@@ -111,10 +111,10 @@ export const nextPhase = createSelector(
       [PATHS.INCOME]: () => currentPower.name === 'US' ? PATHS.LEND_LEASE : PATHS.PLAN_ATTACKS,
       [PATHS.LEND_LEASE]: () => PATHS.PLAN_ATTACKS,
       [PATHS.PLAN_ATTACKS]: () => noCombat ? PATHS.PLAN_MOVEMENT : PATHS.RESOLVE_COMBAT,
-      [PATHS.LAND_PLANES]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLAN_MOVEMENT,
-      'russian-winter': () => PATHS.PLAN_MOVEMENT,
-      [PATHS.PLAN_MOVEMENT]: () => PATHS.PLACE_UNITS,
-      [PATHS.PLACE_UNITS]: () => PATHS.PLAN_MOVEMENT,
+      [PATHS.LAND_PLANES]: () => PATHS.PLAN_MOVEMENT,
+      [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLACE_UNITS,
+      'russian-winter': () => PATHS.PLACE_UNITS,
+      [PATHS.PLACE_UNITS]: () => PATHS.ORDER_UNITS,
       [PATHS.ORDER_UNITS]: () => afterOrder(),
       'carrier-loading': () => PATHS.CONFIRM_FINISH, //assuming units placed, otherwise movement
       [PATHS.CONFIRM_FINISH]: () => 'start'

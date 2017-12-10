@@ -63,6 +63,9 @@ export const COMBAT = 'COMBAT';
 
 export const RESET = 'RESET'
 
+export const START_RUSSIAN_WINTER = 'START_RUSSIAN_WINTER'
+export const END_RUSSIAN_WINTER = 'END_RUSSIAN_WINTER'
+
 export const dogfight = (territoryIndex) => ({ type: DOGFIGHT, territoryIndex })
 
 export const resolveCombat = (territoryIndex) => ({ type: RESOLVE_COMBAT, territoryIndex })
