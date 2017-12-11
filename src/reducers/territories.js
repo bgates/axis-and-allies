@@ -31,16 +31,17 @@ const territories = (state = [], action) => {
     }
     return state.map(mapping(territoryIndex, callback))
   }
-  //TODO: this doesn't take plane landing into account
   case NEXT_TURN: {
-    const { unitOrigin, unitDestination, idsByTerritoryIndex } = action
+    const { unitOrigin, unitDestination, idsByTerritoryIndex, landPlanes } = action
     return state.map((territory, index) => {
       const outboundUnits = unitOrigin[index] || []
       const inboundUnits = unitDestination[index] || []
       const newUnits = idsByTerritoryIndex[index] || []
+      const landingUnits = Object.keys(landPlanes).filter(id => landPlanes[id] === index)
       const unitIds = territory.unitIds
                         .filter(id => !outboundUnits.includes(id))
-                        .concat(inboundUnits)
+                        .concat(inboundUnits.filter(id => !landPlanes[id]))
+                        .concat(landingUnits)
                         .concat(newUnits)
       return { ...territory, unitIds }
     })

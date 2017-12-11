@@ -40,10 +40,10 @@ const idsAndUnits = (placement, power) => {
 
 const endCurrentTurn = (dispatch, getState) => {
   const state = getState()
-  const { currentPowerIndex, income, placement, unitOrigin, unitDestination } = state
+  const { currentPowerIndex, income, placement, unitOrigin, unitDestination, landPlanes } = state
   const currentPower = getCurrentPowerName(state)
   const { newUnits, idsByTerritoryIndex }= idsAndUnits(placement, currentPower)
-  dispatch({ type: NEXT_TURN, currentPowerIndex, income, unitOrigin, unitDestination, newUnits, idsByTerritoryIndex })
+  dispatch({ type: NEXT_TURN, currentPowerIndex, income, unitOrigin, unitDestination, newUnits, idsByTerritoryIndex, landPlanes })
 }
 
 export const nextTurn = () => (
