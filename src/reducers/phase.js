@@ -14,7 +14,8 @@ import {
   VIEW_PLANE_LANDING_OPTIONS,
   SELECT_PLANE_LANDING_TERRITORY,
   CONFIRM_LAND_PLANES,
-  ORDER_UNITS
+  ORDER_UNITS,
+  NEXT_TURN
 } from '../actions'
 
 const currentWithout = (state, current, ...deletedProps) => {
@@ -25,11 +26,12 @@ const currentWithTerritory = (state, current, territoryIndex) => (
   { ...state, current, territoryIndex }
 )
 
-const phase = (state = { current: 'start', minimum: 'start' }, action) => {
+const origin = { current: 'start', minimum: 'start' }
+const phase = (state = origin, action) => {
   switch (action.type) {
   case '@@router/LOCATION_CHANGE': {
-    const { pathname } = action.payload.location;
-    const current = pathname === '/' ? 'start' : pathname;
+    const { pathname } = action.payload.location
+    const current = pathname === '/' ? 'start' : pathname
     return { ...state, current }
   }
   case ROLLS: {
@@ -74,6 +76,9 @@ const phase = (state = { current: 'start', minimum: 'start' }, action) => {
   }
   case ORDER_UNITS: {
     return currentWithout(state, 'order-units', 'territory')
+  }
+  case NEXT_TURN: {
+    return origin
   }
   default:
     return state
