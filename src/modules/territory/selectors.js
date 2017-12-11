@@ -83,7 +83,7 @@ export const getClasses = createSelector(
   getFlights,
   getLandingPlanes,
   (state, index) => index,
-  (currentPower, territory, { sea }, phase, amphib, unitDestination, flightDistance, landings, territoryIndex) => {
+  (currentPower, territory, { sea, original_power }, phase, amphib, unitDestination, flightDistance, landings, territoryIndex) => {
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
@@ -93,6 +93,7 @@ export const getClasses = createSelector(
     const hasCombat = hasAttackers && territory.unitIds.length
     return classNames({
       convoy: isConvoy(sea, territoryPower),
+      winter: !sea && original_power === 'USSR',
       [territoryPower.toLowerCase()]: isOcean || isControlled,
       active: isActive(phase, hasAttackers, movedIds, flightDistance, landings),
       'active-combat': phase === RESOLVE_COMBAT && hasCombat && territoryPower !== currentPower,
