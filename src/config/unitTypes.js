@@ -174,27 +174,6 @@ const unitTypes = {
     air: true,
     tech: ['jets']
   },
-  'long-range jet fighter': { 
-    name: 'long-range jet fighter', 
-    cost: 14, 
-    movement: 6, 
-    attack: 3, 
-    defend: 5, 
-    fighter: true, 
-    air: true,
-    tech: ['longRange', 'jets']
-  },
-  'strategic heavy bomber': { 
-    name: 'strategic heavy bomber', 
-    cost: 16, 
-    movement: 6, 
-    attack: 4, 
-    defend: 1, 
-    numAttack: 2, 
-    bomber: true, 
-    air: true,
-    tech: ['heavyBomber']
-  },
   'long-range strategic heavy bomber': { 
     name: 'long-range strategic heavy bomber', 
     cost: 18, 
@@ -213,6 +192,46 @@ const unitTypes = {
     ship: true,
     attack: 3, 
     defend: 1, tech: ['subs']
+  },
+  'naval fighter': { 
+    name: 'naval fighter', 
+    cost: 11, 
+    movement: 4, 
+    attack: 3, 
+    defend: 4, 
+    fighter: true,
+    air: true,
+    navalRated: true
+  },
+  'long-range naval fighter': { 
+    name: 'long-range naval fighter', 
+    cost: 12, 
+    movement: 6, 
+    attack: 3, 
+    defend: 4, 
+    fighter: true, 
+    air: true,
+    navalRated: true,
+    tech: ['longRange']
+  },
+  'naval tactical bomber': { 
+    name: 'naval tactical bomber', 
+    cost: 12, 
+    movement: 4, 
+    attack: 4, 
+    defend: 2,
+    navalRated: true,
+    air: true
+  },
+  'long-range naval tactical bomber': { 
+    name: 'long-range naval tactical bomber', 
+    cost: 13, 
+    movement: 6, 
+    attack: 4, 
+    defend: 2, 
+    air: true,
+    navalRated: true,
+    tech: ['longRange'] 
   },
 }
 
