@@ -33,8 +33,8 @@ const unitTypes = {
     bomber: true,
     air: true
   },
-  'anti-aircraft gun': { 
-    name: 'anti-aircraft gun', 
+  'antiaircraft gun': { 
+    name: 'antiaircraft gun', 
     cost: 6, 
     movement: 1, 
     range: 3, 

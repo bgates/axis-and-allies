@@ -26,7 +26,7 @@ const BattleStatus = ({
       if (count) {
         span += `Mark ${count} ${casualtyWord}.`
         if (air) {
-          span += ` At least ${air} must be air units due to anti-aircraft hits.`
+          span += ` At least ${air} must be air units due to antiaircraft hits.`
         }
       } else {
         span += 'Click `Remove Casualties`.'
