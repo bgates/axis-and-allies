@@ -4,7 +4,15 @@ import { Link } from 'react-router-dom'
 import { partial } from 'ramda'
 import '../../assets/styles/research.css'
 
-const ResearchModal = ({ canMakeJets, currentPower, research, setTech, incrementResearch, decrementResearch, hasRockets, attemptResearch }) => {
+const ResearchModal = ({ 
+  currentPower, 
+  research, 
+  setTech, 
+  incrementResearch, 
+  decrementResearch, 
+  hasRockets, 
+  attemptResearch 
+}) => {
   let { cost, attempts, selectedTech, availableTech } = research
   return (
     <div>
@@ -47,12 +55,13 @@ const Technology = ({ tech, setTech, developedTech }) => {
     <li>
       <button 
         className={tech.abbr} 
-        disabled={developedTech.includes(tech.name)}
+        disabled={developedTech.includes(tech.abbr)}
         onClick={partial(setTech, [tech.name])}>
         <i></i>
         {tech.name}
       </button> 
       {tech.text}
+      {developedTech.includes(tech.abbr) ? <span className="developed"> Developed</span> : ''}
     </li>
   )
 }

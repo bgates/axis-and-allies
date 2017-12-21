@@ -14,22 +14,22 @@ export const canMakeJets = createSelector(
   ({ name }) => ['Germany', 'US', 'USSR'].includes(name)
 )
 
-const allowedFor = name => ({ abbr })=> {
-  if (['Germany', 'UK', 'US'].includes(name)) {
-    return true
-  } else if (name === 'USSR') {
+const allowedFor = currentPower => ({ abbr })=> {
+  if (['Germany', 'UK', 'US'].includes(currentPower.name)) {
+    return abbr !== 'heavyBomber' || currentPower.tech.includes('longRange')
+  } else if (currentPower.name === 'USSR') {
     return ['jets', 'heavyBomber', 'radar', 'longRange'].includes(abbr)
-  } else if (name === 'Japan') {
+  } else if (currentPower.name === 'Japan') {
     return abbr !== 'rockets'
   }
 }
 
 export const allowedTech = createSelector(
   getCurrentPower,
-  ({ name }) => (
+  currentPower => (
     { 
       cost: researchOptions.cost,
-      availableTech: researchOptions.availableTech.filter(allowedFor(name))
+      availableTech: researchOptions.availableTech.filter(allowedFor(currentPower))
     }
   )
 )

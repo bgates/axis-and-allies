@@ -1,7 +1,11 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { getCurrentPower, research, currentPowerHasRockets, canMakeJets } from './selectors'
+import { 
+  getCurrentPower, 
+  research, 
+  currentPowerHasRockets
+} from './selectors'
 import researchOptions from '../../config/research'
 import dice from '../../lib/numericalDieRolls'
 import ResearchModal from './ResearchModal'
@@ -17,7 +21,6 @@ import PATHS from '../../paths'
 
 const mapStateToProps = (state) => {
   return {
-    canMakeJets: canMakeJets(state),
     currentPower: getCurrentPower(state),
     hasRockets: currentPowerHasRockets(state),
     research: research(state)

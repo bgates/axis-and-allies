@@ -19,7 +19,7 @@ export const flags = {
 export default [
   {name: 'Germany', ipc: 56, tech: []},
   {name: 'USSR', ipc: 46, tech: []},
-  {name: 'Japan', ipc: 41, tech: []},
+  {name: 'Japan', ipc: 41, tech: ['longRange']},
   {name: 'UK', ipc: 70, tech: []},
   {name: 'Italy', ipc: 27, tech: []},
   {name: 'US', ipc: 67, tech: []},
