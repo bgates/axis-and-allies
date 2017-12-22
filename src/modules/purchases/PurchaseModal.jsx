@@ -6,7 +6,7 @@ import PATHS from '../../paths'
 
 const PurchaseModal = ({ budget, buildableUnits, purchases, total, increment, decrement, previous, currentPower }) => {
   return (
-    <div>
+    <div style={{ minHeight: 580 }}>
       <a data-tip className="help">?</a>
       <h1>Make Purchases</h1>
       <ReactTooltip place="bottom">
@@ -14,40 +14,42 @@ const PurchaseModal = ({ budget, buildableUnits, purchases, total, increment, de
         <p>You may place new sea units in a sea zone you capture this turn. However, if you fail to capture the sea zone and there are no other friendly sea zones next to one of your industrial complexes, you will lose the new sea units and not get a refund.</p>
         <p>A territory cannot have more than one antiaircraft gun. Therefore, if you purchase antiaircraft guns but at the end of your turn all your territories with an industrial complex already have an antiaircraft gun (due to failure to capture an adjacent territory, or a transport ship was sunk, etc.), you will lose the new antiaircraft guns and not get a refund, even if you also bought a transport ship you could put one on.</p>
       </ReactTooltip>
-      <table 
-        className="outer purchase"
-        cellSpacing={0} 
-        cellPadding={1}>
-        <thead>
+      <div className="purchases">
+        <table 
+          className="outer purchase"
+          cellSpacing={0} 
+          cellPadding={1}>
+          <thead>
+            <tr>
+              <th colSpan={2}>Unit</th>
+              <th>Movement</th>
+              <th>Attack</th>
+              <th>Defend</th>
+              <th>Cost</th>
+              <th colSpan={3}>Number</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            {buildableUnits.map(unit => <PurchaseRow 
+              key={unit.name}
+              currentPower={currentPower}
+              unit={unit} 
+              count={purchases[unit.name]}
+              budget={budget}
+              increment={increment.bind(null, unit)}
+              decrement={decrement.bind(null, unit)}
+            />)}
+          </tbody>
+          <tfoot>
           <tr>
-            <th colSpan={2}>Unit</th>
-            <th>Movement</th>
-            <th>Attack</th>
-            <th>Defend</th>
-            <th>Cost</th>
-            <th colSpan={3}>Number</th>
-            <th>Subtotal</th>
+            <th colSpan={8}>Remaining Budget: {budget} I.P.C.s</th>
+            <th>Total</th>
+            <th>{total}</th>
           </tr>
-        </thead>
-        <tbody>
-          {buildableUnits.map(unit => <PurchaseRow 
-            key={unit.name}
-            currentPower={currentPower}
-            unit={unit} 
-            count={purchases[unit.name]}
-            budget={budget}
-            increment={increment.bind(null, unit)}
-            decrement={decrement.bind(null, unit)}
-          />)}
-        </tbody>
-        <tfoot>
-        <tr>
-          <th colSpan={8}>Remaining Budget: {budget} I.P.C.s</th>
-          <th>Total</th>
-          <th>{total}</th>
-        </tr>
-      </tfoot>
-      </table>
+          </tfoot>
+        </table>
+      </div>
       <nav>
         <Link to={previous} className="btn">Back</Link>
         <Link to={PATHS.INCOME} className="btn">Purchase</Link>

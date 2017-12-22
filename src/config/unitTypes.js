@@ -136,7 +136,7 @@ const unitTypes = {
     landingSlots: 1
   },
   'long_range fighter': { 
-    name: 'long-range fighter', 
+    name: 'long range fighter', 
     cost: 11, 
     movement: 6, 
     attack: 3, 
@@ -146,7 +146,7 @@ const unitTypes = {
     tech: ['longRange']
   },
   'long_range tactical bomber': { 
-    name: 'long-range tactical bomber', 
+    name: 'long range tactical bomber', 
     cost: 12, 
     movement: 6, 
     attack: 4, 
@@ -155,7 +155,7 @@ const unitTypes = {
     tech: ['longRange'] 
   },
   'long_range strategic bomber': { 
-    name: 'long-range strategic bomber', 
+    name: 'long range strategic bomber', 
     cost: 14, 
     movement: 8, 
     attack: 4, 
@@ -175,7 +175,7 @@ const unitTypes = {
     tech: ['jets']
   },
   'long-range strategic heavy bomber': { 
-    name: 'long-range strategic heavy bomber', 
+    name: 'long range strategic heavy bomber', 
     cost: 18, 
     movement: 8, 
     attack: 4, 
@@ -204,7 +204,7 @@ const unitTypes = {
     navalRated: true
   },
   'long_range naval fighter': { 
-    name: 'long-range naval fighter', 
+    name: 'long range naval fighter', 
     cost: 12, 
     movement: 6, 
     attack: 3, 
@@ -224,7 +224,7 @@ const unitTypes = {
     air: true
   },
   'long_range naval tactical bomber': { 
-    name: 'long_range naval tactical bomber', 
+    name: 'long range naval tactical bomber', 
     cost: 13, 
     movement: 6, 
     attack: 4, 

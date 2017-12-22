@@ -48,6 +48,10 @@ table.scroll strong {
 .scroll .available {
   width: 125px;
 }
+.purchases {
+  max-height: 510px;
+  overflow: scroll;
+}
 .purchase tbody td {
   padding-left: 6px;
 }

@@ -15,6 +15,9 @@ export const purchaseCost = createSelector(
 
 const powerCanBuild = (unit, power) => {
   return !unit.name.includes('damaged') && 
+    (power.name !== 'Japan' || !['fighter', 'tactical bomber', 'naval fighter', 'naval tactical bomber', 'strategic bomber'].includes(unit.name)) &&
+    (power.name !== 'USSR' || !unit.name.includes('naval')) &&
+    (power.name !== 'Italy' || !unit.name.includes('naval')) &&
     (!unit.tech || unit.tech.every(tech => power.tech.includes(tech)))
 };
 
