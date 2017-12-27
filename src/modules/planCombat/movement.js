@@ -1,6 +1,7 @@
 import {
   combineUnits,
-  unitWithOrigin
+  unitWithOrigin,
+  landingSlots
 } from '../../selectors/units'
 import {
   isFriendly,
@@ -42,7 +43,7 @@ export const territoriesInRange = (board, currentPower, territory, accessible, m
   return territories
 }
 
-const availableUnit = (range, currentPower, medium, returnFlight) => unit => {
+const availableUnit = (range, currentPower, medium, returnFlight = 0) => unit => {
   const { movement } = unitTypes[unit.type]
   const effectiveRange = medium === 'air' ? movement - returnFlight : movement
   return unitTypes[unit.type][medium] && 
@@ -70,7 +71,7 @@ const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendl
 
 const hasLandingSlots = ({ units }, currentPower) => (
   units.reduce((total, unit) => (
-    total + (unit.power === currentPower && unitTypes[unit.type].landingSlots) ? 1 : 0
+    total + (unit.power === currentPower && landingSlots(unit)) ? 1 : 0
   ), 0)
 )
 
@@ -80,21 +81,22 @@ export const canLandInTerritory = (territory, currentPower) => (
 
 const landable = currentPower => territory => canLandInTerritory(territory, currentPower)
 
-const airUnitsInRange = (board, currentPower, territory) => {
-  if (territory.units.length) { //TODO: this condition is too narrow-can't noncom to carrier or empty
+const airUnitsInRange = (board, currentPower, territory, destination, allUnits) => {
+  if (territory.units.length) { 
     const territories = territoriesInRange(board, currentPower, territory, nonNeutral, 6)
     const returnFlight = Object.keys(territories).reduce((min, range) => (
       territories[range].some(landable(currentPower)) ? Math.min(min, range) : min
     ), 8)
     return unitsInRange(territories, currentPower, 'air', returnFlight)
-  } else {
-    return []
+  } else if (destination[territory.index] && destination[territory.index].some(id => landingSlots(allUnits[id]))){
+    const territories = territoriesInRange(board, currentPower, territory, nonNeutral, 4)
+    return unitsInRange(territories, currentPower, 'navalRated')
   }
 }
 
 const landUnitsInRange = (board, currentPower, territory) => {
   let territories = territoriesInRange(board, currentPower, territory, friendlyLand, 2)
-  return unitsInRange(territories, currentPower, 'land');
+  return unitsInRange(territories, currentPower, 'land')
 }
 
 const transportOrMovedTo = (territory) => ( 
@@ -143,12 +145,12 @@ const unitsByMedium = (board, currentPower, territory, inbound, destination, tra
       ...amphibUnitsInRange(board, currentPower, territory, inbound, destination, transport, amphib, allUnits),
       ...airUnitsInRange(board, currentPower, territory)
     ]
-  } else if (isFriendly(territory, currentPower, allUnits)) {
-    return seaUnitsInRange(board, currentPower, territory, allUnits)
+    //} else if (isFriendly(territory, currentPower, allUnits)) {
+    //return seaUnitsInRange(board, currentPower, territory, allUnits)
   } else {
     return [
       ...seaUnitsInRange(board, currentPower, territory, allUnits),
-      ...airUnitsInRange(board, currentPower, territory)
+      ...airUnitsInRange(board, currentPower, territory, destination, allUnits)
     ]
   }
 }

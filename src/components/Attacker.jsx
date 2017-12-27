@@ -79,6 +79,7 @@ const CommitButtons = ({
   )
 }
 
+//TODO: prevent carrier from withdrawing if air units are expecting to land on it
 const UncommitButtons = ({ 
   unit, 
   committed,
@@ -122,4 +123,3 @@ const AirOptions = ({
 )
 
 export default Attacker
-
