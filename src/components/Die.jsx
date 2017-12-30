@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import Transition from 'react-inline-transition-group';
-import classNames from 'classnames';
-import '../assets/styles/die.css';
+import React, { Component } from 'react'
+import Transition from 'react-inline-transition-group'
+import classNames from 'classnames'
+import '../assets/styles/die.css'
 
 class Die extends Component {
   constructor () {
@@ -19,7 +19,7 @@ class Die extends Component {
   }
 
   render () {
-    let duration = this.state.complete ? 0 : Math.random() * 3;
+    const duration = this.state.complete ? 0 : Math.random() * 3
     const classes = classNames('die', { metGoal: this.props.metGoal && this.state.complete })
     return (
       <Transition
@@ -27,25 +27,25 @@ class Die extends Component {
         onPhaseEnd={this.showRed.bind(this)}
         childrenStyles={{ appear: { transform: `rotateX(${this.props.rotateX}) rotateY(${this.props.rotateY})` } }}>
         <div className={classes} style={ { transition: `transform ${duration}s` } }>
-          <figure className="front" ref={(f) => this._1 = f}>
+          <figure className="front">
             <svg viewBox="0 0 170 170">
               <circle cx="85" cy="85" r="24"/>
             </svg>
           </figure>
-          <figure className="bottom" ref={(f) => this._2 = f}>
+          <figure className="bottom">
             <svg viewBox="0 0 170 170">
               <circle cx="140" cy="30" r="24" />
               <circle cx="30" cy="140" r="24" />
             </svg>
           </figure>
-          <figure className="left" ref={(f) => this._3 = f}>
+          <figure className="left">
             <svg viewBox="0 0 170 170">
               <circle cx="140" cy="30" r="24" />
               <circle cx="85" cy="85" r="24"  />
               <circle cx="30" cy="140" r="24" />
             </svg>
           </figure>
-          <figure className="right" ref={(f) => this._4 = f}>
+          <figure className="right">
             <svg viewBox="0 0 170 170">
               <circle cx="140" cy="30" r="24" />
               <circle cx="30" cy="140" r="24" />
@@ -53,7 +53,7 @@ class Die extends Component {
               <circle cx="140" cy="140" r="24"/>
             </svg>
           </figure>
-          <figure className="top" ref={(f) => this._5 = f}>
+          <figure className="top">
             <svg viewBox="0 0 170 170">
               <circle cx="140" cy="30" r="24" />
               <circle cx="30" cy="140" r="24" />
@@ -62,7 +62,7 @@ class Die extends Component {
               <circle cx="140" cy="140" r="24"/>
             </svg>
           </figure>
-          <figure className="back" ref={(f) => this._6 = f}>
+          <figure className="back">
             <svg viewBox="0 0 170 170">
               <circle cx="140" cy="30" r="24" />
               <circle cx="30" cy="140" r="24" />
@@ -85,4 +85,4 @@ class Die extends Component {
     )
   }
 }
-export default Die;
+export default Die
