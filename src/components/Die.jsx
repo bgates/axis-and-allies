@@ -9,80 +9,46 @@ class Die extends Component {
     this.state = {}
   }
 
-  showRed (phase) {
-    if (phase === 'appear') {
-      this.setState({ complete: true })
-      if (this.props.reveal) {
-        this.props.reveal()
-      }
+  showRed () {
+    this.setState({ complete: true })
+    if (this.props.reveal) {
+      setTimeout(this.props.reveal, 100)
     }
   }
 
   render () {
-    const duration = this.state.complete ? 0 : Math.random() * 3
+    const duration = this.state.complete ? 0 : Math.random() * 5
     const classes = classNames('die', { metGoal: this.props.metGoal && this.state.complete })
+    const { rotateX, rotateY } = this.props
+    const transform = `rotateX(${rotateX}) rotateY(${rotateY})`
     return (
       <Transition
         className="dieWrapper"
         onPhaseEnd={this.showRed.bind(this)}
-        childrenStyles={{ appear: { transform: `rotateX(${this.props.rotateX}) rotateY(${this.props.rotateY})` } }}>
-        <div className={classes} style={ { transition: `transform ${duration}s` } }>
-          <figure className="front">
-            <svg viewBox="0 0 170 170">
-              <circle cx="85" cy="85" r="24"/>
-            </svg>
-          </figure>
-          <figure className="bottom">
-            <svg viewBox="0 0 170 170">
-              <circle cx="140" cy="30" r="24" />
-              <circle cx="30" cy="140" r="24" />
-            </svg>
-          </figure>
-          <figure className="left">
-            <svg viewBox="0 0 170 170">
-              <circle cx="140" cy="30" r="24" />
-              <circle cx="85" cy="85" r="24"  />
-              <circle cx="30" cy="140" r="24" />
-            </svg>
-          </figure>
-          <figure className="right">
-            <svg viewBox="0 0 170 170">
-              <circle cx="140" cy="30" r="24" />
-              <circle cx="30" cy="140" r="24" />
-              <circle cx="30" cy="30" r="24"  />
-              <circle cx="140" cy="140" r="24"/>
-            </svg>
-          </figure>
-          <figure className="top">
-            <svg viewBox="0 0 170 170">
-              <circle cx="140" cy="30" r="24" />
-              <circle cx="30" cy="140" r="24" />
-              <circle cx="85" cy="85" r="24"  />
-              <circle cx="30" cy="30" r="24"  />
-              <circle cx="140" cy="140" r="24"/>
-            </svg>
-          </figure>
-          <figure className="back">
-            <svg viewBox="0 0 170 170">
-              <circle cx="140" cy="30" r="24" />
-              <circle cx="30" cy="140" r="24" />
-              <circle cx="30" cy="30" r="24"  />
-              <circle cx="140" cy="140" r="24"/>
-              <circle cx="30" cy="85" r="24"  />
-              <circle cx="140" cy="85" r="24" />
-            </svg>
-          </figure>
-          <svg width="100" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <radialGradient id="dieGradient" fx="30%" fy="30%">
-                <stop offset="5%" stopColor="#333"></stop>
-                <stop offset="95%" stopColor="#000"></stop>
-              </radialGradient>
-            </defs>
-          </svg>
+        childrenStyles={ { appear: { transform } } }
+        >
+        <div className={classes} style={ { transition: `transform ${duration}s` }} >
+          {['front', 'bottom', 'left', 'right', 'top', 'back'].map((side, n) => (
+            <Face key={side} n={n+1} className={side} />
+          ))}
         </div>
       </Transition>
     )
   }
 }
+
+const Face = ({ n, className }) => (
+  <figure className={className}>
+    <svg viewBox="0 0 170 170">
+      {n % 2 === 1 && <circle cx="85" cy="85" r="24"/>}
+      {n > 1 && <circle cx="140" cy="30" r="24" />}
+      {n > 1 && <circle cx="30" cy="140" r="24" />}
+      {n > 3 && <circle cx="30" cy="30" r="24" />}
+      {n > 3 && <circle cx="140" cy="140" r="24" />}
+      {n > 5 && <circle cx="30" cy="85" r="24" />}
+      {n > 5 && <circle cx="140" cy="85" r="24" />}
+    </svg>
+  </figure>
+)
+
 export default Die
