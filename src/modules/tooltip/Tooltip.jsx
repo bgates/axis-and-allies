@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { ImgAndQty } from '../../components/UnitFigure'
 import '../../assets/styles/tooltip.css'
 import industryImg from '../../assets/images/industrial_complex.png'
@@ -117,15 +117,17 @@ const Tooltip = ({
         {territoryValue ? ` [${territoryValue}IPC]` : null}
       </h1>
       <Units units={units} />
-      <Route exact path="/" 
-        render={() => <StartTooltip playing={playing} currentPower={currentPower} />} />
-      <Route path={PATHS.REPAIR} component={RepairTooltip} />
-      <Route path={PATHS.PLAN_ATTACKS} component={PlanCombatTooltip} />
-      <Route path={PATHS.RESOLVE_COMBAT} component={ResolveCombatTooltip} />
-      <Route path={PATHS.LAND_PLANES} component={LandPlanesTooltip} />
-      <Route path={PATHS.PLAN_MOVEMENT} component={NonCombatMovementTooltip} />
-      <Route path={PATHS.ORDER_UNITS} component={OrderUnitsTooltip} />
-      <Route path={PATHS.CONFIRM_FINISH} component={ConfirmFinishTooltip} />
+      <Switch>
+        <Route exact path="/" 
+          render={() => <StartTooltip playing={playing} currentPower={currentPower} />} />
+        <Route path={PATHS.REPAIR} component={RepairTooltip} />
+        <Route path={PATHS.PLAN_ATTACKS} component={PlanCombatTooltip} />
+        <Route path={PATHS.RESOLVE_COMBAT} component={ResolveCombatTooltip} />
+        <Route path={PATHS.LAND_PLANES} component={LandPlanesTooltip} />
+        <Route path={PATHS.PLAN_MOVEMENT} component={NonCombatMovementTooltip} />
+        <Route path={PATHS.ORDER_UNITS} component={OrderUnitsTooltip} />
+        <Route path={PATHS.CONFIRM_FINISH} component={ConfirmFinishTooltip} />
+      </Switch>
     </div>
   )
 }
