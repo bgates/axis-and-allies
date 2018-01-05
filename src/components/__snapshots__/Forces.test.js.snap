@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`correctly renders a pair of German infantry 1`] = `
+Array [
+  <img
+    alt="Germany infantry"
+    className={null}
+    onClick={null}
+    src="infantry.png"
+/>,
+  <img
+    alt="Germany infantry"
+    className={null}
+    onClick={null}
+    src="infantry.png"
+/>,
+]
+`;
