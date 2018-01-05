@@ -17,7 +17,7 @@ class Die extends Component {
   }
 
   render () {
-    const duration = this.state.complete ? 0 : Math.random() * 5
+    const duration = this.state.complete ? 0 : this.props.duration
     const classes = classNames('die', { metGoal: this.props.metGoal && this.state.complete })
     const { rotateX, rotateY } = this.props
     const transform = `rotateX(${rotateX}) rotateY(${rotateY})`

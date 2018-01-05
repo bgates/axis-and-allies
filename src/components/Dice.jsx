@@ -4,13 +4,14 @@ import roll from '../lib/dieRollRotation'
 
 const Dice = ({ rolls, goalFunction, handleReveal }) => (
   <div>
-    {rolls.map((die) => roll(die)).map((rotation, i) => (
+    {rolls.map(die => roll(die, Math.random(), Math.random())).map((rotation, i) => (
       <Die 
         key={i}
         metGoal={goalFunction(rolls[i])}
         reveal={handleReveal}
         rotateX={rotation[0]}
-        rotateY={rotation[1]} />
+        rotateY={rotation[1]} 
+        duration={(parseFloat(rotation[0]) + parseFloat(rotation[1])) / 1000} />
     ))}
     <svg width="100" height="50" version="1.1" xmlns="http://www.w3.org/2000/svg">
       <defs>

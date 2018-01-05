@@ -1,0 +1,1225 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`correctly renders a Chinese artillery 1`] = `
+<img
+  alt="China artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a Chinese fighter 1`] = `
+<img
+  alt="China fighter"
+  className={undefined}
+  onClick={undefined}
+  src="fighter.png"
+/>
+`;
+
+exports[`correctly renders a Chinese infantry 1`] = `
+<img
+  alt="China infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a German aircraft carrier 1`] = `
+<img
+  alt="Germany aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a German antiaircraft gun 1`] = `
+<img
+  alt="Germany antiaircraft gun"
+  className={undefined}
+  onClick={undefined}
+  src="antiaircraft_gun.png"
+/>
+`;
+
+exports[`correctly renders a German armor 1`] = `
+<img
+  alt="Germany armor"
+  className={undefined}
+  onClick={undefined}
+  src="armor.png"
+/>
+`;
+
+exports[`correctly renders a German artillery 1`] = `
+<img
+  alt="Germany artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a German battleship 1`] = `
+<img
+  alt="Germany battleship"
+  className={undefined}
+  onClick={undefined}
+  src="battleship.png"
+/>
+`;
+
+exports[`correctly renders a German cruiser 1`] = `
+<img
+  alt="Germany cruiser"
+  className={undefined}
+  onClick={undefined}
+  src="cruiser.png"
+/>
+`;
+
+exports[`correctly renders a German damaged aircraft carrier 1`] = `
+<img
+  alt="Germany damaged aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a German damaged battleship 1`] = `
+<img
+  alt="Germany damaged battleship"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_battleship.png"
+/>
+`;
+
+exports[`correctly renders a German destroyer 1`] = `
+<img
+  alt="Germany destroyer"
+  className={undefined}
+  onClick={undefined}
+  src="destroyer.png"
+/>
+`;
+
+exports[`correctly renders a German fighter 1`] = `
+<img
+  alt="Germany fighter"
+  className={undefined}
+  onClick={undefined}
+  src="fighter.png"
+/>
+`;
+
+exports[`correctly renders a German heavy bomber 1`] = `
+<img
+  alt="Germany heavy bomber"
+  className={undefined}
+  onClick={undefined}
+  src="heavy_bomber.png"
+/>
+`;
+
+exports[`correctly renders a German industrial complex 1`] = `
+<img
+  alt="Germany industrial complex"
+  className={undefined}
+  onClick={undefined}
+  src="industrial_complex.png"
+/>
+`;
+
+exports[`correctly renders a German infantry 1`] = `
+<img
+  alt="Germany infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a German jet fighter 1`] = `
+<img
+  alt="Germany jet fighter"
+  className={undefined}
+  onClick={undefined}
+  src="jet_fighter.png"
+/>
+`;
+
+exports[`correctly renders a German long range fighter 1`] = `
+<img
+  alt="Germany long range fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_fighter.png"
+/>
+`;
+
+exports[`correctly renders a German long range strategic bomber 1`] = `
+<img
+  alt="Germany long range strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a German long range tactical bomber 1`] = `
+<img
+  alt="Germany long range tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a German mechanized infantry 1`] = `
+<img
+  alt="Germany mechanized infantry"
+  className={undefined}
+  onClick={undefined}
+  src="mechanized_infantry.png"
+/>
+`;
+
+exports[`correctly renders a German naval fighter 1`] = `
+<img
+  alt="Germany naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a German naval tactical bomber 1`] = `
+<img
+  alt="Germany naval tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="naval_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a German strategic bomber 1`] = `
+<img
+  alt="Germany strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a German submarine 1`] = `
+<img
+  alt="Germany submarine"
+  className={undefined}
+  onClick={undefined}
+  src="submarine.png"
+/>
+`;
+
+exports[`correctly renders a German super submarine 1`] = `
+<img
+  alt="Germany super submarine"
+  className={undefined}
+  onClick={undefined}
+  src="super_submarine.png"
+/>
+`;
+
+exports[`correctly renders a German tactical bomber 1`] = `
+<img
+  alt="Germany tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a German transport 1`] = `
+<img
+  alt="Germany transport"
+  className={undefined}
+  onClick={undefined}
+  src="transport.png"
+/>
+`;
+
+exports[`correctly renders a Italian aircraft carrier 1`] = `
+<img
+  alt="Italy aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a Italian antiaircraft gun 1`] = `
+<img
+  alt="Italy antiaircraft gun"
+  className={undefined}
+  onClick={undefined}
+  src="antiaircraft_gun.png"
+/>
+`;
+
+exports[`correctly renders a Italian armor 1`] = `
+<img
+  alt="Italy armor"
+  className={undefined}
+  onClick={undefined}
+  src="armor.png"
+/>
+`;
+
+exports[`correctly renders a Italian artillery 1`] = `
+<img
+  alt="Italy artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a Italian battleship 1`] = `
+<img
+  alt="Italy battleship"
+  className={undefined}
+  onClick={undefined}
+  src="battleship.png"
+/>
+`;
+
+exports[`correctly renders a Italian cruiser 1`] = `
+<img
+  alt="Italy cruiser"
+  className={undefined}
+  onClick={undefined}
+  src="cruiser.png"
+/>
+`;
+
+exports[`correctly renders a Italian damaged battleship 1`] = `
+<img
+  alt="Italy damaged battleship"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_battleship.png"
+/>
+`;
+
+exports[`correctly renders a Italian destroyer 1`] = `
+<img
+  alt="Italy destroyer"
+  className={undefined}
+  onClick={undefined}
+  src="destroyer.png"
+/>
+`;
+
+exports[`correctly renders a Italian fighter 1`] = `
+<img
+  alt="Italy fighter"
+  className={undefined}
+  onClick={undefined}
+  src="fighter.png"
+/>
+`;
+
+exports[`correctly renders a Italian industrial complex 1`] = `
+<img
+  alt="Italy industrial complex"
+  className={undefined}
+  onClick={undefined}
+  src="industrial_complex.png"
+/>
+`;
+
+exports[`correctly renders a Italian infantry 1`] = `
+<img
+  alt="Italy infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a Italian mechanized infantry 1`] = `
+<img
+  alt="Italy mechanized infantry"
+  className={undefined}
+  onClick={undefined}
+  src="mechanized_infantry.png"
+/>
+`;
+
+exports[`correctly renders a Italian naval fighter 1`] = `
+<img
+  alt="Italy naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a Italian strategic bomber 1`] = `
+<img
+  alt="Italy strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Italian submarine 1`] = `
+<img
+  alt="Italy submarine"
+  className={undefined}
+  onClick={undefined}
+  src="submarine.png"
+/>
+`;
+
+exports[`correctly renders a Italian tactical bomber 1`] = `
+<img
+  alt="Italy tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Italian transport 1`] = `
+<img
+  alt="Italy transport"
+  className={undefined}
+  onClick={undefined}
+  src="transport.png"
+/>
+`;
+
+exports[`correctly renders a Japanese aircraft carrier 1`] = `
+<img
+  alt="Japan aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a Japanese antiaircraft gun 1`] = `
+<img
+  alt="Japan antiaircraft gun"
+  className={undefined}
+  onClick={undefined}
+  src="antiaircraft_gun.png"
+/>
+`;
+
+exports[`correctly renders a Japanese armor 1`] = `
+<img
+  alt="Japan armor"
+  className={undefined}
+  onClick={undefined}
+  src="armor.png"
+/>
+`;
+
+exports[`correctly renders a Japanese artillery 1`] = `
+<img
+  alt="Japan artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a Japanese battleship 1`] = `
+<img
+  alt="Japan battleship"
+  className={undefined}
+  onClick={undefined}
+  src="battleship.png"
+/>
+`;
+
+exports[`correctly renders a Japanese cruiser 1`] = `
+<img
+  alt="Japan cruiser"
+  className={undefined}
+  onClick={undefined}
+  src="cruiser.png"
+/>
+`;
+
+exports[`correctly renders a Japanese damaged aircraft carrier 1`] = `
+<img
+  alt="Japan damaged aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a Japanese damaged battleship 1`] = `
+<img
+  alt="Japan damaged battleship"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_battleship.png"
+/>
+`;
+
+exports[`correctly renders a Japanese destroyer 1`] = `
+<img
+  alt="Japan destroyer"
+  className={undefined}
+  onClick={undefined}
+  src="destroyer.png"
+/>
+`;
+
+exports[`correctly renders a Japanese industrial complex 1`] = `
+<img
+  alt="Japan industrial complex"
+  className={undefined}
+  onClick={undefined}
+  src="industrial_complex.png"
+/>
+`;
+
+exports[`correctly renders a Japanese infantry 1`] = `
+<img
+  alt="Japan infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a Japanese long range fighter 1`] = `
+<img
+  alt="Japan long range fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_fighter.png"
+/>
+`;
+
+exports[`correctly renders a Japanese long range naval fighter 1`] = `
+<img
+  alt="Japan long range naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a Japanese long range naval tactical bomber 1`] = `
+<img
+  alt="Japan long range naval tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_naval_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Japanese long range strategic bomber 1`] = `
+<img
+  alt="Japan long range strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Japanese long range tactical bomber 1`] = `
+<img
+  alt="Japan long range tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Japanese mechanized infantry 1`] = `
+<img
+  alt="Japan mechanized infantry"
+  className={undefined}
+  onClick={undefined}
+  src="mechanized_infantry.png"
+/>
+`;
+
+exports[`correctly renders a Japanese submarine 1`] = `
+<img
+  alt="Japan submarine"
+  className={undefined}
+  onClick={undefined}
+  src="submarine.png"
+/>
+`;
+
+exports[`correctly renders a Japanese super submarine 1`] = `
+<img
+  alt="Japan super submarine"
+  className={undefined}
+  onClick={undefined}
+  src="super_submarine.png"
+/>
+`;
+
+exports[`correctly renders a Japanese transport 1`] = `
+<img
+  alt="Japan transport"
+  className={undefined}
+  onClick={undefined}
+  src="transport.png"
+/>
+`;
+
+exports[`correctly renders a Soviet armor 1`] = `
+<img
+  alt="USSR armor"
+  className={undefined}
+  onClick={undefined}
+  src="armor.png"
+/>
+`;
+
+exports[`correctly renders a Soviet artillery 1`] = `
+<img
+  alt="USSR artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a Soviet battleship 1`] = `
+<img
+  alt="USSR battleship"
+  className={undefined}
+  onClick={undefined}
+  src="battleship.png"
+/>
+`;
+
+exports[`correctly renders a Soviet cruiser 1`] = `
+<img
+  alt="USSR cruiser"
+  className={undefined}
+  onClick={undefined}
+  src="cruiser.png"
+/>
+`;
+
+exports[`correctly renders a Soviet damaged battleship 1`] = `
+<img
+  alt="USSR damaged battleship"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_battleship.png"
+/>
+`;
+
+exports[`correctly renders a Soviet destroyer 1`] = `
+<img
+  alt="USSR destroyer"
+  className={undefined}
+  onClick={undefined}
+  src="destroyer.png"
+/>
+`;
+
+exports[`correctly renders a Soviet fighter 1`] = `
+<img
+  alt="USSR fighter"
+  className={undefined}
+  onClick={undefined}
+  src="fighter.png"
+/>
+`;
+
+exports[`correctly renders a Soviet industrial complex 1`] = `
+<img
+  alt="USSR industrial complex"
+  className={undefined}
+  onClick={undefined}
+  src="industrial_complex.png"
+/>
+`;
+
+exports[`correctly renders a Soviet infantry 1`] = `
+<img
+  alt="USSR infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a Soviet long range fighter 1`] = `
+<img
+  alt="USSR long range fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_fighter.png"
+/>
+`;
+
+exports[`correctly renders a Soviet long range strategic bomber 1`] = `
+<img
+  alt="USSR long range strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Soviet long range tactical bomber 1`] = `
+<img
+  alt="USSR long range tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Soviet mechanized infantry 1`] = `
+<img
+  alt="USSR mechanized infantry"
+  className={undefined}
+  onClick={undefined}
+  src="mechanized_infantry.png"
+/>
+`;
+
+exports[`correctly renders a Soviet submarine 1`] = `
+<img
+  alt="USSR submarine"
+  className={undefined}
+  onClick={undefined}
+  src="submarine.png"
+/>
+`;
+
+exports[`correctly renders a Soviet super submarine 1`] = `
+<img
+  alt="USSR super submarine"
+  className={undefined}
+  onClick={undefined}
+  src="super_submarine.png"
+/>
+`;
+
+exports[`correctly renders a Soviet tactical bomber 1`] = `
+<img
+  alt="USSR tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a Soviet transport 1`] = `
+<img
+  alt="USSR transport"
+  className={undefined}
+  onClick={undefined}
+  src="transport.png"
+/>
+`;
+
+exports[`correctly renders a UK aircraft carrier 1`] = `
+<img
+  alt="UK aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a UK antiaircraft gun 1`] = `
+<img
+  alt="UK antiaircraft gun"
+  className={undefined}
+  onClick={undefined}
+  src="antiaircraft_gun.png"
+/>
+`;
+
+exports[`correctly renders a UK armor 1`] = `
+<img
+  alt="UK armor"
+  className={undefined}
+  onClick={undefined}
+  src="armor.png"
+/>
+`;
+
+exports[`correctly renders a UK artillery 1`] = `
+<img
+  alt="UK artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a UK battleship 1`] = `
+<img
+  alt="UK battleship"
+  className={undefined}
+  onClick={undefined}
+  src="battleship.png"
+/>
+`;
+
+exports[`correctly renders a UK cruiser 1`] = `
+<img
+  alt="UK cruiser"
+  className={undefined}
+  onClick={undefined}
+  src="cruiser.png"
+/>
+`;
+
+exports[`correctly renders a UK damaged aircraft carrier 1`] = `
+<img
+  alt="UK damaged aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a UK damaged battleship 1`] = `
+<img
+  alt="UK damaged battleship"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_battleship.png"
+/>
+`;
+
+exports[`correctly renders a UK destroyer 1`] = `
+<img
+  alt="UK destroyer"
+  className={undefined}
+  onClick={undefined}
+  src="destroyer.png"
+/>
+`;
+
+exports[`correctly renders a UK fighter 1`] = `
+<img
+  alt="UK fighter"
+  className={undefined}
+  onClick={undefined}
+  src="fighter.png"
+/>
+`;
+
+exports[`correctly renders a UK heavy bomber 1`] = `
+<img
+  alt="UK heavy bomber"
+  className={undefined}
+  onClick={undefined}
+  src="heavy_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK industrial complex 1`] = `
+<img
+  alt="UK industrial complex"
+  className={undefined}
+  onClick={undefined}
+  src="industrial_complex.png"
+/>
+`;
+
+exports[`correctly renders a UK infantry 1`] = `
+<img
+  alt="UK infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a UK jet fighter 1`] = `
+<img
+  alt="UK jet fighter"
+  className={undefined}
+  onClick={undefined}
+  src="jet_fighter.png"
+/>
+`;
+
+exports[`correctly renders a UK long range fighter 1`] = `
+<img
+  alt="UK long range fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_fighter.png"
+/>
+`;
+
+exports[`correctly renders a UK long range naval fighter 1`] = `
+<img
+  alt="UK long range naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a UK long range naval tactical bomber 1`] = `
+<img
+  alt="UK long range naval tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_naval_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK long range strategic bomber 1`] = `
+<img
+  alt="UK long range strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK long range tactical bomber 1`] = `
+<img
+  alt="UK long range tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK mechanized infantry 1`] = `
+<img
+  alt="UK mechanized infantry"
+  className={undefined}
+  onClick={undefined}
+  src="mechanized_infantry.png"
+/>
+`;
+
+exports[`correctly renders a UK naval fighter 1`] = `
+<img
+  alt="UK naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a UK naval tactical bomber 1`] = `
+<img
+  alt="UK naval tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="naval_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK strategic bomber 1`] = `
+<img
+  alt="UK strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK submarine 1`] = `
+<img
+  alt="UK submarine"
+  className={undefined}
+  onClick={undefined}
+  src="submarine.png"
+/>
+`;
+
+exports[`correctly renders a UK super submarine 1`] = `
+<img
+  alt="UK super submarine"
+  className={undefined}
+  onClick={undefined}
+  src="super_submarine.png"
+/>
+`;
+
+exports[`correctly renders a UK tactical bomber 1`] = `
+<img
+  alt="UK tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a UK transport 1`] = `
+<img
+  alt="UK transport"
+  className={undefined}
+  onClick={undefined}
+  src="transport.png"
+/>
+`;
+
+exports[`correctly renders a US aircraft carrier 1`] = `
+<img
+  alt="US aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a US antiaircraft gun 1`] = `
+<img
+  alt="US antiaircraft gun"
+  className={undefined}
+  onClick={undefined}
+  src="antiaircraft_gun.png"
+/>
+`;
+
+exports[`correctly renders a US armor 1`] = `
+<img
+  alt="US armor"
+  className={undefined}
+  onClick={undefined}
+  src="armor.png"
+/>
+`;
+
+exports[`correctly renders a US artillery 1`] = `
+<img
+  alt="US artillery"
+  className={undefined}
+  onClick={undefined}
+  src="artillery.png"
+/>
+`;
+
+exports[`correctly renders a US battleship 1`] = `
+<img
+  alt="US battleship"
+  className={undefined}
+  onClick={undefined}
+  src="battleship.png"
+/>
+`;
+
+exports[`correctly renders a US cruiser 1`] = `
+<img
+  alt="US cruiser"
+  className={undefined}
+  onClick={undefined}
+  src="cruiser.png"
+/>
+`;
+
+exports[`correctly renders a US damaged aircraft carrier 1`] = `
+<img
+  alt="US damaged aircraft carrier"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_aircraft_carrier.png"
+/>
+`;
+
+exports[`correctly renders a US damaged battleship 1`] = `
+<img
+  alt="US damaged battleship"
+  className={undefined}
+  onClick={undefined}
+  src="damaged_battleship.png"
+/>
+`;
+
+exports[`correctly renders a US destroyer 1`] = `
+<img
+  alt="US destroyer"
+  className={undefined}
+  onClick={undefined}
+  src="destroyer.png"
+/>
+`;
+
+exports[`correctly renders a US fighter 1`] = `
+<img
+  alt="US fighter"
+  className={undefined}
+  onClick={undefined}
+  src="fighter.png"
+/>
+`;
+
+exports[`correctly renders a US heavy bomber 1`] = `
+<img
+  alt="US heavy bomber"
+  className={undefined}
+  onClick={undefined}
+  src="heavy_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US industrial complex 1`] = `
+<img
+  alt="US industrial complex"
+  className={undefined}
+  onClick={undefined}
+  src="industrial_complex.png"
+/>
+`;
+
+exports[`correctly renders a US infantry 1`] = `
+<img
+  alt="US infantry"
+  className={undefined}
+  onClick={undefined}
+  src="infantry.png"
+/>
+`;
+
+exports[`correctly renders a US jet fighter 1`] = `
+<img
+  alt="US jet fighter"
+  className={undefined}
+  onClick={undefined}
+  src="jet_fighter.png"
+/>
+`;
+
+exports[`correctly renders a US long range fighter 1`] = `
+<img
+  alt="US long range fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_fighter.png"
+/>
+`;
+
+exports[`correctly renders a US long range naval fighter 1`] = `
+<img
+  alt="US long range naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a US long range naval tactical bomber 1`] = `
+<img
+  alt="US long range naval tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_naval_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US long range strategic bomber 1`] = `
+<img
+  alt="US long range strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US long range tactical bomber 1`] = `
+<img
+  alt="US long range tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="long_range_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US mechanized infantry 1`] = `
+<img
+  alt="US mechanized infantry"
+  className={undefined}
+  onClick={undefined}
+  src="mechanized_infantry.png"
+/>
+`;
+
+exports[`correctly renders a US naval fighter 1`] = `
+<img
+  alt="US naval fighter"
+  className={undefined}
+  onClick={undefined}
+  src="naval_fighter.png"
+/>
+`;
+
+exports[`correctly renders a US naval tactical bomber 1`] = `
+<img
+  alt="US naval tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="naval_tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US strategic bomber 1`] = `
+<img
+  alt="US strategic bomber"
+  className={undefined}
+  onClick={undefined}
+  src="strategic_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US submarine 1`] = `
+<img
+  alt="US submarine"
+  className={undefined}
+  onClick={undefined}
+  src="submarine.png"
+/>
+`;
+
+exports[`correctly renders a US super submarine 1`] = `
+<img
+  alt="US super submarine"
+  className={undefined}
+  onClick={undefined}
+  src="super_submarine.png"
+/>
+`;
+
+exports[`correctly renders a US tactical bomber 1`] = `
+<img
+  alt="US tactical bomber"
+  className={undefined}
+  onClick={undefined}
+  src="tactical_bomber.png"
+/>
+`;
+
+exports[`correctly renders a US transport 1`] = `
+<img
+  alt="US transport"
+  className={undefined}
+  onClick={undefined}
+  src="transport.png"
+/>
+`;
