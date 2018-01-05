@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <h1>
+    Collect Income
+  </h1>
+  <p>
+    Since your last turn you have maintained control of territories with a total value of 
+    60
+     
+    <abbr
+      title="National Production Level"
+    >
+      N.P.L.
+    </abbr>
+  </p>
+  <h3>
+    Germany
+     National Objectives
+  </h3>
+  <p>
+    Your forces have made progress towards the following national objectives:
+  </p>
+  <ul>
+    <li>
+      goal 1
+      : 
+      <strong>
+        1
+         I.P.C.s
+      </strong>
+    </li>
+    <li>
+      goal 2
+      : 
+      <strong>
+        2
+         I.P.C.s
+      </strong>
+    </li>
+  </ul>
+  <p>
+     so you will be able to use 
+    63
+     
+    <abbr
+      title="Industrial Production Certificates"
+    >
+      I.P.C.s
+    </abbr>
+     next turn
+  </p>
+  <nav>
+    <a
+      className="btn"
+      href="/purchase"
+      onClick={[Function]}
+    >
+      Back
+    </a>
+    <a
+      className="btn"
+      href="/plan-attacks"
+      onClick={[Function]}
+    >
+      Plan Combat
+    </a>
+  </nav>
+</div>
+`;
