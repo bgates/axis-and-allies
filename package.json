@@ -25,9 +25,11 @@
     "circular-dependency-plugin": "^4.3.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "enzyme-to-json": "^3.3.0",
     "json-loader": "^0.5.7",
     "react-scripts": "^1.0.17",
-    "react-test-renderer": "^16.2.0"
+    "react-test-renderer": "^16.2.0",
+    "redux-mock-store": "^1.4.0"
   },
   "scripts": {
     "predeploy": "npm run build",
@@ -39,6 +41,11 @@
     "remove": "node wipe-dependencies.js && rm -rf node_modules",
     "replace": "npm update -D && npm update -S",
     "eject": "react-scripts eject"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
   },
   "homepage": "https://bgates.github.io/axis-and-allies"
 }
