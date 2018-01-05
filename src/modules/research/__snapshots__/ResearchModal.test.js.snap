@@ -1,0 +1,68 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<div>
+  <a
+    className="help"
+    data-tip={true}
+  >
+    ?
+  </a>
+  <h1>
+    Research Weapons Development
+  </h1>
+  <div
+    className="__react_component_tooltip place-top type-dark "
+    data-id="tooltip"
+  >
+    
+  </div>
+  <ol
+    className="tech"
+  >
+    <li>
+      <button
+        className="jets"
+        disabled={false}
+        onClick={[Function]}
+      >
+        <i />
+        jet power
+      </button>
+      make jets
+      
+    </li>
+    <li>
+      <button
+        className="subs"
+        disabled={false}
+        onClick={[Function]}
+      >
+        <i />
+        submarines
+      </button>
+      improve subs
+      
+    </li>
+  </ol>
+  <p>
+    Select a technology to develop
+  </p>
+  <nav>
+    <a
+      className="btn"
+      href="/"
+      onClick={[Function]}
+    >
+      Back
+    </a>
+    <a
+      className="btn"
+      href="/purchase"
+      onClick={[Function]}
+    >
+      Plan Purchases
+    </a>
+  </nav>
+</div>
+`;
