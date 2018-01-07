@@ -9,16 +9,12 @@ export const currentPowerHasRockets = createSelector(
   currentPower => currentPower.tech.includes('Rockets')
 )
 
-export const canMakeJets = createSelector(
-  getCurrentPower,
-  ({ name }) => ['Germany', 'US', 'USSR'].includes(name)
-)
-
 const allowedFor = currentPower => ({ abbr })=> {
   if (['Germany', 'UK', 'US'].includes(currentPower.name)) {
     return abbr !== 'heavyBomber' || currentPower.tech.includes('Long Range Aircraft')
   } else if (currentPower.name === 'USSR') {
-    return ['jets', 'heavyBomber', 'radar', 'longRange'].includes(abbr)
+    return ['jets', 'radar', 'longRange'].includes(abbr) || 
+      (abbr == 'heavyBomber' && currentPower.tech.includes('Long Range Aircraft'))
   } else if (currentPower.name === 'Japan') {
     return abbr !== 'rockets'
   }
