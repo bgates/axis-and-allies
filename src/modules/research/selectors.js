@@ -16,7 +16,7 @@ export const canMakeJets = createSelector(
 
 const allowedFor = currentPower => ({ abbr })=> {
   if (['Germany', 'UK', 'US'].includes(currentPower.name)) {
-    return abbr !== 'heavyBomber' || currentPower.tech.includes('longRange')
+    return abbr !== 'heavyBomber' || currentPower.tech.includes('Long Range Aircraft')
   } else if (currentPower.name === 'USSR') {
     return ['jets', 'heavyBomber', 'radar', 'longRange'].includes(abbr)
   } else if (currentPower.name === 'Japan') {
