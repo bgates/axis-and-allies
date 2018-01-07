@@ -4,7 +4,7 @@ import {
   INCREASE_RESEARCH_BUDGET,
   DECREASE_RESEARCH_BUDGET,
   NEXT_TURN
-} from '../../actions';
+} from '../../actions'
 
 const origin = { attempts: 0 }
 
