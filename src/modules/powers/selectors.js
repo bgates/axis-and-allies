@@ -8,9 +8,8 @@ const nplFor = (power, territories) => {
 }
 
 const nplAsObject = (powers, territories) => {
-  return powers.reduce((object, power) => {
-    const powerName = power.name
-    object[powerName] = nplFor(powerName, territories[powerName])
+  return powers.reduce((object, { name }) => {
+    object[name] = nplFor(name, territories[name])
     return object
   }, {})
 }
