@@ -3,10 +3,9 @@
 import React from 'react'
 import Dice from './Dice'
 import renderer from 'react-test-renderer'
+import { mockRandom } from '../setupTests'
 
-const mockMath = Object.create(global.Math)
-mockMath.random = () => 0.5
-global.Math = mockMath
+mockRandom(() => 0.5)
 
 it('renders correctly', () => {
   const tree = renderer.create(
