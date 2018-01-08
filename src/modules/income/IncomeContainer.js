@@ -13,13 +13,12 @@ const mapStateToProps = (state) => ({
   income: state.income
 })
 
-const setIncome = () => {
+const setIncome = () => {  
   return (dispatch, getState) => {
     const state = getState()
     dispatch({ type: SET_INCOME, amount: currentPowerNPL(state) })
   }
 }
-
 const mapDispatchToProps = (dispatch) => (
   bindActionCreators({ 
     setIncome
