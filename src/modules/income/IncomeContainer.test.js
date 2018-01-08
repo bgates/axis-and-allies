@@ -2,7 +2,6 @@
 
 import React from 'react'
 import IncomeContainer from './IncomeContainer'
-//import IncomeModal from './IncomeModal'
 import thunk from 'redux-thunk'
 import { initialState as unitsAndTerritories } from '../../config/configureStore'
 import powers from '../../config/initialPowers'

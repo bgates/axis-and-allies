@@ -13,9 +13,9 @@ class ResearchResultsModal extends DiceResultsModal {
   }
 
   text () {
-    const rolls = this.props.rolls.join(', ');
+    const rolls = this.props.rolls.join(', ')
     const tech = this.props.developedTech
-    const sentence = tech ? `You developed ${tech}!` : null;
+    const sentence = tech ? `You developed ${tech}!` : null
     return (
       <div>
         <p>You rolled {rolls}. {sentence}</p> 
