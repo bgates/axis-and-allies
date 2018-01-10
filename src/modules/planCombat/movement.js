@@ -91,6 +91,8 @@ const airUnitsInRange = (board, currentPower, territory, destination, allUnits) 
   } else if (destination[territory.index] && destination[territory.index].some(id => landingSlots(allUnits[id]))){
     const territories = territoriesInRange(board, currentPower, territory, nonNeutral, 4)
     return unitsInRange(territories, currentPower, 'navalRated')
+  } else {
+    return []
   }
 }
 
@@ -104,8 +106,8 @@ const transportOrMovedTo = (territory) => (
 )
 
 const amphibUnitsInRange = (board, currentPower, _territory, inbound, destination, { transporting }, { transport }, allUnits) => {
-  const territories = _territory.adjacentIndexes.map(index => board[index]).filter(isSea)
-  return territories.reduce((transports, territory) => {
+  const adjacentSeaTerritories = _territory.adjacentIndexes.map(index => board[index]).filter(isSea)
+  return adjacentSeaTerritories.reduce((transports, territory) => {
     const territoryTransports = territory.units
       .filter(unit => transporting[unit.id] && !inbound[unit.id])
       .concat(
@@ -143,7 +145,7 @@ const unitsByMedium = (board, currentPower, territory, inbound, destination, tra
     return [
       ...landUnitsInRange(board, currentPower, territory),
       ...amphibUnitsInRange(board, currentPower, territory, inbound, destination, transport, amphib, allUnits),
-      ...airUnitsInRange(board, currentPower, territory)
+      ...airUnitsInRange(board, currentPower, territory, destination)
     ]
     //} else if (isFriendly(territory, currentPower, allUnits)) {
     //return seaUnitsInRange(board, currentPower, territory, allUnits)

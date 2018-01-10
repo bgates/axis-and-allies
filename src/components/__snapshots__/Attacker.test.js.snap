@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<tr>
+  <td
+    className="unit"
+  >
+    <strong />
+    <figure>
+      <img
+        alt="Germany infantry"
+        className={undefined}
+        onClick={undefined}
+        src="infantry.png"
+      />
+      <figcaption>
+        infantry
+         - attacks @ 
+        1
+      </figcaption>
+    </figure>
+  </td>
+  <td
+    className="available"
+  >
+    <div>
+      <input
+        readOnly={true}
+        size={2}
+        value={1}
+      />
+      <button
+        disabled={undefined}
+        onClick={[Function]}
+      >
+        &gt;&gt;
+      </button>
+      <button
+        disabled={undefined}
+        onClick={[Function]}
+      >
+        &gt;
+      </button>
+    </div>
+  </td>
+  <td
+    className="available"
+  >
+    <div>
+      <input
+        readOnly={true}
+        size={2}
+        value={0}
+      />
+      <button
+        disabled={true}
+        onClick={[Function]}
+      >
+        &lt;&lt;
+      </button>
+      <button
+        disabled={true}
+        onClick={[Function]}
+      >
+        &lt;
+      </button>
+    </div>
+  </td>
+</tr>
+`;
