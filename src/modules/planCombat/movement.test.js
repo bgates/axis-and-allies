@@ -8,10 +8,9 @@ import powers from '../../config/initialPowers'
 const { units, territories } = unitsAndTerritories
 const startingBoard = mergeBoardAndTerritories.resultFunc(units, territories)
 
-//const territory = name => startingBoard.find(t => t.name === name)
-it('gets the board right', () => {
+  /*it('gets the board right', () => {
   expect(startingBoard[0]).toEqual([])
-})
+})*/
 
 const findTerritory = name => startingBoard.find(t => t.name === name)
 
@@ -46,8 +45,8 @@ describe('combatUnitsInRange', () => {
     const simpleInRange = (power, territory) => (
       combatUnitsInRange(startingBoard, power, territory, {}, {}, { transporting: {} }, { transport: {} }, units)
     )
-    describe('far south Atlantic', () => {
-      const territory = findTerritory('far south Atlantic')
+    describe('Gulf of Guinea', () => {
+      const territory = findTerritory('Gulf of Guinea')
       powers.forEach(power => {
         it(`finds no units for ${power.name}`, () => {
           expect(simpleInRange(power, territory).length).toEqual(0)
@@ -63,9 +62,15 @@ describe('combatUnitsInRange', () => {
         })
       }
     })
-    describe('Hawaiian Islands', () => {
+    describe('land in range of carrier air: Hawaiian Islands', () => {
       const territory = findTerritory('Hawaiian Islands')
       it('finds Midway planes in range', () => {
+        expect(simpleInRange({ name: 'Japan' }, territory).filter(unit => unit.type.includes('naval')).length).toEqual(2)
+      })
+    })
+    describe('sea in range of carrier air: Gulf of California', () => {
+      const territory = findTerritory('Gulf of California')
+      it('finds Midway units in range', () => {
         expect(simpleInRange({ name: 'Japan' }, territory).length).toEqual(2)
       })
     })

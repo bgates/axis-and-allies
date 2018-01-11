@@ -34,6 +34,10 @@ export const getTerritoryUnits = createSelector(
   ({ unitIds }, units) => idsToUnits(unitIds, units)
 )
 
+export const adjacents = (board, territory) => (
+  territory.adjacentIndexes.map(i => board[i])
+)
+
 const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
 export const nonNeutral = (territory) => !isNeutral(territory)
 
