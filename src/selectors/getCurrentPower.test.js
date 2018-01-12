@@ -1,6 +1,24 @@
 import powers from '../config/initialPowers'
-import { getLoggedInPower } from './getCurrentPower'
+import { isCurrentPower, getLoggedInPower } from './getCurrentPower'
 
+describe('isCurrentPower', () => {
+  const { resultFunc } = isCurrentPower
+  it('returns true for no firebase login', () => {
+    expect(resultFunc({})).toBe(true)
+  })
+  describe('when logged in', () => {
+    const auth = { empty: false }
+    const loggedInPower = { name: 'Germany' }
+    it('returns true if logged in as current power', () => {
+      const currentPower = { name: 'Germany' }
+      expect(resultFunc(auth, loggedInPower, currentPower)).toBe(true)
+    })
+    it('returns false if logged in as other power', () => {
+      const currentPower = { name: 'Japan' }
+      expect(resultFunc(auth, loggedInPower, currentPower)).toBe(false)
+    })
+  })
+})
 describe('getLoggedInPower', () => {
   const { resultFunc } = getLoggedInPower
   it('is empty object if no firebase profile exists', () => {
