@@ -5,7 +5,8 @@ import {
   range8,
   range6,
   movement,
-  attack
+  attack,
+  air
 } from '../../selectors/units'
 import {
   isFriendly,
@@ -74,23 +75,31 @@ const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendl
 
 const landable = currentPower => territory => friendlyLand(territory, currentPower)
 
+const distanceToLand = (territories, currentPower, maxRange) => (
+  Object.keys(territories).reduce((min, range) => (
+    territories[range].some(landable(currentPower)) ? Math.min(min, range) : min
+  ), maxRange)
+)
+
+const canLand = (navalReturn, landReturn) => unit => {
+  if (unit.type.includes('naval')) {
+    return unit.distance + navalReturn <= movement(unit) 
+  } 
+  return unit.distance + landReturn <= movement(unit)
+}
+
 const airUnitsInRange = (board, currentPower, territory, allUnits) => {
   const units = Object.values(allUnits).filter(unit => (
-    unit.power === currentPower && 
-    (unit.type.includes('fighter') || unit.type.includes('bomber'))
+    unit.power === currentPower && air(unit)
   ))
   if (units.length === 0) return []                         
   const maxRange = units.some(range8) ? 8 : units.some(range6) ? 6 : 4
   const territories = territoriesInRange(board, currentPower, territory, nonNeutral, maxRange)
-  const returnFlight = Object.keys(territories).reduce((min, range) => (
-    territories[range].some(landable(currentPower)) ? Math.min(min, range) : min
-  ), maxRange)
+  const landReturn = distanceToLand(territories, currentPower, maxRange)
   // assume during planning stage that naval aircraft can travel max range and reach carrier
   const navalReturn = isLand(territory) ? 1 : 0
-  return unitsInRange(territories, currentPower, 'air').filter(unit => (
-    unit.type.includes('naval') ? unit.distance + navalReturn <= movement(unit) : 
-    unit.distance + returnFlight <= movement(unit)
-  ))
+  return unitsInRange(territories, currentPower, 'air')
+    .filter(canLand(navalReturn, landReturn))
 }
 
 const landUnitsInRange = (board, currentPower, territory) => {
@@ -146,8 +155,6 @@ const unitsByMedium = (board, currentPower, territory, inbound, destination, tra
       ...amphibUnitsInRange(board, currentPower, territory, inbound, destination, transport, amphib, allUnits),
       ...airUnitsInRange(board, currentPower, territory, allUnits)
     ]
-    //} else if (isFriendly(territory, currentPower, allUnits)) {
-    //return seaUnitsInRange(board, currentPower, territory, allUnits)
   } else {
     return [
       ...seaUnitsInRange(board, currentPower, territory, allUnits),

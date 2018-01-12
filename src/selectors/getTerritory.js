@@ -42,14 +42,14 @@ const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
 export const nonNeutral = (territory) => !isNeutral(territory)
 
 export const isFriendly = (territory, currentPower, units) => (  
-  !isNeutral(territory) && !isEnemy(territory, currentPower, units)
+  !isNeutral(territory) && !isEnemy(territory, currentPower)
 )
 
-export const isEnemy = ({ currentPower, unitIds = []}, activePower, units = []) => {
+export const isEnemy = ({ currentPower, units = []}, activePower) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
     return !sameSide(currentPower, activePower)
   }
-  return idsToUnits(unitIds, units).some(unit => !sameSide(unit.power, activePower))
+  return units.some(unit => !sameSide(unit.power, activePower))
 }
 
 const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (
@@ -79,17 +79,16 @@ export const getCommittedUnits = createSelector(
   getAllUnits,
   idsToUnits
 )
-
 export const mergeBoardAndTerritories = createSelector(
   getAllUnits,
   getAllTerritories,
   (allUnits, territories) => territories.map(({ currentPower, unitIds }, index) => {
-    const { name, original_power, sea, adjacentIndexes, seaPort } = territoryData[index]
+    const { name, original_power, sea, adjacentIndexes, seaPort, canalToIndex, canalControlIndex } = territoryData[index]
     const units = idsToUnits(unitIds, allUnits)
-    return { currentPower, units, name, original_power, sea, seaPort, adjacentIndexes, index}
+    return { currentPower, units, name, original_power, sea, seaPort, adjacentIndexes, index, canalToIndex, canalControlIndex }
   })
 )
-   
+window.getBoard = mergeBoardAndTerritories
 export const getTerritoriesWithIpcValues = createSelector(
   getAllTerritories,
   territories => territories.map(({ currentPower }, index) => {

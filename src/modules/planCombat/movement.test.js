@@ -99,6 +99,41 @@ describe('combatUnitsInRange', () => {
       })
     })
   })
+  describe('naval units', () => {
+    const germany = { name: 'Germany' }
+    it('can be blocked by enemy', () => {
+      const territory = findTerritory('English Channel')
+      const blocker = findTerritory('southern North Sea')
+      const units = simpleInRange(germany, territory)
+      const blockedFromChannel = unit => unit.originName === 'Skagerrak-Kattegat'
+      expect(units.find(blockedFromChannel)).toBeUndefined()
+      blocker.units = []
+      const unblockedUnits = simpleInRange(germany, territory)
+      expect(unblockedUnits.find(blockedFromChannel)).toBeDefined()
+    })
+    describe('traversing canal', () => {
+      const gibraltar = findTerritory('Gibraltar')
+      const atlanticSide = findTerritory('Strait of Gibraltar')
+      const medSide = findTerritory('Alboran Sea')
+      atlanticSide.units = []
+      medSide.units = []
+      const blockedFromMed = unit => unit.originName === 'off Morocco'
+      it('can be blocked if enemy controls chokepoint', () => {
+        const units = simpleInRange(germany, medSide)
+        expect(units.find(blockedFromMed)).toBeUndefined()
+      })
+      it('can pass canal if self controls chokepoint', () => {
+        gibraltar.currentPower = 'Germany'
+        const units = simpleInRange(germany, medSide)
+        expect(units.find(blockedFromMed)).toBeDefined()
+      })
+      it('can pass canal if ally controls chokepoint', () => {
+        gibraltar.currentPower = 'Italy'
+        const units = simpleInRange(germany, medSide)
+        expect(units.find(blockedFromMed)).toBeDefined()
+      })
+    })
+  })
   describe('with some units inbound/outbound', () => {
     const territory = findTerritory('East Poland')
     const originalUnitsInRange = simpleInRange({ name: 'Germany' }, territory)
