@@ -12,7 +12,10 @@ const startingBoard = mergeBoardAndTerritories.resultFunc(units, territories)
   expect(startingBoard[0]).toEqual([])
 })*/
 
-const findTerritory = name => startingBoard.find(t => t.name === name)
+// assign so I can mutate within a test without affecting others
+const findTerritory = name => (
+  Object.assign({}, startingBoard.find(t => t.name === name))
+)
 
 describe('territoriesInRange', () => {
   describe('relative to the Strait of Gibraltar', () => {
@@ -41,9 +44,12 @@ describe('territoriesInRange', () => {
 //export const combatUnitsInRange = (board, currentPower, territory, inbound, destination, transport, amphib, allUnits) => {
 
 describe('combatUnitsInRange', () => {
-  const simpleInRange = (power, territory) => (
-    combatUnitsInRange(startingBoard, power, territory, {}, {}, { transporting: {} }, { transport: {} }, units)
-  )
+  const simpleInRange = (power, territory, ...toReplace) => {
+    const board = startingBoard.map(territory => (
+      toReplace.find(t => t.name === territory.name) || territory
+    ))
+    return combatUnitsInRange(board, power, territory, {}, {}, { transporting: {} }, { transport: {} }, units)
+  }
   it('returns array of unit objects', () => {
     const unitsInRange = simpleInRange({ name: 'Germany' }, findTerritory('East Poland'))
     expect(Array.isArray(unitsInRange)).toBe(true);
@@ -99,8 +105,23 @@ describe('combatUnitsInRange', () => {
       })
     })
   })
+  const germany = { name: 'Germany' }
+  describe('neutral territories: Spain', () => {
+    const spain = findTerritory('Spain')
+    const gibraltar = findTerritory('Gibraltar')
+    it('blocks air overflight', () => {
+      const units = simpleInRange(germany, gibraltar)
+      expect(units.find(unit => unit.originName === 'Western France')).toBeUndefined()
+      spain.currentPower = 'Germany'
+      const unblockedUnits = simpleInRange(germany, gibraltar, spain)
+      expect(unblockedUnits.find(unit => unit.originName === 'Western France')).toBeDefined()
+    })
+    it('can be targeted for attack', () => {
+      const units = simpleInRange(germany, spain)
+      expect(units.find(unit => unit.originName === 'Western France')).toBeDefined()
+    })
+  })
   describe('naval units', () => {
-    const germany = { name: 'Germany' }
     it('can be blocked by enemy', () => {
       const territory = findTerritory('English Channel')
       const blocker = findTerritory('southern North Sea')
@@ -108,7 +129,7 @@ describe('combatUnitsInRange', () => {
       const blockedFromChannel = unit => unit.originName === 'Skagerrak-Kattegat'
       expect(units.find(blockedFromChannel)).toBeUndefined()
       blocker.units = []
-      const unblockedUnits = simpleInRange(germany, territory)
+      const unblockedUnits = simpleInRange(germany, territory, blocker)
       expect(unblockedUnits.find(blockedFromChannel)).toBeDefined()
     })
     describe('traversing canal', () => {
@@ -116,20 +137,19 @@ describe('combatUnitsInRange', () => {
       const atlanticSide = findTerritory('Strait of Gibraltar')
       const medSide = findTerritory('Alboran Sea')
       atlanticSide.units = []
-      medSide.units = []
       const blockedFromMed = unit => unit.originName === 'off Morocco'
       it('can be blocked if enemy controls chokepoint', () => {
-        const units = simpleInRange(germany, medSide)
+        const units = simpleInRange(germany, medSide, atlanticSide)
         expect(units.find(blockedFromMed)).toBeUndefined()
       })
       it('can pass canal if self controls chokepoint', () => {
         gibraltar.currentPower = 'Germany'
-        const units = simpleInRange(germany, medSide)
+        const units = simpleInRange(germany, medSide, atlanticSide, gibraltar)
         expect(units.find(blockedFromMed)).toBeDefined()
       })
       it('can pass canal if ally controls chokepoint', () => {
         gibraltar.currentPower = 'Italy'
-        const units = simpleInRange(germany, medSide)
+        const units = simpleInRange(germany, medSide, atlanticSide, gibraltar)
         expect(units.find(blockedFromMed)).toBeDefined()
       })
     })
