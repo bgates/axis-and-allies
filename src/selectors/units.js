@@ -64,9 +64,6 @@ export const nonIndustry = unit => unit.type !== 'industrial complex'
 export const industry = unit => unit.type === 'industrial complex'
 export const antiaircraft = unit => unit.type === 'anti-aircraft gun'
 
-export const range8 = ({ type }) => (
-  type.includes('heavy') || type.includes('long range strategic')
-)
-export const range6 = ({ type }) => (
-  type.includes('long range') || type.includes('strategic')
-)
+export const range8 = unit => movement(unit) === 8
+
+export const range6 = unit => movement(unit) === 6

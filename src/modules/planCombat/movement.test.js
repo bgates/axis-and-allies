@@ -41,10 +41,17 @@ describe('territoriesInRange', () => {
 //export const combatUnitsInRange = (board, currentPower, territory, inbound, destination, transport, amphib, allUnits) => {
 
 describe('combatUnitsInRange', () => {
+  const simpleInRange = (power, territory) => (
+    combatUnitsInRange(startingBoard, power, territory, {}, {}, { transporting: {} }, { transport: {} }, units)
+  )
+  it('returns array of unit objects', () => {
+    const unitsInRange = simpleInRange({ name: 'Germany' }, findTerritory('East Poland'))
+    expect(Array.isArray(unitsInRange)).toBe(true);
+    ['distance', 'ids', 'originIndex', 'originName', 'power', 'qty', 'type'].forEach(prop => (
+      expect(unitsInRange[0]).toHaveProperty(prop)
+    ))
+  })
   describe('simplest conditions (no inbound, outbound, transport, amphib)', () => {
-    const simpleInRange = (power, territory) => (
-      combatUnitsInRange(startingBoard, power, territory, {}, {}, { transporting: {} }, { transport: {} }, units)
-    )
     describe('Gulf of Guinea', () => {
       const territory = findTerritory('Gulf of Guinea')
       powers.forEach(power => {
@@ -62,17 +69,55 @@ describe('combatUnitsInRange', () => {
         })
       }
     })
+    const japan = { name: 'Japan' }
     describe('land in range of carrier air: Hawaiian Islands', () => {
       const territory = findTerritory('Hawaiian Islands')
       it('finds Midway planes in range', () => {
-        expect(simpleInRange({ name: 'Japan' }, territory).filter(unit => unit.type.includes('naval')).length).toEqual(2)
+        expect(simpleInRange(japan, territory).filter(unit => unit.type.includes('naval')).length).toEqual(2)
       })
     })
     describe('sea in range of carrier air: Gulf of California', () => {
       const territory = findTerritory('Gulf of California')
-      it('finds Midway units in range', () => {
-        expect(simpleInRange({ name: 'Japan' }, territory).length).toEqual(2)
+      it('finds Midway planes in range', () => {
+        expect(simpleInRange(japan, territory).length).toEqual(2)
       })
     })
+    describe('land in range of long range bomber: Kansk', () => {
+      const territory = findTerritory('Kansk')
+      it('finds Japan bomber in range', () => {
+        expect(simpleInRange(japan, territory).length).toEqual(1)
+      })
+    })
+    describe('sea in range of naval+air: off Line Islands', () => {
+      const territory = findTerritory('off Line Islands')
+      it('finds naval, naval air, and ground-based air in range', () => {
+        const units = simpleInRange(japan, territory)
+        expect(units.length).toEqual(11)
+        expect(units.find(unit => unit.type.includes('naval'))).toBeDefined()
+        expect(units.find(({ type }) => type.includes('fighter') && !type.includes('naval'))).toBeDefined()
+        expect(units.find(unit => unit.type === 'battleship')).toBeDefined()
+      })
+    })
+  })
+  describe('with some units inbound/outbound', () => {
+    const territory = findTerritory('East Poland')
+    const originalUnitsInRange = simpleInRange({ name: 'Germany' }, territory)
+    const deployedUnit = originalUnitsInRange[0]
+    describe('to the same territory', () => {
+      const inbound = deployedUnit.ids.reduce((obj, id) => ( { ...obj, [id]: territory.index } ), {})
+      const unitsInRange = combatUnitsInRange(startingBoard, { name: 'Germany' }, territory, inbound, {}, { transporting: {} }, { transport: {} }, units)
+      it('does not change which units are in range', () => {
+        expect(unitsInRange).toMatchObject(originalUnitsInRange)
+      })
+    })
+    describe('to another territory', () => {
+      const inbound = deployedUnit.ids.reduce((obj, id) => ( { ...obj, [id]: territory.index + 1 } ), {})
+      const unitsInRange = combatUnitsInRange(startingBoard, { name: 'Germany' }, territory, inbound, {}, { transporting: {} }, { transport: {} }, units)
+      it('does not count those units as in range', () => {
+        expect(originalUnitsInRange.slice(1)).toMatchObject(unitsInRange)
+      })
+
+    })
+
   })
 })

@@ -4,7 +4,8 @@ import {
   landingSlots,
   range8,
   range6,
-  movement
+  movement,
+  attack
 } from '../../selectors/units'
 import {
   isFriendly,
@@ -53,7 +54,7 @@ const availableUnit = (range, currentPower, medium) => unit => {
     movement(unit) >= range
 }
 
-const unitsWithOrigin = (range, currentPower, medium, returnFlight) => (units, territory) => {
+const unitsWithOrigin = (range, currentPower, medium) => (units, territory) => {
   const territoryUnits = territory.units.filter(availableUnit(range, currentPower, medium))
   return [...units, ...territoryUnits.map(unitWithOrigin(territory, range))]
 }
@@ -73,7 +74,7 @@ const friendlyLand = (territory, currentPower) => isLand(territory) && isFriendl
 
 const landable = currentPower => territory => friendlyLand(territory, currentPower)
 
-const airUnitsInRange = (board, currentPower, territory, destination, allUnits) => {
+const airUnitsInRange = (board, currentPower, territory, allUnits) => {
   const units = Object.values(allUnits).filter(unit => (
     unit.power === currentPower && 
     (unit.type.includes('fighter') || unit.type.includes('bomber'))
@@ -131,8 +132,10 @@ const unitSort = (a, b) => {
     return -1
   } else if (a.originName !== b.originName) {
     return a.originName.localeCompare(b.originName)
+  } else if (attack(a) !== attack(b)) {
+    return attack(a) > attack(b) ? 1 : -1
   } else {
-    return a.attack > b.attack ? 1 : -1
+    return a.type.localeCompare(b.type)
   }
 }
 
@@ -141,14 +144,14 @@ const unitsByMedium = (board, currentPower, territory, inbound, destination, tra
     return [
       ...landUnitsInRange(board, currentPower, territory),
       ...amphibUnitsInRange(board, currentPower, territory, inbound, destination, transport, amphib, allUnits),
-      ...airUnitsInRange(board, currentPower, territory, destination, allUnits)
+      ...airUnitsInRange(board, currentPower, territory, allUnits)
     ]
     //} else if (isFriendly(territory, currentPower, allUnits)) {
     //return seaUnitsInRange(board, currentPower, territory, allUnits)
   } else {
     return [
       ...seaUnitsInRange(board, currentPower, territory, allUnits),
-      ...airUnitsInRange(board, currentPower, territory, destination, allUnits)
+      ...airUnitsInRange(board, currentPower, territory, allUnits)
     ]
   }
 }
