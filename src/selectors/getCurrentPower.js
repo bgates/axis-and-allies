@@ -13,11 +13,7 @@ export const getCurrentPower = createSelector(
 
 export const getCurrentPowerName = createSelector(
   getCurrentPower,
-  currentPower => currentPower.name
-)
-
-export const loggedInAsCurrentPower = createSelector(
-  getCurrentPower
+  ({ name })=> name
 )
 
 const getProfilePowers = ({ firebase }) => firebase.profile[firebase.profile.currentGameId]
