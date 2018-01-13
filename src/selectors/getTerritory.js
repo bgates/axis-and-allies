@@ -8,19 +8,19 @@ import {
   getPlacement,
   getLandingPlanes
 } from './stateSlices'
-import { getAllUnits, idsToUnits, bombCapacity } from './units'
+import { getAllUnits, idsToUnits, bombCapacity, industry } from './units'
 import { getCurrentPowerName } from './getCurrentPower'
 
 export const isLand = (territory) => !territory.sea
 export const isSea = (territory) => territory.sea
 
-export const getAllTerritories = (state) => state.territories
+const getAllTerritories = (state) => state.territories
 
 export const getTerritoryData = (_, territoryIndex) => territoryData[territoryIndex]
 
 export const getTerritory = (state, territoryIndex) => state.territories[territoryIndex]
 
-export const getOutboundUnits = (state, territoryIndex) => (
+const getOutboundUnits = (state, territoryIndex) => (
   state.unitOrigin[territoryIndex] || []
 )
 
@@ -28,7 +28,7 @@ export const getInboundUnits = (state, territoryIndex) => (
   state.unitDestination[territoryIndex] || []
 )
 
-export const getTerritoryUnits = createSelector(
+const getTerritoryUnits = createSelector(
   getTerritory,
   getAllUnits,
   ({ unitIds }, units) => idsToUnits(unitIds, units)
@@ -111,6 +111,7 @@ const newUnits = (placement, power, index) => (
     placement[type][index] ? units.concat(new Array(placement[type][index]).fill({ type, power, id: 0 })) : units
   ), [])
 )
+
 export const getUnits = createSelector(
   getTerritory,
   getAllUnits,
@@ -135,7 +136,7 @@ export const getUnits = createSelector(
 export const hasIndustrialComplex = createSelector(
   getAllUnits,
   getTerritory,
-  (allUnits, territory) => territory.unitIds.find(id => allUnits[id].type === 'industrial complex')
+  (allUnits, territory) => territory.unitIds.find(id => industry(allUnits[id]))
 )
 
 export const amphibOrigins = (amphib, inbound, index) => (

@@ -1,21 +1,8 @@
 'use strict'
 
 import { territoriesInRange, combatUnitsInRange } from './movement'
-import { initialState as unitsAndTerritories } from '../../config/configureStore'
-import { mergeBoardAndTerritories } from '../../selectors/getTerritory'
 import powers from '../../config/initialPowers'
-
-const { units, territories } = unitsAndTerritories
-const startingBoard = mergeBoardAndTerritories.resultFunc(units, territories)
-
-  /*it('gets the board right', () => {
-  expect(startingBoard[0]).toEqual([])
-})*/
-
-// assign so I can mutate within a test without affecting others
-const findTerritory = name => (
-  Object.assign({}, startingBoard.find(t => t.name === name))
-)
+import { findTerritory, startingBoard, startingUnits } from '../../setupTests'
 
 describe('territoriesInRange', () => {
   describe('relative to the Strait of Gibraltar', () => {
@@ -48,7 +35,7 @@ describe('combatUnitsInRange', () => {
     const board = startingBoard.map(territory => (
       toReplace.find(t => t.name === territory.name) || territory
     ))
-    return combatUnitsInRange(board, power, territory, {}, {}, { transporting: {} }, { transport: {} }, units)
+    return combatUnitsInRange(board, power, territory, {}, {}, { transporting: {} }, { transport: {} }, startingUnits)
   }
   it('returns array of unit objects', () => {
     const unitsInRange = simpleInRange({ name: 'Germany' }, findTerritory('East Poland'))
@@ -160,14 +147,14 @@ describe('combatUnitsInRange', () => {
     const deployedUnit = originalUnitsInRange[0]
     describe('to the same territory', () => {
       const inbound = deployedUnit.ids.reduce((obj, id) => ( { ...obj, [id]: territory.index } ), {})
-      const unitsInRange = combatUnitsInRange(startingBoard, { name: 'Germany' }, territory, inbound, {}, { transporting: {} }, { transport: {} }, units)
+      const unitsInRange = combatUnitsInRange(startingBoard, { name: 'Germany' }, territory, inbound, {}, { transporting: {} }, { transport: {} }, startingUnits)
       it('does not change which units are in range', () => {
         expect(unitsInRange).toMatchObject(originalUnitsInRange)
       })
     })
     describe('to another territory', () => {
       const inbound = deployedUnit.ids.reduce((obj, id) => ( { ...obj, [id]: territory.index + 1 } ), {})
-      const unitsInRange = combatUnitsInRange(startingBoard, { name: 'Germany' }, territory, inbound, {}, { transporting: {} }, { transport: {} }, units)
+      const unitsInRange = combatUnitsInRange(startingBoard, { name: 'Germany' }, territory, inbound, {}, { transporting: {} }, { transport: {} }, startingUnits)
       it('does not count those units as in range', () => {
         expect(originalUnitsInRange.slice(1)).toMatchObject(unitsInRange)
       })
