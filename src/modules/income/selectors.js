@@ -7,7 +7,7 @@ import unitTypes from '../../config/unitTypes'
 // capturing capital: 3; losing capital: -5
 
 const capitalCapture = (territoryNames, power) => {
-  let opponent = powerData[power].side === 'axis' ? 'allies' : 'axis'
+  let opponent = powerData[power].side === 'Axis' ? 'Allies' : 'Axis'
   return Object.values(powerData)
     .filter(power => power.side === opponent)
     .reduce((total, opponent) => total + territoryNames.includes(opponent.capital) ? 3 : 0, 0)
@@ -36,26 +36,26 @@ const groBdeutschland = (territoryNames) => {
     territoryNames.includes('Stalingrad') ? 5 : 0
 }
 
-const GermanNationalObjectives = (territoryNames) => {
-  return [      
+const GermanNationalObjectives = (territoryNames) => (
+  [      
     { text: "For controlling all of the traditional German homeland (Berlin, West Germany, Bavaria, Austria, Denmark, Holland, France, Western France, Vichy France, Yugoslavia, Bulgaria, Romania, Hungary, Poland, and East Poland)", value: homelandControl(territoryNames) },
     { text: "For controlling at least three of the more-or-less empty spaces to the east (Baltic States, Western Ukraine, Eastern Ukraine, Belorussia, Orel-Kursk)", value: lebensraumControl(territoryNames) },
     { text: "For controlling either of the soon-to-be-traditionally German cities of Leningrad or Stalingrad", value: groBdeutschland(territoryNames) },
     { text: "For capturing enemy capitals", value: capitalCapture(territoryNames, 'Germany') }
   ]
-}
+)
 
 const bufferStates = (territoryNames) => {
   const states = ['Norway', 'Finland', 'Poland', 'Bulgaria', 'Romania', 'Hungary', 'Yugoslavia', 'Greece', 'Albania']
   return hasEnough(states, territoryNames, 6) ? 10 : 0
 }
 
-const RussianNationalObjectives = (territoryNames) => {
-  return [ 
+const RussianNationalObjectives = (territoryNames) => (
+  [ 
     { text: "For controlling a buffer zone to the West (at least six of Norway, Finland, Poland, Bulgaria, Romania, Hungary, Yugoslavia, Greece, and Albania)", value: bufferStates(territoryNames) },
     { text: "For capturing enemy capitals", value: capitalCapture(territoryNames, 'USSR') }
   ]
-}
+)
 
 const greaterEastAsiaControl = (territoryNames) => {
   const greaterEastAsia = ['Korea', 'Manchuria', 'Peking', 'Shantung', 'Kwangtung', 'Hong Kong', 'Kwangsi', 'French Indochina', 'Saigon', 'Malaysia', 'Thailand']
@@ -89,7 +89,7 @@ const BritishNationalObjectives = (territoryNames) => {
 
 const alliedSurfaceShip = (unit) => {
   const surfaceShips = Object.values(unitTypes).filter(unit => unit.ship)
-    .map(unit => unit.type)
+    .map(unit => unit.name)
   const allies = ['US', 'UK', 'USSR']
   return surfaceShips.includes(unit.type) && allies.includes(unit.power)
 }
@@ -105,7 +105,7 @@ const romanEmpire = (territories, territoryNames) => {
   return hasAll(empire, territoryNames) ? 5 : 0
 }
 
-const ItalianNationalObjectives = (territories, territoryNames) => {
+const ItalianNationalObjectives = (territoryNames, territories) => {
   return [ 
     { text: "For making the Mediterranean an Italian lake (with no Allied surface combat vessels present)", value: mareNostrum(territories) },
     { text: "For restoring the Roman Empire (controlling all original Italian territories plus Tobruk, Upper Egypt, the Sudan, Cairo, Cyprus, and Malta)", value: romanEmpire(territories, territoryNames) },
@@ -122,15 +122,15 @@ const AmericanNationalObjectives = (territoryNames) => {
 const objectivesByNation = (territories, ownedTerritories, powerName) => {
   const territoryNames = ownedTerritories.map(territory => territory.name)
   const objectives = {
-    'Germany': GermanNationalObjectives(territoryNames),
-    'USSR': RussianNationalObjectives(territoryNames),
-    'Japan': JapaneseNationalObjectives(territoryNames),
-    'UK': BritishNationalObjectives(territoryNames),
-    'Italy': ItalianNationalObjectives(territories, territoryNames),
-    'US': AmericanNationalObjectives(territoryNames),
-    'China': []
+    'Germany': GermanNationalObjectives,
+    'USSR': RussianNationalObjectives,
+    'Japan': JapaneseNationalObjectives,
+    'UK': BritishNationalObjectives,
+    'Italy': ItalianNationalObjectives,
+    'US': AmericanNationalObjectives,
+    'China': () => []
   }
-  return objectives[powerName]
+  return objectives[powerName](territoryNames, territories)
 }
 
 export const territoriesOwnedBy = createSelector(
@@ -142,8 +142,8 @@ export const nationalObjectives = createSelector(
   mergeBoardAndTerritories,
   territoriesOwnedBy,
   getCurrentPower,
-  (allTerritories, ownedTerritories, power) => objectivesByNation(allTerritories, ownedTerritories[power.name], power.name)
-);
+  (allTerritories, ownedTerritories, { name }) => objectivesByNation(allTerritories, ownedTerritories[name], name)
+)
  
 export const calculateNPL = (territories) => {
   return territories.filter(({ sea, currentPower, original_power }) => (
