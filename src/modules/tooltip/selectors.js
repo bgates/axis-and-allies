@@ -20,12 +20,12 @@ export const getIndustry = createSelector(
 
 export const getTerritoryName = createSelector(
   getTerritoryData,
-  territory => territory.name
+  ({ name }) => name
 )
 
 export const getTerritoryValue = createSelector(
   getTerritoryData,
-  territory => territory.ipc_value
+  ({ ipc_value }) => ipc_value
 )
 
 export const getSide = createSelector(
