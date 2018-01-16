@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
 import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
-import territoryData from '../config/territories.json'
+import territoryData from '../config/territories'
 import { 
   getCurrentTerritoryIndex, 
   getDestinations, 

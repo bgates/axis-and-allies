@@ -10,7 +10,7 @@ import firebaseConfig from './firebase'
 import { newParse } from '../lib/Parser'
 import { nextId } from '../selectors/units'
 import Board from './startingBoard'
-import territoryData from './territories.json'
+import territoryData from './territories'
 
 firebase.initializeApp(firebaseConfig)
 const rrfConfig = {
