@@ -17,7 +17,7 @@ const Territory = ({
       stroke="#000"
       strokeWidth="2"
       fill={fill} 
-      onClick={playing && handleClick.bind(null, territoryIndex)}
+      onClick={playing && handleClick}
       onMouseOver={setVisibility} >
     </path>
   )

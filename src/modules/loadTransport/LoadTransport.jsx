@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { Component } from 'react'
 import ReactTooltip from 'react-tooltip'
 import { TransportFigure } from '../../components/UnitFigure'
+import BoundButton from '../../components/BoundButton'
 
 const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAttackOptions }) => {
-  const handleClick = loadUnits.bind(null, transport, territory.index)
   return (
     <div>
       <a data-tip className="help">?</a>
@@ -26,32 +26,48 @@ const LoadTransport = ({ territory, transport, loadableUnits, loadUnits, viewAtt
         cellSpacing={0} 
         cellPadding={1}>
         <tbody>
-        {loadableUnits.map(({ originName, originIndex, units }, index) => ( 
+        {loadableUnits.map(({ originName, originIndex, units }) => ( 
           <LoadableUnit 
-            key={index}
-            handleClick={handleClick.bind(null, units.map(u => u.id), originIndex)}
+            key={units.map(u => u.id)}
+            transport={transport}
+            territoryIndex={territory.index}
+            originIndex={originIndex}
+            loadUnits={loadUnits}
             name={originName}
             units={units} />
         ))}
         </tbody>
       </table>
-      <p>To go back to the previous screen without loading and moving press <button onClick={viewAttackOptions.bind(null, territory.index)}>Cancel</button></p>
+      <p>To go back to the previous screen without loading and moving press <BoundButton handleClick={viewAttackOptions} index={territory.index} >Cancel</BoundButton></p>
     </div> 
   )
 }
 
 export default LoadTransport
 
-const LoadableUnit = ({ name, units, handleClick }) => (
-  <tr>
-    <td><strong>{name}</strong></td>
-    {units.map((unit, index) => (        
-      <td key={index} className="unit" colSpan={3 - units.length}>
-        <TransportFigure unit={unit} />
-      </td>
-      ))}
-    <td className="available">
-      <button onClick={handleClick}>Load &amp; Move</button>
-    </td>
-  </tr>
-)
+class LoadableUnit extends Component {
+  constructor () {
+    super()
+    this._onClick = this._onClick.bind(this)
+  }
+  _onClick () {
+    const { transport, territoryIndex, units, originIndex } = this.props
+    this.props.loadUnits(transport, territoryIndex, units.map(u => u.id), originIndex)
+  }
+  render () {
+    const { name, units } = this.props
+    return (
+      <tr>
+        <td><strong>{name}</strong></td>
+        {units.map((unit, index) => (        
+          <td key={index} className="unit" colSpan={3 - units.length}>
+            <TransportFigure unit={unit} />
+          </td>
+          ))}
+        <td className="available">
+          <button onClick={this._onClick}>Load &amp; Move</button>
+        </td>
+      </tr>
+    )
+  }
+}

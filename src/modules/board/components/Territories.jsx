@@ -9,8 +9,8 @@ import '../../../assets/styles/game.css'
 import '../../../assets/styles/color.css'
 
 class Territories extends Component {
-  constructor () {
-    super()
+  constructor (props) {
+    super(props)
     this.state = {
       tooltipTerritoryIndex: 0,
       ctrlPressed: false
@@ -20,6 +20,10 @@ class Territories extends Component {
     this.handleMouseMove = this.handleMouseMove.bind(this)
     this.handleMouseOut = this.handleMouseOut.bind(this)
     this.setVisibility = this.setVisibility.bind(this)
+    this.setVisibilities = props.territories.reduce((obj, _, index) => {
+      obj[index] = this.setVisibility.bind(this, index)
+      return obj
+    }, {})
   }
 
   componentDidMount () {
@@ -134,7 +138,7 @@ class Territories extends Component {
             <TerritoryContainer
               playing={this.props.playing}
               territoryIndex={index}
-              setVisibility={this.setVisibility.bind(this, index)}
+              setVisibility={this.setVisibilities[index]}
               key={index} />
            )}
         </svg>

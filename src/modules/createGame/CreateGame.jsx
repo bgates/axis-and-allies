@@ -7,6 +7,7 @@ class CreateGame extends Component {
     super(props)
     this.state = { select: '' }
     this.setSelect = this.setSelect.bind(this)
+    this.createGame = this.createGame.bind(this)
   }
 
   createGame (event) {
@@ -42,7 +43,7 @@ class CreateGame extends Component {
         <h1>Create Game</h1>
         <p>Enter the email addresses and screen names for everyone who wants to play the game. You can enter an email address more than once if you are playing with fewer than seven people.</p>
         <p>If you are already playing a single game in progress, you will automatically join that game. If you are playing multiple games, you will be given the option of choosing which one to join. If you are not part of a current game, you will be taken to a dialog to let you create one.</p>
-        <form onSubmit={this.createGame.bind(this)}>
+        <form onSubmit={this.createGame}>
           <div>
             <label>Germany</label>
             <input name="email_germany" placeholder="Email for German player"/>

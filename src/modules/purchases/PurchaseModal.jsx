@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
 import { UnitImg } from '../../components/UnitFigure'
@@ -35,10 +35,10 @@ const PurchaseModal = ({ budget, buildableUnits, purchases, total, increment, de
               key={unit.name}
               currentPower={currentPower}
               unit={unit} 
-              count={purchases[unit.name]}
+              count={purchases[unit.name] || 0}
               budget={budget}
-              increment={increment.bind(null, unit)}
-              decrement={decrement.bind(null, unit)}
+              increment={increment}
+              decrement={decrement}
             />)}
           </tbody>
           <tfoot>
@@ -60,7 +60,37 @@ const PurchaseModal = ({ budget, buildableUnits, purchases, total, increment, de
 
 export default PurchaseModal
 
-const PurchaseRow = ({budget, unit, count, increment, decrement, currentPower }) => {
+class PurchaseRow extends Component {
+  constructor () {
+    super()
+    this.handleIncrement = this.handleIncrement.bind(this)
+    this.handleDecrement = this.handleDecrement.bind(this)
+  }
+  handleIncrement () {
+    this.props.increment(this.props.unit)
+  }
+  handleDecrement () {
+    this.props.decrement(this.props.unit)
+  }
+  render () {
+    const {budget, unit, count, currentPower } = this.props
+    return (
+      <tr>
+        <td>{unit.name}</td>
+        <td><UnitImg power={currentPower} name={unit.name}/></td>
+        <td>{unit.movement}</td>
+        <td>{unit.attack}</td>
+        <td>{unit.defend}</td>
+        <td>{unit.cost}</td>
+        <td><button disabled={budget < unit.cost} onClick={this.handleIncrement}>+</button></td>
+        <td>{count}</td>
+        <td><button disabled={count === 0} onClick={this.handleDecrement}>-</button></td>
+        <td>{count * unit.cost}</td>
+      </tr>
+    )
+  }
+}
+  /*const PurchaseRow = () => {
   if (!count) count = 0
   return (
     <tr>
@@ -76,4 +106,4 @@ const PurchaseRow = ({budget, unit, count, increment, decrement, currentPower })
       <td>{count * unit.cost}</td>
     </tr>
   )
-}
+}*/

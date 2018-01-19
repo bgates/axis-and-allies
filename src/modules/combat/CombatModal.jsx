@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Forces from '../../components/Forces'
+import BoundButton from '../../components/BoundButton'
 import PATHS from '../../paths'
 import '../../assets/styles/combat.css'
 
@@ -46,9 +47,7 @@ const CombatModal = ({
       <nav>
         <button onClick={isUnderway ? null : selectBattle}>Back</button>
         {allowRetreat && <Link className="btn" to={PATHS.RETREAT}>View Retreat Options</Link>}
-        <button 
-          onClick={rollForCombat.bind(null, territory.index)}
-        >Roll for combat</button>
+        <BoundButton handleClick={rollForCombat} index={territory.index} >Roll for combat</BoundButton>
       </nav>
     </div>
   )

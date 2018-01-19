@@ -7,6 +7,7 @@ class Die extends Component {
   constructor () {
     super()
     this.state = {}
+    this.showRed = this.showRed.bind(this)
   }
 
   showRed () {
@@ -24,7 +25,7 @@ class Die extends Component {
     return (
       <Transition
         className="dieWrapper"
-        onPhaseEnd={this.showRed.bind(this)}
+        onPhaseEnd={this.showRed}
         childrenStyles={ { appear: { transform } } }
         >
         <div className={classes} style={ { transition: `transform ${duration}s` }} >

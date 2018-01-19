@@ -115,9 +115,10 @@ export const bombRaid = (dispatch, state, territoryIndex) => {
   dispatch(push(PATHS.STRATEGIC_BOMB))
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
+  const { territoryIndex } = ownProps
   return {
-    handleClick: bindActionCreators(territoryThunk, dispatch)
+    handleClick: bindActionCreators(territoryThunk.bind(null, territoryIndex), dispatch)
   }
 }
 
