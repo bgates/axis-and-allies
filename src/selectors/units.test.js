@@ -1,4 +1,4 @@
-import { combineUnits } from './units'
+import { combineUnits, survivors } from './units'
 
 describe('combineUnits', () => {
   const unit = { type: 'infantry', power: 'Germany', originName: 'Berlin', id: 2 }
@@ -43,6 +43,25 @@ describe('combineUnits', () => {
         total = combineUnits(total, { type: 'transport', power: 'UK', originName: 'Channel', id: n })
       })
       expect(total.length).toEqual(3)
+    })
+  })
+})
+
+describe('survivors', () => {
+  const units = [{ id: 1, type: 'infantry' }, { id: 2, type: 'armor' }]
+  it('returns units if no casualties', () => {
+    const result = survivors(units)
+    expect(result).toEqual(units)
+  })
+  it('removes casualties', () => {
+    const result = survivors(units, [2])
+    expect(result).toEqual([{ id: 1, type: 'infantry' }])
+  })
+  describe('when a unit can take damage', () => {
+    const units = [{ id: 1, type: 'destroyer' }, { id: 2, type: 'battleship' }]
+    it('damages the unit if unit is casualty', () => {
+      const result = survivors(units, [2])
+      expect(result[1].type).toEqual('damaged battleship')
     })
   })
 })
