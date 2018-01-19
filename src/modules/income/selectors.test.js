@@ -27,10 +27,10 @@ const conquer = (power, names) => startingBoard.map(territory => (
 
 describe('nationalObjectives', () => {
   const { resultFunc } = nationalObjectives
+  const objectives = (board, power) => resultFunc(board, owned(board, power), { name: power })
   describe('for Germany', () => {
-    const germany = { name: 'Germany' }
     describe('at start', () => {
-      const result = resultFunc(startingBoard, owned(startingBoard, 'Germany'), germany)
+      const result = objectives(startingBoard, 'Germany')
       it('has four elements', () => {
         expect(result.length).toEqual(4)
       })
@@ -40,22 +40,36 @@ describe('nationalObjectives', () => {
     })
     describe('by conquering East Poland', () => {
       const board = conquer('Germany', ['East Poland'])
-      const result = resultFunc(board, owned(board, 'Germany'), germany)
+      const result = objectives(board, 'Germany')
       it('gets some value', () => {
         expect(result.map(value)).toEqual([5, 0, 0, 0])
       })
     })
     describe('by conquering Leningrad', () => {
       const board = conquer('Germany', ['Leningrad'])
-      const result = resultFunc(board, owned(board, 'Germany'), germany)
+      const result = objectives(board, 'Germany')
       it('gets some value', () => {
         expect(result.map(value)).toEqual([0, 0, 5, 0])
+      })
+    })
+    describe('by conquering three Soviet territories', () => {
+      const board = conquer('Germany', ['Western Ukraine', 'Eastern Ukraine', 'Belorussia'])
+      const result = objectives(board, 'Germany')
+      it('gets some value', () => {
+        expect(result.map(value)).toEqual([0, 5, 0, 0])
+      })
+    })
+    describe('by conquering Moscow', () => {
+      const board = conquer('Germany', ['Moscow'])
+      const result = objectives(board, 'Germany')
+      it('gets some value', () => {
+        expect(result.map(value)).toEqual([0, 0, 0, 3])
       })
     })
   })
   describe('for USSR', () => {
     describe('at start', () => {
-      const result = resultFunc(startingBoard, owned(startingBoard, 'USSR'), { name: 'USSR' })
+      const result = objectives(startingBoard, 'USSR')
       it('has two elements', () => {
         expect(result.length).toEqual(2)
       })
@@ -63,10 +77,24 @@ describe('nationalObjectives', () => {
         expect(result.map(value)).toEqual([0, 0])
       })
     })
+    describe('after conquering most of Eastern Europe', () => {
+      const board = conquer('USSR', ['Poland', 'Bulgaria', 'Romania', 'Hungary', 'Yugoslavia', 'Greece'])
+      const result = objectives(board, 'USSR')
+      it('gets some value', () => {
+        expect(result.map(value)).toEqual([10, 0])
+      })
+    })
+    describe('after conquering Berlin', () => {
+      const board = conquer('USSR', ['Berlin'])
+      const result = objectives(board, 'USSR')
+      it('gets some value', () => {
+        expect(result.map(value)).toEqual([0, 3])
+      })
+    })
   })
   describe('for Japan', () => {
     describe('at start', () => {
-      const result = resultFunc(startingBoard, owned(startingBoard, 'Japan'), { name: 'Japan' })
+      const result = objectives(startingBoard, 'Japan')
       it('has three elements', () => {
         expect(result.length).toEqual(3)
       })
@@ -74,11 +102,31 @@ describe('nationalObjectives', () => {
         expect(result.map(value)).toEqual([0, 0, 0])
       })
     })
+    describe('after conquering Co-Prosperity Sphere', () => {
+      const board = conquer('Japan', ['Korea', 'Manchuria', 'Peking', 'Shantung', 'Kwangtung', 'Hong Kong', 'Kwangsi', 'French Indochina', 'Saigon', 'Malaysia', 'Thailand'])
+      const result = objectives(board, 'Japan')
+      it('has value', () => {
+        expect(result.map(value)).toEqual([5, 0, 0])
+      })
+    })
+    describe('after conquering Pacific', () => {
+      const board = conquer('Japan', ['Sumatra', 'Borneo', 'Java', 'Celebes', 'Philippines', 'Solomon Islands'])
+      const result = objectives(board, 'Japan')
+      it('has value', () => {
+        expect(result.map(value)).toEqual([0, 5, 0])
+      })
+    })
+    describe('after conquering...Moscow', () => {
+      const board = conquer('Japan', ['Moscow'])
+      const result = objectives(board, 'Japan')
+      it('has value', () => {
+        expect(result.map(value)).toEqual([0, 0, 3])
+      })
+    })
   })
   describe('for UK', () => {
-    const uk = { name: 'UK' }
     describe('at start', () => {
-      const result = resultFunc(startingBoard, owned(startingBoard, 'UK'), uk)
+      const result = objectives(startingBoard, 'UK')
       it('has two elements', () => {
         expect(result.length).toEqual(2)
       })
@@ -88,19 +136,24 @@ describe('nationalObjectives', () => {
     })
     describe('by losing an important city', () => {
       ['Hong Kong', 'Cairo', 'Gibraltar'].forEach(city => {
-        const board = startingBoard.map(territory => (
-          territory.name === city ? { ...territory, currentPower: 'Not UK' } : territory
-        ))
-        const result = resultFunc(board, owned(board, 'UK'), uk)
+        const board = conquer('Germany', [city])
+        const result = objectives(board, 'UK')
         it('has no value', () => {
           expect(result.map(value)).toEqual([0, 0])
         })
       })
     })
+    describe('by conquering Berlin', () => {
+      const board = conquer('UK', ['Berlin'])
+      const result = objectives(board, 'UK')
+      it('has some value', () => {
+        expect(result.map(value)).toEqual([5, 3])
+      })
+    })
   })
   describe('for Italy', () => {
     describe('at start', () => {
-      const result = resultFunc(startingBoard, owned(startingBoard, 'Italy'), { name: 'Italy' })
+      const result = objectives(startingBoard, 'Italy')
       it('has three elements', () => {
         expect(result.length).toEqual(3)
       })
@@ -108,10 +161,17 @@ describe('nationalObjectives', () => {
         expect(result.map(value)).toEqual([0, 0, 0])
       })
     })
+    describe('by conquering old empire', () => {
+      const board = conquer('Italy', ['Tobruk', 'Upper Egypt', 'Anglo-Egyptian Sudan', 'Cairo', 'Cyprus', 'Malta'])
+      it('has some value', () => {
+        const result = objectives(board, 'Italy')
+        expect(result.map(value)).toEqual([0, 5, 0])
+      })
+    })
   })
   describe('for US', () => {
     describe('at start', () => {
-      const result = resultFunc(startingBoard, owned(startingBoard, 'US'), { name: 'US' })
+      const result = objectives(startingBoard, 'US')
       it('has one element', () => {
         expect(result.length).toEqual(1)
       })

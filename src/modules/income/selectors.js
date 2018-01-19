@@ -100,8 +100,8 @@ const mareNostrum = (territories) => {
 }
 
 const romanEmpire = (territories, territoryNames) => {
-  const originalHoldings = territories.filter(territory => territory.original_name === 'Italy').map(t => t.name)
-  const empire = ['Tobruk', 'Upper Egypt', 'Anglo-Egypt Sudan', 'Cairo', 'Cyprus', 'Malta'].concat(originalHoldings)
+  const originalHoldings = territories.filter(territory => territory.original_power === 'Italy').map(t => t.name)
+  const empire = ['Tobruk', 'Upper Egypt', 'Anglo-Egyptian Sudan', 'Cairo', 'Cyprus', 'Malta'].concat(originalHoldings)
   return hasAll(empire, territoryNames) ? 5 : 0
 }
 
