@@ -1,3 +1,4 @@
+// @flow
 import unitTypes from '../config/unitTypes'
 import { getAllUnits } from './stateSlices'
 export { getAllUnits }
@@ -10,7 +11,8 @@ const match = unit1 => unit2 => (
     .every(attr => unit1[attr] === unit2[attr])
 )
 
-export const combineUnits = (total, unit) => {
+type Unit = { type: string, id: number, power: string, originName?: string }
+export const combineUnits = (total: Array<any>, unit: Unit) => {
   let present = total.find(match(unit))
   if (present && unit.type !== 'transport') {
     return [ ...total.filter(u => u !== present), { ...present, ids: [...present.ids, unit.id], qty: present.qty + 1 } ]
@@ -19,37 +21,39 @@ export const combineUnits = (total, unit) => {
   }
 }
 
-export const attack = unit => unitTypes[unit.type].attack
-export const defend = unit => unitTypes[unit.type].defend || unitTypes[unit.type].flak
-export const land =   unit => unitTypes[unit.type].land
-export const landingSlots = unit => unitTypes[unit.type].landingSlots
-export const movement = unit => unitTypes[unit.type].movement
-export const canBombard = unit => unitTypes[unit.type].canBombard
-export const air = unit => unitTypes[unit.type].air
-export const attacks = unit => unitTypes[unit.type].numAttack || 1
-export const bombCapacity = unit => unitTypes[unit.type].bomber ? attacks(unit) : 0
-const isStrategic = unit => unit.type.includes('strategic')
-export const willDogfight = unit => air(unit) && !isStrategic(unit)
-const dogfight = unit => isStrategic(unit) ? 1 : 3
-export const AA = unit => unit.type === 'antiaircraft gun'
-export const noAA = unit => unit.type !== 'antiaircraft gun'
+type UnitType = { type: string }
+export const attack = (unit:UnitType) => unitTypes[unit.type].attack
+export const defend = (unit:UnitType) => unitTypes[unit.type].defend || unitTypes[unit.type].flak
+export const land =   (unit:UnitType) => unitTypes[unit.type].land
+export const landingSlots = (unit:UnitType) => unitTypes[unit.type].landingSlots
+export const movement = (unit:UnitType) => unitTypes[unit.type].movement
+export const canBombard = (unit:UnitType) => unitTypes[unit.type].canBombard
+export const air = (unit:UnitType) => unitTypes[unit.type].air
+export const attacks = (unit:UnitType) => unitTypes[unit.type].numAttack || 1
+export const bombCapacity = (unit:UnitType) => unitTypes[unit.type].bomber ? attacks(unit) : 0
+const isStrategic = (unit:UnitType) => unit.type.includes('strategic')
+export const willDogfight = (unit:UnitType) => air(unit) && !isStrategic(unit)
+const dogfight = (unit:UnitType) => isStrategic(unit) ? 1 : 3
+export const AA = (unit:UnitType) => unit.type === 'antiaircraft gun'
+export const noAA = (unit:UnitType) => unit.type !== 'antiaircraft gun'
     
-export const withAttack = unit => ({ ...unit, attack: attack(unit) })
-export const withDefend = unit => ({ ...unit, defend: defend(unit) })
-export const withDogfight = unit => ({ ...unit, attack: dogfight(unit) })
+export const withAttack = (unit:UnitType) => ({ ...unit, attack: attack(unit) })
+export const withDefend = (unit:UnitType) => ({ ...unit, defend: defend(unit) })
+export const withDogfight = (unit:UnitType) => ({ ...unit, attack: dogfight(unit) })
 
 const damaged = (units, casualties) => {
   const damagedUnits = units.filter(unit => casualties.includes(unit.id) && unitTypes[unit.type].canTakeDamage)
   return damagedUnits.map(unit => ({ ...unit, type: `damaged ${unit.type}` }))
 }
 
-export const survivors = (units, casualties = []) => {
+export const survivors = (units:Array<any>, casualties:Array<any> = []) => {
   const undamagedUnits = units.filter(({ id }) => !casualties.includes(id))
   const damagedUnits = damaged(units, casualties)
   return undamagedUnits.concat(damagedUnits)
 }
 
-export const unitWithOrigin = ({ name, index }, range) => unit => (
+type Origin = { name: string, index: number }
+export const unitWithOrigin = ({ name, index }:Origin, range: string) => (unit:Object) => (
   { 
     ...unit, 
     originName: name, 
@@ -58,12 +62,12 @@ export const unitWithOrigin = ({ name, index }, range) => unit => (
   } 
 )
 
-export const idsToUnits = (ids, units) => ids.map(id => units[id])
+export const idsToUnits = (ids:Array<number>, units:{ id: number }) => ids.map(id => units[id])
 
-export const nonIndustry = unit => unit.type !== 'industrial complex'
-export const industry = unit => unit.type === 'industrial complex'
-export const antiaircraft = unit => unit.type === 'anti-aircraft gun'
+export const nonIndustry = (unit:UnitType) => unit.type !== 'industrial complex'
+export const industry = (unit:UnitType) => unit.type === 'industrial complex'
+export const antiaircraft = (unit:UnitType) => unit.type === 'anti-aircraft gun'
 
-export const range8 = unit => movement(unit) === 8
+export const range8 = (unit:UnitType) => movement(unit) === 8
 
-export const range6 = unit => movement(unit) === 6
+export const range6 = (unit:UnitType) => movement(unit) === 6
