@@ -40,6 +40,7 @@ export const noAA = (unit:UnitType) => unit.type !== 'antiaircraft gun'
 export const withAttack = (unit:UnitType) => ({ ...unit, attack: attack(unit) })
 export const withDefend = (unit:UnitType) => ({ ...unit, defend: defend(unit) })
 export const withDogfight = (unit:UnitType) => ({ ...unit, attack: dogfight(unit) })
+export const ship = (unit:UnitType) => unitTypes[unit.type].ship
 
 const damaged = (units, casualties) => {
   const damagedUnits = units.filter(unit => casualties.includes(unit.id) && unitTypes[unit.type].canTakeDamage)

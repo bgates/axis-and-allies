@@ -1,3 +1,4 @@
+// @flow
 import { createSelector } from 'reselect'
 import { getCurrentPower, getPowers } from '../../selectors/getCurrentPower'
 import { territoriesOwnedBy, calculateNPL } from '../income'

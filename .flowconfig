@@ -1,0 +1,11 @@
+[ignore]
+<PROJECT_ROOT>/node_modules/.*/bower.json
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+
+[strict]

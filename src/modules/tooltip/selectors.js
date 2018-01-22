@@ -5,7 +5,7 @@ import {
   getTerritoryData
 } from '../../selectors/getTerritory'
 import { industry, nonIndustry } from '../../selectors/units'
-import { powerData } from '../../config/initialPowers'
+import { side } from '../../config/initialPowers'
 export { getCurrentPowerName }
 
 export const getUnits = createSelector(
@@ -30,5 +30,5 @@ export const getTerritoryValue = createSelector(
 
 export const getSide = createSelector(
   getCurrentPowerName,
-  currentPower => powerData[currentPower].side
+  currentPower => side(currentPower)
 )

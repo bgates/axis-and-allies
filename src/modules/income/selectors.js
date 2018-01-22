@@ -1,17 +1,18 @@
+// @flow
 import { createSelector } from 'reselect'
 import { groupBy } from 'ramda'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { ship } from '../../selectors/units'
 import { mergeBoardAndTerritories, getTerritoriesWithIpcValues } from '../../selectors/getTerritory'
-import { powerData } from '../../config/initialPowers'
+import { opponents } from '../../config/initialPowers'
 import unitTypes from '../../config/unitTypes'
 // capturing capital: 3; losing capital: -5
 
-const capitalCapture = (territoryNames, power) => {
-  let opponent = powerData[power].side === 'Axis' ? 'Allies' : 'Axis'
-  return Object.values(powerData)
-    .filter(power => power.side === opponent)
-    .reduce((total, opponent) => total + territoryNames.includes(opponent.capital) ? 3 : 0, 0)
-}
+const capitalCapture = (territoryNames, currentPower) => (
+  opponents(currentPower).reduce((total, power) => (
+    total + territoryNames.includes(power.capital) ? 3 : 0
+  ), 0)
+)
 
 const hasAll = (subcollection, collection) => {
   return subcollection.every(member => collection.includes(member))
@@ -88,10 +89,8 @@ const BritishNationalObjectives = (territoryNames) => {
 }
 
 const alliedSurfaceShip = (unit) => {
-  const surfaceShips = Object.values(unitTypes).filter(unit => unit.ship)
-    .map(unit => unit.name)
   const allies = ['US', 'UK', 'USSR']
-  return surfaceShips.includes(unit.type) && allies.includes(unit.power)
+  return ship(unit) && allies.includes(unit.power)
 }
 
 const mareNostrum = (territories) => {
@@ -145,7 +144,7 @@ export const nationalObjectives = createSelector(
   (allTerritories, ownedTerritories, { name }) => objectivesByNation(allTerritories, ownedTerritories[name], name)
 )
  
-export const calculateNPL = (territories) => {
+export const calculateNPL = (territories:{ sea:boolean, currentPower: string, original_power:string, ipc_value:number }[]) => {
   return territories.filter(({ sea, currentPower, original_power }) => (
     !(sea && currentPower !== original_power)
   )).reduce((sum, territory) => sum + (territory.ipc_value || 0), 0)
