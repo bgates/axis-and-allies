@@ -1,3 +1,4 @@
+// @flow
 import { createSelector } from 'reselect'
 import { omit, values, groupBy } from 'ramda'
 import { sameSide } from '../config/initialPowers'
@@ -10,22 +11,34 @@ import {
 } from './stateSlices'
 import { getAllUnits, idsToUnits, bombCapacity, industry } from './units'
 import { getCurrentPowerName } from './getCurrentPower'
+import type { PowerName } from '../actions/types'
+import type { UnitType } from './units'
 
-export const isLand = (territory) => !territory.sea
-export const isSea = (territory) => territory.sea
+type Territory = {
+  sea?: boolean,
+  adjacentIndexes: Array<number>,
+  currentPower: PowerName,
+  units: Array<UnitType>
+}
+type State = {
+  territories: Array<Territory>,
+  unitDestination: { [string]: Array<number> }
+}
+export const isLand = (territory:Territory) => !territory.sea
+export const isSea = (territory:Territory) => territory.sea
 
 const getAllTerritories = (state) => state.territories
 
-export const getTerritoryData = (_, territoryIndex) => territoryData[territoryIndex]
+export const getTerritoryData = (_:any, territoryIndex:number) => territoryData[territoryIndex]
 
-export const getTerritory = (state, territoryIndex) => state.territories[territoryIndex]
+export const getTerritory = (state:State, territoryIndex:number) => state.territories[territoryIndex]
 
 const getOutboundUnits = (state, territoryIndex) => (
   state.unitOrigin[territoryIndex] || []
 )
 
-export const getInboundUnits = (state, territoryIndex) => (
-  state.unitDestination[territoryIndex] || []
+export const getInboundUnits = (state:State, territoryIndex:number) => (
+  state.unitDestination[territoryIndex.toString()] || []
 )
 
 const getTerritoryUnits = createSelector(
@@ -34,18 +47,18 @@ const getTerritoryUnits = createSelector(
   ({ unitIds }, units) => idsToUnits(unitIds, units)
 )
 
-export const adjacents = (board, territory) => (
+export const adjacents = (board:Array<Territory>, territory:Territory) => (
   territory.adjacentIndexes.map(i => board[i])
 )
 
 const isNeutral = ({ currentPower }) => currentPower === 'Neutrals'
-export const nonNeutral = (territory) => !isNeutral(territory)
+export const nonNeutral = (territory:Territory) => !isNeutral(territory)
 
-export const isFriendly = (territory, currentPower, units) => (  
+export const isFriendly = (territory:Territory, currentPower:PowerName, units:Array<UnitType>) => (  
   !isNeutral(territory) && !isEnemy(territory, currentPower)
 )
 
-export const isEnemy = ({ currentPower, units = []}, activePower) => {
+export const isEnemy = ({ currentPower, units = []}:Territory, activePower:PowerName) => {
   if (currentPower && !['Neutrals', 'Oceans'].includes(currentPower)) {
     return !sameSide(currentPower, activePower)
   }
@@ -88,7 +101,7 @@ export const mergeBoardAndTerritories = createSelector(
     return { currentPower, units, name, original_power, sea, seaPort, adjacentIndexes, index, canalToIndex, canalControlIndex }
   })
 )
-window.getBoard = mergeBoardAndTerritories
+
 export const getTerritoriesWithIpcValues = createSelector(
   getAllTerritories,
   territories => territories.map(({ currentPower }, index) => {
@@ -139,10 +152,14 @@ export const hasIndustrialComplex = createSelector(
   (allUnits, territory) => territory.unitIds.find(id => industry(allUnits[id]))
 )
 
-export const amphibOrigins = (amphib, inbound, index) => (
-  amphib.territory[index] || []).map(transportId => inbound[transportId]
+export type Amphib = {
+  territory: { [string]:Array<number> }
+}
+export const amphibOrigins = (amphib:Amphib, inbound:{[string]:Array<number>}, index:number) => (
+  amphib.territory[index.toString()] || []).map(transportId => inbound[transportId.toString()]
 )
-export const getBombingUnits = state => state.strategicBombing.bombingUnits
+type BombsInState = { strategicBombing: { bombingUnits:Array<number> } }
+export const getBombingUnits = (state:BombsInState) => state.strategicBombing.bombingUnits
 
 export const bomberPayload = createSelector(
   getCommittedUnits,

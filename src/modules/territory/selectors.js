@@ -1,3 +1,4 @@
+// @flow
 import { createSelector } from 'reselect'
 import classNames from 'classnames'
 import { 
@@ -20,6 +21,9 @@ import {
 import { air, canBombard, getAllUnits, nonIndustry } from '../../selectors/units'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES, PLAN_MOVEMENT } from '../../actions'
+import type { PowerName } from '../../actions/types'
+import type { UnitType } from '../../selectors/units'
+import type { Amphib } from '../../selectors/getTerritory'
 
 export const getFill = createSelector(
   getTerritory,
@@ -53,7 +57,7 @@ const isConvoy = (sea, territoryPower) => (
   sea && territoryPower !== 'Oceans'
 )
 
-export const isOrdering = (phase, currentPowerName, territoryPower, units) => (
+export const isOrdering = (phase: string, currentPowerName: PowerName, territoryPower: string, units: Array<UnitType>) => (
   phase === ORDER_UNITS && 
   ((currentPowerName === territoryPower && 
     units.filter(nonIndustry).length > 1) || 
@@ -135,8 +139,11 @@ export const isCombat = createSelector(
     (units.filter(({ id }) => !missionComplete[id]).some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
   )
 )
-
-export const awaitingNavalResolution = (state, territoryIndex) => {
+type AmphibState = {
+  amphib:Amphib, 
+  inboundUnits:{ [string]:Array<number> }
+}
+export const awaitingNavalResolution = (state:AmphibState, territoryIndex:number) => {
   const { amphib, inboundUnits } = state
   return amphibOrigins(amphib, inboundUnits, territoryIndex).some(index => isCombat(state, index))
 }
@@ -158,7 +165,7 @@ export const isBombed = createSelector(
   (territories, territoryIndex) => (territories[territoryIndex] || []).length
 )
 
-export const isBombardable = (state, territoryIndex) => {
+export const isBombardable = (state:AmphibState, territoryIndex:number) => {
   const { amphib, inboundUnits } = state
   return amphibOrigins(amphib, inboundUnits, territoryIndex)
     .map(index => getUnits(state, index))
