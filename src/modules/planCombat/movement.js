@@ -12,12 +12,11 @@ import {
   isFriendly,
   isLand, 
   isSea,
-  adjacents
+  adjacents,
+  nonNeutral
 } from '../../selectors/getTerritory'
 import unitTypes from '../../config/unitTypes'
 
-const nonNeutral = ({ currentPower }) => currentPower !== 'Neutrals'
-   
 const canalOpenIfPresent = ({ canalToIndex, canalControlIndex }, currentPower, board, { index }) => {
   return !canalToIndex || 
     canalToIndex !== index ||
