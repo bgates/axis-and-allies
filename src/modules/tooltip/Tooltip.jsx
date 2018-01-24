@@ -8,8 +8,8 @@ import PATHS from '../../paths'
 const Units = ({ units }) => {
   return (
     <div>
-      {units.map((unit, index) => (
-        <ImgAndQty key={index} unit={unit} />
+      {units.map(unit => (
+        <ImgAndQty key={unit.id} unit={unit} />
        ))}
     </div>
   )
@@ -107,7 +107,8 @@ const Tooltip = ({
   industry, 
   territoryName,
   territoryValue,
-  side 
+  side,
+  index
 }) => {
   return (
     <div>

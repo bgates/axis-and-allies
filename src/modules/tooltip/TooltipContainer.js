@@ -16,7 +16,8 @@ const mapStateToProps = (state, { territoryIndex, playing }) => ({
   units: getUnits(state, territoryIndex),
   industry: getIndustry(state, territoryIndex),
   territoryName: getTerritoryName(state, territoryIndex),
-  territoryValue: getTerritoryValue(state, territoryIndex)
+  territoryValue: getTerritoryValue(state, territoryIndex),
+  index: territoryIndex
 })
 
 const TooltipContainer = connect(mapStateToProps)(Tooltip)
