@@ -1,6 +1,7 @@
 // @flow
 import unitTypes from '../config/unitTypes'
 import { getAllUnits } from './stateSlices'
+import type { PowerName } from '../actions/types'
 export { getAllUnits }
 
 let n = 0
@@ -11,7 +12,7 @@ const match = unit1 => unit2 => (
     .every(attr => unit1[attr] === unit2[attr])
 )
 
-type Unit = { type: string, id: number, power: string, originName?: string }
+type Unit = { type: string, id: number, power:PowerName, originName?: string }
 export const combineUnits = (total: Array<any>, unit: Unit) => {
   let present = total.find(match(unit))
   if (present && unit.type !== 'transport') {
@@ -21,7 +22,7 @@ export const combineUnits = (total: Array<any>, unit: Unit) => {
   }
 }
 
-type UnitType = { type: string }
+export type UnitType = { type: string, power:PowerName, id?: number  }
 export const attack = (unit:UnitType) => unitTypes[unit.type].attack
 export const defend = (unit:UnitType) => unitTypes[unit.type].defend || unitTypes[unit.type].flak
 export const land =   (unit:UnitType) => unitTypes[unit.type].land
