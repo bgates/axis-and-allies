@@ -90,20 +90,3 @@ class PurchaseRow extends Component {
     )
   }
 }
-  /*const PurchaseRow = () => {
-  if (!count) count = 0
-  return (
-    <tr>
-      <td>{unit.name}</td>
-      <td><UnitImg power={currentPower} name={unit.name}/></td>
-      <td>{unit.movement}</td>
-      <td>{unit.attack}</td>
-      <td>{unit.defend}</td>
-      <td>{unit.cost}</td>
-      <td><button disabled={budget < unit.cost} onClick={increment}>+</button></td>
-      <td>{count}</td>
-      <td><button disabled={count === 0} onClick={decrement}>-</button></td>
-      <td>{count * unit.cost}</td>
-    </tr>
-  )
-}*/
