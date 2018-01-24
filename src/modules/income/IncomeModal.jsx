@@ -1,8 +1,17 @@
+// @flow
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import PATHS from '../../paths'
 
-class IncomeModal extends Component {
+type Props = {
+  setIncome: () => void,
+  currentPower: { name: string },
+  npl: number,
+  objectives: Array<{text: string, value: number}>,
+  nextNpl: number
+}
+
+class IncomeModal extends Component<Props> {
   
   componentDidMount () {
     if (!this.props.income) {
