@@ -1,16 +1,26 @@
+// @flow
 import React, { Component } from 'react'
 import Transition from 'react-inline-transition-group'
 import classNames from 'classnames'
 import '../assets/styles/die.css'
 
-class Die extends Component {
+type Props = {
+  duration: number,
+  rotateX: number,
+  rotateY: number,
+  reveal: () => void
+}
+type State = {
+  complete: boolean
+}
+
+class Die extends Component<Props, State> {
   constructor () {
     super()
-    this.state = {}
-    this.showRed = this.showRed.bind(this)
+    this.state = { complete: false }
   }
 
-  showRed () {
+  showRed = () => {
     this.setState({ complete: true })
     if (this.props.reveal) {
       setTimeout(this.props.reveal, 100)

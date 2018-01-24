@@ -1,3 +1,4 @@
+// @flow
 import React, { Component } from 'react'
 import TerritoryContainer from '../../territory/TerritoryContainer'
 import { TooltipContainer } from '../../tooltip'
@@ -8,18 +9,30 @@ import AdvanceButton from './AdvanceButton'
 import '../../../assets/styles/game.css'
 import '../../../assets/styles/color.css'
 
-class Territories extends Component {
-  constructor (props) {
+type Props = {
+  advanceBtn: boolean,
+  hasOverlay: boolean,
+  playing: boolean,
+  phase: { current: string },
+  territories: Array<Object>
+}
+type State = {
+  tooltipTerritoryIndex: number,
+  ctrlPressed: boolean
+}
+class Territories extends Component<Props, State> {
+  box: ?HTMLDivElement
+  horizontalCenter: number
+  heightNormalizer: number
+  tooltip: ?HTMLDivElement
+  setVisibilities: { [string]: (n:number) => void }
+  verticalCenter:number
+  constructor (props:Props) {
     super(props)
     this.state = {
       tooltipTerritoryIndex: 0,
       ctrlPressed: false
     }
-    this.handleKeydown = this.handleKeydown.bind(this)
-    this.handleKeyup = this.handleKeyup.bind(this)
-    this.handleMouseMove = this.handleMouseMove.bind(this)
-    this.handleMouseOut = this.handleMouseOut.bind(this)
-    this.setVisibility = this.setVisibility.bind(this)
     this.setVisibilities = props.territories.reduce((obj, _, index) => {
       obj[index] = this.setVisibility.bind(this, index)
       return obj
@@ -29,9 +42,9 @@ class Territories extends Component {
   componentDidMount () {
     document.addEventListener('keydown', this.handleKeydown)
     document.addEventListener('keyup', this.handleKeyup)
-    this.verticalCenter = 0.5 * this.box.clientWidth 
-    this.horizontalCenter = this.box.offsetTop + this.box.clientHeight * 0.57 
-    this.heightNormalizer = 20 / (this.box.clientHeight - this.horizontalCenter)
+    this.verticalCenter = this.box ? 0.5 * this.box.clientWidth : 0
+    this.horizontalCenter = this.box ? this.box.offsetTop + this.box.clientHeight * 0.57 : 0
+    this.heightNormalizer = this.box ? 20 / (this.box.clientHeight - this.horizontalCenter) : 0
   }
 
   componentWillUnmount () {
@@ -39,19 +52,19 @@ class Territories extends Component {
     document.removeEventListener('keyup', this.handleKeyup)
   }
 
-  handleKeydown (event) {
+  handleKeydown = (event:Event) => {
     if (event.key === 'Control') {
       this.setState({ ctrlPressed: true })
     }
   }
 
-  handleKeyup (event) {
+  handleKeyup = (event:Event) => {
     if (event.key === 'Control') {
       this.setState({ ctrlPressed: false })
     }
   }
 
-  conditionalTooltip () {
+  conditionalTooltip = () => {
     if ((this.props.hasOverlay && this.state.ctrlPressed) ||
         !this.props.hasOverlay) {
       return (
@@ -67,29 +80,29 @@ class Territories extends Component {
     return null
   }
 
-  setVisibility (territoryIndex) {
+  setVisibility = (territoryIndex:number | boolean) => {
     if (this.tooltip) {
-      let { tooltipTerritoryIndex } = this.state
+      const tooltip = this.tooltip
       let display
       if (territoryIndex) {
         display = 'block'
-        tooltipTerritoryIndex = territoryIndex
+        const tooltipTerritoryIndex = parseInt(territoryIndex)
+        this.setState({ tooltipTerritoryIndex })
       } else {
         display = 'none'
       }
-      this.tooltip.style.display = display
-      this.setState({ tooltipTerritoryIndex })
+      tooltip.style.display = display
     }
   }
 
-  handleMouseOut (event) {
+  handleMouseOut = (event:Event & { relatedTarget: Element }) => {
     if (event.relatedTarget &&
         !['path', 'svg'].includes(event.relatedTarget.tagName)) {
       this.setVisibility(false)
     }
   }
 
-  tooltipLeft (mousePosition, tooltipWidth) {
+  tooltipLeft = (mousePosition: number, tooltipWidth: number) => {
     const verticalCenter = this.verticalCenter + tooltipWidth 
     if (mousePosition <= 10) {
       return 10
@@ -100,24 +113,28 @@ class Territories extends Component {
     }
   }
 
-  tooltipTop (mousePosition, tooltipHeight) {
-    let adjustment = this.box.offsetTop
-    if (mousePosition > this.horizontalCenter) {
-      adjustment += tooltipHeight + this.heightNormalizer * (mousePosition - this.horizontalCenter)  
-    } else {
-      adjustment -= 10 + this.heightNormalizer * (this.box.offsetTop + this.horizontalCenter - mousePosition) 
+  tooltipTop = (mousePosition: number, tooltipHeight: number) => {
+    if (this.box) {
+      let adjustment = this.box.offsetTop
+      if (mousePosition > this.horizontalCenter) {
+        adjustment += tooltipHeight + this.heightNormalizer * (mousePosition - this.horizontalCenter)  
+      } else {
+        adjustment -= 10 + this.heightNormalizer * (this.box.offsetTop + this.horizontalCenter - mousePosition) 
+      }
+      return mousePosition - adjustment 
     }
-    return mousePosition - adjustment 
+    return 0
   }
 
-  handleMouseMove (event) {
+  handleMouseMove = (event:SyntheticMouseEvent<HTMLElement>) => {
     if (this.tooltip) {
+      const tooltip = this.tooltip //https://github.com/facebook/flow/issues/4865
       const { width, height } = this.tooltip.getBoundingClientRect()
       const left = this.tooltipLeft(event.clientX, width)
-      this.tooltip.style.left = left + 'px'
+      tooltip.style.left = left + 'px'
 
       const top = this.tooltipTop(event.clientY, height)
-      this.tooltip.style.top = top + 'px'
+      tooltip.style.top = top + 'px'
     }
   }
 
@@ -138,7 +155,7 @@ class Territories extends Component {
             <TerritoryContainer
               playing={this.props.playing}
               territoryIndex={index}
-              setVisibility={this.setVisibilities[index]}
+              setVisibility={this.setVisibilities[index.toString()]}
               key={index} />
            )}
         </svg>
