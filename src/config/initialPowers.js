@@ -6,6 +6,7 @@ import ukFlag from '../assets/images/uk.svg'
 import italyFlag from '../assets/images/italy.svg'
 import usFlag from '../assets/images/us.svg'
 import chinaFlag from '../assets/images/china.svg'
+import type { PowerName } from '../actions/types'
 
 export const flags = {
   germany: germanyFlag,
@@ -35,24 +36,25 @@ const powerData = {
   Italy: { capital: 'Rome', side: 'Axis' },
   US: { capital: 'Washington', side: 'Allies' },
   China: { capital: null, side: 'Allies' },
-  neutral: { capital: undefined, side: 'None' }
+  Neutrals: { capital: undefined, side: 'None' },
+  Oceans: { capital: undefined, side: 'None' }
 };
 
-export const side = (power:string) => powerData[power].side
+export const side = (power:PowerName) => powerData[power].side
 
-export const sameSide = (power1:string, power2:string) => (
+export const sameSide = (power1:PowerName, power2:PowerName) => (
  powerData[power1].side === powerData[power2].side
 )
 
-export const allyOf = (power:string) => (unit:{ power:string }) => (
+export const allyOf = (power:PowerName) => (unit:{ power:PowerName}) => (
   sameSide(power, unit.power)
 )
 
-export const enemyOf = (power:string) => (unit:{ power:string }) => (
+export const enemyOf = (power:PowerName) => (unit:{ power:PowerName}) => (
   !sameSide(power, unit.power)
 )
 
-export const opponents = (power:string) => {
+export const opponents = (power:PowerName) => {
   const opponent = powerData[power].side === 'Axis' ? 'Allies' : 'Axis'
   return Object.keys(powerData)
     .filter(_power => side(_power) === opponent)

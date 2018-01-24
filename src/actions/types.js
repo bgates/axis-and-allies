@@ -1,5 +1,5 @@
 // @flow
-type PowerName = 'Germany' | 'USSR' | 'Japan' | 'UK' | 'Italy' | 'US' | 'China'
+export type PowerName = 'Germany' | 'USSR' | 'Japan' | 'UK' | 'Italy' | 'US' | 'China' | 'Neutrals' | 'Oceans'
 type Tech = 'Jet Power' | 'Rockets' | 'Super Submarines' | 'Long Range Aircraft' | 'Radar' | 'Heavy Bombers'
 type Transport = { id: number, originName: string, originIndex: number }
 type UnitIdsByIndex = { [string]: Array<number> }
