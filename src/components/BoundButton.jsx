@@ -1,11 +1,12 @@
-import React, { Component } from 'react'
-
-class BoundButton extends Component {
-  constructor () {
-    super()
-    this._onClick = this._onClick.bind(this)
-  }
-  _onClick () {
+// @flow
+import * as React from 'react'
+type Props = {
+  children: React.Node,
+  index: number,
+  handleClick: (n:number) => void
+}
+class BoundButton extends React.Component<Props> {
+  _onClick = () => {
     this.props.handleClick(this.props.index)
   }
   render () {
