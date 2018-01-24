@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { ImgAndQty } from '../../components/UnitFigure'
@@ -100,16 +101,27 @@ const ConfirmFinishTooltip = () => {
   )
 }
 
-const Tooltip = ({ 
-  currentPower, 
-  playing, 
-  units, 
-  industry, 
-  territoryName,
-  territoryValue,
-  side,
-  index
-}) => {
+type TooltipType = {
+  currentPower: string,
+  playing: boolean,
+  units: Array<{ id:number }>,
+  industry: boolean,
+  territoryName: string,
+  territoryValue: number,
+  side: string,
+  index: number
+}
+const Tooltip = ({ tooltip } : { tooltip: TooltipType }) => { 
+  const {
+    currentPower, 
+    playing, 
+    units, 
+    industry, 
+    territoryName,
+    territoryValue,
+    side,
+    index
+  } = tooltip
   return (
     <div>
       <h1>
@@ -120,7 +132,7 @@ const Tooltip = ({
       <Units units={units} />
       <Switch>
         <Route exact path="/" 
-          render={() => <StartTooltip playing={playing} currentPower={currentPower} />} />
+          render={() => <StartTooltip playing={playing} currentPower={currentPower} side={side} />} />
         <Route path={PATHS.REPAIR} component={RepairTooltip} />
         <Route path={PATHS.PLAN_ATTACKS} component={PlanCombatTooltip} />
         <Route path={PATHS.RESOLVE_COMBAT} component={ResolveCombatTooltip} />
