@@ -1,3 +1,4 @@
+// @flow
 import { connect } from 'react-redux'
 import Powers from './Powers'
 import { getPowers, getCurrentPower, nplByPower } from './selectors'

@@ -1,10 +1,17 @@
+// @flow
 import React from 'react'
 import classNames from 'classnames'
 import { flags } from '../../config/initialPowers'
+import type { PowerName } from '../../actions/types'
 
 import '../../assets/styles/powers.css'
 
-const Powers = ({ powers, currentPower, npl }) => {
+type Props = {
+  powers: Array<{name: PowerName, ipc?: number }>,
+  currentPower: string,
+  npl: { [PowerName]: number }
+}
+const Powers = ({ powers, currentPower, npl }:Props) => {
   return (
     <ul id="powers">
       {powers.map((power, index) => {
