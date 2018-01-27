@@ -97,7 +97,7 @@ export const sendToFirebase = ({ profile }, getFirebase, action, node, data) => 
   }
 }
 
-export const roll = (phase, rolls) => ( 
+export const roll = (phase:string, rolls:Array<number>) => ( 
   (dispatch, getState, getFirebase) => {
     dispatch({
       type: ROLLS,
