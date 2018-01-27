@@ -1,3 +1,4 @@
+// @flow
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
@@ -108,7 +109,7 @@ const territoryThunk = (territoryIndex) => {
   }
 }
 
-export const bombRaid = (dispatch, state, territoryIndex) => {
+export const bombRaid = (dispatch: (Object) => void, state:Object, territoryIndex:number) => {
   dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
   const rolls = dice(bomberPayload(state, territoryIndex))
   dispatch(roll(PATHS.STRATEGIC_BOMB, rolls))

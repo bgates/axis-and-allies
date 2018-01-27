@@ -1,15 +1,27 @@
+// @flow
 import React from 'react'
 
-const Territory = ({ 
-  territoryIndex, 
-  dimensions,
-  classNames,
-  fill,
-  id,
-  handleClick, 
-  setVisibility, 
-  playing
-}) => {
+type Props = {
+  territoryIndex: number,
+  dimensions: string,
+  classNames: string,
+  fill: string,
+  id: number,
+  handleClick: () => void,
+  setVisibility: () => void,
+  playing: boolean
+}
+const Territory = (props:Props) => { 
+  const {
+    territoryIndex, 
+    dimensions,
+    classNames,
+    fill,
+    id,
+    handleClick, 
+    setVisibility, 
+    playing
+  } = props
   return (
     <path d={dimensions}
       id={id}
