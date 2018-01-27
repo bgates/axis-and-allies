@@ -1,3 +1,4 @@
+// @flow
 import Parser from '../../lib/Parser'
 import territoryData from '../../config/territories'
 
@@ -12,7 +13,7 @@ const boardFromString = boardString => {
   ))
 }
 
-export const updateBoard = (action, state) => {
+export const updateBoard = (action: { path: string }, state:{ board:any, boardString:string, territories:Array<Object> }) => {
   if (action.path === 'boardStrings') {
     return { ...state.board, territories: boardFromString(state.boardString) }
   } else {

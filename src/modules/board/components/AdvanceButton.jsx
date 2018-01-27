@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
@@ -47,7 +48,7 @@ const endCurrentTurn = (dispatch, getState) => {
 }
 
 export const nextTurn = () => (
-  (dispatch, getState, getFirebase) => {
+  (dispatch:(Object) => void, getState:() => Object, getFirebase:() => Object) => {
     endCurrentTurn(dispatch, getState)
     const { boardString, currentPowerIndex, firebase } = getState()
     sendToFirebase(firebase, getFirebase, 'set', 'currentPowerIndex', currentPowerIndex)
@@ -62,7 +63,7 @@ const changePhaseThunk = (dir = 'fwd') => {
     const { phase } = state 
     const phases = {
       'confirm-land-planes-fwd': () => {
-        dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes })
+        dispatch({ type: LAND_PLANES, planesFrom: state.landPlanes }) //TODO: necessary?
         dispatch(push(PATHS.PLAN_MOVEMENT))
       },
       'confirm-land-planes-back': () => dispatch({ type: SELECT_PLANE_LANDING_TERRITORY }),

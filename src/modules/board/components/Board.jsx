@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { PowersContainer } from '../../powers'
@@ -9,8 +10,11 @@ const mayAdvance = (minimum, current = '/start') => {
   return paths.indexOf(minimum) <= paths.indexOf(current) || 
     (minimum === PATHS.COMBAT_ROLLS && [PATHS.RESOLVE_COMBAT].includes(current))
 }
-
-const BoardWithRedirect = (props) => {
+type Props = {
+  router: { location: { pathname: string } },
+  phase: { minimum: string }
+}
+const BoardWithRedirect = (props:Props) => {
   const { pathname } = props.router.location
   const { minimum } = props.phase
   const FirstViewableComponent = (routeProps) => {

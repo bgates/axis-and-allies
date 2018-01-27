@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import ussrConvoy from '../../../assets/images/units/ussr_convoy.png'
 import italyConvoy from '../../../assets/images/units/italy_convoy.png'
@@ -42,12 +43,12 @@ const ConvoyImages = () => {
   }
   return (
     <defs>
-      {navalPowers.map((power, index) => {
-        return <ConvoyImage key={index} power={power} img={images[power]}/>
-      })}
-      {navalPowers.map((power, index) => {
-        return <ConvoyImage key={index + 5} power={`${power}_distress`} img={images[`${power}Distress`]}/>
-      })}
+      {navalPowers.map((power, index) => (
+        <ConvoyImage key={index} power={power} img={images[power]}/>
+      ))}
+      {navalPowers.map((power, index) => (
+        <ConvoyImage key={index + 5} power={`${power}_distress`} img={images[`${power}Distress`]}/>
+      ))}
     </defs>
   )
 }

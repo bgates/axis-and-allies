@@ -1,3 +1,4 @@
+// @flow
 import React from 'react'
 import classNames from 'classnames'
 import { Route } from 'react-router-dom'
@@ -23,7 +24,7 @@ import CarrierLoadingModal from '../../carrierLoading/CarrierLoadingModal'
 import OrderUnitsModal from '../../orderUnits/OrderUnitsModal'
 import PATHS from '../../../paths'
 
-const Modal = ({ ctrlPressed, phase }) => {
+const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) => {
   const classes = classNames('modal', phase, { hidden: ctrlPressed })
   return (
     <div id='modal' className={classes}>

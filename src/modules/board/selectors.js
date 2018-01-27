@@ -1,3 +1,4 @@
+// @flow
 import { createSelector } from 'reselect'
 import { getCurrentPhase, getPathname } from '../../selectors/stateSlices'
 import { nextPhase, previousPhase } from '../../selectors/previousPhase'
@@ -32,11 +33,11 @@ export const overlayPhase = createSelector(
            phaseRequiresOverlay(phase)
 )
 
-export const advanceButtonPhase = (state) => {
+export const advanceButtonPhase = (state:{ phase: {current: string} }) => {
   return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, CONFIRM_FINISH].includes(state.phase.current)
 }
 
-export const noCombat = state => {
+export const noCombat = (state:{unitDestination:Object, amphib:Object}) => {
   const { unitDestination, amphib } = state
   return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
          Object.keys(amphib.territory).find(index => isCombat(state, index)))
