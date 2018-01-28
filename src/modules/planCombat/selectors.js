@@ -106,15 +106,16 @@ export const territoryLandingSlots = createSelector(
   getCurrentPower,
   getFocusTerritory,
   getRecentlyConquered,
-  getInboundUnits,
   getAllUnits,
   getFlights,
-  (currentPower, territory, conquered, inbound, units, flights) => {
+  state => state,
+  (currentPower, territory, conquered, units, flights, state) => {
     if (conquered[territory.index]) {
       return 0
     } else if (isLand(territory)) {
       return 1000
     }
+    const inbound = getInboundUnits(state, territory.index)
     const territoryUnits = territory.unitIds.concat(inbound)
       .map(id => units[id])
       .filter(unit => unit.power === currentPower.name)
