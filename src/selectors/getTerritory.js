@@ -1,6 +1,6 @@
 // @flow
 import { createSelector } from 'reselect'
-import { omit, values, groupBy } from 'ramda'
+import { omit, values, groupBy, uniq } from 'ramda'
 import { sameSide } from '../config/initialPowers'
 import territoryData from '../config/territories'
 import { 
@@ -156,7 +156,10 @@ export type Amphib = {
   territory: { [string]:Array<number> }
 }
 export const amphibOrigins = (amphib:Amphib, inbound:{[string]:Array<number>}, index:number) => (
-  amphib.territory[index.toString()] || []).map(transportId => inbound[transportId.toString()]
+  uniq(
+    (amphib.territory[index.toString()] || [])
+    .map(transportId => inbound[transportId.toString()])
+  )
 )
 type BombsInState = { strategicBombing: { bombingUnits:Array<number> } }
 export const getBombingUnits = (state:BombsInState) => state.strategicBombing.bombingUnits
