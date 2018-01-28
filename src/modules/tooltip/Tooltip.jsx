@@ -111,7 +111,7 @@ type TooltipType = {
   side: string,
   index: number
 }
-const Tooltip = ({ tooltip } : { tooltip: TooltipType }) => { 
+const Tooltip = (props:TooltipType) => { 
   const {
     currentPower, 
     playing, 
@@ -121,7 +121,7 @@ const Tooltip = ({ tooltip } : { tooltip: TooltipType }) => {
     territoryValue,
     side,
     index
-  } = tooltip
+  } = props
   return (
     <div>
       <h1>
