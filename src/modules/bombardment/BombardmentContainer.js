@@ -1,3 +1,4 @@
+// @flow
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Bombardment from './Bombardment'

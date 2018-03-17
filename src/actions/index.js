@@ -1,3 +1,4 @@
+// @flow
 export const ROLLS = 'ROLLS'
 
 export const SET_TECH = 'SET_TECH'
@@ -65,11 +66,11 @@ export const RESET = 'RESET'
 export const START_RUSSIAN_WINTER = 'START_RUSSIAN_WINTER'
 export const END_RUSSIAN_WINTER = 'END_RUSSIAN_WINTER'
 
-export const dogfight = (territoryIndex) => ({ type: DOGFIGHT, territoryIndex })
+export const dogfight = (territoryIndex: number) => ({ type: DOGFIGHT, territoryIndex })
 
-export const resolveCombat = (territoryIndex) => ({ type: RESOLVE_COMBAT, territoryIndex })
+export const resolveCombat = (territoryIndex: number) => ({ type: RESOLVE_COMBAT, territoryIndex })
 
-export const viewStrategicBombingResults = (damage, power, targetIndex, unitIds) => (  
+export const viewStrategicBombingResults = (damage: number, power: { ipc: number, name: string }, targetIndex: number, unitIds: number[]) => (  
   { 
     type: VIEW_STRATEGIC_BOMBING_RESULTS, 
     damage, 
@@ -79,7 +80,7 @@ export const viewStrategicBombingResults = (damage, power, targetIndex, unitIds)
   }
 )
 
-export const removeCasualties = (defenderCasualties, attackerCasualties, territoryIndex, currentPower) => ( 
+export const removeCasualties = (defenderCasualties: number[], attackerCasualties: number[], territoryIndex: number, currentPower: {}) => ( 
   {
     type: REMOVE_CASUALTIES,
     defenderCasualties,
@@ -89,7 +90,9 @@ export const removeCasualties = (defenderCasualties, attackerCasualties, territo
   }
 )
 
-export const sendToFirebase = ({ profile }, getFirebase, action, node, data) => {
+type Profile = { profile: { currentGameId?: number } }
+type GFB = () => Object
+export const sendToFirebase = ({ profile }: Profile, getFirebase: GFB, action: string, node: string, data?: Object) => {
   const { currentGameId } = profile
   if (currentGameId) {
     const firebase = getFirebase()
@@ -97,8 +100,10 @@ export const sendToFirebase = ({ profile }, getFirebase, action, node, data) => 
   }
 }
 
-export const roll = (phase:string, rolls:Array<number>) => ( 
-  (dispatch, getState, getFirebase) => {
+type GS = () => { firebase: Object }
+type Dispatch = (Object) => void
+export const roll = (phase:string, rolls:number[]) => ( 
+  (dispatch: Dispatch, getState: GS, getFirebase: GFB) => {
     dispatch({
       type: ROLLS,
       phase,
@@ -109,15 +114,15 @@ export const roll = (phase:string, rolls:Array<number>) => (
   }
 )
 
-export const viewAttackOptions = (territoryIndex) => ({ type: VIEW_ATTACK_OPTIONS, territoryIndex })
+export const viewAttackOptions = (territoryIndex: number) => ({ type: VIEW_ATTACK_OPTIONS, territoryIndex })
 
-export const viewBombardmentOptions = (territoryIndex) => ({ type: VIEW_BOMBARDMENT_OPTIONS, territoryIndex })
+export const viewBombardmentOptions = (territoryIndex: number) => ({ type: VIEW_BOMBARDMENT_OPTIONS, territoryIndex })
 
-export const viewPlaneLandingOptions = (territoryIndex) => ( 
+export const viewPlaneLandingOptions = (territoryIndex: number) => ( 
   { type: VIEW_PLANE_LANDING_OPTIONS, territoryIndex }
 )
 
-export const winAttack = (territoryIndex, defenderIds, attackerIds, airUnits, casualties, conqueringPower) => ( 
+export const winAttack = (territoryIndex: number, defenderIds: number[], attackerIds: number[], airUnits: Object, casualties: number[], conqueringPower?: {}) => ( 
   { 
     type: WIN_ATTACK, 
     territoryIndex,
@@ -129,7 +134,7 @@ export const winAttack = (territoryIndex, defenderIds, attackerIds, airUnits, ca
   }
 )
 
-export const loseAttack = (territoryIndex, attackerCasualties, defenderCasualties) => (
+export const loseAttack = (territoryIndex: number, attackerCasualties: number[], defenderCasualties: number[]) => (
   {
     type: LOSE_ATTACK,
     territoryIndex,
@@ -138,11 +143,12 @@ export const loseAttack = (territoryIndex, attackerCasualties, defenderCasualtie
   }
 )
 
-export const viewMovementOptions = (territory) => (
+type Territory = { name: string, index: number }
+export const viewMovementOptions = (territory: Territory) => (
   { type: VIEW_MOVEMENT_OPTIONS, territory }
 )
 
-export const orderUnits = (territory) => (
+export const orderUnits = (territory: any) => (
   { type: ORDER_UNITS, territory }
 )
 

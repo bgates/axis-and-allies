@@ -1,26 +1,41 @@
+// @flow
 import { omit } from 'ramda'
 import { 
   COMMIT_BOMBARDMENT_UNITS, 
   UNCOMMIT_BOMBARDMENT_UNITS 
 } from '../../actions'
 import { add, remove } from '../../reducers/unitOrigin'
+import type { Action } from '../../actions/types'
 
-const bombardment = (state = { bombardingUnits: {}, targetTerritories: {} }, action) => {
-  const { unitIds, targetIndex, type } = action
-  switch (type) {
+type State = {
+  bombardingUnits: { [string]: Array<number> },
+  targetTerritories: { [string]: Array<number> }
+}
+
+const initialState = {
+  bombardingUnits: {},
+  targetTerritories: {}
+}
+
+const bombardment = (state:State = initialState, action:Action) => {
+  switch (action.type) {
   case COMMIT_BOMBARDMENT_UNITS: {
+    const { unitIds, targetIndex } = action
+    const index = targetIndex.toString()
     let { bombardingUnits, targetTerritories } = { ...state }
-    unitIds.forEach(id => bombardingUnits[id] = targetIndex)
-    targetTerritories[targetIndex] = add(targetTerritories[targetIndex], unitIds)
+    // unitIds.forEach(id => bombardingUnits[id.toString()] = targetIndex)
+    targetTerritories[index] = add(targetTerritories[index], unitIds)
     return { bombardingUnits, targetTerritories }
   }
   case UNCOMMIT_BOMBARDMENT_UNITS: {
+    const { unitIds, targetIndex } = action
+    const index = targetIndex.toString()
     const { bombardingUnits, targetTerritories } = { ...state }
     return { 
       bombardingUnits: omit(unitIds.map(String), bombardingUnits),
       targetTerritories: { 
         ...targetTerritories, 
-        [targetIndex]: remove(targetTerritories[targetIndex], unitIds)
+        [index]: remove(targetTerritories[index], unitIds)
       }
     }
   }
