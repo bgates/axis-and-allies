@@ -5,7 +5,7 @@ import { getCurrentPower } from '../../selectors/getCurrentPower'
 import { ship } from '../../selectors/units'
 import { mergeBoardAndTerritories, getTerritoriesWithIpcValues } from '../../selectors/getTerritory'
 import { opponents } from '../../config/initialPowers'
-import unitTypes from '../../config/unitTypes'
+// import unitTypes from '../../config/unitTypes'
 // capturing capital: 3; losing capital: -5
 
 const capitalCapture = (territoryNames, currentPower) => (

@@ -14,7 +14,7 @@ const allowedFor = currentPower => ({ abbr })=> {
     return abbr !== 'heavyBomber' || currentPower.tech.includes('Long Range Aircraft')
   } else if (currentPower.name === 'USSR') {
     return ['jets', 'radar', 'longRange'].includes(abbr) || 
-      (abbr == 'heavyBomber' && currentPower.tech.includes('Long Range Aircraft'))
+      (abbr === 'heavyBomber' && currentPower.tech.includes('Long Range Aircraft'))
   } else if (currentPower.name === 'Japan') {
     return abbr !== 'rockets'
   }
