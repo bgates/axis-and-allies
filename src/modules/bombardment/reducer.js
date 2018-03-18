@@ -8,8 +8,8 @@ import { add, remove } from '../../reducers/unitOrigin'
 import type { Action } from '../../actions/types'
 
 type State = {
-  bombardingUnits: { [string]: Array<number> },
-  targetTerritories: { [string]: Array<number> }
+  bombardingUnits: { [string]: number },
+  targetTerritories: { [string]: number[] }
 }
 
 const initialState = {
@@ -23,7 +23,7 @@ const bombardment = (state:State = initialState, action:Action) => {
     const { unitIds, targetIndex } = action
     const index = targetIndex.toString()
     let { bombardingUnits, targetTerritories } = { ...state }
-    // unitIds.forEach(id => bombardingUnits[id.toString()] = targetIndex)
+    unitIds.forEach(id => bombardingUnits[id.toString()] = targetIndex)
     targetTerritories[index] = add(targetTerritories[index], unitIds)
     return { bombardingUnits, targetTerritories }
   }
