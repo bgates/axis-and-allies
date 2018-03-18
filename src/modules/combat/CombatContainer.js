@@ -55,7 +55,7 @@ const rollForCombat = (territoryIndex) => {
     const bombardmentIds = bombardment.targetTerritories[territoryIndex]
     if (Object.keys(conquered).length === 0) {
       Object.keys(unitDestination).forEach(index => {
-        if (territories[index].unitIds.length === 0) {
+        if (territories[index].unitIds.length === 0 && territories[index].currentPower !== 'Oceans') {
           dispatch(winAttack(Number(index), [], unitDestination[index], [], [], getCurrentPowerName(state)))
         }
       })
