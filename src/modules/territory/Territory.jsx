@@ -2,7 +2,7 @@
 import React from 'react'
 
 type Props = {
-  territoryIndex: number,
+  territoryIndex?: number,
   dimensions: string,
   classNames: string,
   fill: string,
@@ -13,7 +13,6 @@ type Props = {
 }
 const Territory = (props:Props) => { 
   const {
-    territoryIndex, 
     dimensions,
     classNames,
     fill,

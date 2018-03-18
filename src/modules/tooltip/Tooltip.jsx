@@ -109,7 +109,7 @@ type TooltipType = {
   territoryName: string,
   territoryValue: number,
   side: string,
-  index: number
+  index?: number
 }
 const Tooltip = (props:TooltipType) => { 
   const {
@@ -119,8 +119,7 @@ const Tooltip = (props:TooltipType) => {
     industry, 
     territoryName,
     territoryValue,
-    side,
-    index
+    side
   } = props
   return (
     <div>
