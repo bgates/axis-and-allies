@@ -19,7 +19,7 @@ import {
 } from '../actions'
 
 const currentWithout = (state, current, ...deletedProps) => {
-  return omit(deletedProps, { ...state, current })
+  return omit([deletedProps], { ...state, current })
 }
 
 const currentWithTerritory = (state, current, territoryIndex) => (

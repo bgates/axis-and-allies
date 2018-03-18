@@ -1,6 +1,7 @@
+// @flow
 import { combineReducers } from 'redux'
 import { amphib } from '../modules/transport'
-import { updateBoard } from '../modules/board'
+// import { updateBoard } from '../modules/board'
 import { bombardment } from '../modules/bombardment'
 import { casualties } from '../modules/selectCasualties'
 import combatUnderway from './combatUnderway'
@@ -35,6 +36,7 @@ import {
 } from '../actions'
 import { actionTypes, firebaseStateReducer as firebase } from 'react-redux-firebase'
 import { initialState } from '../config/configureStore'
+import type { Action } from '../actions/types'
 
 const combinedReducer = combineReducers({
   amphib,
@@ -101,11 +103,13 @@ const crossSliceReducer = (state, action) => {
   }
 }
 
-const rootReducer = (state = initialState, action) => {
+const rootReducer = (state = initialState, action: Action) => {
+  let intermediateState
   if (action.type === RESET) {
-    state = initialState
+    intermediateState = combinedReducer(initialState, action)
+  } else {
+    intermediateState = combinedReducer(state, action)
   }
-  const intermediateState = combinedReducer(state, action)
   return crossSliceReducer(intermediateState, action)
 }
 export default rootReducer

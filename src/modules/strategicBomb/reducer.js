@@ -42,7 +42,7 @@ const strategicBombing = (state = { bombingUnits: {}, targetTerritories: {} }, a
     const { targetIndex } = action
     return {
       bombingUnits: omit(targetTerritories[targetIndex].map(String), bombingUnits),
-      targetTerritories: omit(String(targetIndex), targetTerritories)
+      targetTerritories: omit([String(targetIndex)], targetTerritories)
     }
   }
   default:

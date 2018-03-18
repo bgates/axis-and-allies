@@ -67,7 +67,7 @@ export const isEnemy = ({ currentPower, units = []}:Territory, activePower:Power
 
 const getStaticAndDynamicTerritory = (state, territoryIndex, units) => (
   { 
-    ...omit('dimensions', getTerritoryData(state, territoryIndex)), 
+    ...omit(['dimensions'], getTerritoryData(state, territoryIndex)), 
     ...getTerritory(state, territoryIndex),
     index: territoryIndex,
     units

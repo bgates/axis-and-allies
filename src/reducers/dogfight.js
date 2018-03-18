@@ -7,7 +7,7 @@ const dogfight = (state = {}, action) => {
   case DOGFIGHT: 
     return { ...state, [territoryIndex]: true }
   case VIEW_STRATEGIC_BOMBING_RESULTS:
-    return omit(String(targetIndex), state)
+    return omit([String(targetIndex)], state)
   case NEXT_TURN: 
     return {}
   default:

@@ -21,7 +21,7 @@ const transport = (state = initialState, action) => {
     const { unitIds } = action
     const transportId = unitIds[0]
     if (state.newlyLoaded.includes(transportId)) {
-      const transporting = omit(String(transportId), state.transporting)
+      const transporting = omit([String(transportId)], state.transporting)
       const transportedBy = omit(state.transporting[transportId].map(String), state.transportedBy)
       const newlyLoaded = state.newlyLoaded.filter(id => id !== transportId)
       return { transporting, transportedBy, newlyLoaded }
