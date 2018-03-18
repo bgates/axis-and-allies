@@ -1,3 +1,4 @@
+// @flow
 import { createSelector } from 'reselect'
 import { 
   getAllInbound,
@@ -96,9 +97,9 @@ export const combinedCombatants = createSelector(
   combatants,
   (bombingUnits, { attackers, defenders }) => {
     const strategicBombers = attackers.filter(({ id }) => bombingUnits[id]).reduce(combineUnits, [])
-    attackers = attackers.filter(({ id }) => !bombingUnits[id]).reduce(combineUnits, []).concat(strategicBombers)
-    defenders = defenders.reduce(combineUnits, [])
-    return { attackers, defenders }
+    const _attackers = attackers.filter(({ id }) => !bombingUnits[id]).reduce(combineUnits, []).concat(strategicBombers)
+    const _defenders = defenders.reduce(combineUnits, [])
+    return { attackers: _attackers, defenders: _defenders }
   }
 )
 
