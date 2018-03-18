@@ -86,7 +86,7 @@ class Territories extends Component<Props, State> {
       let display
       if (territoryIndex) {
         display = 'block'
-        const tooltipTerritoryIndex = parseInt(territoryIndex)
+        const tooltipTerritoryIndex = parseInt(territoryIndex, 10)
         this.setState({ tooltipTerritoryIndex })
       } else {
         display = 'none'
