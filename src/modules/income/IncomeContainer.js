@@ -1,6 +1,5 @@
 // @flow
 import { bindActionCreators } from 'redux'
-import type { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import IncomeModal from './IncomeModal'
 import { getCurrentPower } from '../../selectors/getCurrentPower'
