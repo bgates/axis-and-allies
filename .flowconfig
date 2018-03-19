@@ -7,5 +7,6 @@
 [lints]
 
 [options]
+experimental.const_params=true
 
 [strict]
