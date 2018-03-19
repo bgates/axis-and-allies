@@ -95,6 +95,7 @@ export const getClasses = createSelector(
     const hasAttackers = movedIds.length || 
       (amphib.territory[territoryIndex] || []).length
     const hasCombat = hasAttackers && territory.unitIds.length
+    // TODO: winter should not override active-combat (css issue)
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       winter: !sea && original_power === 'USSR',

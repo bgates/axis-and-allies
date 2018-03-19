@@ -11,6 +11,7 @@ const SelectCasualtiesModal = ({
   defenderCasualties, 
   attackerCasualties,
   airCasualties,
+  classNameFct,
   casualtyCount,
   attackDefeated,
   toggleCasualtyStatus,
@@ -54,7 +55,7 @@ const SelectCasualtiesModal = ({
             <Forces
               key={n}
               units={attackers.filter(u => u.attack === n)}
-              classNameFct={id => attackDefeated || attackerCasualties.includes(id) ? 'casualty' : null}
+              classNameFct={classNameFct}
               handleClick={(id, type) => e => (
                 mayClick(id, type) && toggleCasualtyStatus(id)
               )}

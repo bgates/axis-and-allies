@@ -8,6 +8,7 @@ import {
   defenderCasualties,
   getFocusTerritory, 
   getAttackerCasualties, 
+  bombardingUnits,
   getFlights,
   combatants,
   victor, 
@@ -29,20 +30,31 @@ import {
   winAttack 
 } from '../../actions'
 
-const mapStateToProps = (state) => ({
-  territory: getFocusTerritory(state),
-  dogfight: isDogfight(state),
-  combatants: combatants(state),
-  strengths: strengths(state),
-  defenderCasualties: defenderCasualties(state),
-  attackerCasualties: getAttackerCasualties(state),
-  airCasualties: airCasualties(state),
-  casualtyCount: casualtyCount(state),
-  attackDefeated: attackDefeated(state),
-  victor: victor(state),
-  conquered: isConquered(state)
-})
-
+const mapStateToProps = (state) => {
+  const _attackDefeated = attackDefeated(state)
+  const attackerCasualties = getAttackerCasualties(state)
+  const _bombardingUnits = bombardingUnits(state)
+  const classNameFct = id => {
+    if (_bombardingUnits.includes(id)) {
+      return null
+    }
+    return _attackDefeated || attackerCasualties.includes(id) ? 'casualty' : null
+  }
+  return {
+    territory: getFocusTerritory(state),
+    dogfight: isDogfight(state),
+    combatants: combatants(state),
+    strengths: strengths(state),
+    defenderCasualties: defenderCasualties(state),
+    attackerCasualties,
+    classNameFct,
+    airCasualties: airCasualties(state),
+    casualtyCount: casualtyCount(state),
+    attackDefeated: _attackDefeated,
+    victor: victor(state),
+    conquered: isConquered(state)
+  }
+}
 const toggleCasualtyStatus = id => dispatch => dispatch({ type: TOGGLE_CASUALTY, id })
 
 const nextStep = (victor, territoryIndex, dogfight) => {

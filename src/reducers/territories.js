@@ -14,7 +14,10 @@ const territories = (state = [], action) => {
   const { type, territoryIndex } = action
   switch (type) {
   case COMBAT_UNDERWAY: {
-    return state.map(mapping(territoryIndex, t => ({ ...t, unitIds: t.unitIds.concat(action.unitIds) })))
+    return state.map(mapping(territoryIndex, t => {
+      const unitIds = t.unitIds.concat(action.unitIds).concat(action.bombardmentIds)
+      return { ...t, unitIds }
+    }))
   }
   case LOSE_ATTACK:
   case REMOVE_CASUALTIES: {
