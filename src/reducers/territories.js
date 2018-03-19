@@ -14,8 +14,10 @@ const territories = (state = [], action) => {
   const { type, territoryIndex } = action
   switch (type) {
   case COMBAT_UNDERWAY: {
+    const { combatUnderway, bombardmentIds } = action
     return state.map(mapping(territoryIndex, t => {
-      const unitIds = t.unitIds.concat(action.unitIds).concat(action.bombardmentIds)
+      let unitIds = t.unitIds.concat(action.unitIds)
+      unitIds = combatUnderway ? unitIds.filter(id => !bombardmentIds.includes(id)) : unitIds.concat(bombardmentIds)
       return { ...t, unitIds }
     }))
   }
