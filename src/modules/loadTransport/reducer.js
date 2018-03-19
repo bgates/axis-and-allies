@@ -1,13 +1,20 @@
+// @flow
 import { omit } from 'ramda'
 import { LOAD_TRANSPORT, UNCOMMIT_UNITS, COMBAT_UNDERWAY } from '../../actions'
+import type { Action } from '../../actions/types'
 
+type State = {
+  transporting: { [string]: number[] },
+  transportedBy: { [string]: number },
+  newlyLoaded: number[]
+}
 const initialState = {
   transporting: {},
   transportedBy: {},
   newlyLoaded: []
 }
 
-const transport = (state = initialState, action) => {
+const transport = (state: State = initialState, action: Action) => {
   switch (action.type) {
   case LOAD_TRANSPORT: {
     const { transport: { id }, unitIds } = action
@@ -22,7 +29,7 @@ const transport = (state = initialState, action) => {
     const transportId = unitIds[0]
     if (state.newlyLoaded.includes(transportId)) {
       const transporting = omit([String(transportId)], state.transporting)
-      const transportedBy = omit(state.transporting[transportId].map(String), state.transportedBy)
+      const transportedBy = omit(state.transporting[String(transportId)].map(String), state.transportedBy)
       const newlyLoaded = state.newlyLoaded.filter(id => id !== transportId)
       return { transporting, transportedBy, newlyLoaded }
     } else {
