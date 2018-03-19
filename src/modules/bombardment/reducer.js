@@ -22,10 +22,12 @@ const bombardment = (state:State = initialState, action:Action) => {
   case COMMIT_BOMBARDMENT_UNITS: {
     const { unitIds, targetIndex } = action
     const index = targetIndex.toString()
-    let { bombardingUnits, targetTerritories } = { ...state }
-    unitIds.forEach(id => bombardingUnits[id.toString()] = targetIndex)
-    targetTerritories[index] = add(targetTerritories[index], unitIds)
-    return { bombardingUnits, targetTerritories }
+    const { bombardingUnits, targetTerritories } = state
+    let newBombardingUnits = { ...bombardingUnits }
+    let newTargetTerritories = { ...targetTerritories }
+    unitIds.forEach(id => newBombardingUnits[id.toString()] = targetIndex)
+    newTargetTerritories[index] = add(newTargetTerritories[index], unitIds)
+    return { bombardingUnits: newBombardingUnits, targetTerritories: newTargetTerritories }
   }
   case UNCOMMIT_BOMBARDMENT_UNITS: {
     const { unitIds, targetIndex } = action
