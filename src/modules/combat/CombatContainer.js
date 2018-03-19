@@ -46,22 +46,27 @@ const markCombatUnderway = (territoryIndex, transportIds, bombardmentIds, unitId
 
 const selectBattle = () => dispatch => dispatch(push(PATHS.RESOLVE_COMBAT))
 
+const conquerUndefendedLands = (dispatch, conquered, unitDestination, territories, currentPowerName) => {
+  if (Object.keys(conquered).length === 0) {
+    Object.keys(unitDestination).forEach(index => {
+      if (territories[index].unitIds.length === 0 && territories[index].currentPower !== 'Oceans') {
+        dispatch(winAttack(Number(index), [], unitDestination[index], [], [], currentPowerName))
+      }
+    })
+  }
+}
+
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
     const { amphib, transport, bombardment, conquered, unitDestination, territories } = state
+    const currentPowerName = getCurrentPowerName(state)
+    conquerUndefendedLands(dispatch, conquered, unitDestination, territories, currentPowerName)
     const transportIds = amphib.territory[territoryIndex] || []
     const transportedBy = transportIds.reduce((all, id) => (transport.transporting[id] || []).concat(all), [])
     const bombardmentIds = bombardment.targetTerritories[territoryIndex]
-    if (Object.keys(conquered).length === 0) {
-      Object.keys(unitDestination).forEach(index => {
-        if (territories[index].unitIds.length === 0 && territories[index].currentPower !== 'Oceans') {
-          dispatch(winAttack(Number(index), [], unitDestination[index], [], [], getCurrentPowerName(state)))
-        }
-      })
-    }
     dispatch(markCombatUnderway(territoryIndex, transportIds, bombardmentIds, transportedBy))
-    dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
+    dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), territoryIndex, currentPowerName))
     const rolls = dice(rollCount(getState()))
     dispatch(roll(PATHS.COMBAT_ROLLS, rolls))
     dispatch(push(PATHS.COMBAT_ROLLS))

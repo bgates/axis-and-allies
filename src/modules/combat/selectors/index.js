@@ -1,4 +1,4 @@
-import {
+export {
   allowRetreat,
   isUnderway,
   bombardingUnits,
@@ -7,7 +7,7 @@ import {
   getFocusTerritory, 
   preCasualtyCombatants,
 } from './combatants'
-import {
+export {
   airCasualtyCount,
   attackerCasualtyCount,
   combatRolls,
@@ -15,19 +15,3 @@ import {
   rollCount,
   strengths
 } from './rolls'
-export { 
-  allowRetreat,
-  isUnderway,
-  bombardingUnits,
-  combatants,
-  getAttackerCasualties,
-  getFocusTerritory, 
-  preCasualtyCombatants,
-  airCasualtyCount,
-  attackerCasualtyCount,
-  combatRolls,
-  defenderCasualties,
-  rollCount,
-  strengths
-}
-
