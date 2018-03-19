@@ -34,13 +34,14 @@ const mapStateToProps = (state) => ({
   territory: getFocusTerritory(state)
 })
 
-const markCombatUnderway = (territoryIndex, transportIds, bombardmentIds, unitIds) => (
+const markCombatUnderway = (territoryIndex, transportIds, bombardmentIds, unitIds, transportLocations) => (
   {
     type: COMBAT_UNDERWAY,
     territoryIndex,
     transportIds,
     bombardmentIds,
-    unitIds
+    unitIds,
+    transportLocations
   }
 )
 
@@ -59,13 +60,14 @@ const conquerUndefendedLands = (dispatch, conquered, unitDestination, territorie
 const rollForCombat = (territoryIndex) => {
   return (dispatch, getState) => {
     const state = getState()
-    const { amphib, transport, bombardment, conquered, unitDestination, territories } = state
+    const { amphib, inboundUnits, transport, bombardment, conquered, unitDestination, territories } = state
     const currentPowerName = getCurrentPowerName(state)
     conquerUndefendedLands(dispatch, conquered, unitDestination, territories, currentPowerName)
     const transportIds = amphib.territory[territoryIndex] || []
     const transportedBy = transportIds.reduce((all, id) => (transport.transporting[id] || []).concat(all), [])
-    const bombardmentIds = bombardment.targetTerritories[territoryIndex]
-    dispatch(markCombatUnderway(territoryIndex, transportIds, bombardmentIds, transportedBy))
+    const bombardmentIds = bombardment.targetTerritories[territoryIndex] || []
+    const transportLocations = transportIds.map(id => inboundUnits[id])
+    dispatch(markCombatUnderway(territoryIndex, transportIds, bombardmentIds, transportedBy, transportLocations))
     dispatch(removeCasualties(defenderCasualties(state), getAttackerCasualties(state), territoryIndex, currentPowerName))
     const rolls = dice(rollCount(getState()))
     dispatch(roll(PATHS.COMBAT_ROLLS, rolls))

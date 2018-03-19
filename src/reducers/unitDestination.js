@@ -3,6 +3,7 @@ import {
   UNCOMMIT_UNITS, 
   LOAD_TRANSPORT,
   COMMIT_TO_STRATEGIC_BOMBING,
+  COMBAT_UNDERWAY,
   REMOVE_CASUALTIES,
   RETREAT,
   WIN_ATTACK,
@@ -33,6 +34,14 @@ const unitDestination = (state = {}, action) => {
       ...state,
       [targetIndex]: add(state[targetIndex], unitIds.concat(transport.id))
     }
+  }
+  case COMBAT_UNDERWAY: {
+    const { unitIds, transportLocations } = action
+    let newState = { ...state }
+    transportLocations.forEach(territoryId => {
+      newState[territoryId] = newState[territoryId].filter(unitId => !unitIds.includes(unitId))
+    })
+    return newState
   }
   case LOSE_ATTACK:
   case REMOVE_CASUALTIES: {
