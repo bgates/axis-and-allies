@@ -1,6 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import { air as isAir } from '../../selectors/units'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { 
   airCasualties,
@@ -34,11 +35,22 @@ const mapStateToProps = (state) => {
   const _attackDefeated = attackDefeated(state)
   const attackerCasualties = getAttackerCasualties(state)
   const _bombardingUnits = bombardingUnits(state)
+  const _casualtyCount = casualtyCount(state)
+  const _airCasualties = airCasualties(state)
   const classNameFct = id => {
     if (_bombardingUnits.includes(id)) {
       return null
     }
     return _attackDefeated || attackerCasualties.includes(id) ? 'casualty' : null
+  }
+  const { air, all } = _casualtyCount
+  const mayClick = (id, type) => {
+    if (_attackDefeated || _bombardingUnits.includes(id)) return false
+    if (attackerCasualties.includes(id)) return true
+    return attackerCasualties.length < all &&
+      (isAir({ type }) || 
+        airCasualties >= air || 
+        attackerCasualties.length < all - air)
   }
   return {
     territory: getFocusTerritory(state),
@@ -48,11 +60,12 @@ const mapStateToProps = (state) => {
     defenderCasualties: defenderCasualties(state),
     attackerCasualties,
     classNameFct,
-    airCasualties: airCasualties(state),
-    casualtyCount: casualtyCount(state),
+    airCasualties: _airCasualties,
+    casualtyCount: _casualtyCount,
     attackDefeated: _attackDefeated,
     victor: victor(state),
-    conquered: isConquered(state)
+    conquered: isConquered(state),
+    mayClick
   }
 }
 const toggleCasualtyStatus = id => dispatch => dispatch({ type: TOGGLE_CASUALTY, id })

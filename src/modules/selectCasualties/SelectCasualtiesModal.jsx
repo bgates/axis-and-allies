@@ -1,5 +1,4 @@
 import React from 'react'
-import { air as isAir } from '../../selectors/units'
 import Forces from '../../components/Forces'
 import BattleStatus from './BattleStatus'
 import '../../assets/styles/combat.css'
@@ -17,18 +16,10 @@ const SelectCasualtiesModal = ({
   toggleCasualtyStatus,
   victor,
   dogfight,
-  nextStep
+  nextStep,
+  mayClick
 }) => {
   const { attackers, defenders } = combatants
-  const { air, all } = casualtyCount
-  const mayClick = (id, type) => {
-    if (attackDefeated) return false
-    if (attackerCasualties.includes(id)) return true
-    return attackerCasualties.length < all &&
-      (isAir({ type }) || 
-        airCasualties >= air || 
-        attackerCasualties.length < all - air)
-  }
   return (
     <div className="battleBoard">
       <h1>Combat in {territory.name}</h1>
