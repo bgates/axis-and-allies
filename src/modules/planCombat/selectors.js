@@ -31,6 +31,7 @@ import {
   
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
+import { VIEW_ATTACK_OPTIONS } from '../../actions'
 export { getCurrentPower, getFocusTerritory, getCommittedIds }
 
 export const unitsInRange = createSelector(
@@ -123,11 +124,11 @@ export const territoryLandingSlots = createSelector(
     const requiredLandingSlots = territoryUnits
       .filter(air)
       .filter(unit => flights[unit.id] && flights[unit.id] === movement(unit)).length
-    if (!requiredLandingSlots.length) {
+    if (!requiredLandingSlots.length && state.phase.current === VIEW_ATTACK_OPTIONS) {
       return 1000
     }
     const totalLandingSlots = territoryUnits
-      .filter(unit => landingSlots(unit))
+      .filter(landingSlots)
       .reduce((total, unit) => total + landingSlots(unit), 0)
     return totalLandingSlots - requiredLandingSlots
   }

@@ -2,7 +2,7 @@ import { createSelector } from 'reselect'
 import { 
   getAllUnits,
   getAttackerCasualties, 
-  getBombardment,
+  getCompletedMissions,
   getDogfights, 
   getFlights 
 } from '../../selectors/stateSlices'
@@ -22,6 +22,7 @@ import unitTypes from '../../config/unitTypes'
 export { 
   defenderCasualties,
   getAttackerCasualties, 
+  getCompletedMissions,
   getFlights, 
   getFocusTerritory, 
   combatants,
@@ -32,12 +33,6 @@ export {
   isCombat,
   noCombat,
 }
-
-export const bombardingUnits = createSelector(
-  getFocusTerritory,
-  getBombardment,
-  ({ index }, { targetTerritories }) => targetTerritories[index] || []
-)
 
 export const casualtyCount = createSelector(
   airCasualtyCount,
@@ -55,10 +50,10 @@ const noneLeft = (side, strength, casualtyCount) => (
 
 export const attackDefeated = createSelector(
   combatants,
-  bombardingUnits,
+  getCompletedMissions,
   attackerCasualtyCount,
-  (combatants, bombardingUnits, casualtyCount) => {
-    const vulnerableUnits = combatants.attackers.filter(id => !bombardingUnits.includes(id))
+  (combatants, unitsOutOfCombat, casualtyCount) => {
+    const vulnerableUnits = combatants.attackers.filter(unit => !unitsOutOfCombat[unit.id])
     return noneLeft(vulnerableUnits, 'attack', casualtyCount)
   }
 )

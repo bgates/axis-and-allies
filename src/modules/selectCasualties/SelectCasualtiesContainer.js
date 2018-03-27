@@ -9,7 +9,7 @@ import {
   defenderCasualties,
   getFocusTerritory, 
   getAttackerCasualties, 
-  bombardingUnits,
+  getCompletedMissions,
   getFlights,
   combatants,
   victor, 
@@ -34,18 +34,18 @@ import {
 const mapStateToProps = (state) => {
   const _attackDefeated = attackDefeated(state)
   const attackerCasualties = getAttackerCasualties(state)
-  const _bombardingUnits = bombardingUnits(state)
+  const unitsOutOfCombat = getCompletedMissions(state)
   const _casualtyCount = casualtyCount(state)
   const _airCasualties = airCasualties(state)
   const classNameFct = id => {
-    if (_bombardingUnits.includes(id)) {
+    if (unitsOutOfCombat[id]) {
       return null
     }
     return _attackDefeated || attackerCasualties.includes(id) ? 'casualty' : null
   }
   const { air, all } = _casualtyCount
   const mayClick = (id, type) => {
-    if (_attackDefeated || _bombardingUnits.includes(id)) return false
+    if (_attackDefeated || unitsOutOfCombat[id]) return false
     if (attackerCasualties.includes(id)) return true
     return attackerCasualties.length < all &&
       (isAir({ type }) || 
@@ -78,7 +78,7 @@ const nextStep = (victor, territoryIndex, dogfight) => {
   } else if (victor === 'defender') {
     return defenderWins(territoryIndex)
   } else {
-    return continueCombat()
+    return continueCombat
   }
 }
 
@@ -106,13 +106,11 @@ const defenderWins = (territoryIndex) => {
   }
 }
 
-const continueCombat = () => {
-  return (dispatch, getState) => {
-    const state = getState()
-    const territory = getFocusTerritory(state)
-    dispatch(push('resolve-combat'))
-    dispatch(resolveCombat(territory.index))
-  }
+const continueCombat = (dispatch, getState) => {
+  const state = getState()
+  const territory = getFocusTerritory(state)
+  dispatch(push('resolve-combat'))
+  dispatch(resolveCombat(territory.index))
 }
 
 const postDogfight = (territoryIndex, victor) => {
