@@ -5,6 +5,7 @@ import {
   getAttackerCasualties, 
   getBombedTerritories, 
   getCombatUnderway, 
+  getCompletedMissions,
   getCurrentTerritoryIndex,
   getDogfights, 
 } from '../../../selectors/stateSlices'
@@ -46,12 +47,12 @@ const dogfightIds = createSelector(
   getDogfights,
   getBombedTerritories,
   (territoryIndex, dogfight, strategicBombing) => (
-    dogfight[territoryIndex] && (strategicBombing[territoryIndex] || 'all')
+    dogfight[territoryIndex] && (strategicBombing[territoryIndex] || 'nonStrategic')
   )
 )
 
 const dogfightCombatants = (attackers, defenders, dogfighters) => (
-  dogfighters === 'all' ?
+  dogfighters === 'nonStrategic' ?
   {
     attackers: attackers.filter(air).map(withDogfight),
     defenders: defenders.filter(willDogfight).map(withDefend),

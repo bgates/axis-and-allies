@@ -16,7 +16,7 @@ import {
   isDogfightable,
   isOrdering 
 } from './selectors'
-import { attackerCasualties } from '../selectCasualties'
+import { getAttackerCasualties as attackerCasualties } from '../../selectors/stateSlices'
 import { defenderCasualties } from '../combat'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { bomberPayload, isFriendly } from '../../selectors/getTerritory'
@@ -35,6 +35,7 @@ import {
   roll
 } from '../../actions'
 import PATHS from '../../paths'
+import type { Dispatch } from 'redux';
 
 const mapStateToProps = (state, ownProps) => {
   const { territoryIndex } = ownProps
@@ -109,8 +110,11 @@ const territoryThunk = (territoryIndex) => {
   }
 }
 
-export const bombRaid = (dispatch: (Object) => void, state:Object, territoryIndex:number) => {
-  dispatch(removeCasualties(defenderCasualties(state), attackerCasualties(state), territoryIndex, getCurrentPowerName(state)))
+export const bombRaid = (dispatch:Dispatch, state:Object, territoryIndex:number) => {
+  dispatch(removeCasualties(defenderCasualties(state),
+    attackerCasualties(state), 
+    territoryIndex, 
+    getCurrentPowerName(state)))
   const rolls = dice(bomberPayload(state, territoryIndex))
   dispatch(roll(PATHS.STRATEGIC_BOMB, rolls))
   dispatch(push(PATHS.STRATEGIC_BOMB))

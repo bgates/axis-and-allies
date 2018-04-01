@@ -126,6 +126,7 @@ const postDogfight = (territoryIndex, victor) => {
       return bombRaid(dispatch, state, territoryIndex)
     } else if (isCombat(state, territoryIndex)) {
       console.log('combat continues')
+      continueCombat(dispatch, getState)
     } else {
       continueOrAdvancePhase(dispatch, state)
     }
