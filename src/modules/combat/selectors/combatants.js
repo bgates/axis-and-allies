@@ -73,14 +73,19 @@ export const preCasualtyCombatants = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
   dogfightIds,
-  ({ attackers, defenders }, bombardingUnits, dogfighters) => (
-    dogfighters ? dogfightCombatants(attackers, defenders, dogfighters) :
-    { 
-      attackers: modify(attackers), 
-      defenders: withFlakVsAir(defenders, attackers).map(withDefend), 
-      bombardingUnits
+  getCompletedMissions,
+  ({ attackers, defenders }, bombardingUnits, dogfighters, completedMission) => {
+    const availableAttackers = attackers.filter(({ id }) => !completedMission[id])
+    if (dogfighters) {
+      return dogfightCombatants(availableAttackers, defenders, dogfighters) 
+    } else {
+      return { 
+        attackers: modify(availableAttackers), 
+        defenders: withFlakVsAir(defenders, availableAttackers).map(withDefend), 
+        bombardingUnits
+      }
     }
-  )
+  }
 )
 
 export const combatants = createSelector(
