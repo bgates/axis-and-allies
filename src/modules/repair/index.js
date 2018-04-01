@@ -1,3 +1,2 @@
-import { hasDamagedShipsInHarbor } from './selectors';
+export { hasDamagedShipsInHarbor } from './selectors'
 
-export { hasDamagedShipsInHarbor }

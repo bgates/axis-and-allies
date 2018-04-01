@@ -1,5 +1,4 @@
-import ResearchContainer from './ResearchContainer'
-import { currentPowerHasRockets } from './selectors'
-import research from './reducer'
+export { default as ResearchContainer } from './ResearchContainer'
+export { currentPowerHasRockets } from './selectors'
+export { default as research } from './reducer'
 
-export { research, currentPowerHasRockets, ResearchContainer }

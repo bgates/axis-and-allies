@@ -1,5 +1,5 @@
-import CombatContainer from './CombatContainer'
-import { 
+export { default as CombatContainer } from './CombatContainer'
+export { 
   airCasualtyCount,
   attackerCasualtyCount, 
   combatants, 
@@ -8,13 +8,3 @@ import {
   preCasualtyCombatants,
   strengths 
 } from './selectors'
-export { 
-  CombatContainer, 
-  airCasualtyCount,
-  attackerCasualtyCount, 
-  combatants, 
-  combatRolls, 
-  defenderCasualties, 
-  preCasualtyCombatants,
-  strengths 
-}

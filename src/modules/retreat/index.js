@@ -1,3 +1,2 @@
-import RetreatContainer from './RetreatContainer'
+export { default as RetreatContainer } from './RetreatContainer'
 
-export { RetreatContainer }

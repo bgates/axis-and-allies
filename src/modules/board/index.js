@@ -1,6 +1,4 @@
-import BoardContainer from './BoardContainer'
-import { updateBoard } from './reducer'
-import { getCurrentPhase, noCombat, overlayPhase } from './selectors'
-
-export { BoardContainer, updateBoard, getCurrentPhase, noCombat, overlayPhase }
+export { default as BoardContainer } from './BoardContainer'
+export { updateBoard } from './reducer'
+export { getCurrentPhase, noCombat, overlayPhase } from './selectors'
 

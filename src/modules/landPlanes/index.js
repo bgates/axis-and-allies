@@ -1,6 +1,4 @@
-import LandPlanesContainer from './LandPlanesContainer'
-import landPlanes from './reducer'
-import { getRecentlyConquered, planesInAir } from './selectors'
-
-export { landPlanes, getRecentlyConquered, planesInAir, LandPlanesContainer }
+export { default as LandPlanesContainer } from './LandPlanesContainer'
+export { default as landPlanes } from './reducer'
+export { getRecentlyConquered, planesInAir } from './selectors'
 

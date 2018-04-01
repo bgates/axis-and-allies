@@ -1,3 +1,2 @@
-import PowersContainer from './PowersContainer';
+export { default as PowersContainer } from './PowersContainer'
 
-export { PowersContainer }

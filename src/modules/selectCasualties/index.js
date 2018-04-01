@@ -1,5 +1,7 @@
-import SelectCasualtiesContainer, { continueOrAdvancePhase } from './SelectCasualtiesContainer'
-import { attackerCasualties, strengths, noCombat } from './selectors'
-import casualties from './reducer'
+export { 
+  default as SelectCasualtiesContainer, 
+  continueOrAdvancePhase 
+} from './SelectCasualtiesContainer'
+export { strengths, noCombat } from './selectors'
+export { default as casualties } from './reducer'
 
-export { SelectCasualtiesContainer, attackerCasualties, continueOrAdvancePhase, strengths, noCombat, casualties }

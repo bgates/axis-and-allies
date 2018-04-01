@@ -1,12 +1,6 @@
-import CombatRollsContainer from './combatRollsContainer'
-import { 
+export { default as CombatRollsContainer } from './combatRollsContainer'
+export { 
   combatRolls, 
   strengths 
 } from './selectors'
-
-export { 
-  combatRolls, 
-  strengths, 
-  CombatRollsContainer 
-}
 

@@ -1,4 +1,3 @@
-import StrategicBombModal from './StrategicBombModal'
-import strategicBombing from './reducer'
+export { default as StrategicBombModal } from './StrategicBombModal'
+export { default as strategicBombing } from './reducer'
 
-export { StrategicBombModal, strategicBombing }

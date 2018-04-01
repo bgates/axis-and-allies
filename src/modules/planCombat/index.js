@@ -1,20 +1,10 @@
-import PlanContainer from './PlanContainer'
-import { 
+export { default as PlanContainer } from './PlanContainer'
+export { 
   combatants, 
   unitsInRange, 
   combinedCombatants, 
   strategicBombing,
   territoryLandingSlots
 } from './selectors'
-import { territoriesInRange, canLandInTerritory } from './movement'
+export { territoriesInRange, canLandInTerritory } from './movement'
 
-export { 
-  PlanContainer, 
-  combatants, 
-  unitsInRange, 
-  combinedCombatants, 
-  strategicBombing,
-  territoriesInRange, 
-  territoryLandingSlots,
-  canLandInTerritory 
-}

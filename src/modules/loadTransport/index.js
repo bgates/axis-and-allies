@@ -1,4 +1,3 @@
-import LoadTransportContainer from './LoadTransportContainer'
-import transport from './reducer'
+export { default as LoadTransportContainer } from './LoadTransportContainer'
+export { default as transport } from './reducer'
 
-export { LoadTransportContainer, transport }

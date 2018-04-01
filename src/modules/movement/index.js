@@ -1,3 +1,2 @@
-import MovementContainer from './MovementContainer'
+export { default } from './MovementContainer'
 
-export default MovementContainer

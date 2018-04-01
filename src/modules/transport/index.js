@@ -1,4 +1,3 @@
-import TransportContainer from './TransportContainer'
-import amphib from './reducer'
+export { default as TransportContainer } from './TransportContainer'
+export { default as amphib } from './reducer'
 
-export { TransportContainer, amphib }

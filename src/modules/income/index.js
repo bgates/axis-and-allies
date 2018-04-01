@@ -1,5 +1,4 @@
-import IncomeContainer from './IncomeContainer'
-import { territoriesOwnedBy, calculateNPL } from './selectors'
-import income from './reducer'
+export { default as IncomeContainer } from './IncomeContainer'
+export { territoriesOwnedBy, calculateNPL } from './selectors'
+export { default as income } from './reducer'
 
-export { territoriesOwnedBy, calculateNPL, IncomeContainer, income }

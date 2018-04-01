@@ -1,5 +1,3 @@
-import PlacementContainer from './PlacementContainer'
-import placement from './reducer'
-
-export { PlacementContainer, placement }
+export { default as PlacementContainer } from './PlacementContainer'
+export { default as placement } from './reducer'
 

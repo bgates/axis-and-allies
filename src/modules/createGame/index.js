@@ -1,3 +1,2 @@
-import CreateGameContainer from './CreateGameContainer'
+export { default as CreateGameContainer } from './CreateGameContainer'
 
-export { CreateGameContainer }
