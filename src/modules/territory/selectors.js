@@ -86,16 +86,17 @@ export const getClasses = createSelector(
   getDestinations,
   getFlights,
   getLandingPlanes,
+  getCompletedMissions,
   (state, index) => index,
-  (currentPower, territory, { sea, original_power }, phase, amphib, unitDestination, flightDistance, landings, territoryIndex) => {
+  (currentPower, territory, { sea, original_power }, phase, amphib, unitDestination, flightDistance, landings, completedMissions, territoryIndex) => {
     const territoryPower = territory.currentPower || ''
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
-    const movedIds = unitDestination[territoryIndex] || []
+    const movedIds = (unitDestination[territoryIndex] || [])
+                       .filter(id => !completedMissions[id])
     const hasAttackers = movedIds.length || 
       (amphib.territory[territoryIndex] || []).length
     const hasCombat = hasAttackers && territory.unitIds.length
-    // TODO: winter should not override active-combat (css issue)
     return classNames({
       convoy: isConvoy(sea, territoryPower),
       winter: !sea && original_power === 'USSR',

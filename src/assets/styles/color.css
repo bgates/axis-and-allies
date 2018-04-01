@@ -121,7 +121,7 @@ path {
   transition: 0.5s fill;
 }
 
-path.active-combat {
+path.active-combat, path.winter.active-combat {
   animation: blink 1s infinite;
   fill: url(#p-fire);
 }
