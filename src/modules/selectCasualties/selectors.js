@@ -7,7 +7,7 @@ import {
   getFlights 
 } from '../../selectors/stateSlices'
 import { getFocusTerritory } from '../../selectors/getTerritory'
-import { air, land, idsToUnits } from '../../selectors/units'
+import { air as isAir, land, idsToUnits } from '../../selectors/units'
 import { 
   airCasualtyCount,
   attackerCasualtyCount,
@@ -98,5 +98,33 @@ export const isConquered = createSelector(
 export const airCasualties = createSelector(
   getAttackerCasualties, 
   getAllUnits,
-  (ids, units) => idsToUnits(ids, units).filter(air).length
+  (ids, units) => idsToUnits(ids, units).filter(isAir).length
+)
+
+export const classNameFct = createSelector(
+  getCompletedMissions,
+  attackDefeated,
+  getAttackerCasualties,
+  (unitsOutOfCombat, attackersLost, attackerCasualties) => id => {
+    if (unitsOutOfCombat[id]) {
+      return null
+    }
+    return attackersLost || attackerCasualties.includes(id) ? 'casualty' : null
+  }
+)
+
+export const mayClick = createSelector(
+  getCompletedMissions,
+  attackDefeated,
+  getAttackerCasualties,
+  airCasualties,
+  casualtyCount,
+  (unitsOutOfCombat, attackersLost, attackerCasualties, airCasualties, { air, all }) => (id, type) => {
+    if (attackersLost || unitsOutOfCombat[id]) return false
+    if (attackerCasualties.includes(id)) return true
+    return attackerCasualties.length < all &&
+      (isAir({ type }) || 
+        airCasualties >= air || 
+        attackerCasualties.length < all - air)
+  }
 )

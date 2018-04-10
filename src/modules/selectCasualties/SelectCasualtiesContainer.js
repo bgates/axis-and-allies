@@ -1,26 +1,25 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { air as isAir } from '../../selectors/units'
+import { nextPhase } from '../../selectors/previousPhase'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { 
   airCasualties,
   casualtyCount,
+  classNameFct,
   defenderCasualties,
   getFocusTerritory, 
   getAttackerCasualties, 
-  getCompletedMissions,
   getFlights,
   combatants,
+  mayClick,
   victor, 
   attackDefeated,
   isConquered,
   isDogfight,
-  planesInAir,
   bombRaid,
   isBombed,
   isCombat,
-  noCombat,
   strengths,
 } from './selectors'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
@@ -32,40 +31,20 @@ import {
 } from '../../actions'
 
 const mapStateToProps = (state) => {
-  const _attackDefeated = attackDefeated(state)
-  const attackerCasualties = getAttackerCasualties(state)
-  const unitsOutOfCombat = getCompletedMissions(state)
-  const _casualtyCount = casualtyCount(state)
-  const _airCasualties = airCasualties(state)
-  const classNameFct = id => {
-    if (unitsOutOfCombat[id]) {
-      return null
-    }
-    return _attackDefeated || attackerCasualties.includes(id) ? 'casualty' : null
-  }
-  const { air, all } = _casualtyCount
-  const mayClick = (id, type) => {
-    if (_attackDefeated || unitsOutOfCombat[id]) return false
-    if (attackerCasualties.includes(id)) return true
-    return attackerCasualties.length < all &&
-      (isAir({ type }) || 
-        airCasualties >= air || 
-        attackerCasualties.length < all - air)
-  }
   return {
     territory: getFocusTerritory(state),
     dogfight: isDogfight(state),
     combatants: combatants(state),
     strengths: strengths(state),
     defenderCasualties: defenderCasualties(state),
-    attackerCasualties,
-    classNameFct,
-    airCasualties: _airCasualties,
-    casualtyCount: _casualtyCount,
-    attackDefeated: _attackDefeated,
+    attackerCasualties: getAttackerCasualties(state),
+    classNameFct: classNameFct(state),
+    airCasualties: airCasualties(state),
+    casualtyCount: casualtyCount(state),
+    attackDefeated: attackDefeated(state),
     victor: victor(state),
     conquered: isConquered(state),
-    mayClick
+    mayClick: mayClick(state)
   }
 }
 const toggleCasualtyStatus = id => dispatch => dispatch({ type: TOGGLE_CASUALTY, id })
@@ -93,7 +72,7 @@ const attackerWins = (territoryIndex) => {
     const airUnits = getFlights(state)
     dispatch(winAttack(territoryIndex, defenders.map(id), survivors, airUnits, casualties, conqueringPower))
     state = getState()
-    continueOrAdvancePhase(dispatch, state)
+    dispatch(push(nextPhase(state)))
   }
 }
 
@@ -102,7 +81,7 @@ const defenderWins = (territoryIndex) => {
     let state = getState()
     dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
     state = getState()
-    continueOrAdvancePhase(dispatch, state)
+    dispatch(push(nextPhase(state)))
   }
 }
 
@@ -113,6 +92,7 @@ const continueCombat = (dispatch, getState) => {
   dispatch(resolveCombat(territory.index))
 }
 
+// TODO: this doesn't cover strat bomb dogfight
 const postDogfight = (territoryIndex, victor) => {
   return (dispatch, getState) => {
     let state = getState()
@@ -128,23 +108,11 @@ const postDogfight = (territoryIndex, victor) => {
       console.log('combat continues')
       continueCombat(dispatch, getState)
     } else {
-      continueOrAdvancePhase(dispatch, state)
+      dispatch(push(nextPhase(state)))
     }
   }
 }
     
-export const continueOrAdvancePhase = (dispatch, state) => {
-  if (noCombat(state)) {
-    if (planesInAir(state)) {
-      dispatch(push('land-planes'))
-    } else {
-      dispatch(push('plan-movement'))
-    }
-  } else {
-    dispatch(push('resolve-combat'))
-  }
-}
-
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({ 
     toggleCasualtyStatus,
