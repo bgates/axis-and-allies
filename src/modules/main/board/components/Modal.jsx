@@ -2,32 +2,32 @@
 import React from 'react'
 import classNames from 'classnames'
 import { Route } from 'react-router-dom'
-import RepairModal from '../../repair/RepairModal'
+import RepairModal from '../../../repair/RepairModal'
 import { 
   ResearchContainer,
   ResearchResultsContainer 
-} from '../../research'
+} from '../../../research'
 import { 
   RocketAttackContainer,
   RocketResultsContainer 
-} from '../../rockets'
-import { PurchaseContainer } from '../../purchases'
-import { IncomeContainer } from '../../income'
-import LendLeaseModal from '../../lendLease/LendLeaseModal'
-import { PlanContainer } from '../../planCombat'
-import { FlakModal } from '../../flak'
-import { StrategicBombModal } from '../../strategicBomb'
-import { CombatContainer } from '../../combat'
-import { RetreatContainer } from '../../retreat'
-import { CombatRollsContainer } from '../../combatRolls'
-import { SelectCasualtiesContainer } from '../../selectCasualties'
-import { LandPlanesContainer } from '../../landPlanes'
-import RussianWinterModal from '../../russianWinter/RussianWinterModal'
-import MovementContainer from '../../movement'
-import { PlacementContainer } from '../../placement'
-import CarrierLoadingModal from '../../carrierLoading/CarrierLoadingModal'
-import OrderUnitsModal from '../../orderUnits/OrderUnitsModal'
-import PATHS from '../../../paths'
+} from '../../../rockets'
+import { PurchaseContainer } from '../../../purchases'
+import { IncomeContainer } from '../../../income'
+import LendLeaseModal from '../../../lendLease/LendLeaseModal'
+import { PlanContainer } from '../../../planCombat'
+import { FlakModal } from '../../../flak'
+import { StrategicBombModal } from '../../../strategicBomb'
+import { CombatContainer } from '../../../combat'
+import { RetreatContainer } from '../../../retreat'
+import { CombatRollsContainer } from '../../../combatRolls'
+import { SelectCasualtiesContainer } from '../../../selectCasualties'
+import { LandPlanesContainer } from '../../../landPlanes'
+import RussianWinterModal from '../../../russianWinter/RussianWinterModal'
+import MovementContainer from '../../../movement'
+import { PlacementContainer } from '../../../placement'
+import CarrierLoadingModal from '../../../carrierLoading/CarrierLoadingModal'
+import OrderUnitsModal from '../../../orderUnits/OrderUnitsModal'
+import PATHS from '../../../../paths'
 
 const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) => {
   const classes = classNames('modal', phase, { hidden: ctrlPressed })

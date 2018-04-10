@@ -1,7 +1,7 @@
 // @flow
 import { createSelector } from 'reselect'
-import { getCurrentPhase, getPathname } from '../../selectors/stateSlices'
-import { nextPhase, previousPhase } from '../../selectors/previousPhase'
+import { getCurrentPhase, getPathname } from '../../../selectors/stateSlices'
+import { nextPhase, previousPhase } from '../../../selectors/previousPhase'
 import { isCombat } from '../territory'
 import { 
   PLAN_ATTACKS, 
@@ -13,8 +13,8 @@ import {
   VIEW_PLANE_LANDING_OPTIONS,
   ORDER_UNITS,
   CONFIRM_FINISH
-} from '../../actions'
-import PATHS from '../../paths'
+} from '../../../actions'
+import PATHS from '../../../paths'
 export { nextPhase, previousPhase }
 
 const pathRequiresOverlay = (pathname) => {

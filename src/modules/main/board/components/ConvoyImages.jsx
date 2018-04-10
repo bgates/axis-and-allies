@@ -1,15 +1,15 @@
 // @flow
 import React from 'react'
-import ussrConvoy from '../../../assets/images/units/ussr_convoy.png'
-import italyConvoy from '../../../assets/images/units/italy_convoy.png'
-import ukConvoy from '../../../assets/images/units/uk_convoy.png'
-import usConvoy from '../../../assets/images/units/us_convoy.png'
-import japanConvoy from '../../../assets/images/units/japan_convoy.png'
-import ussrConvoyDistress from '../../../assets/images/units/ussr_convoy_distress.png'
-import italyConvoyDistress from '../../../assets/images/units/italy_convoy_distress.png'
-import ukConvoyDistress from '../../../assets/images/units/uk_convoy_distress.png'
-import usConvoyDistress from '../../../assets/images/units/us_convoy_distress.png'
-import japanConvoyDistress from '../../../assets/images/units/japan_convoy_distress.png'
+import ussrConvoy from '../../../../assets/images/units/ussr_convoy.png'
+import italyConvoy from '../../../../assets/images/units/italy_convoy.png'
+import ukConvoy from '../../../../assets/images/units/uk_convoy.png'
+import usConvoy from '../../../../assets/images/units/us_convoy.png'
+import japanConvoy from '../../../../assets/images/units/japan_convoy.png'
+import ussrConvoyDistress from '../../../../assets/images/units/ussr_convoy_distress.png'
+import italyConvoyDistress from '../../../../assets/images/units/italy_convoy_distress.png'
+import ukConvoyDistress from '../../../../assets/images/units/uk_convoy_distress.png'
+import usConvoyDistress from '../../../../assets/images/units/us_convoy_distress.png'
+import japanConvoyDistress from '../../../../assets/images/units/japan_convoy_distress.png'
 
 const ConvoyImage = ({ power, img }) => (
   <pattern

@@ -5,16 +5,16 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { nextPhase, previousPhase, showNavLinks, navLinkText } from '../selectors'
-import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
-import { nextId } from '../../../selectors/units'
+import { getCurrentPowerName } from '../../../../selectors/getCurrentPower'
+import { nextId } from '../../../../selectors/units'
 import {
   SELECT_PLANE_LANDING_TERRITORY,
   LAND_PLANES,
   NEXT_TURN,
   sendToFirebase,
   CONFIRM_FINISH
-} from '../../../actions'
-import PATHS from '../../../paths'
+} from '../../../../actions'
+import PATHS from '../../../../paths'
 
 const mapStateToProps = (state) => ({
   nextPhase: nextPhase(state),

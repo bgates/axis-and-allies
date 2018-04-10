@@ -1,7 +1,7 @@
 // @flow
 import { createSelector } from 'reselect'
-import { getCurrentPower, getPowers } from '../../selectors/getCurrentPower'
-import { territoriesOwnedBy, calculateNPL } from '../income'
+import { getCurrentPower, getPowers } from '../../../selectors/getCurrentPower'
+import { territoriesOwnedBy, calculateNPL } from '../../income'
 export { getCurrentPower, getPowers }
 
 const nplFor = (power, territories) => {

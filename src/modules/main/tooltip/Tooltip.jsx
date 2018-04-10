@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { ImgAndQty } from '../../components/UnitFigure'
-import '../../assets/styles/tooltip.css'
-import industryImg from '../../assets/images/industrial_complex.png'
-import PATHS from '../../paths'
+import { ImgAndQty } from '../../../components/UnitFigure'
+import '../../../assets/styles/tooltip.css'
+import industryImg from '../../../assets/images/industrial_complex.png'
+import PATHS from '../../../paths'
 
 const Units = ({ units }) => {
   return (

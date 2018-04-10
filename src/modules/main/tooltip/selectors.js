@@ -1,12 +1,12 @@
 // @flow
 import { createSelector } from 'reselect'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { 
   getUnits as getUnfilteredUnits,
   getTerritoryData
-} from '../../selectors/getTerritory'
-import { industry, nonIndustry } from '../../selectors/units'
-import { side } from '../../config/initialPowers'
+} from '../../../selectors/getTerritory'
+import { industry, nonIndustry } from '../../../selectors/units'
+import { side } from '../../../config/initialPowers'
 export { getCurrentPowerName }
 
 export const getUnits = createSelector(

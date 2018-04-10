@@ -9,20 +9,16 @@ import {
   getTerritoryDimensions,
   getClasses, 
   isAttackable, 
-  isBombardable,
-  isBombed,
-  isDogfightable,
-  isFlakable,
   isOrdering 
 } from './selectors'
-import { nextCombatSubphase } from '../../selectors/combatSubphase'
-import { getAttackerCasualties as attackerCasualties } from '../../selectors/stateSlices'
-import { defenderCasualties } from '../combat'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { bomberPayload, isFriendly, getFlakTargetCount } from '../../selectors/getTerritory'
-import { hasDamagedShipsInHarbor } from '../repair'
+import { nextCombatSubphase } from '../../../selectors/combatSubphase'
+import { getAttackerCasualties as attackerCasualties } from '../../../selectors/stateSlices'
+import { defenderCasualties } from '../../combat'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { bomberPayload, isFriendly, getFlakTargetCount } from '../../../selectors/getTerritory'
+import { hasDamagedShipsInHarbor } from '../../repair'
 import { overlayPhase } from '../board'
-import dice from '../../lib/numericalDieRolls'
+import dice from '../../../lib/numericalDieRolls'
 import { 
   viewAttackOptions, 
   dogfight,
@@ -33,8 +29,8 @@ import {
   viewBombardmentOptions,
   orderUnits,
   roll
-} from '../../actions'
-import PATHS from '../../paths'
+} from '../../../actions'
+import PATHS from '../../../paths'
 import type { Dispatch } from 'redux';
 
 const mapStateToProps = (state, ownProps) => {

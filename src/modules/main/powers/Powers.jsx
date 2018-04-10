@@ -1,10 +1,10 @@
 // @flow
 import React from 'react'
 import classNames from 'classnames'
-import { flags } from '../../config/initialPowers'
-import type { PowerName } from '../../actions/types'
+import { flags } from '../../../config/initialPowers'
+import type { PowerName } from '../../../actions/types'
 
-import '../../assets/styles/powers.css'
+import '../../../assets/styles/powers.css'
 
 type Props = {
   powers: Array<{name: PowerName, ipc?: number }>,

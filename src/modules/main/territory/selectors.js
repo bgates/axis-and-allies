@@ -8,20 +8,20 @@ import {
   getDestinations,
   getFlights, 
   getLandingPlanes,
-} from '../../selectors/stateSlices'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+} from '../../../selectors/stateSlices'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { 
   getTerritory, 
   getTerritoryData, 
   getUnits,
   isFriendly
-} from '../../selectors/getTerritory'
-import { getAllUnits, nonIndustry } from '../../selectors/units'
-import { allyOf, enemyOf } from '../../config/initialPowers'
-import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES, PLAN_MOVEMENT } from '../../actions'
-import type { PowerName } from '../../actions/types'
-import type { UnitType } from '../../selectors/units'
-import type { Amphib } from '../../selectors/getTerritory'
+} from '../../../selectors/getTerritory'
+import { getAllUnits, nonIndustry } from '../../../selectors/units'
+import { allyOf, enemyOf } from '../../../config/initialPowers'
+import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES, PLAN_MOVEMENT } from '../../../actions'
+import type { PowerName } from '../../../actions/types'
+import type { UnitType } from '../../../selectors/units'
+import type { Amphib } from '../../../selectors/getTerritory'
 
 export const getFill = createSelector(
   getTerritory,

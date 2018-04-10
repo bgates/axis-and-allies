@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { PowersContainer } from '../../powers'
 import Territories from './Territories'
-import PATHS from '../../../paths'
+import PATHS from '../../../../paths'
 
 const mayAdvance = (minimum, current = '/start') => {
   const paths = Object.values(PATHS)

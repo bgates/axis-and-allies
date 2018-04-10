@@ -7,7 +7,7 @@ import {
   overlayPhase,
   advanceButtonPhase,
 } from './selectors'
-import { isCurrentPower } from '../../selectors/getCurrentPower'
+import { isCurrentPower } from '../../../selectors/getCurrentPower'
 
 const mapStateToProps = (state) => {
   return {
