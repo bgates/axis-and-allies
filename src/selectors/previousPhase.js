@@ -7,6 +7,7 @@ import {
 } from './stateSlices'
 import { getCurrentPower } from './getCurrentPower'
 import { isCombat } from '../modules/territory'
+import { planesInAir } from '../modules/landPlanes'
 import { hasDamagedShipsInHarbor } from '../modules/repair'
 import { currentPowerHasRockets } from '../modules/research'
 import PATHS from '../paths'
@@ -88,6 +89,18 @@ const afterResearch = (hasRockets, { attempts } = {}) => (
   attempts ? PATHS.RESEARCH_RESULTS : hasRockets ? PATHS.ROCKETS : PATHS.PURCHASE
 )
 
+const afterCombat = (noCombat, planesInAir) => {
+  if (noCombat) {
+    if (planesInAir) {
+      return PATHS.LAND_PLANES
+    } else {
+      return PATHS.PLAN_MOVEMENT
+    }
+  } else {
+    return PATHS.RESOLVE_COMBAT
+  }
+}
+
 const afterOrder = () => (
   PATHS.CONFIRM_FINISH //'carrier-loading', //if naval planes purchased & carriers available, otherwise placement
 )
@@ -99,7 +112,8 @@ export const nextPhase = createSelector(
   getResearch,
   noCombat,
   getPhase,
-  (currentPower, hasRockets, hasDamagedShips, research, noCombat, phase) => {
+  planesInAir,
+  (currentPower, hasRockets, hasDamagedShips, research, noCombat, phase, planesInAir) => {
     const phases = {
       start: () => afterStart(currentPower, hasDamagedShips),
       [PATHS.REPAIR]: () => PATHS.RESEARCH,
@@ -111,6 +125,7 @@ export const nextPhase = createSelector(
       [PATHS.INCOME]: () => currentPower.name === 'US' ? PATHS.LEND_LEASE : PATHS.PLAN_ATTACKS,
       [PATHS.LEND_LEASE]: () => PATHS.PLAN_ATTACKS,
       [PATHS.PLAN_ATTACKS]: () => noCombat ? PATHS.PLAN_MOVEMENT : PATHS.RESOLVE_COMBAT,
+      [PATHS.RESOLVE_COMBAT]: afterCombat(noCombat, planesInAir),
       [PATHS.LAND_PLANES]: () => PATHS.PLAN_MOVEMENT,
       [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLACE_UNITS,
       'russian-winter': () => PATHS.PLACE_UNITS,

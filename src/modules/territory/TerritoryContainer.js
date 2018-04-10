@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import Territory from './Territory'
 import { 
-  awaitingNavalResolution,
   getFill, 
   getTerritoryId,
   getTerritoryDimensions,
@@ -12,14 +11,15 @@ import {
   isAttackable, 
   isBombardable,
   isBombed,
-  isCombat,
   isDogfightable,
+  isFlakable,
   isOrdering 
 } from './selectors'
+import { nextCombatSubphase } from '../../selectors/combatSubphase'
 import { getAttackerCasualties as attackerCasualties } from '../../selectors/stateSlices'
 import { defenderCasualties } from '../combat'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { bomberPayload, isFriendly } from '../../selectors/getTerritory'
+import { bomberPayload, isFriendly, getFlakTargetCount } from '../../selectors/getTerritory'
 import { hasDamagedShipsInHarbor } from '../repair'
 import { overlayPhase } from '../board'
 import dice from '../../lib/numericalDieRolls'
@@ -72,20 +72,19 @@ const territoryThunk = (territoryIndex) => {
         }
       },
       [PATHS.RESOLVE_COMBAT]: () => {
-        // need logic to prevent dispatch if no combat
-        if (isCombat(state, territoryIndex)) {
-          if (awaitingNavalResolution(state, territoryIndex)) {
+        switch (nextCombatSubphase(state, territoryIndex)) {
+          case 'awaitNaval': 
             return alert('not yet!')
-          }
-          if (isDogfightable(state, territoryIndex)) {
+          case 'flak':
+            flakAttack(dispatch, state, territoryIndex)
+          case 'dogfight':
             dispatch(dogfight(territoryIndex))
-          } else if (isBombed(state, territoryIndex)) {
+          case 'bombRaid':
             bombRaid(dispatch, state, territoryIndex)
-          } else if (isBombardable(state, territoryIndex)) {
+          case 'bombard':
             dispatch(viewBombardmentOptions(territoryIndex))
-          } else {
+          case 'normal':
             dispatch(resolveCombat(territoryIndex))
-          }
         }
       },
       [PATHS.LAND_PLANES]: () => {
@@ -108,6 +107,13 @@ const territoryThunk = (territoryIndex) => {
     }
     routes[router.location.pathname]()
   }
+}
+
+const flakAttack = (dispatch, state, territoryIndex) => {
+  console.log(getFlakTargetCount(state, territoryIndex), territoryIndex)
+  const rolls = dice(getFlakTargetCount(state, territoryIndex))
+  dispatch(roll(PATHS.FLAK, rolls))
+  dispatch(push(PATHS.FLAK))
 }
 
 export const bombRaid = (dispatch:Dispatch, state:Object, territoryIndex:number) => {

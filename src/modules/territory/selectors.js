@@ -3,22 +3,20 @@ import { createSelector } from 'reselect'
 import classNames from 'classnames'
 import { 
   getAmphib, 
-  getBombedTerritories,
   getCompletedMissions, 
   getCurrentPhase, 
   getDestinations,
   getFlights, 
-  getLandingPlanes
+  getLandingPlanes,
 } from '../../selectors/stateSlices'
 import { getCurrentPowerName } from '../../selectors/getCurrentPower'
 import { 
-  amphibOrigins,
   getTerritory, 
   getTerritoryData, 
   getUnits,
   isFriendly
 } from '../../selectors/getTerritory'
-import { air, canBombard, getAllUnits, nonIndustry } from '../../selectors/units'
+import { getAllUnits, nonIndustry } from '../../selectors/units'
 import { allyOf, enemyOf } from '../../config/initialPowers'
 import { RESOLVE_COMBAT, ORDER_UNITS, LAND_PLANES, PLAN_MOVEMENT } from '../../actions'
 import type { PowerName } from '../../actions/types'
@@ -93,8 +91,7 @@ export const getClasses = createSelector(
     const isOcean = sea && territoryPower === 'Oceans' 
     const isControlled = !sea && territoryPower.length
     const movedIds = (unitDestination[territoryIndex] || [])
-                       .filter(id => !completedMissions[id])
-    const hasAttackers = movedIds.length || 
+    const hasAttackers = movedIds.filter(id => !completedMissions[id]).length || 
       (amphib.territory[territoryIndex] || []).length
     const hasCombat = hasAttackers && territory.unitIds.length
     return classNames({
@@ -130,46 +127,4 @@ export const isAttackable = createSelector(
   }
 )
 
-const isAmphib = (state, territoryIndex) => (state.amphib.territory[territoryIndex] || []).length
 
-export const isCombat = createSelector(
-  getCurrentPowerName,
-  getUnits,
-  isAmphib,
-  getCompletedMissions,
-  (currentPower, units, amphib, missionComplete) => (
-    (units.filter(({ id }) => !missionComplete[id]).some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
-  )
-)
-type AmphibState = {
-  amphib:Amphib, 
-  inboundUnits:{ [string]:Array<number> }
-}
-export const awaitingNavalResolution = (state:AmphibState, territoryIndex:number) => {
-  const { amphib, inboundUnits } = state
-  return amphibOrigins(amphib, inboundUnits, territoryIndex).some(index => isCombat(state, index))
-}
-
-const getAirUnits = createSelector(
-  getUnits,
-  units => units.filter(air)
-)
-
-export const isDogfightable = createSelector(
-  getCurrentPowerName,
-  getAirUnits,
-  (currentPower, units) => units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
-)
-
-export const isBombed = createSelector(
-  getBombedTerritories,
-  (state, territoryIndex) => territoryIndex,
-  (territories, territoryIndex) => (territories[territoryIndex] || []).length
-)
-
-export const isBombardable = (state:AmphibState, territoryIndex:number) => {
-  const { amphib, inboundUnits } = state
-  return amphibOrigins(amphib, inboundUnits, territoryIndex)
-    .map(index => getUnits(state, index))
-    .some(units => units.some(canBombard))
-}
