@@ -1,4 +1,4 @@
-import { SET_ROCKET_TARGET, NEXT_TURN } from '../../actions'
+import { SET_ROCKET_TARGET, NEXT_TURN } from '../../../actions'
 
 const rocketTargets = (state = {}, action) => {
   switch (action.type) {

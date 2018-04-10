@@ -1,5 +1,5 @@
 import React from 'react'
-import DiceResultsModal from '../../components/DiceResultsModal'
+import DiceResultsModal from '../../../components/DiceResultsModal'
 
 class RocketResultsModal extends DiceResultsModal {
 

@@ -3,8 +3,8 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import RocketResultsModal from './RocketResultsModal'
 import { targetValues, damages } from './selectors'
-import { ASSESS_ROCKET_DAMAGE } from '../../actions'
-import PATHS from '../../paths'
+import { ASSESS_ROCKET_DAMAGE } from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => ({
   targetValues: targetValues(state),

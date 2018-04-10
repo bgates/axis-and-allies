@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import RocketAttackModal from './RocketAttackModal'
 import { rocketTargets, getSelectedRocketTargets } from './selectors'
-import { previousPhase } from '../../selectors/previousPhase'
-import dice from '../../lib/numericalDieRolls'
-import { SET_ROCKET_TARGET, roll } from '../../actions'
-import PATHS from '../../paths'
+import { previousPhase } from '../../../selectors/previousPhase'
+import dice from '../../../lib/numericalDieRolls'
+import { SET_ROCKET_TARGET, roll } from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => ({
   rocketsAndTargets: rocketTargets(state),

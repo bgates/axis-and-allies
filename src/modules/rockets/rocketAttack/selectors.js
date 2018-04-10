@@ -1,9 +1,9 @@
 import { createSelector } from 'reselect'
-import { getSelectedRocketTargets } from '../../selectors/stateSlices'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { territoriesInRange } from '../planCombat/movement'
-import { mergeBoardAndTerritories, isEnemy } from '../../selectors/getTerritory'
-import { industry, antiaircraft } from '../../selectors/units'
+import { getSelectedRocketTargets } from '../../../selectors/stateSlices'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { territoriesInRange } from '../../planCombat/movement'
+import { mergeBoardAndTerritories, isEnemy } from '../../../selectors/getTerritory'
+import { industry, antiaircraft } from '../../../selectors/units'
 export { getSelectedRocketTargets }
 
 export const hasIndustry = territory => territory.units.find(industry)

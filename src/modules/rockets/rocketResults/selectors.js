@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect'
-import { getRolls } from '../../selectors/stateSlices'
-import { getTerritoriesWithIpcValues } from '../../selectors/getTerritory'
+import { getRolls } from '../../../selectors/stateSlices'
+import { getTerritoriesWithIpcValues } from '../../../selectors/getTerritory'
 import { getSelectedRocketTargets } from '../rocketAttack'
-import PATHS from '../../paths'
+import PATHS from '../../../paths'
 
 export const targetValues = createSelector(
   getTerritoriesWithIpcValues,
