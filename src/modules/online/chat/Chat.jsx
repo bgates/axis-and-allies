@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { isLoaded, isEmpty } from 'react-redux-firebase'
-import { flags } from '../../config/initialPowers'
-import '../../assets/styles/chat.css'
+import { flags } from '../../../config/initialPowers'
+import '../../../assets/styles/chat.css'
 
 const Message = ({ author, power, text }) => (
   <li>

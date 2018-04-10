@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { firebaseConnect } from 'react-redux-firebase'
 import CreateGame from './CreateGame'
-import initialPowers from '../../config/initialPowers'
+import initialPowers from '../../../config/initialPowers'
 
 const setupGame = (formData) => {
   let game = { powers: initialPowers, currentPowerIndex: 0 }

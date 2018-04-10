@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import '../../assets/styles/login.css'
+import '../../../assets/styles/login.css'
 
 class CreateGame extends Component {
 

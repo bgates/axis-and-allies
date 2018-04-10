@@ -8,9 +8,11 @@ import {
   isEmpty
 } from 'react-redux-firebase'
 import { BoardContainer } from './modules/board'
-import Chat from './modules/chat'
-import { LoginContainer } from './modules/login'
-import { CreateGameContainer } from './modules/createGame'
+import { 
+  Chat,
+  LoginContainer,
+  CreateGameContainer
+} from './modules/online'
 
 const Game = ({ auth, profile }) => (    
   <div>

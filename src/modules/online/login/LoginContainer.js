@@ -2,8 +2,8 @@ import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { firebaseConnect } from 'react-redux-firebase'
-import { persistor } from '../../config/configureStore'
-import { RESET } from '../../actions'
+import { persistor } from '../../../config/configureStore'
+import { RESET } from '../../../actions'
 import Login from './Login'
                          
 const login = (email, password) => {
