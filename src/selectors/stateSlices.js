@@ -49,3 +49,5 @@ export const getRolls = state => state.rolls
 export const getSelectedRocketTargets = state => state.rocketTargets
 
 export const getTransport = state => state.transport
+
+export const getTakenFlak = state => state.flak

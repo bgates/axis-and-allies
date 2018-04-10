@@ -29,6 +29,7 @@ export const UNCOMMIT_BOMBARDMENT_UNITS = 'UNCOMMIT_BOMBARDMENT_UNITS'
 export const COMMIT_TO_STRATEGIC_BOMBING = 'COMMIT_TO_STRATEGIC_BOMBING'
 
 export const DOGFIGHT = 'DOGFIGHT'
+export const REMOVE_FLAK_CASUALTIES = 'REMOVE_FLAK_CASUALTIES'
 export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS'
 
 export const RESOLVE_COMBAT = '/resolve-combat';
@@ -69,6 +70,12 @@ export const END_RUSSIAN_WINTER = 'END_RUSSIAN_WINTER'
 export const dogfight = (territoryIndex: number) => ({ type: DOGFIGHT, territoryIndex })
 
 export const resolveCombat = (territoryIndex: number) => ({ type: RESOLVE_COMBAT, territoryIndex })
+
+export const removeFlakCasualties = (casualtyIds: number[], territoryIndex: number) => ({
+  type: REMOVE_FLAK_CASUALTIES,
+  casualtyIds,
+  territoryIndex
+})
 
 export const viewStrategicBombingResults = (damage: number, power: { ipc: number, name: string }, targetIndex: number, unitIds: number[]) => (  
   { 

@@ -9,6 +9,7 @@ const PATHS = {
   INCOME: '/income',
   LEND_LEASE: '/lend-lease',
   PLAN_ATTACKS: '/plan-attacks',
+  FLAK: '/flak',
   STRATEGIC_BOMB: '/strategic-bomb',
   RESOLVE_COMBAT: '/resolve-combat',
   RETREAT: '/retreat',

@@ -173,3 +173,9 @@ export const bomberPayload = createSelector(
   )
 )
 
+export const getFlakTargetCount = createSelector(
+  getCommittedUnits,
+  getBombingUnits,
+  (state, territoryIndex) => territoryIndex,
+  (units, bombers, index) => units.filter(({ id }) => bombers[id]).length
+)

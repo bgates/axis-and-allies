@@ -8,6 +8,7 @@ import combatUnderway from './combatUnderway'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
 import dogfight from './dogfight'
+import { flak } from '../modules/flak'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { income } from '../modules/income'
@@ -48,6 +49,7 @@ const combinedReducer = combineReducers({
   dogfight,
   boardString,
   firebase,
+  flak,
   flightDistance,
   inboundUnits,
   income,
