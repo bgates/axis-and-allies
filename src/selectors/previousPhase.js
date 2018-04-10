@@ -6,8 +6,8 @@ import {
   getResearch 
 } from './stateSlices'
 import { getCurrentPower } from './getCurrentPower'
-import { isCombat } from '../modules/territory'
-import { planesInAir } from '../modules/landPlanes'
+import { isCombat } from '../modules/main/territory'
+import { planesInAir } from '../modules/postCombat/landPlanes'
 import { hasDamagedShipsInHarbor } from '../modules/repair'
 import { currentPowerHasRockets } from '../modules/research'
 import PATHS from '../paths'

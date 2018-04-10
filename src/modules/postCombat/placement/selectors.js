@@ -1,17 +1,17 @@
 import { createSelector } from 'reselect'
-import { hasIndustry } from '../rocketAttack'
+import { hasIndustry } from '../../rockets'
 import { 
   getPlacement,
   getPurchases as getAllPurchases, 
   getRecentlyConquered 
-} from '../../selectors/stateSlices'
+} from '../../../selectors/stateSlices'
 import { 
   getTerritoriesWithIpcValues,
   mergeBoardAndTerritories 
-} from '../../selectors/getTerritory'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { previousPhase } from '../../selectors/previousPhase'
-import unitTypes from '../../config/unitTypes'
+} from '../../../selectors/getTerritory'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { previousPhase } from '../../../selectors/previousPhase'
+import unitTypes from '../../../config/unitTypes'
 export { previousPhase }
 
 const CHINA_PRODUCTION_DIVISOR = 2

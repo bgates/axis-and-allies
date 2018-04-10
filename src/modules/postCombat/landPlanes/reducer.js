@@ -1,4 +1,4 @@
-import { SELECT_PLANE_LANDING_OPTION, NEXT_TURN } from '../../actions'
+import { SELECT_PLANE_LANDING_OPTION, NEXT_TURN } from '../../../actions'
 
 const origin = {}
 const landPlanes = (state = origin, action) => {

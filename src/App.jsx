@@ -7,7 +7,7 @@ import {
   firebaseConnect,
   isEmpty
 } from 'react-redux-firebase'
-import { BoardContainer } from './modules/board'
+import { BoardContainer } from './modules/main/board'
 import { 
   Chat,
   LoginContainer,

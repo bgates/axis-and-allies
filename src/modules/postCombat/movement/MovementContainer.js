@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { LoadTransportContainer } from '../loadTransport'
+import { LoadTransportContainer } from '../../loadTransport'
 import { 
   getCommittedIds,
   getCurrentPower, 
@@ -11,7 +11,7 @@ import {
   unitsInRange
 } from './selectors'
 import MovementModal from './MovementModal'
-import { PLAN_MOVEMENT, VIEW_TRANSPORT_LOAD_OPTIONS } from '../../actions'
+import { PLAN_MOVEMENT, VIEW_TRANSPORT_LOAD_OPTIONS } from '../../../actions'
 
 const mapStateToProps = (state) => (  
   {

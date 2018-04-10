@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import { UnitFigTableData } from '../../components/UnitFigure'
+import { UnitFigTableData } from '../../../components/UnitFigure'
 
 // selected is all of them.and the keys are objId. 
 const disable = (selected, airUnits) => (

@@ -4,15 +4,15 @@ import {
   getBombardment, 
   getRecentlyConquered,
   getTransport 
-} from '../../selectors/stateSlices'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
-import { getCommittedIds, getFocusTerritory } from '../../selectors/getTerritory'
-import { air } from '../../selectors/units'
+} from '../../../selectors/stateSlices'
+import { getCurrentPower } from '../../../selectors/getCurrentPower'
+import { getCommittedIds, getFocusTerritory } from '../../../selectors/getTerritory'
+import { air } from '../../../selectors/units'
 import { 
   unitsInRange as tooBroadUnits, 
   territoryLandingSlots
-} from '../planCombat'
-import { getUnits } from '../tooltip'
+} from '../../planCombat'
+import { getUnits } from '../../main/tooltip'
 export { getCurrentPower, getFocusTerritory, getCommittedIds, territoryLandingSlots }
 
 export const getOccupants = createSelector(

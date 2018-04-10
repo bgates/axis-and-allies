@@ -4,7 +4,7 @@ import {
   COMMIT_PLACE_ALL,
   UNCOMMIT_PLACE_ALL,
   NEXT_TURN
-} from '../../actions'
+} from '../../../actions'
 
 const placeUnit = (state, unitName, index, count = 1) => {
   const newState = JSON.parse(JSON.stringify(state))

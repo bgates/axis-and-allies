@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import Attacker from '../planCombat/AttackerContainer'
-import Occupiers from '../planCombat/Occupiers'
+import Attacker from '../../planCombat/AttackerContainer'
+import Occupiers from '../../planCombat/Occupiers'
 
 const MovementModal = ({ 
   territory, 

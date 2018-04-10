@@ -1,6 +1,7 @@
 export { 
   RocketAttackContainer, 
-  rocketTargets 
+  rocketTargets,
+  hasIndustry
 } from './rocketAttack'
 export { RocketResultsContainer } from './rocketResults'
 

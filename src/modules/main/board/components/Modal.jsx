@@ -21,12 +21,14 @@ import { CombatContainer } from '../../../combat'
 import { RetreatContainer } from '../../../retreat'
 import { CombatRollsContainer } from '../../../combatRolls'
 import { SelectCasualtiesContainer } from '../../../selectCasualties'
-import { LandPlanesContainer } from '../../../landPlanes'
+import { 
+  LandPlanesContainer,
+  MovementContainer,
+  PlacementContainer,
+  CarrierLoadingModal,
+  OrderUnitsModal 
+} from '../../../postCombat'
 import RussianWinterModal from '../../../russianWinter/RussianWinterModal'
-import MovementContainer from '../../../movement'
-import { PlacementContainer } from '../../../placement'
-import CarrierLoadingModal from '../../../carrierLoading/CarrierLoadingModal'
-import OrderUnitsModal from '../../../orderUnits/OrderUnitsModal'
 import PATHS from '../../../../paths'
 
 const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) => {

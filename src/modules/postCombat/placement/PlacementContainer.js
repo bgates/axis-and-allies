@@ -9,14 +9,14 @@ import {
   previousPhase,
   shipyards, 
 } from './selectors'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import {
   COMMIT_PLACEMENT,
   UNCOMMIT_PLACEMENT,
   COMMIT_PLACE_ALL,
   UNCOMMIT_PLACE_ALL,
   PLACE_UNITS
-} from '../../actions'
+} from '../../../actions'
 
 const mapStateToProps = (state) => {
   return {

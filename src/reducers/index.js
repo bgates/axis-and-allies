@@ -12,11 +12,13 @@ import { flak } from '../modules/flak'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { income } from '../modules/income'
-import { landPlanes } from '../modules/landPlanes'
+import { 
+  landPlanes,
+  placement 
+} from '../modules/postCombat'
 import missionComplete from './mission'
 import outboundUnits from './outboundUnits'
 import phase from './phase'
-import { placement } from '../modules/placement'
 import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'

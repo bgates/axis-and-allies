@@ -15,9 +15,9 @@ import {
   defenderCasualties, 
   strengths,
 } from '../combat'
-import { noCombat } from '../board'
-import { planesInAir } from '../landPlanes'
-import { bombRaid, isBombed, isCombat } from '../territory'
+import { noCombat } from '../main/board'
+import { planesInAir } from '../postCombat/landPlanes'
+import { bombRaid, isBombed, isCombat } from '../main/territory'
 import unitTypes from '../../config/unitTypes'
 export { 
   defenderCasualties,

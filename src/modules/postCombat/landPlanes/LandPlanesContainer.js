@@ -12,7 +12,7 @@ import {
   SELECT_PLANE_LANDING_OPTION,
   SELECT_PLANE_LANDING_TERRITORY,
   CONFIRM_LAND_PLANES
-} from '../../actions'
+} from '../../../actions'
 
 const mapStateToProps = (state) => ({
   airUnits: airUnits(state),

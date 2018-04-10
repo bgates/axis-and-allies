@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import ReactTooltip from 'react-tooltip'
-import { UnitImg } from '../../components/UnitFigure'
-import unitTypes from '../../config/unitTypes'
+import { UnitImg } from '../../../components/UnitFigure'
+import unitTypes from '../../../config/unitTypes'
 
 const PlacementModal = ({ 
   availables,
