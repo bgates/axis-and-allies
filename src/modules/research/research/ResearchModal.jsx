@@ -2,7 +2,7 @@ import React from 'react'
 import ReactTooltip from 'react-tooltip'
 import { Link } from 'react-router-dom'
 import { partial } from 'ramda'
-import '../../assets/styles/research.css'
+import '../../../assets/styles/research.css'
 
 const ResearchModal = ({ 
   currentPower, 

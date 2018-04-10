@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
+import { getCurrentPower } from '../../../selectors/getCurrentPower'
 import ResearchResultsModal from './ResearchResultsModal'
-import PATHS from '../../paths'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => {
   return {

@@ -6,8 +6,8 @@ import {
   research, 
   currentPowerHasRockets
 } from './selectors'
-import researchOptions from '../../config/research'
-import dice from '../../lib/numericalDieRolls'
+import researchOptions from '../../../config/research'
+import dice from '../../../lib/numericalDieRolls'
 import ResearchModal from './ResearchModal'
 import { 
   DEVELOP_TECH,
@@ -16,8 +16,8 @@ import {
   SET_TECH,
   ATTEMPT_RESEARCH,
   roll 
-} from '../../actions'
-import PATHS from '../../paths'
+} from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => {
   return {

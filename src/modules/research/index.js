@@ -1,4 +1,7 @@
-export { default as ResearchContainer } from './ResearchContainer'
-export { currentPowerHasRockets } from './selectors'
-export { default as research } from './reducer'
+export { 
+  ResearchContainer, 
+  currentPowerHasRockets, 
+  research
+} from './research'
+export { ResearchResultsContainer } from './researchResults/ResearchResultsContainer'
 

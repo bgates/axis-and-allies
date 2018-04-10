@@ -3,10 +3,14 @@ import React from 'react'
 import classNames from 'classnames'
 import { Route } from 'react-router-dom'
 import RepairModal from '../../repair/RepairModal'
-import { ResearchContainer } from '../../research'
-import ResearchResultsContainer from '../../researchResults/ResearchResultsContainer'
-import { RocketAttackContainer } from '../../rockets'
-import { RocketResultsContainer } from '../../rockets/'
+import { 
+  ResearchContainer,
+  ResearchResultsContainer 
+} from '../../research'
+import { 
+  RocketAttackContainer,
+  RocketResultsContainer 
+} from '../../rockets'
 import { PurchaseContainer } from '../../purchases'
 import { IncomeContainer } from '../../income'
 import LendLeaseModal from '../../lendLease/LendLeaseModal'

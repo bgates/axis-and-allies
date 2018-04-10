@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect'
-import { getResearch } from '../../selectors/stateSlices'
-import { getCurrentPower } from '../../selectors/getCurrentPower'
-import researchOptions from '../../config/research'
+import { getResearch } from '../../../selectors/stateSlices'
+import { getCurrentPower } from '../../../selectors/getCurrentPower'
+import researchOptions from '../../../config/research'
 export { getCurrentPower }
 
 export const currentPowerHasRockets = createSelector(

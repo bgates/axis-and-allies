@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import DiceResultsModal from '../../components/DiceResultsModal'
+import DiceResultsModal from '../../../components/DiceResultsModal'
 
 class ResearchResultsModal extends DiceResultsModal {
 
