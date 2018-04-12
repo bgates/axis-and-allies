@@ -6,7 +6,7 @@ import {
   getResearch 
 } from './stateSlices'
 import { getCurrentPower } from './getCurrentPower'
-import { isCombat } from '../modules/main/territory'
+import { isCombat } from './combatSubphase'
 import { planesInAir } from '../modules/postCombat/landPlanes'
 import { hasDamagedShipsInHarbor } from '../modules/repair'
 import { currentPowerHasRockets } from '../modules/research'
@@ -14,6 +14,7 @@ import PATHS from '../paths'
 
 export const noCombat = state => {
   const { unitDestination, amphib } = state
+  console.log(isCombat)
   return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
          Object.keys(amphib.territory).find(index => isCombat(state, index)))
 }

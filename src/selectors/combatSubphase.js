@@ -76,12 +76,11 @@ type AmphibState = {
   amphib:Amphib, 
   inboundUnits:{ [string]:Array<number> }
 }
-export const awaitingNavalResolution = createSelector(
-  (state, territoryIndex) => {
-    const { amphib, inboundUnits } = state
-    return amphibOrigins(amphib, inboundUnits, territoryIndex).some(index => isCombat(state, index))
-  }
-)
+export const awaitingNavalResolution = (state, territoryIndex) => {
+  const { amphib, inboundUnits } = state
+  return amphibOrigins(amphib, inboundUnits, territoryIndex)
+    .some(index => isCombat(state, index))
+}
 
 const getAirUnits = createSelector(
   getUnits,

@@ -8,6 +8,7 @@ import {
 } from '../../../selectors/stateSlices'
 import { getFocusTerritory } from '../../../selectors/getTerritory'
 import { air as isAir, land, idsToUnits } from '../../../selectors/units'
+import { isCombat } from '../../../selectors/combatSubphase'
 import { 
   airCasualtyCount,
   attackerCasualtyCount,
@@ -17,7 +18,7 @@ import {
 } from '../combat'
 import { noCombat } from '../../main/board'
 import { planesInAir } from '../../postCombat/landPlanes'
-import { bombRaid, isBombed, isCombat } from '../../main/territory'
+import { bombRaid, isBombed, } from '../../main/territory'
 import unitTypes from '../../../config/unitTypes'
 export { 
   defenderCasualties,

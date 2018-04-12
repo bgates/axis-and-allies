@@ -3,5 +3,5 @@ export {
   currentPowerHasRockets, 
   research
 } from './research'
-export { ResearchResultsContainer } from './researchResults/ResearchResultsContainer'
+export { default as ResearchResultsContainer } from './researchResults/ResearchResultsContainer'
 

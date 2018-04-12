@@ -2,7 +2,7 @@
 import { createSelector } from 'reselect'
 import { getCurrentPhase, getPathname } from '../../../selectors/stateSlices'
 import { nextPhase, previousPhase } from '../../../selectors/previousPhase'
-import { isCombat } from '../territory'
+import { isCombat } from '../../../selectors/combatSubphase'
 import { 
   PLAN_ATTACKS, 
   VIEW_ATTACK_OPTIONS, 

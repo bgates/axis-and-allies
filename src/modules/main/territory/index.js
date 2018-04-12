@@ -1,3 +1,3 @@
 export { bombRaid } from './TerritoryContainer'
-export { isBombed, isCombat } from './selectors'
+export { isBombed } from './selectors'
 
