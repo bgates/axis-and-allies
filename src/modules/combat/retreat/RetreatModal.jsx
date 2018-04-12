@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import BoundButton from '../../components/BoundButton'
+import BoundButton from '../../../components/BoundButton'
 
 const RetreatModal = ({ territory, retreatOptions, retreat, returnToCombat }) => {
   return (

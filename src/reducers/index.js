@@ -2,13 +2,16 @@
 import { combineReducers } from 'redux'
 import { amphib } from '../modules/transport'
 // import { updateBoard } from '../modules/board'
-import { bombardment } from '../modules/bombardment'
-import { casualties } from '../modules/selectCasualties'
+import { 
+  bombardment,
+  casualties,
+  flak,
+  strategicBombing,
+} from '../modules/combat'
 import combatUnderway from './combatUnderway'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
 import dogfight from './dogfight'
-import { flak } from '../modules/flak'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { income } from '../modules/income'
@@ -23,7 +26,6 @@ import powers from './powers'
 import { purchases } from '../modules/purchases'
 import { research } from '../modules/research'
 import { rocketTargets } from '../modules/rockets'
-import { strategicBombing } from '../modules/strategicBomb'
 import territories from './territories'
 import { transport } from '../modules/loadTransport'
 import units from './units'

@@ -18,6 +18,8 @@ export {
 
 export { CombatRollsContainer } from './combatRolls'
 
+export { RetreatContainer } from './retreat'
+
 export { 
   SelectCasualtiesContainer, 
   continueOrAdvancePhase,

@@ -1,13 +1,13 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import PATHS from '../../paths'
+import PATHS from '../../../paths'
 import RetreatModal from './RetreatModal'
-import { defenderCasualties } from '../combat'
+import { defenderCasualties } from '../../combat'
 import { continueOrAdvancePhase } from '../selectCasualties'
-import { getInboundUnits } from '../../selectors/getTerritory'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import { removeCasualties, resolveCombat, RETREAT } from '../../actions'
+import { getInboundUnits } from '../../../selectors/getTerritory'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { removeCasualties, resolveCombat, RETREAT } from '../../../actions'
 import { getAttackerCasualties, getFocusTerritory, retreatOptions } from './selectors'
 
 const mapStateToProps = (state) => ({
