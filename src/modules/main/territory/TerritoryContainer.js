@@ -16,7 +16,7 @@ import { getAttackerCasualties as attackerCasualties } from '../../../selectors/
 import { defenderCasualties } from '../../combat'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { bomberPayload, isFriendly, getFlakTargetCount } from '../../../selectors/getTerritory'
-import { hasDamagedShipsInHarbor } from '../../repair'
+import { hasDamagedShipsInHarbor } from '../../preCombat'
 import { overlayPhase } from '../board'
 import dice from '../../../lib/numericalDieRolls'
 import { 

@@ -14,7 +14,12 @@ import currentPowerIndex from './currentPower'
 import dogfight from './dogfight'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
-import { income } from '../modules/income'
+import { 
+  income,
+  purchases,
+  research,
+  rocketTargets
+} from '../modules/preCombat'
 import { 
   landPlanes,
   placement 
@@ -23,9 +28,6 @@ import missionComplete from './mission'
 import outboundUnits from './outboundUnits'
 import phase from './phase'
 import powers from './powers'
-import { purchases } from '../modules/purchases'
-import { research } from '../modules/research'
-import { rocketTargets } from '../modules/rockets'
 import territories from './territories'
 import { transport } from '../modules/loadTransport'
 import units from './units'

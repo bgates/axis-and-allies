@@ -8,8 +8,10 @@ import {
 import { getCurrentPower } from './getCurrentPower'
 import { isCombat } from './combatSubphase'
 import { planesInAir } from '../modules/postCombat/landPlanes'
-import { hasDamagedShipsInHarbor } from '../modules/repair'
-import { currentPowerHasRockets } from '../modules/research'
+import { 
+  hasDamagedShipsInHarbor,
+  currentPowerHasRockets 
+} from '../modules/preCombat'
 import PATHS from '../paths'
 
 const territoryInCombat = state => index => isCombat(state, index)

@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { hasIndustry } from '../../rockets'
+import { hasIndustry } from '../../preCombat'
 import { 
   getPlacement,
   getPurchases as getAllPurchases, 
