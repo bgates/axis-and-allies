@@ -28,9 +28,9 @@ import {
   MovementContainer,
   PlacementContainer,
   CarrierLoadingModal,
-  OrderUnitsModal 
+  OrderUnitsModal,
+  RussianWinterModal
 } from '../../../postCombat'
-import RussianWinterModal from '../../../russianWinter/RussianWinterModal'
 import PATHS from '../../../../paths'
 
 const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) => {

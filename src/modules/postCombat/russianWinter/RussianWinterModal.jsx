@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { START_RUSSIAN_WINTER } from '../../actions'
-import PATHS from '../../paths'
+import { START_RUSSIAN_WINTER } from '../../../actions'
+import PATHS from '../../../paths'
 
 const Modal = ({ startWinter }) => {
   return (
