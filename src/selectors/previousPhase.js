@@ -12,11 +12,11 @@ import { hasDamagedShipsInHarbor } from '../modules/repair'
 import { currentPowerHasRockets } from '../modules/research'
 import PATHS from '../paths'
 
+const territoryInCombat = state => index => isCombat(state, index)
 export const noCombat = state => {
   const { unitDestination, amphib } = state
-  console.log(isCombat)
-  return !(Object.keys(unitDestination).find(index => isCombat(state, index)) ||
-         Object.keys(amphib.territory).find(index => isCombat(state, index)))
+  return !(Object.keys(unitDestination).find(territoryInCombat(state)) ||
+         Object.keys(amphib.territory).find(territoryInCombat(state)))
 }
 
 const beforePurchase = ({ minimum }, hasRockets) => {
@@ -126,7 +126,8 @@ export const nextPhase = createSelector(
       [PATHS.INCOME]: () => currentPower.name === 'US' ? PATHS.LEND_LEASE : PATHS.PLAN_ATTACKS,
       [PATHS.LEND_LEASE]: () => PATHS.PLAN_ATTACKS,
       [PATHS.PLAN_ATTACKS]: () => noCombat ? PATHS.PLAN_MOVEMENT : PATHS.RESOLVE_COMBAT,
-      [PATHS.RESOLVE_COMBAT]: afterCombat(noCombat, planesInAir),
+      [PATHS.RESOLVE_COMBAT]: () => console.log('how did I get here?') || PATHS.RESOLVE_COMBAT,
+      [PATHS.SELECT_CASUALTIES]: () => afterCombat(noCombat, planesInAir),
       [PATHS.LAND_PLANES]: () => PATHS.PLAN_MOVEMENT,
       [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLACE_UNITS,
       'russian-winter': () => PATHS.PLACE_UNITS,
