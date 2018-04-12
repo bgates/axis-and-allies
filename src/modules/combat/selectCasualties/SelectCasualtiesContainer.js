@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { nextPhase } from '../../selectors/previousPhase'
+import { nextPhase } from '../../../selectors/previousPhase'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { 
   airCasualties,
@@ -22,13 +22,13 @@ import {
   isCombat,
   strengths,
 } from './selectors'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { 
   resolveCombat, 
   TOGGLE_CASUALTY,
   loseAttack, 
   winAttack 
-} from '../../actions'
+} from '../../../actions'
 
 const mapStateToProps = (state) => {
   return {

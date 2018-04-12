@@ -5,9 +5,9 @@ import {
   getCompletedMissions,
   getDogfights, 
   getFlights 
-} from '../../selectors/stateSlices'
-import { getFocusTerritory } from '../../selectors/getTerritory'
-import { air as isAir, land, idsToUnits } from '../../selectors/units'
+} from '../../../selectors/stateSlices'
+import { getFocusTerritory } from '../../../selectors/getTerritory'
+import { air as isAir, land, idsToUnits } from '../../../selectors/units'
 import { 
   airCasualtyCount,
   attackerCasualtyCount,
@@ -15,10 +15,10 @@ import {
   defenderCasualties, 
   strengths,
 } from '../combat'
-import { noCombat } from '../main/board'
-import { planesInAir } from '../postCombat/landPlanes'
-import { bombRaid, isBombed, isCombat } from '../main/territory'
-import unitTypes from '../../config/unitTypes'
+import { noCombat } from '../../main/board'
+import { planesInAir } from '../../postCombat/landPlanes'
+import { bombRaid, isBombed, isCombat } from '../../main/territory'
+import unitTypes from '../../../config/unitTypes'
 export { 
   defenderCasualties,
   getAttackerCasualties, 

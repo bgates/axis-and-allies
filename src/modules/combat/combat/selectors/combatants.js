@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import { combatants as combatantsWithoutDamage } from '../../planCombat'
+import { combatants as combatantsWithoutDamage } from '../../../planCombat'
 import { 
   getAmphib, 
   getAttackerCasualties, 
@@ -8,8 +8,8 @@ import {
   getCompletedMissions,
   getCurrentTerritoryIndex,
   getDogfights, 
-} from '../../../selectors/stateSlices'
-import { getFocusTerritory } from '../../../selectors/getTerritory'
+} from '../../../../selectors/stateSlices'
+import { getFocusTerritory } from '../../../../selectors/getTerritory'
 import { 
   air,
   idsToUnits, 
@@ -19,7 +19,7 @@ import {
   withAttack, 
   withDefend,
   withDogfight
-} from '../../../selectors/units'
+} from '../../../../selectors/units'
 export { getFocusTerritory, getAttackerCasualties }
 
 export const bombardingUnits = ({ bombardment, missionComplete, phase, units }) => (

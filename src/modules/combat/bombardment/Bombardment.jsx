@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactTooltip from 'react-tooltip'
-import Attacker from '../../components/Attacker'
-import BoundButton from '../../components/BoundButton'
+import Attacker from '../../../components/Attacker'
+import BoundButton from '../../../components/BoundButton'
 
 const Bombardment = ({ 
   territory, 

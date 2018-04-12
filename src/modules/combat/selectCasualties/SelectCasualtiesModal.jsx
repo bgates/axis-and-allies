@@ -1,7 +1,7 @@
 import React from 'react'
-import Forces from '../../components/Forces'
+import Forces from '../../../components/Forces'
 import BattleStatus from './BattleStatus'
-import '../../assets/styles/combat.css'
+import '../../../assets/styles/combat.css'
 
 const SelectCasualtiesModal = ({ 
   combatants, 

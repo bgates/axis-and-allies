@@ -1,9 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import Forces from '../../components/Forces'
-import BoundButton from '../../components/BoundButton'
-import PATHS from '../../paths'
-import '../../assets/styles/combat.css'
+import Forces from '../../../components/Forces'
+import BoundButton from '../../../components/BoundButton'
+import PATHS from '../../../paths'
+import '../../../assets/styles/combat.css'
 
 const CombatModal = ({ 
   combatants, 

@@ -1,3 +1,2 @@
-import { combatRolls, strengths } from '../combat'
-export { combatRolls, strengths }
+export { combatRolls, strengths } from '../combat'
 

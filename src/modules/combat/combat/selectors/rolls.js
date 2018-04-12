@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
-import { combatants as combatantsWithoutDamage } from '../../planCombat'
-import { getRolls } from '../../../selectors/stateSlices'
+import { combatants as combatantsWithoutDamage } from '../../../planCombat'
+import { getRolls } from '../../../../selectors/stateSlices'
 import { 
   bombardingUnits,
   combatants, 
@@ -13,8 +13,8 @@ import {
   attacks,
   defend, 
   noAA,
-} from '../../../selectors/units'
-import PATHS from '../../../paths'
+} from '../../../../selectors/units'
+import PATHS from '../../../../paths'
 
 const strengthRange = ({ attackers, defenders, bombardingUnits }) => {
   const supportedAttackers = [ ...attackers, ...bombardingUnits ]

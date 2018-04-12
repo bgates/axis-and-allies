@@ -2,13 +2,13 @@
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Bombardment from './Bombardment'
-import { getFocusTerritory } from '../../selectors/getTerritory'
+import { getFocusTerritory } from '../../../selectors/getTerritory'
 import { getBombardmentCapableUnits, getBombardingIds } from './selectors'
 import { 
   COMMIT_BOMBARDMENT_UNITS, 
   UNCOMMIT_BOMBARDMENT_UNITS,
   resolveCombat
-} from '../../actions'
+} from '../../../actions'
 
 const mapStateToProps = (state) => ({
   committed: getBombardingIds(state),

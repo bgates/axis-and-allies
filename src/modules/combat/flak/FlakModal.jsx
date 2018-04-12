@@ -2,11 +2,11 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { continueOrAdvancePhase } from '../selectCasualties'
-import { strategicBombing } from '../planCombat'
-import { getFocusTerritory } from '../../selectors/getTerritory'
-import DiceResultsModal from '../../components/DiceResultsModal'
-import { removeFlakCasualties } from '../../actions'
-import PATHS from '../../paths'
+import { strategicBombing } from '../../planCombat'
+import { getFocusTerritory } from '../../../selectors/getTerritory'
+import DiceResultsModal from '../../../components/DiceResultsModal'
+import { removeFlakCasualties } from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => {
   return {

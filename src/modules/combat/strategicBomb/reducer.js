@@ -4,8 +4,8 @@ import {
   UNCOMMIT_UNITS,
   LOSE_ATTACK,
   VIEW_STRATEGIC_BOMBING_RESULTS
-} from '../../actions'
-import { add, remove } from '../../reducers/unitOrigin'
+} from '../../../actions'
+import { add, remove } from '../../../reducers/unitOrigin'
 
 const strategicBombing = (state = { bombingUnits: {}, targetTerritories: {} }, action) => {
   const { unitIds, targetIndex, type } = action

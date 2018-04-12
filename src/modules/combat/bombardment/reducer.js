@@ -3,9 +3,9 @@ import { omit } from 'ramda'
 import { 
   COMMIT_BOMBARDMENT_UNITS, 
   UNCOMMIT_BOMBARDMENT_UNITS 
-} from '../../actions'
-import { add, remove } from '../../reducers/unitOrigin'
-import type { Action } from '../../actions/types'
+} from '../../../actions'
+import { add, remove } from '../../../reducers/unitOrigin'
+import type { Action } from '../../../actions/types'
 
 type State = {
   bombardingUnits: { [string]: number },

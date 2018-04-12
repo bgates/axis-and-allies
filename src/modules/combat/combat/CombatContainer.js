@@ -10,7 +10,7 @@ import {
   removeCasualties,
   roll,
   winAttack
-} from '../../actions'
+} from '../../../actions'
 import { 
   allowRetreat,
   getAttackerCasualties, 
@@ -21,9 +21,9 @@ import {
   rollCount, 
   strengths,
 } from './selectors'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
-import dice from '../../lib/numericalDieRolls'
-import PATHS from '../../paths'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import dice from '../../../lib/numericalDieRolls'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => ({
   allowRetreat: allowRetreat(state),

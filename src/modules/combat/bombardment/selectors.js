@@ -1,18 +1,18 @@
 // @flow
 import { createSelector } from 'reselect'
-import { getAmphib, getBombardment, getInboundUnits } from '../../selectors/stateSlices'
-import { getCurrentPowerName } from '../../selectors/getCurrentPower'
+import { getAmphib, getBombardment, getInboundUnits } from '../../../selectors/stateSlices'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { 
   amphibOrigins, 
   getFocusTerritory, 
   getTerritoryData,
   getUnits 
-} from '../../selectors/getTerritory'
+} from '../../../selectors/getTerritory'
 import { 
   canBombard,
   combineUnits,
   unitWithOrigin
-} from '../../selectors/units'
+} from '../../../selectors/units'
 
 const bombardmentCapableUnits = ({ index }, currentPower, amphib, inboundUnits, { bombardingUnits }, state) => (
   amphibOrigins(amphib, inboundUnits, index)

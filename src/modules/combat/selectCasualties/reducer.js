@@ -1,4 +1,4 @@
-import { TOGGLE_CASUALTY, REMOVE_CASUALTIES } from '../../actions'
+import { TOGGLE_CASUALTY, REMOVE_CASUALTIES } from '../../../actions'
 
 const casualties = (state = [], action) => {
   if (action.type === TOGGLE_CASUALTY) {

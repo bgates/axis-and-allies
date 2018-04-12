@@ -1,5 +1,5 @@
 import React from 'react'
-import Dice from '../../components/Dice'
+import Dice from '../../../components/Dice'
 
 const CombatRollsModal = ({ rolls, strengths, selectCasualties }) => {
 
