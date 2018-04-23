@@ -11,19 +11,13 @@ import {
   isAttackable, 
   isOrdering 
 } from './selectors'
-import { nextCombatSubphase } from '../../../selectors/combatSubphase'
-import { getAttackerCasualties as attackerCasualties } from '../../../selectors/stateSlices'
-import { defenderCasualties } from '../../combat'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
-import { bomberPayload, isFriendly, getFlakTargetCount } from '../../../selectors/getTerritory'
+import { isFriendly } from '../../../selectors/getTerritory'
 import { hasDamagedShipsInHarbor } from '../../preCombat'
 import { overlayPhase } from '../board'
-import dice from '../../../lib/numericalDieRolls'
 import { 
+  enterCombatLifecycle,
   viewAttackOptions, 
-  dogfight,
-  removeCasualties,
-  resolveCombat, 
   viewPlaneLandingOptions,
   viewMovementOptions,
   viewBombardmentOptions,
@@ -68,20 +62,7 @@ const territoryThunk = (territoryIndex) => {
         }
       },
       [PATHS.RESOLVE_COMBAT]: () => {
-        switch (nextCombatSubphase(state, territoryIndex)) {
-          case 'awaitNaval': 
-            return alert('not yet!')
-          case 'flak':
-            flakAttack(dispatch, state, territoryIndex)
-          case 'dogfight':
-            dispatch(dogfight(territoryIndex))
-          case 'bombRaid':
-            bombRaid(dispatch, state, territoryIndex)
-          case 'bombard':
-            dispatch(viewBombardmentOptions(territoryIndex))
-          case 'normal':
-            dispatch(resolveCombat(territoryIndex))
-        }
+        dispatch(enterCombatLifecycle(territoryIndex))
       },
       [PATHS.LAND_PLANES]: () => {
         if (Object.keys(flightDistance).length >= Object.keys(landPlanes).length) {
@@ -103,23 +84,6 @@ const territoryThunk = (territoryIndex) => {
     }
     routes[router.location.pathname]()
   }
-}
-
-const flakAttack = (dispatch, state, territoryIndex) => {
-  console.log(getFlakTargetCount(state, territoryIndex), territoryIndex)
-  const rolls = dice(getFlakTargetCount(state, territoryIndex))
-  dispatch(roll(PATHS.FLAK, rolls))
-  dispatch(push(PATHS.FLAK))
-}
-
-export const bombRaid = (dispatch:Dispatch, state:Object, territoryIndex:number) => {
-  dispatch(removeCasualties(defenderCasualties(state),
-    attackerCasualties(state), 
-    territoryIndex, 
-    getCurrentPowerName(state)))
-  const rolls = dice(bomberPayload(state, territoryIndex))
-  dispatch(roll(PATHS.STRATEGIC_BOMB, rolls))
-  dispatch(push(PATHS.STRATEGIC_BOMB))
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {

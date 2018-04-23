@@ -13,14 +13,7 @@ import {
 } from '../../../preCombat'
 import LendLeaseModal from '../../../lendLease/LendLeaseModal'
 import { PlanContainer } from '../../../planCombat'
-import { 
-  FlakModal, 
-  StrategicBombModal,
-  CombatContainer,
-  RetreatContainer,
-  CombatRollsContainer,
-  SelectCasualtiesContainer,
-} from '../../../combat'
+import { default as CombatLifeCycle } from '../../../combat/lifecycle/LifecycleContainer'
 import { 
   LandPlanesContainer,
   MovementContainer,
@@ -30,6 +23,15 @@ import {
   RussianWinterModal
 } from '../../../postCombat'
 import PATHS from '../../../../paths'
+
+const COMBAT_PATHS = [
+  PATHS.FLAK, 
+  PATHS.STRATEGIC_BOMB, 
+  PATHS.RESOLVE_COMBAT, 
+  PATHS.RETREAT, 
+  PATHS.COMBAT_ROLLS, 
+  PATHS.SELECT_CASUALTIES
+]
 
 const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) => {
   const classes = classNames('modal', phase, { hidden: ctrlPressed })
@@ -44,12 +46,7 @@ const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) 
       <Route path={PATHS.INCOME} component={IncomeContainer}/>
       <Route path={PATHS.LEND_LEASE} component={LendLeaseModal}/>
       <Route path={PATHS.PLAN_ATTACKS} component={PlanContainer}/>
-      <Route path={PATHS.FLAK} component={FlakModal}/>
-      <Route path={PATHS.STRATEGIC_BOMB} component={StrategicBombModal}/>
-      <Route path={PATHS.RESOLVE_COMBAT} component={CombatContainer}/>
-      <Route path={PATHS.RETREAT} component={RetreatContainer}/>
-      <Route path={PATHS.COMBAT_ROLLS} component={CombatRollsContainer}/>
-      <Route path={PATHS.SELECT_CASUALTIES} component={SelectCasualtiesContainer}/>
+      <Route path={`(${COMBAT_PATHS.join('|')})`} component={CombatLifeCycle} />
       <Route path="/land-planes" component={LandPlanesContainer}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
       <Route path={PATHS.PLAN_MOVEMENT} component={MovementContainer}/>
