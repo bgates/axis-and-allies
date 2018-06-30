@@ -1,3 +1,5 @@
+export { LendLeaseModal } from './lendLease/LendLeaseModal'
+
 export { 
   IncomeContainer, 
   territoriesOwnedBy, 

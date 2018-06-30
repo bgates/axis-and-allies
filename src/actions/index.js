@@ -34,6 +34,7 @@ export const REMOVE_FLAK_CASUALTIES = 'REMOVE_FLAK_CASUALTIES'
 export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS'
 
 export const RESOLVE_COMBAT = '/resolve-combat';
+export const ENTER_COMBAT = 'ENTER_COMBAT';
 export const COMBAT_UNDERWAY = 'COMBAT_UNDERWAY'
 export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY'
 export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES'
@@ -70,6 +71,11 @@ export const END_RUSSIAN_WINTER = 'END_RUSSIAN_WINTER'
 
 export const enterCombatLifecycle = (territoryIndex: number) => ({
   type: ENTER_COMBAT_LIFECYCLE,
+  territoryIndex
+})
+
+export const enterCombat = (territoryIndex: number) => ({
+  type: ENTER_COMBAT,
   territoryIndex
 })
 

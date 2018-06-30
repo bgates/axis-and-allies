@@ -19,7 +19,7 @@ class CombatLifeCycle extends Component {
       <React.Fragment>
         <Route path={PATHS.FLAK} component={FlakModal}/>
         <Route path={PATHS.STRATEGIC_BOMB} component={StrategicBombModal}/>
-        <Route path={PATHS.RESOLVE_COMBAT} component={CombatContainer}/>
+        <Route path={PATHS.VIEW_COMBATANTS} component={CombatContainer}/>
         <Route path={PATHS.RETREAT} component={RetreatContainer}/>
         <Route path={PATHS.COMBAT_ROLLS} component={CombatRollsContainer}/>
         <Route path={PATHS.SELECT_CASUALTIES} component={SelectCasualtiesContainer}/>

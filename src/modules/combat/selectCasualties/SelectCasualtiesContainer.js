@@ -24,11 +24,13 @@ import {
 } from './selectors'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { 
+  enterCombatLifecycle,
   resolveCombat, 
   TOGGLE_CASUALTY,
   loseAttack, 
   winAttack 
 } from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => {
   return {
@@ -88,8 +90,7 @@ const defenderWins = (territoryIndex) => {
 const continueCombat = (dispatch, getState) => {
   const state = getState()
   const territory = getFocusTerritory(state)
-  dispatch(push('resolve-combat'))
-  dispatch(resolveCombat(territory.index))
+  dispatch(push(PATHS.COMBAT))
 }
 
 // TODO: this doesn't cover strat bomb dogfight

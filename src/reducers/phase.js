@@ -6,7 +6,7 @@ import {
   VIEW_BOMBARDMENT_OPTIONS,
   LOAD_TRANSPORT,
   STRATEGIC_BOMB,
-  ENTER_COMBAT_LIFECYCLE,
+  ENTER_COMBAT,
   ROLLS,
   PLAN_MOVEMENT,
   VIEW_MOVEMENT_OPTIONS,
@@ -57,7 +57,7 @@ const phase = (state = origin, action) => {
   case LOAD_TRANSPORT: {
     return currentWithout(state, VIEW_ATTACK_OPTIONS, 'transport')
   }
-  case ENTER_COMBAT_LIFECYCLE: {
+  case ENTER_COMBAT: {
     return currentWithTerritory(state, 'combat', action.territoryIndex || state.territoryIndex)
   }
   case SELECT_PLANE_LANDING_TERRITORY: {

@@ -17,25 +17,46 @@ import {
 import PATHS from '../../../paths'
 export { nextPhase, previousPhase }
 
-const pathRequiresOverlay = (pathname) => {
-  return [PATHS.RESEARCH, PATHS.RESEARCH_RESULTS, PATHS.ROCKETS, PATHS.ROCKET_RESULTS, PATHS.PURCHASE, 
-    PATHS.INCOME, PATHS.FLAK, PATHS.STRATEGIC_BOMB, PATHS.RETREAT, PATHS.COMBAT_ROLLS, PATHS.RUSSIAN_WINTER, PATHS.PLACE_UNITS].includes(pathname)
-}
+const pathRequiresOverlay = pathname => (  
+  ![
+    '/',
+    PATHS.START, 
+    PATHS.PLAN_ATTACKS, 
+    PATHS.RESOLVE_COMBAT,
+    PATHS.PLAN_MOVEMENT, 
+    PATHS.LAND_PLANES, 
+    PATHS.CONFIRM_FINISH
+  ].includes(pathname)
+)
 
-const phaseRequiresOverlay = (phase) => {
-  return [VIEW_ATTACK_OPTIONS, VIEW_TRANSPORT_LOAD_OPTIONS, VIEW_BOMBARDMENT_OPTIONS, VIEW_PLANE_LANDING_OPTIONS, 'combat', PATHS.SELECT_CASUALTIES, VIEW_MOVEMENT_OPTIONS, 'order-units-territory'].includes(phase)
-}
+const phaseRequiresOverlay = phase => (  
+  [
+    VIEW_ATTACK_OPTIONS, 
+    VIEW_TRANSPORT_LOAD_OPTIONS, 
+    VIEW_BOMBARDMENT_OPTIONS, 
+    VIEW_PLANE_LANDING_OPTIONS, 
+    'combat', 
+    PATHS.SELECT_CASUALTIES, 
+    VIEW_MOVEMENT_OPTIONS, 
+    'order-units-territory'
+  ].includes(phase)
+)
 
 export const overlayPhase = createSelector(
   getPathname,
   getCurrentPhase,
-  (pathname, phase) => pathRequiresOverlay(pathname) || 
-           phaseRequiresOverlay(phase)
+  (pathname, phase) => pathRequiresOverlay(pathname) || phaseRequiresOverlay(phase)
 )
 
-export const advanceButtonPhase = (state:{ phase: {current: string} }) => {
-  return [PLAN_ATTACKS, 'confirm-land-planes', PLAN_MOVEMENT, PATHS.ORDER_UNITS, CONFIRM_FINISH].includes(state.phase.current)
-}
+export const advanceButtonPhase = (state:{ phase: {current: string} }) => (  
+  [
+    PLAN_ATTACKS, 
+    'confirm-land-planes', 
+    PLAN_MOVEMENT, 
+    PATHS.ORDER_UNITS, 
+    CONFIRM_FINISH
+  ].includes(state.phase.current)
+)
 
 export const noCombat = (state:{unitDestination:Object, amphib:Object}) => {
   const { unitDestination, amphib } = state

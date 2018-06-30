@@ -63,6 +63,7 @@ const territoryThunk = (territoryIndex) => {
       },
       [PATHS.RESOLVE_COMBAT]: () => {
         dispatch(enterCombatLifecycle(territoryIndex))
+        dispatch(push(PATHS.COMBAT))
       },
       [PATHS.LAND_PLANES]: () => {
         if (Object.keys(flightDistance).length >= Object.keys(landPlanes).length) {

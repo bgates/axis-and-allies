@@ -1,4 +1,3 @@
-import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
@@ -20,7 +19,7 @@ import {
 import { 
   dogfight,
   removeCasualties,
-  resolveCombat, 
+  enterCombat,
   viewBombardmentOptions,
   roll
 } from '../../../actions'
@@ -43,8 +42,11 @@ export const bombRaid = (dispatch:Dispatch, state:Object, territoryIndex:number)
 }
 
 const mapStateToProps = (state) => {
+  const territoryIndex = getCurrentTerritoryIndex(state)
+  const nextPhase = nextCombatSubphase(state, territoryIndex)
   return {
-    territoryIndex: getCurrentTerritoryIndex(state)
+    territoryIndex,
+    nextPhase
   }
 }
 
@@ -56,15 +58,23 @@ const combatPhaseThunk = (territoryIndex) => {
         return alert('not yet!')
       case 'flak':
         flakAttack(dispatch, state, territoryIndex)
+        break
       case 'dogfight':
         dispatch(dogfight(territoryIndex))
+        break
       case 'bombRaid':
         bombRaid(dispatch, state, territoryIndex)
+        break
       case 'bombard':
         dispatch(viewBombardmentOptions(territoryIndex))
+        break
       case 'normal':
-        dispatch(resolveCombat(territoryIndex))
+        console.log('normal!')
+        dispatch(push(PATHS.VIEW_COMBATANTS))
+        // dispatch(enterCombat(territoryIndex))
+        break
       default:
+        console.log('default?')
         return
     }
   }
