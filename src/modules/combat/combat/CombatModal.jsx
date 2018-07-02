@@ -45,7 +45,7 @@ const CombatModal = ({
       </div>
       <h2>Attacker</h2>
       <nav>
-        <button onClick={isUnderway ? null : selectBattle}>Back</button>
+        {!isUnderway && <button onClick={selectBattle}>Back</button>}
         {allowRetreat && <Link className="btn" to={PATHS.RETREAT}>View Retreat Options</Link>}
         <BoundButton handleClick={rollForCombat} index={territory.index} >Roll for combat</BoundButton>
       </nav>
