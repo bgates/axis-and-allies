@@ -19,7 +19,6 @@ import {
 import { 
   dogfight,
   removeCasualties,
-  enterCombat,
   viewBombardmentOptions,
   roll
 } from '../../../actions'
@@ -55,6 +54,7 @@ const combatPhaseThunk = (territoryIndex) => {
     const state = getState()
     switch (nextCombatSubphase(state, territoryIndex)) {
       case 'awaitNaval': 
+        dispatch(push(PATHS.PLAN_ATTACKS))
         return alert('not yet!')
       case 'flak':
         flakAttack(dispatch, state, territoryIndex)
@@ -69,9 +69,7 @@ const combatPhaseThunk = (territoryIndex) => {
         dispatch(viewBombardmentOptions(territoryIndex))
         break
       case 'normal':
-        console.log('normal!')
         dispatch(push(PATHS.VIEW_COMBATANTS))
-        // dispatch(enterCombat(territoryIndex))
         break
       default:
         console.log('default?')
