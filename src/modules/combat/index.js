@@ -1,7 +1,5 @@
 export { bombardment } from './bombardment'
 
-export { flak } from './flak'
-
 export { 
   airCasualtyCount,
   attackerCasualtyCount, 

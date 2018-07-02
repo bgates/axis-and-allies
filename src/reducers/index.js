@@ -5,10 +5,9 @@ import { amphib } from '../modules/transport'
 import { 
   bombardment,
   casualties,
-  flak,
   strategicBombing,
 } from '../modules/combat'
-import combatUnderway from './combatUnderway'
+import combatSubphase from './combatSubphase'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
 import dogfight from './dogfight'
@@ -49,13 +48,12 @@ const combinedReducer = combineReducers({
   amphib,
   bombardment,
   casualties,
-  combatUnderway,
+  combatSubphase,
   conquered,
   currentPowerIndex,
   dogfight,
   boardString,
   firebase,
-  flak,
   flightDistance,
   inboundUnits,
   income,

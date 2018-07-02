@@ -4,7 +4,7 @@ import {
   getAmphib, 
   getAttackerCasualties, 
   getBombedTerritories, 
-  getCombatUnderway, 
+  getCombatSubphase, 
   getCompletedMissions,
   getCurrentTerritoryIndex,
   getDogfights, 
@@ -102,8 +102,8 @@ export const combatants = createSelector(
 
 export const isUnderway = createSelector(
   getFocusTerritory,
-  getCombatUnderway,
-  (territory, underway) => underway[territory.index]
+  getCombatSubphase,
+  (territory, combatSubphase) => combatSubphase[territory.index]
 )
 
 export const allowRetreat = createSelector(
@@ -111,10 +111,10 @@ export const allowRetreat = createSelector(
   combatants,
   getAttackerCasualties,
   getAmphib,
-  getCombatUnderway,
-  ({ index }, { attackers }, casualties, amphib, combatUnderway) => (
+  getCombatSubphase,
+  ({ index }, { attackers }, casualties, amphib, combatSubphase) => (
     !amphib.territory[index] &&
-    combatUnderway[index] && 
+    combatSubphase[index] && 
     attackers.some(({ id }) => !casualties.includes(id))
   )
 )

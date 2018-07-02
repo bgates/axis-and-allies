@@ -12,7 +12,7 @@ export const getBombardment = state => state.bombardment
 
 export const getBombedTerritories = state => state.strategicBombing.targetTerritories
 
-export const getCombatUnderway = state => state.combatUnderway
+export const getCombatSubphase = state => state.combatSubphase
 
 export const getCompletedMissions = state => state.missionComplete
 
@@ -50,4 +50,3 @@ export const getSelectedRocketTargets = state => state.rocketTargets
 
 export const getTransport = state => state.transport
 
-export const getTakenFlak = state => state.flak

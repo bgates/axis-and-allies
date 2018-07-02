@@ -2,8 +2,8 @@ import { createSelector } from 'reselect'
 import { 
   getAmphib, 
   getBombedTerritories,
+  getCombatSubphase,
   getCompletedMissions, 
-  getTakenFlak
 } from './stateSlices'
 import { getCurrentPowerName } from './getCurrentPower'
 import { 
@@ -95,9 +95,9 @@ export const isDogfightable = createSelector(
 
 export const isFlakable = createSelector(
   getBombedTerritories,
-  getTakenFlak,
+  getCombatSubphase,
   (state, territoryIndex) => territoryIndex,
-  (bombTargets, flak, territoryIndex) => bombTargets[territoryIndex] && !flak[territoryIndex]
+  (bombTargets, combatSubphase, territoryIndex) => bombTargets[territoryIndex] && !combatSubphase[territoryIndex]
 )
 
 export const isBombed = createSelector(
