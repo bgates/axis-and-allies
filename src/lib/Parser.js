@@ -1,7 +1,7 @@
 import powers from '../config/initialPowers'
 import unitTypes from '../config/unitTypes'
 
-const powersWithNeutral = powers.concat({name: 'neutral'})
+const powersWithNeutral = powers.concat({ name: 'Neutrals' })
 
 const unitNameArray = Object.keys(unitTypes)
 
