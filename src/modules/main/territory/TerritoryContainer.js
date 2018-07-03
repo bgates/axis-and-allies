@@ -12,6 +12,7 @@ import {
   isOrdering 
 } from './selectors'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { isCombat } from '../../../selectors/combatSubphase'
 import { isFriendly } from '../../../selectors/getTerritory'
 import { hasDamagedShipsInHarbor } from '../../preCombat'
 import { overlayPhase } from '../board'
@@ -62,8 +63,10 @@ const territoryThunk = (territoryIndex) => {
         }
       },
       [PATHS.RESOLVE_COMBAT]: () => {
-        dispatch(enterCombatLifecycle(territoryIndex))
-        dispatch(push(PATHS.COMBAT))
+        if (isCombat(state, territoryIndex)) {
+          dispatch(enterCombatLifecycle(territoryIndex))
+          dispatch(push(PATHS.COMBAT))
+        }
       },
       [PATHS.LAND_PLANES]: () => {
         if (Object.keys(flightDistance).length >= Object.keys(landPlanes).length) {
