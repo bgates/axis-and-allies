@@ -20,8 +20,12 @@ type Territory = {
   currentPower: PowerName,
   units: Array<UnitType>
 }
+type ThinTerritory = {
+  unitIds: Array<number>,
+  currentPower: PowerName
+}
 type State = {
-  territories: Array<Territory>,
+  territories: Array<ThinTerritory>,
   unitDestination: { [string]: Array<number> }
 }
 export const isLand = (territory:Territory) => !territory.sea
