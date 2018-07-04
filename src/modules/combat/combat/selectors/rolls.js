@@ -1,6 +1,10 @@
 import { createSelector } from 'reselect'
 import { combatants as combatantsWithoutDamage } from '../../../planCombat'
-import { getRolls } from '../../../../selectors/stateSlices'
+import { 
+  getCombatSubphase,
+  getCurrentTerritoryIndex,
+  getRolls 
+} from '../../../../selectors/stateSlices'
 import { 
   bombardingUnits,
   combatants, 
@@ -13,6 +17,7 @@ import {
   attacks,
   defend, 
   noAA,
+  willDogfight
 } from '../../../../selectors/units'
 import PATHS from '../../../../paths'
 
@@ -105,9 +110,15 @@ export const defenderCasualties = createSelector(
 export const rollCount = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
-  ({ attackers, defenders }, bombardingUnits) => (
-    attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
-    + defenders.reduce(totalDefends, 0)
-  )
+  getCombatSubphase,
+  getCurrentTerritoryIndex,
+  ({ attackers, defenders }, bombardingUnits, subphase, territoryIndex) => { 
+    if (subphase[territoryIndex] === 'dogfight') {
+      return attackers.filter(air).length + defenders.filter(willDogfight).length
+    } else {
+      return attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
+        + defenders.reduce(totalDefends, 0)
+    }
+  }
 )
 
