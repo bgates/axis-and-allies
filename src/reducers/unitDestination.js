@@ -5,6 +5,7 @@ import {
   COMMIT_TO_STRATEGIC_BOMBING,
   COMBAT_UNDERWAY,
   REMOVE_CASUALTIES,
+  REMOVE_FLAK_CASUALTIES,
   RETREAT,
   WIN_ATTACK,
   LOSE_ATTACK,
@@ -44,6 +45,7 @@ const unitDestination = (state = {}, action) => {
     return newState
   }
   case LOSE_ATTACK:
+  case REMOVE_FLAK_CASUALTIES:
   case REMOVE_CASUALTIES: {
     const { territoryIndex, attackerCasualties } = action
     return {

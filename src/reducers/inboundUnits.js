@@ -5,6 +5,7 @@ import {
   LOAD_TRANSPORT,
   COMMIT_TO_STRATEGIC_BOMBING,
   REMOVE_CASUALTIES,
+  REMOVE_FLAK_CASUALTIES,
   RETREAT,
   NEXT_TURN
 } from '../actions'
@@ -27,6 +28,7 @@ const inboundUnits = (state = {}, action) => {
     unitIds.concat(transport.id).forEach(id => inbound[id] = targetIndex)
     return inbound
   }
+  case REMOVE_FLAK_CASUALTIES:
   case REMOVE_CASUALTIES: {
     return omit(action.attackerCasualties.map(String), state)
   }

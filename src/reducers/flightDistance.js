@@ -4,6 +4,7 @@ import {
   COMMIT_TO_STRATEGIC_BOMBING,
   UNCOMMIT_UNITS, 
   REMOVE_CASUALTIES,
+  REMOVE_FLAK_CASUALTIES,
   WIN_ATTACK,
   LOSE_ATTACK,
   NEXT_TURN 
@@ -24,6 +25,7 @@ const flightDistance = (state = {}, action) => {
     return omit(unitIds.map(String), state)
   }
   case LOSE_ATTACK: 
+  case REMOVE_FLAK_CASUALTIES:
   case REMOVE_CASUALTIES: {
     return omit(attackerCasualties.map(String), state)
   }

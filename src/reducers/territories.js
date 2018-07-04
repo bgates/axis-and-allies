@@ -1,6 +1,7 @@
 import { 
   COMBAT_UNDERWAY,
   REMOVE_CASUALTIES, 
+  REMOVE_FLAK_CASUALTIES, 
   WIN_ATTACK,
   LOSE_ATTACK,
   NEXT_TURN
@@ -22,6 +23,7 @@ const territories = (state = [], action) => {
     }))
   }
   case LOSE_ATTACK:
+  case REMOVE_FLAK_CASUALTIES:
   case REMOVE_CASUALTIES: {
     const { attackerCasualties, defenderCasualties } = action
     const casualties = attackerCasualties.concat(defenderCasualties)

@@ -83,10 +83,12 @@ export const resolveCombat = (territoryIndex: number) => ({
   territoryIndex 
 })
 
-export const removeFlakCasualties = (casualtyIds: number[], territoryIndex: number) => ({
+export const removeFlakCasualties = (attackerCasualties: number[], territoryIndex: number) => ({
   type: REMOVE_FLAK_CASUALTIES,
-  casualtyIds,
-  territoryIndex
+  defenderCasualties: [],
+  attackerCasualties,
+  territoryIndex,
+  currentPower: {}
 })
 
 export const viewStrategicBombingResults = (damage: number, power: { ipc: number, name: string }, targetIndex: number, unitIds: number[]) => (  
