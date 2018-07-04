@@ -94,26 +94,33 @@ export const airCasualtyCount = createSelector(
 
 const byDefense = (a, b) => defend(a) - defend(b)
 
-const _casualties = (combatants, rolls) => (
+const _casualties = (combatants, rolls, dogfight) => (
   combatants.defenders
     .filter(noAA) //ASK: does this make sense?
+    .filter(dogfight ? willDogfight : () => true)
     .sort(byDefense)
     .map(unit => unit.id).slice(0, hits(rolls, 'attackers'))
+)
+
+const isDogfight = createSelector(
+  getCombatSubphase,
+  getCurrentTerritoryIndex,
+  (subphase, territoryIndex) => subphase[territoryIndex] === 'dogfight'
 )
 
 export const defenderCasualties = createSelector(
   combatantsWithoutDamage,
   combatRolls,
+  isDogfight,
   _casualties
 )
 
 export const rollCount = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
-  getCombatSubphase,
-  getCurrentTerritoryIndex,
-  ({ attackers, defenders }, bombardingUnits, subphase, territoryIndex) => { 
-    if (subphase[territoryIndex] === 'dogfight') {
+  isDogfight,
+  ({ attackers, defenders }, bombardingUnits, dogfight) => { 
+    if (dogfight) {
       return attackers.filter(air).length + defenders.filter(willDogfight).length
     } else {
       return attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
