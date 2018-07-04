@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { continueOrAdvancePhase } from '../selectCasualties'
+import { push } from 'connected-react-router'
 import { strategicBombing } from '../../planCombat'
 import { getFocusTerritory } from '../../../selectors/getTerritory'
 import DiceResultsModal from '../../../components/DiceResultsModal'
@@ -19,7 +19,7 @@ const advancePhase = (damage, power, territoryIndex) => {
   return (dispatch, getState) => {
     const unitIds = strategicBombing(getState())
     dispatch(viewStrategicBombingResults(damage, power, territoryIndex, unitIds))
-    continueOrAdvancePhase(dispatch, getState())
+    dispatch(push(PATHS.COMBAT))
   }
 }
 

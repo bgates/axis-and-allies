@@ -12,7 +12,11 @@ const reducer = (state = {}, action) => {
       return { ...state, [territoryIndex]: 'flak' }
     }
     case COMBAT_UNDERWAY: {
-      return { ...state, [territoryIndex]: 'combat' }
+      if (state[territoryIndex] === 'dogfight') {
+        return state
+      } else {
+        return { ...state, [territoryIndex]: 'combat' }
+      }
     }
     case DOGFIGHT: {
       return { ...state, [territoryIndex]: 'dogfight' }

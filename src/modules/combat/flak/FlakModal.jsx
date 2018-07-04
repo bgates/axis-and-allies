@@ -1,7 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { continueOrAdvancePhase } from '../selectCasualties'
+import { push } from 'connected-react-router'
 import { strategicBombing } from '../../planCombat'
 import { getFocusTerritory } from '../../../selectors/getTerritory'
 import DiceResultsModal from '../../../components/DiceResultsModal'
@@ -19,15 +19,10 @@ const advancePhase = (rolls, territoryIndex) => {
   return (dispatch, getState) => {
     const casualties = strategicBombing(getState()).filter((_, n) => rolls[n] === 1)
     dispatch(removeFlakCasualties(casualties, territoryIndex))
-    continueOrAdvancePhase(dispatch, getState())
+    dispatch(push(PATHS.COMBAT))
   }
 }
-// from flak, where to go?
-// dogfight if possible
-// strat if possible
-// resolve combat if possible
-// next phase otherwise
-//
+
 class FlakComponent extends DiceResultsModal {
 
   render () {

@@ -11,7 +11,6 @@ export {
 } from './combat'
 
 export { 
-  continueOrAdvancePhase,
   noCombat,
   casualties
 } from './selectCasualties'

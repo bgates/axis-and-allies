@@ -6,6 +6,7 @@ import LifecycleComponent from './LifecycleComponent'
 import PATHS from '../../../paths'
 import dice from '../../../lib/numericalDieRolls'
 import { nextCombatSubphase } from '../../../selectors/combatSubphase'
+import { nextPhase } from '../../../selectors/previousPhase'
 import { 
   getAttackerCasualties as attackerCasualties,
   getCurrentTerritoryIndex
@@ -25,9 +26,14 @@ import {
 import type { Dispatch } from 'redux'
 
 const flakAttack = (dispatch, state, territoryIndex) => {
+  dispatch(push(PATHS.FLAK))
   const rolls = dice(getFlakTargetCount(state, territoryIndex))
   dispatch(roll(PATHS.FLAK, rolls))
-  dispatch(push(PATHS.FLAK))
+}
+
+const startDogfight = (dispatch, state, territoryIndex) => {
+  dispatch(dogfight(territoryIndex))
+  dispatch(push(PATHS.VIEW_COMBATANTS))
 }
 
 export const bombRaid = (dispatch:Dispatch, state:Object, territoryIndex:number) => {
@@ -40,12 +46,13 @@ export const bombRaid = (dispatch:Dispatch, state:Object, territoryIndex:number)
   dispatch(push(PATHS.STRATEGIC_BOMB))
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, { location }) => {
   const territoryIndex = getCurrentTerritoryIndex(state)
-  const nextPhase = nextCombatSubphase(state, territoryIndex)
+  // const nextSubphase = nextCombatSubphase(state, territoryIndex)
   return {
     territoryIndex,
-    nextPhase
+    // nextSubphase,
+    location
   }
 }
 
@@ -54,13 +61,13 @@ const combatPhaseThunk = (territoryIndex) => {
     const state = getState()
     switch (nextCombatSubphase(state, territoryIndex)) {
       case 'awaitNaval': 
-        dispatch(push(PATHS.PLAN_ATTACKS))
+        dispatch(push(PATHS.RESOLVE_COMBAT))
         return alert('not yet!')
       case 'flak':
         flakAttack(dispatch, state, territoryIndex)
         break
       case 'dogfight':
-        dispatch(dogfight(territoryIndex))
+        startDogfight(dispatch, state, territoryIndex)
         break
       case 'bombRaid':
         bombRaid(dispatch, state, territoryIndex)
@@ -72,7 +79,7 @@ const combatPhaseThunk = (territoryIndex) => {
         dispatch(push(PATHS.VIEW_COMBATANTS))
         break
       default:
-        console.log('default?')
+        dispatch(push(nextPhase(state)))
         return
     }
   }

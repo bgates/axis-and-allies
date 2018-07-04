@@ -129,6 +129,7 @@ export const nextPhase = createSelector(
       [PATHS.LEND_LEASE]: () => PATHS.PLAN_ATTACKS,
       [PATHS.PLAN_ATTACKS]: () => noCombat ? PATHS.PLAN_MOVEMENT : PATHS.RESOLVE_COMBAT,
       [PATHS.RESOLVE_COMBAT]: () => console.log('how did I get here?') || PATHS.RESOLVE_COMBAT,
+      [PATHS.COMBAT]: () => afterCombat(noCombat, planesInAir),
       [PATHS.SELECT_CASUALTIES]: () => afterCombat(noCombat, planesInAir),
       [PATHS.LAND_PLANES]: () => PATHS.PLAN_MOVEMENT,
       [PATHS.PLAN_MOVEMENT]: () => currentPower.name === 'USSR' ? 'russian-winter' : PATHS.PLACE_UNITS,

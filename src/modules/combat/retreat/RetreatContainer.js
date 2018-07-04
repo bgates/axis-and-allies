@@ -4,7 +4,6 @@ import { push } from 'connected-react-router'
 import PATHS from '../../../paths'
 import RetreatModal from './RetreatModal'
 import { defenderCasualties } from '../../combat'
-import { continueOrAdvancePhase } from '../selectCasualties'
 import { getInboundUnits } from '../../../selectors/getTerritory'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { removeCasualties, resolveCombat, RETREAT } from '../../../actions'
@@ -22,8 +21,7 @@ const retreat = (battleTerritoryIndex, retreatTerritoryIndex) => (
     state = getState()
     const survivors = getInboundUnits(state, battleTerritoryIndex)
     dispatch({ type: RETREAT, battleTerritoryIndex, retreatTerritoryIndex, survivors })
-    state = getState()
-    continueOrAdvancePhase(dispatch, state)
+    dispatch(push(PATHS.COMBAT))
   }
 )
 

@@ -11,7 +11,9 @@ import { SelectCasualtiesContainer } from '../selectCasualties'
 class CombatLifeCycle extends Component {
 
   componentDidMount () {
-    this.props.onEnter(this.props.territoryIndex)
+    if (this.props.location.pathname === PATHS.COMBAT) {
+      this.props.onEnter(this.props.territoryIndex)
+    }
   }
 
   render () {

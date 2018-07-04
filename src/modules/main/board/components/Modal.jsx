@@ -47,7 +47,7 @@ const Modal = ({ ctrlPressed, phase }: { ctrlPressed: boolean, phase: string }) 
       <Route path={PATHS.INCOME} component={IncomeContainer}/>
       <Route path={PATHS.LEND_LEASE} component={LendLeaseModal}/>
       <Route path={PATHS.PLAN_ATTACKS} component={PlanContainer}/>
-      <Route path={PATHS.COMBAT} render={() => <CombatLifeCycle/>}/>
+      <Route path={PATHS.COMBAT} render={({ location  }) => <CombatLifeCycle location={location} />}/>
       <Route path={`(${COMBAT_SUBPATHS.join('|')})`} component={CombatLifeCycle} />
       <Route path="/land-planes" component={LandPlanesContainer}/>
       <Route path="/russian-winter" component={RussianWinterModal}/>
