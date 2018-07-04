@@ -3,7 +3,11 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { TransportContainer } from '../transport'
 import Attacker from '../../components/Attacker'
-import { strategicBombing } from './selectors'
+import { 
+  mayNotCommitToStrategicBombing,
+  mayNotUncommitFromStrategicBombing,
+  strategicBombing 
+} from './selectors'
 import { 
   COMMIT_UNITS, 
   UNCOMMIT_UNITS,
@@ -11,7 +15,10 @@ import {
 } from '../../actions'
 
 const mapStateToProps = (state, ownProps) => (
-  { strategicBombing: strategicBombing(state),
+  { 
+    mayNotCommitToStrategicBombing: mayNotCommitToStrategicBombing(state, ownProps.unit),
+    mayNotUncommitFromStrategicBombing: mayNotUncommitFromStrategicBombing(state, ownProps.unit),
+    strategicBombing: strategicBombing(state),
     ...ownProps
   }
 )
@@ -92,7 +99,9 @@ const GenericAttacker = (props) => {
       strategicBombing,
       commitUnits, 
       unCommitUnits,
-      commitToStrategicBombing
+      commitToStrategicBombing,
+      mayNotCommitToStrategicBombing,
+      mayNotUncommitFromStrategicBombing
     } = props
     return (
       <Attacker
@@ -105,6 +114,8 @@ const GenericAttacker = (props) => {
         commitUnits={commitUnits}
         unCommitUnits={unCommitUnits}
         commitToStrategicBombing={commitToStrategicBombing}
+        mayNotCommitToStrategicBombing={mayNotCommitToStrategicBombing}
+        mayNotUncommitFromStrategicBombing={mayNotUncommitFromStrategicBombing}
       />
     )
   }

@@ -22,12 +22,14 @@ import {
 import { 
   air,
   getAllUnits, 
+  isStrategic,
   landingSlots,
   movement,
   combineUnits,
   nonIndustry,
-  industry
+  industry,
 } from '../../selectors/units'
+import type { UnitType } from '../../selectors/units'
   
 import { combatUnitsInRange } from './movement'
 import { allyOf, enemyOf } from '../../config/initialPowers'
@@ -81,6 +83,20 @@ export const strategicBombing = createSelector(
   getFocusTerritory,
   getBombedTerritories,
   ({ index }, territories) => (territories[index] || [])
+)
+
+export const mayNotCommitToStrategicBombing = createSelector(
+  strategicBombing,
+  getAllUnits,
+  (state, unit) => unit,
+  (bombingIds, units, unit) => !(isStrategic(unit) || (air(unit) && bombingIds.some(id => isStrategic(units[id]))))
+)
+
+export const mayNotUncommitFromStrategicBombing = createSelector(
+  strategicBombing,
+  getAllUnits,
+  (state, unit) => unit,
+  (bombingIds, units, unit) => isStrategic(unit) && !bombingIds.some(id => id !== unit.id && isStrategic(units[id])) && bombingIds.length > 1
 )
 
 export const combatants = createSelector(

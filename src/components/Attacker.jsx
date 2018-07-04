@@ -8,6 +8,8 @@ const Attacker = ({
   strategicBombing,
   targetIndex, 
   landingSlots,
+  mayNotCommitToStrategicBombing,
+  mayNotUncommitFromStrategicBombing,
   hasIndustry,
   commitUnits, 
   unCommitUnits, 
@@ -32,6 +34,7 @@ const Attacker = ({
           landingSlots={landingSlots}
           targetIndex={targetIndex} 
           action={commitToStrategicBombing}
+          mayNotCommitToStrategicBombing={mayNotCommitToStrategicBombing}
         />}
       </td>
       <td className="available">
@@ -42,6 +45,7 @@ const Attacker = ({
         {air && hasIndustry && <UncommitButtons
           unit={unit} 
           committed={strategicBombing.filter(id => unit.ids.includes(id))}
+          mayNotUncommitFromStrategicBombing={mayNotUncommitFromStrategicBombing}
           targetIndex={targetIndex} 
           units={strategicBombing}
           action={unCommitUnits} 
@@ -57,13 +61,14 @@ const CommitButtons = ({
   targetIndex, 
   action, 
   air, 
-  landingSlots 
+  landingSlots,
+  mayNotCommitToStrategicBombing
 }) => {
   const { distance, ids, originIndex } = unit
   const available = ids.filter(id => !committed.includes(id))
   const qty = available.length
-  const allDisabled = qty === 0 || (air && qty > landingSlots)
-  const oneDisabled = qty === 0 || (air && !landingSlots)
+  const allDisabled = qty === 0 || (air && qty > landingSlots) || mayNotCommitToStrategicBombing
+  const oneDisabled = qty === 0 || (air && !landingSlots) || mayNotCommitToStrategicBombing
   return (
     <div>
       <input readOnly size={2} value={qty} />
@@ -84,7 +89,8 @@ const UncommitButtons = ({
   unit, 
   committed,
   targetIndex, 
-  action 
+  action,
+  mayNotUncommitFromStrategicBombing
 }) => {
   const commitQty = committed.length
   return (
@@ -92,11 +98,11 @@ const UncommitButtons = ({
       <input readOnly size={2} value={commitQty} />
       <button 
         onClick={e => action(targetIndex, committed)}
-        disabled={commitQty === 0}
+        disabled={commitQty === 0 || mayNotUncommitFromStrategicBombing} 
       >&lt;&lt;</button>
       <button 
         onClick={e => action(targetIndex, [committed[0]])}
-        disabled={commitQty === 0}
+        disabled={commitQty === 0 || mayNotUncommitFromStrategicBombing}
       >&lt;</button>
     </div>
   )
@@ -107,7 +113,8 @@ const AirOptions = ({
   committed,
   targetIndex, 
   landingSlots,
-  action 
+  action,
+  mayNotCommitToStrategicBombing
 }) => (
   <div>
     <CommitButtons
@@ -117,6 +124,7 @@ const AirOptions = ({
       targetIndex={targetIndex}
       landingSlots={landingSlots}
       action={action}
+      mayNotCommitToStrategicBombing={mayNotCommitToStrategicBombing}
     />
     <span>{unit.type.includes('strategic') ? 'Strategic bombing' : 'Bomber escort'}</span>
   </div>
