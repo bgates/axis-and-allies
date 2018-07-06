@@ -22,8 +22,6 @@ export const getCurrentTerritoryIndex = state => state.phase.territoryIndex
 
 export const getDestinations = state => state.unitDestination
 
-export const getDogfights = state => state.dogfight
-
 export const getFlights = state => state.flightDistance
 
 export const getInboundUnits = state => state.inboundUnits

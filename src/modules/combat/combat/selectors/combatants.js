@@ -7,7 +7,6 @@ import {
   getCombatSubphase, 
   getCompletedMissions,
   getCurrentTerritoryIndex,
-  getDogfights, 
 } from '../../../../selectors/stateSlices'
 import { getFocusTerritory } from '../../../../selectors/getTerritory'
 import { 
@@ -42,27 +41,15 @@ const modify = (units) => {
   }
 }
 
-const dogfightIds = createSelector(
+const getDogfightIds = createSelector(
+  combatantsWithoutDamage,
   getCurrentTerritoryIndex,
-  getDogfights,
+  getCombatSubphase,
   getBombedTerritories,
-  (territoryIndex, dogfight, strategicBombing) => (
-    dogfight[territoryIndex] && (strategicBombing[territoryIndex] || 'nonStrategic')
+  getCompletedMissions,
+  ({ attackers }, territoryIndex, subphase, strategicBombing, completedMission) => (
+    subphase[territoryIndex] === 'dogfight' ? strategicBombing[territoryIndex] || attackers.filter(air).filter(({ id }) => !completedMission[id]) : []
   )
-)
-
-const dogfightCombatants = (attackers, defenders, dogfighters) => (
-  dogfighters === 'nonStrategic' ?
-  {
-    attackers: attackers.filter(air).map(withDogfight),
-    defenders: defenders.filter(willDogfight).map(withDefend),
-    bombardingUnits: []
-  } :
-  {
-    attackers: attackers.filter(unit => dogfighters.includes(unit.id)).map(withDogfight),
-    defenders: defenders.filter(willDogfight).map(withDefend),
-    bombardingUnits: []
-  }
 )
 
 const withFlakVsAir = (defenders, attackers) => (
@@ -72,13 +59,18 @@ const withFlakVsAir = (defenders, attackers) => (
 export const preCasualtyCombatants = createSelector(
   combatantsWithoutDamage,
   bombardingUnits,
-  dogfightIds,
+  getDogfightIds,
   getCompletedMissions,
-  ({ attackers, defenders }, bombardingUnits, dogfighters, completedMission) => {
-    const availableAttackers = attackers.filter(({ id }) => !completedMission[id])
-    if (dogfighters) {
-      return dogfightCombatants(availableAttackers, defenders, dogfighters) 
+  ({ attackers, defenders }, bombardingUnits, dogfightIds, completedMission) => {
+    if (dogfightIds.length > 0) {
+      const dogfighters = attackers.filter(({ id }) => dogfightIds.includes(id)).map(withDogfight)
+      return {
+        attackers: dogfighters,
+        defenders: defenders.filter(willDogfight).map(withDefend),
+        bombardingUnits: []
+      }
     } else {
+      const availableAttackers = attackers.filter(({ id }) => !completedMission[id])
       return { 
         attackers: modify(availableAttackers), 
         defenders: withFlakVsAir(defenders, availableAttackers).map(withDefend), 

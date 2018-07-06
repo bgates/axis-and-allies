@@ -10,7 +10,6 @@ import {
 import combatSubphase from './combatSubphase'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
-import dogfight from './dogfight'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { 
@@ -51,7 +50,6 @@ const combinedReducer = combineReducers({
   combatSubphase,
   conquered,
   currentPowerIndex,
-  dogfight,
   boardString,
   firebase,
   flightDistance,

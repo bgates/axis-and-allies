@@ -3,7 +3,7 @@ import {
   getAllUnits,
   getAttackerCasualties, 
   getCompletedMissions,
-  getDogfights, 
+  getCombatSubphase, 
   getFlights 
 } from '../../../selectors/stateSlices'
 import { getFocusTerritory } from '../../../selectors/getTerritory'
@@ -79,8 +79,8 @@ export const victor = createSelector(
 
 export const isDogfight = createSelector(
   getFocusTerritory,
-  getDogfights,
-  ({ index }, dogfight) => dogfight[index]
+  getCombatSubphase,
+  ({ index }, combatSubphase) => combatSubphase[index] === 'dogfight'
 )
 
 const idNotIn = array => obj => !array.includes(obj.id)

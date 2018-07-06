@@ -116,16 +116,10 @@ export const defenderCasualties = createSelector(
 )
 
 export const rollCount = createSelector(
-  combatantsWithoutDamage,
-  bombardingUnits,
-  isDogfight,
-  ({ attackers, defenders }, bombardingUnits, dogfight) => { 
-    if (dogfight) {
-      return attackers.filter(air).length + defenders.filter(willDogfight).length
-    } else {
-      return attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
-        + defenders.reduce(totalDefends, 0)
-    }
+  preCasualtyCombatants,
+  ({ attackers, defenders, bombardingUnits }) => { 
+    return attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
+      + defenders.reduce(totalDefends, 0)
   }
 )
 
