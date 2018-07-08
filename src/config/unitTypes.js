@@ -65,7 +65,8 @@ const unitTypes = {
     cost: 2, 
     movement: 2,
     ship: true,
-    transport: true
+    transport: true,
+    numAttack: 0
   },
   submarine: { 
     name: 'submarine', 

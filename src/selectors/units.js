@@ -30,7 +30,7 @@ export const landingSlots = (unit:UnitType) => unitTypes[unit.type].landingSlots
 export const movement = (unit:UnitType) => unitTypes[unit.type].movement
 export const canBombard = (unit:UnitType) => unitTypes[unit.type].canBombard
 export const air = (unit:UnitType) => unitTypes[unit.type].air
-export const attacks = (unit:UnitType) => unitTypes[unit.type].numAttack || 1
+export const attacks = (unit:UnitType) => Number.isInteger(unitTypes[unit.type].numAttack) ? unitTypes[unit.type].numAttack : 1
 export const bombCapacity = (unit:UnitType) => unitTypes[unit.type].bomber ? attacks(unit) : 0
 export const isStrategic = (unit:UnitType) => unit.type.includes('strategic')
 export const willDogfight = (unit:UnitType) => air(unit) && !isStrategic(unit)
