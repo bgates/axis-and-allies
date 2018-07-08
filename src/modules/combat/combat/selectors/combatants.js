@@ -48,7 +48,7 @@ const getDogfightIds = createSelector(
   getBombedTerritories,
   getCompletedMissions,
   ({ attackers }, territoryIndex, subphase, strategicBombing, completedMission) => (
-    subphase[territoryIndex] === 'dogfight' ? strategicBombing[territoryIndex] || attackers.filter(air).filter(({ id }) => !completedMission[id]) : []
+    subphase[territoryIndex] === 'dogfight' ? strategicBombing[territoryIndex] || attackers.filter(air).map(({ id }) => id).filter(id => !completedMission[id]) : []
   )
 )
 
@@ -64,6 +64,8 @@ export const preCasualtyCombatants = createSelector(
   ({ attackers, defenders }, bombardingUnits, dogfightIds, completedMission) => {
     if (dogfightIds.length > 0) {
       const dogfighters = attackers.filter(({ id }) => dogfightIds.includes(id)).map(withDogfight)
+      console.log(attackers)
+      console.log(dogfighters)
       return {
         attackers: dogfighters,
         defenders: defenders.filter(willDogfight).map(withDefend),
