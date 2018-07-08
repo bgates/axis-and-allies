@@ -117,9 +117,9 @@ export const defenderCasualties = createSelector(
 
 export const rollCount = createSelector(
   preCasualtyCombatants,
-  ({ attackers, defenders, bombardingUnits }) => { 
-    return attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
+  ({ attackers, defenders, bombardingUnits }) => ( 
+    attackers.concat(bombardingUnits).reduce(totalAttacks, 0)
       + defenders.reduce(totalDefends, 0)
-  }
+  )
 )
 
