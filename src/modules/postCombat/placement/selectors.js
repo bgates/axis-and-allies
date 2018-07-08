@@ -10,7 +10,7 @@ import {
   mergeBoardAndTerritories 
 } from '../../../selectors/getTerritory'
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
-import { previousPhase } from '../../../selectors/previousPhase'
+import { previousPhase } from '../../../selectors/phase'
 import unitTypes from '../../../config/unitTypes'
 export { previousPhase }
 

@@ -2,7 +2,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PurchaseModal from './PurchaseModal'
 import { purchaseCost, buildableUnits, getCurrentPower } from './selectors'
-import { previousPhase } from '../../../selectors/previousPhase'
+import { previousPhase } from '../../../selectors/phase'
 
 const mapStateToProps = (state) => ({
   currentPower: getCurrentPower(state).name,

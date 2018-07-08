@@ -26,10 +26,10 @@ const reducer = (state = {}, action) => {
       return { ...state, [territoryIndex]: 'dogfight' }
     }
     case VIEW_STRATEGIC_BOMBING_RESULTS:
-      return omit(String(action.targetIndex), state)
+      return omit([String(action.targetIndex)], state)
     case WIN_ATTACK:
     case LOSE_ATTACK: {
-      return omit(String(territoryIndex), state)
+      return omit([String(territoryIndex)], state)
     }
     case NEXT_TURN: {
       return {}

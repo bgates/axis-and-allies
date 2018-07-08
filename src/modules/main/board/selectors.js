@@ -1,7 +1,7 @@
 // @flow
 import { createSelector } from 'reselect'
 import { getCurrentPhase, getPathname } from '../../../selectors/stateSlices'
-import { nextPhase, previousPhase } from '../../../selectors/previousPhase'
+import { nextPhase, previousPhase } from '../../../selectors/phase'
 import { isCombat } from '../../../selectors/combatSubphase'
 import { 
   PLAN_ATTACKS, 

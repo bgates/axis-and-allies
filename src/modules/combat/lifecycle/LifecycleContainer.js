@@ -6,7 +6,7 @@ import LifecycleComponent from './LifecycleComponent'
 import PATHS from '../../../paths'
 import dice from '../../../lib/numericalDieRolls'
 import { nextCombatSubphase } from '../../../selectors/combatSubphase'
-import { nextPhase } from '../../../selectors/previousPhase'
+import { nextPhase } from '../../../selectors/phase'
 import { 
   getAttackerCasualties as attackerCasualties,
   getCurrentTerritoryIndex

@@ -14,7 +14,7 @@ import {
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { isCombat } from '../../../selectors/combatSubphase'
 import { isFriendly } from '../../../selectors/getTerritory'
-import { nextPhase } from '../../../selectors/previousPhase'
+import { nextPhase } from '../../../selectors/phase'
 import { overlayPhase } from '../board'
 import { 
   enterCombatLifecycle,

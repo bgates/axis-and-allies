@@ -19,59 +19,13 @@ export const isCombat = createSelector(
   getCurrentPowerName,
   getUnits,
   isAmphib,
+  // isbombed?,
   getCompletedMissions,
   (currentPower, units, amphib, missionComplete) => (
     (units.filter(({ id }) => !missionComplete[id]).some(allyOf(currentPower)) && units.some(enemyOf(currentPower))) || amphib
   )
 )
-/*
- * flak
- * strategic dogfight
- * strategic bomb
- * bombard
- * dogfight
- * combat
- * */
-/*
- * can get into these only from RESOLVE_COMBAT phase
- * once in, can advance from one to next within a territory
- * or can restart tseq in another territory
- * or if combat phase ends may go to another phase
- * but that's not this selector's responsibility
- * */
-  /*
-const nextStep = (victor, territoryIndex, dogfight) => {
-  if (dogfight) {
-    return postDogfight(territoryIndex, victor)
-  } else if (victor === 'attacker') {
-    return attackerWins(territoryIndex)
-  } else if (victor === 'defender') {
-    return defenderWins(territoryIndex)
-  } else {
-    return continueCombat
-  }
-}
 
-const postDogfight = (territoryIndex, victor) => {
-  return (dispatch, getState) => {
-    let state = getState()
-    if (victor === 'defender') {
-      dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
-    } else if (victor === 'attacker') {
-      console.log('skip, see if it matters')
-    }
-    state = getState()
-    if (isBombed(state, territoryIndex)) {
-      return bombRaid(dispatch, state, territoryIndex)
-    } else if (isCombat(state, territoryIndex)) {
-      console.log('combat continues')
-      continueCombat(dispatch, getState)
-    } else {
-      dispatch(push(nextPhase(state)))
-    }
-  }
-}
-*/
 type AmphibState = {
   amphib:Amphib, 
   inboundUnits:{ [string]:Array<number> }
@@ -90,7 +44,9 @@ const getAirUnits = createSelector(
 export const isDogfightable = createSelector(
   getCurrentPowerName,
   getAirUnits,
-  (currentPower, units) => units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
+  getCombatSubphase,
+  (state, territoryIndex) => territoryIndex,
+  (currentPower, units, combatSubphase, territoryIndex) => combatSubphase[territoryIndex] !== 'dogfight' && units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
 )
 
 export const isFlakable = createSelector(

@@ -1,7 +1,7 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
-import { nextPhase } from '../../../selectors/previousPhase'
+import { nextPhase } from '../../../selectors/phase'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { 
   airCasualties,
@@ -88,29 +88,16 @@ const defenderWins = (territoryIndex) => {
 }
 
 const continueCombat = (dispatch, getState) => {
-  const state = getState()
-  const territory = getFocusTerritory(state)
   dispatch(push(PATHS.COMBAT))
 }
 
-// TODO: this doesn't cover strat bomb dogfight
 const postDogfight = (territoryIndex, victor) => {
   return (dispatch, getState) => {
-    let state = getState()
     if (victor === 'defender') {
+      let state = getState()
       dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
-    } else if (victor === 'attacker') {
-      console.log('skip, see if it matters')
-    }
-    state = getState()
-    if (isBombed(state, territoryIndex)) {
-      return bombRaid(dispatch, state, territoryIndex)
-    } else if (isCombat(state, territoryIndex)) {
-      console.log('combat continues')
-      continueCombat(dispatch, getState)
-    } else {
-      dispatch(push(nextPhase(state)))
-    }
+    } 
+    dispatch(push(PATHS.COMBAT))
   }
 }
     
