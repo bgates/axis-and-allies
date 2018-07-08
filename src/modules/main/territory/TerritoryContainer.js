@@ -14,16 +14,14 @@ import {
 import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { isCombat } from '../../../selectors/combatSubphase'
 import { isFriendly } from '../../../selectors/getTerritory'
-import { hasDamagedShipsInHarbor } from '../../preCombat'
+import { nextPhase } from '../../../selectors/previousPhase'
 import { overlayPhase } from '../board'
 import { 
   enterCombatLifecycle,
   viewAttackOptions, 
   viewPlaneLandingOptions,
   viewMovementOptions,
-  viewBombardmentOptions,
   orderUnits,
-  roll
 } from '../../../actions'
 import PATHS from '../../../paths'
 import type { Dispatch } from 'redux';
@@ -50,12 +48,7 @@ const territoryThunk = (territoryIndex) => {
     const currentPower = getCurrentPowerName(state)
     const routes = {
       '/': () => {
-        if (currentPower === 'China') {
-          dispatch(push(PATHS.PLAN_ATTACKS))
-        } else {
-          const nextUrl = hasDamagedShipsInHarbor(state) ? PATHS.REPAIR : PATHS.RESEARCH
-          dispatch(push(nextUrl)) 
-        }
+        dispatch(push(nextPhase(state)))
       }, 
       [PATHS.PLAN_ATTACKS]: () => {
         if (isAttackable(state, territoryIndex)) {
