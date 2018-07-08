@@ -32,19 +32,24 @@ const strategicBombing = (state = { bombingUnits: {}, targetTerritories: {} }, a
   case REMOVE_FLAK_CASUALTIES: {
     let { bombingUnits, targetTerritories } = { ...state }
     const { attackerCasualties, territoryIndex } = action
-    if (targetTerritories[territoryIndex].every(id => attackerCasualties.includes(id))) {
-      return {
-        bombingUnits: omit(attackerCasualties.map(String), bombingUnits),
-        targetTerritories: omit([territoryIndex], targetTerritories)
-      }
-    } else {
-      return {
-        bombingUnits: omit(attackerCasualties.map(String), bombingUnits),
-        targetTerritories: {
-          ...targetTerritories,
-          [territoryIndex]: remove(targetTerritories[territoryIndex], attackerCasualties)
+    const target = targetTerritories[territoryIndex]
+    if (target) {
+      if (target.every(id => attackerCasualties.includes(id))) {
+        return {
+          bombingUnits: omit(attackerCasualties.map(String), bombingUnits),
+          targetTerritories: omit([territoryIndex], targetTerritories)
+        }
+      } else {
+        return {
+          bombingUnits: omit(attackerCasualties.map(String), bombingUnits),
+          targetTerritories: {
+            ...targetTerritories,
+            [territoryIndex]: remove(target, attackerCasualties)
+          }
         }
       }
+    } else {
+      return state
     }
   }
   case LOSE_ATTACK: {
