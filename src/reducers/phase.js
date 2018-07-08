@@ -1,4 +1,5 @@
 import { omit } from 'ramda'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { 
   PLAN_ATTACKS,
   VIEW_ATTACK_OPTIONS,
@@ -28,7 +29,7 @@ const currentWithTerritory = (state, current, territoryIndex) => (
 const origin = { current: 'start', minimum: 'start' }
 const phase = (state = origin, action) => {
   switch (action.type) {
-  case '@@router/LOCATION_CHANGE': {
+  case LOCATION_CHANGE: {
     const { pathname } = action.payload.location
     const current = pathname === '/' ? 'start' : pathname
     return { ...state, current }

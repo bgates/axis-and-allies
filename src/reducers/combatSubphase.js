@@ -1,4 +1,5 @@
 import { omit } from 'ramda'
+import { LOCATION_CHANGE } from 'connected-react-router'
 import { 
   REMOVE_FLAK_CASUALTIES, 
   DOGFIGHT, 
@@ -8,10 +9,22 @@ import {
   LOSE_ATTACK,
   NEXT_TURN 
 } from '../actions'
+import PATHS from '../paths'
 
 const reducer = (state = {}, action) => {
   const { type, territoryIndex } = action
   switch (type) {
+    case LOCATION_CHANGE: {
+      const { pathname } = action.payload.location
+      if (pathname === PATHS.COMBAT) {
+        return Object.keys(state).reduce((newState, prop) => {
+          const newValue = state[prop] === 'dogfight' ? 'postDogfight' : state[prop]
+          return { ...newState, [prop]: newValue }
+        }, {})
+      } else {
+        return state
+      }
+    }
     case REMOVE_FLAK_CASUALTIES: {
       return { ...state, [territoryIndex]: 'flak' }
     }

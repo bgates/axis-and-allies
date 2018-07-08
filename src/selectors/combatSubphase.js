@@ -46,7 +46,10 @@ export const isDogfightable = createSelector(
   getAirUnits,
   getCombatSubphase,
   (state, territoryIndex) => territoryIndex,
-  (currentPower, units, combatSubphase, territoryIndex) => combatSubphase[territoryIndex] !== 'dogfight' && units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
+  (currentPower, units, combatSubphase, territoryIndex) => {
+    const currentSubphase = combatSubphase[territoryIndex] || ''
+    return !currentSubphase.includes('ogfight') && units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
+  }
 )
 
 export const isFlakable = createSelector(
