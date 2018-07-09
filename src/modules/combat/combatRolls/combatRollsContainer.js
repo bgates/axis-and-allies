@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { combatRolls, strengths } from './selectors'
 import CombatRollsModal from './CombatRollsModal'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const selectCasualties = () => {
   return (dispatch) => {
-    dispatch(push('select-casualties'))
+    dispatch(push(PATHS.SELECT_CASUALTIES))
   }
 }
 
