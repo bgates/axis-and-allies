@@ -10,6 +10,7 @@ import {
 import combatSubphase from './combatSubphase'
 import conquered from './conquered'
 import currentPowerIndex from './currentPower'
+import dogfights from './dogfights'
 import flightDistance from './flightDistance'
 import inboundUnits from './inboundUnits'
 import { 
@@ -26,6 +27,7 @@ import missionComplete from './mission'
 import outboundUnits from './outboundUnits'
 import phase from './phase'
 import powers from './powers'
+import strategicDogfights from './strategicDogfights'
 import territories from './territories'
 import { transport } from '../modules/loadTransport'
 import units from './units'
@@ -45,12 +47,13 @@ import type { Action } from '../actions/types'
 
 const combinedReducer = combineReducers({
   amphib,
+  boardString,
   bombardment,
   casualties,
   combatSubphase,
   conquered,
   currentPowerIndex,
-  boardString,
+  dogfights,
   firebase,
   flightDistance,
   inboundUnits,
@@ -68,6 +71,7 @@ const combinedReducer = combineReducers({
   territories,
   transport,
   strategicBombing,
+  strategicDogfights,
   units,
   unitOrigin,
   unitDestination

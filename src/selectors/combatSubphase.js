@@ -4,6 +4,8 @@ import {
   getBombedTerritories,
   getCombatSubphase,
   getCompletedMissions, 
+  getDogfights,
+  getStrategicDogfights
 } from './stateSlices'
 import { getCurrentPowerName } from './getCurrentPower'
 import { 
@@ -44,11 +46,16 @@ const getAirUnits = createSelector(
 export const isDogfightable = createSelector(
   getCurrentPowerName,
   getAirUnits,
-  getCombatSubphase,
+  getBombedTerritories,
+  getDogfights,
+  getStrategicDogfights,
   (state, territoryIndex) => territoryIndex,
-  (currentPower, units, combatSubphase, territoryIndex) => {
-    const currentSubphase = combatSubphase[territoryIndex] || ''
-    return !currentSubphase.includes('ogfight') && units.some(allyOf(currentPower)) && units.some(enemyOf(currentPower))
+  (currentPower, units, bombedTerritories, dogfights, strategicDogfights, territoryIndex) => {
+    return ((
+      bombedTerritories[territoryIndex] &&  !strategicDogfights[territoryIndex])
+    || (!bombedTerritories[territoryIndex] && !dogfights[territoryIndex])) && 
+      units.some(allyOf(currentPower)) && 
+      units.some(enemyOf(currentPower))
   }
 )
 

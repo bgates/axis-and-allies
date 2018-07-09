@@ -33,9 +33,11 @@ export const DOGFIGHT = 'DOGFIGHT'
 export const REMOVE_FLAK_CASUALTIES = 'REMOVE_FLAK_CASUALTIES'
 export const VIEW_STRATEGIC_BOMBING_RESULTS = 'VIEW_STRATEGIC_BOMBING_RESULTS'
 
-export const RESOLVE_COMBAT = '/resolve-combat';
+export const RESOLVE_COMBAT = '/resolve-combat'
 export const COMBAT_UNDERWAY = 'COMBAT_UNDERWAY'
 export const TOGGLE_CASUALTY = 'TOGGLE_CASUALTY'
+export const DOGFIGHT_OVER = 'DOGFIGHT_OVER'
+export const STRATEGIC_DOGFIGHT_OVER = 'STRATEGIC_DOGFIGHT_OVER'
 export const REMOVE_CASUALTIES = 'REMOVE_CASUALTIES'
 export const WIN_ATTACK = 'WIN_ATTACK'
 export const LOSE_ATTACK = 'LOSE_ATTACK'
@@ -45,7 +47,7 @@ export const LAND_PLANES = '/land-planes';
 export const VIEW_PLANE_LANDING_OPTIONS = 'VIEW_PLANE_LANDING_OPTIONS'
 export const SELECT_PLANE_LANDING_OPTION = 'SELECT_PLANE_LANDING_OPTION'
 export const SELECT_PLANE_LANDING_TERRITORY = 'SELECT_PLANE_LANDING_TERRITORY';
-export const CONFIRM_LAND_PLANES = 'CONFIRM_LAND_PLANES';
+export const CONFIRM_LAND_PLANES = 'CONFIRM_LAND_PLANES'
 
 export const PLAN_MOVEMENT = '/plan-movement';
 export const VIEW_MOVEMENT_OPTIONS = 'VIEW_MOVEMENT_OPTIONS'
@@ -60,8 +62,8 @@ export const ORDER_UNITS = '/order-units';
 export const CONFIRM_FINISH = '/confirm-finish';
 export const NEXT_TURN = 'NEXT_TURN'
 
-export const STRATEGIC_BOMB = 'STRATEGIC_BOMB';
-export const COMBAT = 'COMBAT';
+export const STRATEGIC_BOMB = 'STRATEGIC_BOMB'
+export const COMBAT = 'COMBAT'
 
 export const RESET = 'RESET'
 
@@ -76,6 +78,16 @@ export const enterCombatLifecycle = (territoryIndex: number) => ({
 export const dogfight = (territoryIndex: number) => ({ 
   type: DOGFIGHT, 
   territoryIndex 
+})
+
+export const dogfightOver = (territoryIndex: number) => ({
+  type: DOGFIGHT_OVER,
+  territoryIndex
+})
+
+export const strategicDogfightOver = (territoryIndex: number) => ({
+  type: STRATEGIC_DOGFIGHT_OVER,
+  territoryIndex
 })
 
 export const resolveCombat = (territoryIndex: number) => ({ 

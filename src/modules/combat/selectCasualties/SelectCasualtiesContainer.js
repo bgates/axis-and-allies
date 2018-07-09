@@ -2,6 +2,8 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { nextPhase } from '../../../selectors/phase'
+import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
+import { getBombedTerritories } from '../../../selectors/stateSlices'
 import SelectCasualtiesModal from './SelectCasualtiesModal'
 import { 
   airCasualties,
@@ -22,11 +24,12 @@ import {
   isCombat,
   strengths,
 } from './selectors'
-import { getCurrentPowerName } from '../../../selectors/getCurrentPower'
 import { 
   enterCombatLifecycle,
   resolveCombat, 
   TOGGLE_CASUALTY,
+  dogfightOver,
+  strategicDogfightOver,
   loseAttack, 
   winAttack 
 } from '../../../actions'
@@ -66,24 +69,24 @@ const nextStep = (victor, territoryIndex, dogfight) => {
 const id = unit => unit.id
 const attackerWins = (territoryIndex) => {
   return (dispatch, getState) => {
-    let state = getState()
+    const state = getState()
     const { attackers, defenders } = combatants(state)
     const casualties = getAttackerCasualties(state)
     const survivors = attackers.map(id).filter(id => !casualties.includes(id))
     const conqueringPower = isConquered(state) ? getCurrentPowerName(state) : null
     const airUnits = getFlights(state)
     dispatch(winAttack(territoryIndex, defenders.map(id), survivors, airUnits, casualties, conqueringPower))
-    state = getState()
-    dispatch(push(nextPhase(state)))
+    const updatedState = getState()
+    dispatch(push(nextPhase(updatedState)))
   }
 }
 
 const defenderWins = (territoryIndex) => {
   return (dispatch, getState) => {
-    let state = getState()
+    const state = getState()
     dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
-    state = getState()
-    dispatch(push(nextPhase(state)))
+    const updatedState = getState()
+    dispatch(push(nextPhase(updatedState)))
   }
 }
 
@@ -93,8 +96,13 @@ const continueCombat = (dispatch, getState) => {
 
 const postDogfight = (territoryIndex, victor) => {
   return (dispatch, getState) => {
+    const state = getState()
+    if (getBombedTerritories(state)[territoryIndex]) {
+      dispatch(strategicDogfightOver(territoryIndex))
+    } else {
+      dispatch(dogfightOver(territoryIndex))
+    }
     if (victor === 'defender') {
-      let state = getState()
       dispatch(loseAttack(territoryIndex, combatants(state).attackers.map(id), defenderCasualties(state)))
     } 
     dispatch(push(PATHS.COMBAT))
