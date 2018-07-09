@@ -36,7 +36,7 @@ export const getPurchases = createSelector(
 const canBuild = (currentPower, conquered) => territory => (     
   territory.currentPower === currentPower &&
   hasIndustry(territory) &&
-  !conquered.includes(territory.index)
+  !conquered[territory.index]
 )
 
 const indexMatch = a => b => a.index === b.index 

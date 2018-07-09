@@ -1,10 +1,11 @@
 import { WIN_ATTACK, NEXT_TURN } from '../actions'
 
-const conquered = (state = [], action) => {
+const initialState = {}
+const conquered = (state = initialState, action) => {
   if (action.type === WIN_ATTACK && action.conqueringPower) {
-    return [ ...state, action.territoryIndex ]
+    return { ...state, [action.territoryIndex]: true }
   } else if (action.type === NEXT_TURN) {
-    return []
+    return initialState
   } else {
     return state
   }

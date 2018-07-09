@@ -29,7 +29,7 @@ export const unitsInRange = createSelector(
   ({ index, unitIds }, units, inbound, { bombardingUnits }, transports, conquered) => units.filter(
     ({ id, type }) => (
       (!inbound[id] || inbound[id] === index || transports.newlyLoaded.includes(id)) &&
-      (!conquered.includes(index) || !air({ type })) &&
+      (!conquered[index] || !air({ type })) &&
       !unitIds.includes(id) && 
       !bombardingUnits[id]
     )

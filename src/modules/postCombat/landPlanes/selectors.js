@@ -35,7 +35,7 @@ export const airUnits = createSelector(
 
 const availableForLanding = (currentPower, conquered) => territory => (
   isLand(territory) && 
-  !conquered.includes(territory.index) && 
+  !conquered[territory.index] && 
   sameSide(territory.currentPower, currentPower.name)
 )
 
