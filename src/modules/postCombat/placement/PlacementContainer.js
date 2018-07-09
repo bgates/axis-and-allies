@@ -17,6 +17,7 @@ import {
   UNCOMMIT_PLACE_ALL,
   PLACE_UNITS
 } from '../../../actions'
+import PATHS from '../../../paths'
 
 const mapStateToProps = (state) => {
   return {
@@ -76,7 +77,7 @@ const place = () => {
     if (false) {
       dispatch(push('load-carriers'))
     } else {
-      dispatch(push('order-units'))
+      dispatch(push(PATHS.ORDER_UNITS))
     }
   }
 }
